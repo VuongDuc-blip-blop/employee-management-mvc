@@ -308,5 +308,56 @@ namespace Wise_Report.Api.Setting
             //return StatusCode(HttpStatusCode.NoContent);
         }
         #endregion
+
+        #region - Update Permission list
+        [Route("api/Api_Permission/UpdatePermission1")]
+        public IHttpActionResult UpdatePermission1(PERMISSION_LIST per)
+        {
+            int id_update = Convert.ToInt32(per.USER_CREATE);
+            var query1 = db.Database.SqlQuery<int>("Proc_CheckPermissionCRUD_Permission_List @iduser", new SqlParameter("iduser", id_update));
+            db.Database.CommandTimeout = 600;
+            var check = Convert.ToInt16(query1.FirstOrDefault());
+            if (check == 0)
+            {
+                return Ok("Bạn không có quyền cập nhật!");
+            }
+
+            try
+            {
+                var query = db.PERMISSION_LIST.Where(x => x.ID == per.ID).FirstOrDefault();
+                if (query != null)
+                {
+                    //Add Log LOG_USER_ACTIONS:
+                    //PERMISSION_LIST log = new PERMISSION_LIST();
+                    //log.USER_ACTION = id_update;
+                    //ulog.COMMENT_ACTIONS = "Sửa id:" + id;
+                    //if (query.GROUP_NAME != group.GROUP_NAME)
+                    //    ulog.COMMENT_ACTIONS += " ,GROUP_NAME:" + query.GROUP_NAME + "->" + group.GROUP_NAME;
+                    //if (query.DESCRIPTION != group.DESCRIPTION)
+                    //    ulog.COMMENT_ACTIONS += " ,FULLNAME:" + query.DESCRIPTION + "->" + group.DESCRIPTION;
+                    //if (query.ID_DEPARTMENT != group.ID_DEPARTMENT)
+                    //    ulog.COMMENT_ACTIONS += " ,ID_DEPARTMENT:" + query.ID_DEPARTMENT + "->" + group.ID_DEPARTMENT;
+                    //if (query.PURPOSE != group.PURPOSE)
+                    //    ulog.COMMENT_ACTIONS += " ,PURPOSE:" + query.PURPOSE + "->" + group.PURPOSE;
+
+                    //update
+                    query.PERMISSION_NAME = per.PERMISSION_NAME;
+                    query.VIEW_APPLY = per.VIEW_APPLY;
+                    query.DESCRIPTION = per.DESCRIPTION;
+                    query.TAGS = per.TAGS;
+                    query.SUB_PERMISSION = per.SUB_PERMISSION;
+                    query.ID_PERMISSION_TYPE = per.ID_PERMISSION_TYPE;
+                    db.SaveChanges();
+                }
+                return Ok("Cập nhật thành công!");
+            }
+            catch (Exception ex)
+            {
+                return Ok("Cập nhật thất bại!");
+            }
+
+            //return StatusCode(HttpStatusCode.NoContent);
+        }
+        #endregion
     }
 }
