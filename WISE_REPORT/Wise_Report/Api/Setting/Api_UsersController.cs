@@ -155,6 +155,14 @@ namespace Wise_Report.Api.Setting
 
         #endregion
 
+        #region - Update User
+        [HttpPost]
+        [Route("api/Api_Users/UpdateUser1")]
+        public IHttpActionResult UpdateUser1(USER user)
+        {
+            //Code Tiên thêm
 
+        }
+        #endregion
     }
 }
