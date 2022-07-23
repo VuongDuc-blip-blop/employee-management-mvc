@@ -37,5 +37,13 @@ namespace Wise_Report.Controllers
         {
             return View();
         }
+        public ActionResult SetupProduct2s()
+        {
+            return View();
+        }
+        public ActionResult SetupProduct3s()
+        {
+            return View();
+        }
     }
 }
