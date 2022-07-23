@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SMART_OKRSModelStoreContainer" CdmEntityContainer="SMART_OKRSEntities">
+    <EntitySetMapping Name="COMMENTS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.COMMENT">
+        <MappingFragment StoreEntitySet="COMMENTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="ID_TASK" ColumnName="ID_TASK" />
+          <ScalarProperty Name="COMMENT1" ColumnName="COMMENT" />
+          <ScalarProperty Name="TABLE" ColumnName="TABLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPARTMENTS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.DEPARTMENT">
+        <MappingFragment StoreEntitySet="DEPARTMENTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
+          <ScalarProperty Name="DEPARTMENT_MANAGER" ColumnName="DEPARTMENT_MANAGER" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GROUPS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.GROUP">
+        <MappingFragment StoreEntitySet="GROUPS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="ID_DEPARTMENT" ColumnName="ID_DEPARTMENT" />
+          <ScalarProperty Name="PURPOSE" ColumnName="PURPOSE" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GROUPS_USERS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.GROUPS_USERS">
+        <MappingFragment StoreEntitySet="GROUPS_USERS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="IS_LEADER" ColumnName="IS_LEADER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOG_GROUPS_ACTIONS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.LOG_GROUPS_ACTIONS">
+        <MappingFragment StoreEntitySet="LOG_GROUPS_ACTIONS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USER_ACTION" ColumnName="USER_ACTION" />
+          <ScalarProperty Name="DATE_ACTION" ColumnName="DATE_ACTION" />
+          <ScalarProperty Name="COMMENT_ACTIONS" ColumnName="COMMENT_ACTIONS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOG_USER_ACTIONS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.LOG_USER_ACTIONS">
+        <MappingFragment StoreEntitySet="LOG_USER_ACTIONS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USER_ACTION" ColumnName="USER_ACTION" />
+          <ScalarProperty Name="DATE_ACTION" ColumnName="DATE_ACTION" />
+          <ScalarProperty Name="COMMENT_ACTIONS" ColumnName="COMMENT_ACTIONS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOG_VIEWS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.LOG_VIEWS">
+        <MappingFragment StoreEntitySet="LOG_VIEWS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_LOG" ColumnName="DATE_LOG" />
+          <ScalarProperty Name="USER_LOG" ColumnName="USER_LOG" />
+          <ScalarProperty Name="VIEW_NAME" ColumnName="VIEW_NAME" />
+          <ScalarProperty Name="ID_VIEW" ColumnName="ID_VIEW" />
+          <ScalarProperty Name="TABLE" ColumnName="TABLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTIFICATIONS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.NOTIFICATION">
+        <MappingFragment StoreEntitySet="NOTIFICATIONS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="LINK" ColumnName="LINK" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERMISSION_LIST">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.PERMISSION_LIST">
+        <MappingFragment StoreEntitySet="PERMISSION_LIST">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
+          <ScalarProperty Name="VIEW_APPLY" ColumnName="VIEW_APPLY" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="TAGS" ColumnName="TAGS" />
+          <ScalarProperty Name="SUB_PERMISSION" ColumnName="SUB_PERMISSION" />
+          <ScalarProperty Name="ID_PERMISSION_TYPE" ColumnName="ID_PERMISSION_TYPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERMISSION_TYPE">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.PERMISSION_TYPE">
+        <MappingFragment StoreEntitySet="PERMISSION_TYPE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PERMISSION_TYPE1" ColumnName="PERMISSION_TYPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERMISSION_USERS_GROUP">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.PERMISSION_USERS_GROUP">
+        <MappingFragment StoreEntitySet="PERMISSION_USERS_GROUP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="ID_PERMISSION" ColumnName="ID_PERMISSION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROCESSINGs">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.PROCESSING">
+        <MappingFragment StoreEntitySet="PROCESSING">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="TRANZITION_TASK" ColumnName="TRANZITION_TASK" />
+          <ScalarProperty Name="ID_STATUS_BEGIN" ColumnName="ID_STATUS_BEGIN" />
+          <ScalarProperty Name="ID_STATUS_END" ColumnName="ID_STATUS_END" />
+          <ScalarProperty Name="STEP" ColumnName="STEP" />
+          <ScalarProperty Name="IS_DONE" ColumnName="IS_DONE" />
+          <ScalarProperty Name="ID_TARGET" ColumnName="ID_TARGET" />
+          <ScalarProperty Name="TABLE" ColumnName="TABLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROCESSING_DEFAULT">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.PROCESSING_DEFAULT">
+        <MappingFragment StoreEntitySet="PROCESSING_DEFAULT">
+          <ScalarProperty Name="TRANZITION_TASK" ColumnName="TRANZITION_TASK" />
+          <ScalarProperty Name="ID_STATUS_BEGIN" ColumnName="ID_STATUS_BEGIN" />
+          <ScalarProperty Name="ID_STATUS_END" ColumnName="ID_STATUS_END" />
+          <ScalarProperty Name="STEP" ColumnName="STEP" />
+          <ScalarProperty Name="IS_DONE" ColumnName="IS_DONE" />
+          <ScalarProperty Name="TYPE_DEFAULT" ColumnName="TYPE_DEFAULT" />
+          <ScalarProperty Name="NAME_DEFAULT" ColumnName="NAME_DEFAULT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROJECTs">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.PROJECT">
+        <MappingFragment StoreEntitySet="PROJECT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="PROJECT_NAME" ColumnName="PROJECT_NAME" />
+          <ScalarProperty Name="PROJECT_OWNER" ColumnName="PROJECT_OWNER" />
+          <ScalarProperty Name="PROJECT_DESCRIPTION" ColumnName="PROJECT_DESCRIPTION" />
+          <ScalarProperty Name="PROJECT_TARGERT" ColumnName="PROJECT_TARGERT" />
+          <ScalarProperty Name="PROJECT_STATUS" ColumnName="PROJECT_STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STATUS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.STATUS">
+        <MappingFragment StoreEntitySet="STATUS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SYSTEM_VIEWS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.SYSTEM_VIEWS">
+        <MappingFragment StoreEntitySet="SYSTEM_VIEWS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_LOG" ColumnName="DATE_LOG" />
+          <ScalarProperty Name="USER_LOG" ColumnName="USER_LOG" />
+          <ScalarProperty Name="VIEW_NAME" ColumnName="VIEW_NAME" />
+          <ScalarProperty Name="CONTROLLER" ColumnName="CONTROLLER" />
+          <ScalarProperty Name="VIEW_POSITION" ColumnName="VIEW_POSITION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TARGETS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.TARGET">
+        <MappingFragment StoreEntitySet="TARGETS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+          <ScalarProperty Name="TARGET_NAME" ColumnName="TARGET_NAME" />
+          <ScalarProperty Name="ID_PROJECT" ColumnName="ID_PROJECT" />
+          <ScalarProperty Name="ASSIGNEE" ColumnName="ASSIGNEE" />
+          <ScalarProperty Name="DATE_COMPLETE" ColumnName="DATE_COMPLETE" />
+          <ScalarProperty Name="TARGET_STATUS" ColumnName="TARGET_STATUS" />
+          <ScalarProperty Name="TARGET_DESCRIPTION" ColumnName="TARGET_DESCRIPTION" />
+          <ScalarProperty Name="RECHECK_USER" ColumnName="RECHECK_USER" />
+          <ScalarProperty Name="RECHECK_TIME" ColumnName="RECHECK_TIME" />
+          <ScalarProperty Name="RECHECK_COMMENT" ColumnName="RECHECK_COMMENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TASKS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.TASK">
+        <MappingFragment StoreEntitySet="TASKS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+          <ScalarProperty Name="ID_TARGET" ColumnName="ID_TARGET" />
+          <ScalarProperty Name="TASK_NAME" ColumnName="TASK_NAME" />
+          <ScalarProperty Name="TASK_DESCRIPTION" ColumnName="TASK_DESCRIPTION" />
+          <ScalarProperty Name="ASSIGNEE" ColumnName="ASSIGNEE" />
+          <ScalarProperty Name="DATE_COMPLETE" ColumnName="DATE_COMPLETE" />
+          <ScalarProperty Name="TASK_STATUS" ColumnName="TASK_STATUS" />
+          <ScalarProperty Name="RECHECK_USER" ColumnName="RECHECK_USER" />
+          <ScalarProperty Name="RECHECK_TIME" ColumnName="RECHECK_TIME" />
+          <ScalarProperty Name="RECHECK_COMMENT" ColumnName="RECHECK_COMMENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.USER">
+        <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="IS_ALLOWED" ColumnName="IS_ALLOWED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORK_LOGS">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.WORK_LOGS">
+        <MappingFragment StoreEntitySet="WORK_LOGS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="ID_TASK" ColumnName="ID_TASK" />
+          <ScalarProperty Name="RESULT_WORK" ColumnName="RESULT_WORK" />
+          <ScalarProperty Name="TIME_LOG" ColumnName="TIME_LOG" />
+          <ScalarProperty Name="RECHECK_USER" ColumnName="RECHECK_USER" />
+          <ScalarProperty Name="RECHECK_TIME" ColumnName="RECHECK_TIME" />
+          <ScalarProperty Name="RECHECK_RECOMMENT" ColumnName="RECHECK_RECOMMENT" />
+          <ScalarProperty Name="TIME_SPENT" ColumnName="TIME_SPENT" />
+          <ScalarProperty Name="HOUR_SPENT" ColumnName="HOUR_SPENT" />
+          <ScalarProperty Name="TITLE_WORKLOG" ColumnName="TITLE_WORKLOG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GROUPS_USERS_DELETED">
+      <EntityTypeMapping TypeName="SMART_OKRSModel.GROUPS_USERS_DELETED">
+        <MappingFragment StoreEntitySet="GROUPS_USERS_DELETED">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="IS_LEADER" ColumnName="IS_LEADER" />
+          <ScalarProperty Name="DATE_DELETE" ColumnName="DATE_DELETE" />
+          <ScalarProperty Name="USER_DELETE" ColumnName="USER_DELETE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Proc_CheckPermissionCRUD_Permission_List" FunctionName="SMART_OKRSModel.Store.Proc_CheckPermissionCRUD_Permission_List" />
+    <FunctionImportMapping FunctionImportName="Proc_CheckPermissionCRUD_Processing_Default" FunctionName="SMART_OKRSModel.Store.Proc_CheckPermissionCRUD_Processing_Default" />
+    <FunctionImportMapping FunctionImportName="Proc_CheckPermissionCRUD_USER" FunctionName="SMART_OKRSModel.Store.Proc_CheckPermissionCRUD_USER" />
+    <FunctionImportMapping FunctionImportName="Proc_List_Departments" FunctionName="SMART_OKRSModel.Store.Proc_List_Departments">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.Proc_List_Departments_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
+          <ScalarProperty Name="DEPARTMENT_MANAGER" ColumnName="DEPARTMENT_MANAGER" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Groups" FunctionName="SMART_OKRSModel.Store.Proc_List_Groups">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.Proc_List_Groups_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
+          <ScalarProperty Name="PURPOSE" ColumnName="PURPOSE" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_GroupUsers" FunctionName="SMART_OKRSModel.Store.Proc_List_GroupUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.Proc_List_GroupUsers_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="IS_LEADER" ColumnName="IS_LEADER" />
+          <ScalarProperty Name="ID1" ColumnName="ID1" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="DATE_CREATE1" ColumnName="DATE_CREATE1" />
+          <ScalarProperty Name="USER_CREATE1" ColumnName="USER_CREATE1" />
+          <ScalarProperty Name="IS_ALLOWED" ColumnName="IS_ALLOWED" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Permission" FunctionName="SMART_OKRSModel.Store.Proc_List_Permission">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.Proc_List_Permission_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
+          <ScalarProperty Name="VIEW_APPLY" ColumnName="VIEW_APPLY" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="TAGS" ColumnName="TAGS" />
+          <ScalarProperty Name="SUB_PERMISSION" ColumnName="SUB_PERMISSION" />
+          <ScalarProperty Name="PERMISSION_TYPE" ColumnName="PERMISSION_TYPE" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Permission_Users_Group" FunctionName="SMART_OKRSModel.Store.Proc_List_Permission_Users_Group">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.Proc_List_Permission_Users_Group_Result">
+          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="SUB_PERMISSION" ColumnName="SUB_PERMISSION" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="TAGS" ColumnName="TAGS" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Users" FunctionName="SMART_OKRSModel.Store.Proc_List_Users">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.Proc_List_Users_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="IS_ALLOWED" ColumnName="IS_ALLOWED" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Users_Count" FunctionName="SMART_OKRSModel.Store.Proc_List_Users_Count" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SMART_OKRSModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SMART_OKRSModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SMART_OKRSModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SMART_OKRSModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SMART_OKRSModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SMART_OKRSModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SMART_OKRSModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SMART_OKRSModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

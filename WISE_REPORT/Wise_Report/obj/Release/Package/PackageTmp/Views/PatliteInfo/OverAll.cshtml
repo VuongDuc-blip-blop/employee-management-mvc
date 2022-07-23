@@ -1,0 +1,592 @@
+﻿<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<script src="~/Content/js/OverAllCtrl.js?time=@DateTime.Now"></script>
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="~/Content/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<div ng-controller="OverAllCtrl" ng-app="myApp" class="col-md-12 no-padding">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px;align-items: center;">
+                    <h3 style="margin:0;line-height:70px;text-transform:uppercase">OVERALL</h3>
+                </header>
+                <div class="main-header" style="display:inline-block">
+                    Logo
+                    <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                        <span class="logo-mini" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                        </span>
+                        <span class="logo-lg" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                        </span>
+                    </a>
+                </div>
+
+                <div class="date-time" style="line-height:70px;position:relative;align-items:center">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#SelectDay" style="position:absolute;left:0;left:calc(50% - 80px)">Query</button>
+                    <div class="datetime-header" style="display:flex">
+                        <span id="dotter" style="margin-right:5px;top:5px;position:relative"><i class="fa fa-circle" style="color:red;font-size:25px"></i></span>
+                        <span id="date"></span> &nbsp;
+                        <span id='time'></span>
+                    </div>
+               
+                    <script>
+                        window.onload = setInterval(clock, 1000);
+                        function clock() {
+                            var d = new Date();
+
+                            var date = d.getDate();
+
+                            var month = d.getMonth();
+                            var montharr = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            month = montharr[month];
+
+                            var year = d.getFullYear();
+
+                            var day = d.getDay();
+                            var dayarr = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+                            day = dayarr[day];
+
+                            var hour = d.getHours();
+                            var min = d.getMinutes();
+                            var sec = d.getSeconds()
+
+                            hour = (hour < 10) ? "0" + hour : hour;
+                            min = (min < 10) ? "0" + min : min;
+                            sec = (sec < 10) ? "0" + sec : sec;
+                            document.getElementById("date").innerHTML = day + " " + date + " " + month + " " + year;
+                            document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
+                        }
+                        $(document).ready(function () {
+                            var dotterFlicker = document.getElementById('dotter');
+                            setInterval(function () {
+                                dotterFlicker.style.display = (dotterFlicker.style.display == 'none' ? '' : 'none');
+                            }, 1000);
+
+                        });
+                    </script>
+                </div>
+                <div class="back-homepage" style="margin:0 15px;line-height:70px">
+                    <a href="/Home/HomeLayout"><i class="fa fa-th-list" style="color:#fff;font-size:22px;top:4px;position:relative"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <div id="chart-timeline" style="width: 100%;"></div>
+    </div>
+    <div class="col-md-12" style="margin-top:20px">
+        <div class="col-md-6 no-padding">
+            <div id="chart-column" style="width: 100%;"></div>
+        </div>
+        <div class="col-md-6 no-padding">
+            <table id="oee_variable" class="table" style="max-height:433px;color:white;line-height:3" ng-show="checked">
+                <tr>
+                    <td colspan="3" style="font-size:20px;border-top:none !important">OEE SUPPORT VARIABLE</td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Day time</td>
+                    <td style="font-size:16px">{{OEE_Variable.OEE_PLAN_TIME | secondtotime}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Total run time</td>
+                    <td style="font-size:16px">{{OEE_Variable.OEE_TOTAL_TIME | secondtotime}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Operate time</td>
+                    <td style="font-size:16px">{{OEE_Variable.OEE_OPERATE_TIME | secondtotime}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Down time</td>
+                    <td style="font-size:16px">{{OEE_Variable.OEE_DOWN_TIME | secondtotime}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Ideal run rate</td>
+                    <td style="font-size:16px">{{OEE_Variable.OEE_IDEAL_RUN_RATE}}</td>
+                    <td style="font-size:16px">seconds</td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Total Pcs</td>
+                    <td style="font-size:16px">{{OEE_Variable.TOTAL_PCS}}</td>
+                    <td style="font-size:16px">pcs</td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Good Pcs</td>
+                    <td style="font-size:16px">{{OEE_Variable.GOOD_PCS}}</td>
+                    <td style="font-size:16px">pcs</td>
+                </tr>
+                <tr>
+                    <td style="font-size:16px">Reject Pcs</td>
+                    <td style="font-size:16px">{{OEE_Variable.REJECT_PCS}}</td>
+                    <td style="font-size:16px">pcs</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="SelectDay" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="display:flex;align-items:center;margin:0 auto;height:100%">
+            <div class="modal-content" style="margin:0 auto;padding:10px;background-color:#ccc">
+                <div class="modal-header">
+                    <h3 style="display:inline">SELECT DAY</h3>
+                    <a style="float:right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close" style="font-size:20px;color:black"></i> </a>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>Date</th>
+                            <td>
+                                <input type="text" datepicker ng-model="ngay" ng-model-options="{debounce:700}" id="ngay" placeholder="Ngày" class="date form-control datetimepickerKT">
+                                <script>
+                                    $("#ngay").datepicker({ dateFormat: 'dd/mm/yy' });
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Machine</th>
+                            <td>
+                                <select ng-model="MCID" class="form-control">
+                                    <option ng-repeat="item in DanhSachMay" ng-value="{{item.MCID}}">{{item.WDT_USERNAME}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>                   
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" ng-click="View()">View</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-close" style="margin-right:5px"></i>Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+        /*.modal-content {
+        background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("../../Content/images/Layout_BG.png");
+    }*/
+        .test {
+            background: url(../../Content/images/Layout_BG.png);
+            opacity: 0.7;
+            width: 285px;
+            z-index: -2;
+            height: 245px;
+            position: absolute;
+            top: 26px;
+        }
+
+        .modal-content {
+            background-color: transparent;
+        }
+
+        .wrapper-buttton {
+            width: 60px;
+            height: 60px;
+            margin: 0px auto;
+            border-radius: 50%;
+            background: linear-gradient(#2d862d, #2d862d);
+            position: relative;
+            cursor: pointer;
+            padding: 5px;
+            box-shadow: inset 0 4px 2px rgba(255,255,255,0.1), 0 4px 4px rgba(0,0,0,0.5), 0 7px 7px 1px rgba(0,0,0,0.3);
+        }
+
+        /*.wrapper-buttton:after {
+        content: "";
+        position: absolute;
+        left: -20px;
+        right: -20px;
+        top: -20px;
+        bottom: -20px;
+        z-index: -2;
+        border-radius: inherit;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 2px rgba(0,0,0,0.3), 0 0 10px rgba(0,0,0,0.15);
+
+    }
+
+    .wrapper-buttton:before {
+        content: "";
+        position: absolute;
+        left: -10px;
+        right: -10px;
+        top: -10px;
+        bottom: -10px;
+        z-index: -1;
+        border-radius: inherit;
+        box-shadow: inset 0 10px 10px rgba(0,0,0,0.13);
+        -webkit-filter: blur(1px);
+        filter: blur(1px);
+    }*/
+
+        .inner-machine {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(#2d862d, #2d862d);
+            display: block;
+            box-shadow: 0 -2px 5px rgba(255,255,255,0.05), 0 2px 5px rgba(255,255,255,0.1);
+        }
+
+            /*.inner-machine:after {
+            position: absolute;
+
+        width: 60px;
+        height: 60px;
+        background: white;
+        left: 50%;
+        top: 50%;
+        content: "";
+        border-radius: inherit;
+        margin: -17px 0 0 -15px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    }
+
+    .inner-machine:before {
+           position: absolute;
+        content: "";
+        width: 50px;
+        height: 50px;
+        left: 50%;
+        top: 50%;
+        border-radius: inherit;
+        background: inherit;
+        margin: -25px 0 0 -24px;
+        z-index: 2;
+        box-shadow: inset 0 3px 5px rgba(0,0,0,0.3), 0 1px 2px rgba(255,255,255,1);
+    }*/
+
+            .inner-machine span {
+                display: block;
+                width: 15px;
+                height: 15px;
+                background: #2d862d;
+                position: absolute;
+                left: 3%;
+                margin-left: -3px;
+                top: 4px;
+                z-index: 3;
+                position: relative;
+            }
+
+                /*.inner-machine span:before {
+             content: "";
+        position: absolute;
+        width: 6px;
+        height: 27px;
+        background: linear-gradient(#fff, #cbcbcd);
+        border-radius: 10px;
+        box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+        left: 50%;
+        margin-left: -2px;
+    }*/
+                .inner-machine span b {
+                    color: #fff;
+                    position: relative;
+                    font-size: 18px;
+                    top: 9px;
+                    left: -8px;
+                }
+
+        .progress {
+            background-color: black !important;
+        }
+
+        .btn-mini {
+            color: deepskyblue;
+            border: 1px solid;
+        }
+
+        .green {
+            background-color: rgb(0, 193, 9);
+            color: white;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        .yellow {
+            background-color: yellow;
+            color: black;
+        }
+
+        .OFF {
+            background-color: grey;
+            color: white;
+        }
+
+        .BLUE {
+            background-color: blue;
+            color: white;
+        }
+
+        .ORANGE {
+            background-color: orange;
+            color: white;
+        }
+
+        td {
+            border-top: 1px solid transparent !important;
+            padding: 0px !important;
+        }
+
+        .ten {
+            width: 16%;
+            display: inline-block;
+        }
+
+        .main_font {
+            font-size: 22px;
+        }
+
+        .sub_font {
+            font-size: 14px;
+        }
+
+        @@media screen and (max-width: 1600px) {
+            .main_font {
+                font-size: 18px;
+            }
+
+            .sub_font {
+                font-size: 12px;
+            }
+        }
+
+        @@media screen and (max-width: 1366px) {
+            .main_font {
+                font-size: 14px;
+            }
+
+            .sub_font {
+                font-size: 11px;
+            }
+        }
+
+        @@media screen and (max-width: 1280px) {
+            .main_font {
+                font-size: 14px;
+            }
+
+            .sub_font {
+                font-size: 10px;
+            }
+        }
+
+        @@media screen and (max-width: 1024px) {
+            .main_font {
+                font-size: 11px;
+            }
+
+            .sub_font {
+                font-size: 8px;
+            }
+        }
+</style>
+<style>
+    .machine-name__text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 3.5vmin;
+        text-align: center;
+        white-space: nowrap;
+        height: 11%;
+    }
+
+    .info-machine__card-panel {
+        background: rgba(0,0,0, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        height: 89%;
+    }
+
+    .current-state__panel {
+        display: flex;
+        align-items: center;
+        font-size: 2.4vmin;
+        font-weight: bold;
+        height: 10%;
+        padding: 0px 10px 0px 10px;
+    }
+
+    .uptime-progress__panel {
+        padding-top: 5%;
+        height: 32%;
+    }
+
+    .information-time__panel {
+        display: flex;
+        font-size: 2.2vmin;
+        width: 100%;
+        padding: 0px 10px 0px 10px;
+        line-height: 3.4vmin;
+        height: 9%;
+        white-space: nowrap;
+        margin: 10px 0px;
+    }
+
+    .current-state-time__text {
+        flex: 1;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .uptime-percentage__panel {
+        display: flex;
+        justify-content: center;
+        height: 50%;
+    }
+
+    .Availability__text {
+        text-align: center;
+        font-size: 2vmin;
+        color: rgba(255, 255, 255, 0.3);
+        height: 28%;
+    }
+
+    .uptime-progress-bar__panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 5px;
+    }
+
+    .uptime-progress__bar {
+        width: 50%;
+        background: grey;
+        height: 100%;
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    .uptime-progress__width {
+        background: rgba(1, 150, 240, 0.8);
+        color: black;
+        height: 100%;
+    }
+
+    .information__text {
+        text-transform: capitalize;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .information-time__text {
+        flex: 1;
+        text-align: right;
+        color: #ffffff;
+    }
+
+    .uptime-percentage-number__text {
+        font-size: 5.5vmin;
+        line-height: 5.5vmin;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .uptime-percentage__text {
+        font-size: 2vmin;
+        line-height: 2vmin;
+        color: rgba(255, 255, 255, 0.4);
+        padding: 3% 0px 0px 1%;
+    }
+
+    .unit-info__text {
+        height: 100%;
+        font-size: 2.2vmin;
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-alarm {
+        margin: 0 auto;
+        transform: translate(3%, 20px);
+        display: inline-block;
+    }
+
+    .production-info__text {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-weight: bold;
+        font-size: 1.8vmin;
+        color: rgba(255, 255, 255, 0.3);
+        height: 10%;
+        padding: 0px 10px 0px 10px;
+    }
+</style>
+<style>
+    .btn-page {
+        background-color: transparent;
+        background-image: url('../../Content/images/Page.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 15px;
+    }
+
+    .btn-page-focus {
+        background-color: transparent;
+        background-image: url('../../Content/images/PageFocus.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 15px;
+    }
+
+    .btn-pause {
+        background-color: transparent;
+        background-image: url('../../Content/images/Pause.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 25px;
+    }
+
+    .btn-play {
+        background-color: transparent;
+        background-image: url('../../Content/images/Play.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 25px;
+    }
+</style>
+<style>
+    #oee_variable td{
+        line-height:2.5;
+        padding-left:10px !important;
+        border-top:2px solid black !important;
+        background-color:#343a40
+    }
+</style>

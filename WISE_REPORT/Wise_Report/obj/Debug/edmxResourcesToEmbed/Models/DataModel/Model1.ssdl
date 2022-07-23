@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SUMIDAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="PasswordDecode" Type="varchar" MaxLength="64" />
+    <Property Name="Fullname" Type="nvarchar(max)" />
+    <Property Name="Avatar" Type="nvarchar(max)" />
+    <Property Name="Isadmin" Type="bit" Nullable="false" />
+    <Property Name="MaPhongBan" Type="nvarchar(max)" />
+    <Property Name="Write" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BROKEN_REASON">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BROKEN_ID" Type="int" Nullable="false" />
+    <Property Name="REASON" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GHI_CHU" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PATLITE_ERROR_LOG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LOG_DATE_CREATE" Type="datetime" />
+    <Property Name="LOG_USERNAME" Type="varchar" MaxLength="64" />
+    <Property Name="LOG_DATE" Type="datetime" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="ERROR_REASON" Type="nvarchar(max)" />
+    <Property Name="NOTE" Type="nvarchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="PATLITE_GROUP_ID">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GROUP_NAME" Type="nvarchar" MaxLength="256" />
+    <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="PATLITE_HISTORY_LOG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="CURRENT_STATE" Type="int" />
+    <Property Name="STATE_TIME" Type="int" />
+    <Property Name="IS_READ" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PATLITE_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar" MaxLength="500" />
+    <Property Name="RED_LIGHT" Type="int" Nullable="false" />
+    <Property Name="AMBER_LIGHT" Type="int" Nullable="false" />
+    <Property Name="GREEN_LIGHT" Type="int" Nullable="false" />
+    <Property Name="BREAK_LIGHT" Type="int" Nullable="false" />
+    <Property Name="MODE" Type="nvarchar" MaxLength="500" />
+    <Property Name="QUANTITY_EACH_TURN" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PATLITE_LINE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LINE_NAME" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="PATLITE_PRODUCTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ITEM_NAME" Type="nvarchar" MaxLength="2560" />
+    <Property Name="ITEM_DESCRIPTION" Type="nvarchar" MaxLength="500" />
+    <Property Name="CYCLE_TIME" Type="float" />
+  </EntityType>
+  <EntityType Name="PATLITE_STATE_CONTROL">
+    <Key>
+      <PropertyRef Name="STID" />
+    </Key>
+    <Property Name="STID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RCID" Type="int" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar" MaxLength="100" />
+    <Property Name="THIS_DATE" Type="datetime" />
+    <Property Name="THIS_HOUR" Type="datetime" />
+    <Property Name="THIS_SHIFT" Type="datetime" />
+    <Property Name="THIS_CHANGED" Type="datetime" />
+    <Property Name="THIS_HR_CHANGED" Type="datetime" />
+    <Property Name="THIS_SF_CHANGED" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="IS_CONNECTED" Type="bit" />
+    <Property Name="CURRENT_STATE" Type="int" />
+    <Property Name="STATE_BEFORE_BREAK" Type="int" />
+    <Property Name="RED" Type="int" />
+    <Property Name="YELLOW" Type="int" />
+    <Property Name="GREEN" Type="int" />
+    <Property Name="BLUE" Type="int" />
+    <Property Name="ORANGE" Type="int" />
+    <Property Name="COUNTER_VALUE" Type="int" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="COUNT_HOUR_RED" Type="int" />
+    <Property Name="COUNT_HOUR_YELLOW" Type="int" />
+    <Property Name="COUNT_HOUR_GREEN" Type="int" />
+    <Property Name="COUNT_HOUR_ERROR" Type="int" />
+    <Property Name="COUNT_HOUR_BREAK" Type="int" />
+    <Property Name="COUNT_HOUR_OFF" Type="int" />
+    <Property Name="COUNT_SHIFT_RED" Type="int" />
+    <Property Name="COUNT_SHIFT_YELLOW" Type="int" />
+    <Property Name="COUNT_SHIFT_GREEN" Type="int" />
+    <Property Name="COUNT_SHIFT_ERROR" Type="int" />
+    <Property Name="COUNT_SHIFT_BREAK" Type="int" />
+    <Property Name="COUNT_SHIFT_OFF" Type="int" />
+    <Property Name="COUNT_WEEK_RED" Type="int" />
+    <Property Name="COUNT_WEEK_YELLOW" Type="int" />
+    <Property Name="COUNT_WEEK_GREEN" Type="int" />
+    <Property Name="COUNT_WEEK_ERROR" Type="int" />
+    <Property Name="COUNT_WEEK_BREAK" Type="int" />
+    <Property Name="COUNT_WEEK_OFF" Type="int" />
+    <Property Name="COUNT_MONTH_RED" Type="int" />
+    <Property Name="COUNT_MONTH_YELLOW" Type="int" />
+    <Property Name="COUNT_MONTH_GREEN" Type="int" />
+    <Property Name="COUNT_MONTH_ERROR" Type="int" />
+    <Property Name="COUNT_MONTH_BREAK" Type="int" />
+    <Property Name="COUNT_MONTH_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="TIME_HOUR_RED" Type="int" />
+    <Property Name="TIME_HOUR_YELLOW" Type="int" />
+    <Property Name="TIME_HOUR_GREEN" Type="int" />
+    <Property Name="TIME_HOUR_ERROR" Type="int" />
+    <Property Name="TIME_HOUR_BREAK" Type="int" />
+    <Property Name="TIME_HOUR_OFF" Type="int" />
+    <Property Name="TIME_SHIFT_RED" Type="int" />
+    <Property Name="TIME_SHIFT_YELLOW" Type="int" />
+    <Property Name="TIME_SHIFT_GREEN" Type="int" />
+    <Property Name="TIME_SHIFT_ERROR" Type="int" />
+    <Property Name="TIME_SHIFT_BREAK" Type="int" />
+    <Property Name="TIME_SHIFT_OFF" Type="int" />
+    <Property Name="TIME_WEEK_RED" Type="int" />
+    <Property Name="TIME_WEEK_YELLOW" Type="int" />
+    <Property Name="TIME_WEEK_GREEN" Type="int" />
+    <Property Name="TIME_WEEK_ERROR" Type="int" />
+    <Property Name="TIME_WEEK_BREAK" Type="int" />
+    <Property Name="TIME_WEEK_OFF" Type="int" />
+    <Property Name="TIME_MONTH_RED" Type="int" />
+    <Property Name="TIME_MONTH_YELLOW" Type="int" />
+    <Property Name="TIME_MONTH_GREEN" Type="int" />
+    <Property Name="TIME_MONTH_ERROR" Type="int" />
+    <Property Name="TIME_MONTH_BREAK" Type="int" />
+    <Property Name="TIME_MONTH_OFF" Type="int" />
+    <Property Name="ITEM_ID" Type="int" />
+    <Property Name="ITEM_NAME" Type="nvarchar" MaxLength="500" />
+    <Property Name="BREAK_START" Type="datetime" />
+    <Property Name="IS_BREAK" Type="bit" />
+    <Property Name="TIMER_BREAK" Type="int" />
+    <Property Name="TIMER_BREAK_HOUR" Type="int" />
+    <Property Name="TIMER_BREAK_SHIFT" Type="int" />
+    <Property Name="TIMER_BREAK_WEEK" Type="int" />
+    <Property Name="TIMER_BREAK_MONTH" Type="int" />
+    <Property Name="CYCLE_CLOCK" Type="datetime" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="ACTUAL_DAY_QTY" Type="int" />
+    <Property Name="ACTUAL_HOUR_QTY" Type="int" />
+    <Property Name="ACTUAL_SHIFT_QTY" Type="int" />
+    <Property Name="ACTUAL_WEEK_QTY" Type="int" />
+    <Property Name="ACTUAL_MONTH_QTY" Type="int" />
+    <Property Name="NG_QTY" Type="int" />
+    <Property Name="NG_HOUR_QTY" Type="int" />
+    <Property Name="NG_SHIFT_QTY" Type="int" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+    <Property Name="IDEAL_RUN_RATE" Type="float" />
+    <Property Name="IS_RESET" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PATLITE_STATE_TRAN">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="THIS_DATE" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="BEGIN_TIME" Type="datetime" />
+    <Property Name="END_TIME" Type="datetime" />
+    <Property Name="DURATION" Type="int" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="CURRENT_STATE" Type="int" />
+  </EntityType>
+  <EntityType Name="PATLITE_WDR_INFO">
+    <Key>
+      <PropertyRef Name="WDR_MAC_ADDRESS" />
+    </Key>
+    <Property Name="WDR_MAC_ADDRESS" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="WDR_USERNAME" Type="nvarchar(max)" />
+    <Property Name="WDR_STATUS" Type="bit" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PATLITE_WDT_INFO">
+    <Key>
+      <PropertyRef Name="WDT_MAC_ADDRESS" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="GROUP_ID" Type="int" />
+    <Property Name="WDT_MAC_ADDRESS" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="WDT_USERNAME" Type="nvarchar(max)" />
+    <Property Name="WDT_STATUS" Type="bit" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="MODE" Type="nvarchar(max)" />
+    <Property Name="QUANTITY_EACH_TURN" Type="int" Nullable="false" />
+    <Property Name="PERCENT_TARGET" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TIME_BREAK" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUM_DAILY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="BEGIN_DATETIME" Type="datetime" />
+    <Property Name="END_DATETIME" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="NG_QTY" Type="int" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+    <Property Name="TOTAL_PCS" Type="int" />
+    <Property Name="GOOD_PCS" Type="int" />
+    <Property Name="REJECT_PCS" Type="int" />
+    <Property Name="OEE_TOTAL_TIME" Type="int" />
+    <Property Name="OEE_PLAN_TIME" Type="int" />
+    <Property Name="OEE_DOWN_TIME" Type="int" />
+    <Property Name="OEE_OPERATE_TIME" Type="int" />
+    <Property Name="OEE_IDEAL_RUN_RATE" Type="float" />
+    <Property Name="OEE_A" Type="float" />
+    <Property Name="OEE_P" Type="float" />
+    <Property Name="OEE_Q" Type="float" />
+    <Property Name="OEE" Type="float" />
+  </EntityType>
+  <EntityType Name="SUM_DAILY_GROUP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GROUP_ID" Type="int" />
+    <Property Name="BEGIN_DATETIME" Type="datetime" />
+    <Property Name="END_DATETIME" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="NG_QTY" Type="int" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+    <Property Name="TOTAL_PCS" Type="int" />
+    <Property Name="GOOD_PCS" Type="int" />
+    <Property Name="REJECT_PCS" Type="int" />
+    <Property Name="OEE_TOTAL_TIME" Type="int" />
+    <Property Name="OEE_PLAN_TIME" Type="int" />
+    <Property Name="OEE_DOWN_TIME" Type="int" />
+    <Property Name="OEE_OPERATE_TIME" Type="int" />
+    <Property Name="OEE_IDEAL_RUN_RATE" Type="float" />
+    <Property Name="OEE_A" Type="float" />
+    <Property Name="OEE_P" Type="float" />
+    <Property Name="OEE_Q" Type="float" />
+    <Property Name="OEE" Type="float" />
+  </EntityType>
+  <EntityType Name="SUM_HOURLY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="THIS_DATE" Type="datetime" />
+    <Property Name="BEGIN_DATETIME" Type="datetime" />
+    <Property Name="END_DATETIME" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="NG_QTY" Type="int" Nullable="false" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+  </EntityType>
+  <EntityType Name="SUM_MONTHLY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="BEGIN_DATETIME" Type="datetime" />
+    <Property Name="END_DATETIME" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+  </EntityType>
+  <EntityType Name="SUM_SHIFT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="SHIFT_ID" Type="int" />
+    <Property Name="THIS_DATE" Type="datetime" />
+    <Property Name="BEGIN_DATETIME" Type="datetime" />
+    <Property Name="END_DATETIME" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="NG_QTY" Type="int" Nullable="false" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+  </EntityType>
+  <EntityType Name="SUM_WEEKLY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MCID" Type="int" />
+    <Property Name="LNID" Type="int" />
+    <Property Name="BEGIN_DATETIME" Type="datetime" />
+    <Property Name="END_DATETIME" Type="datetime" />
+    <Property Name="SERVER_TIME" Type="datetime" />
+    <Property Name="COUNT_RED" Type="int" />
+    <Property Name="COUNT_YELLOW" Type="int" />
+    <Property Name="COUNT_GREEN" Type="int" />
+    <Property Name="COUNT_ERROR" Type="int" />
+    <Property Name="COUNT_BREAK" Type="int" />
+    <Property Name="COUNT_OFF" Type="int" />
+    <Property Name="TIME_RED" Type="int" />
+    <Property Name="TIME_YELLOW" Type="int" />
+    <Property Name="TIME_GREEN" Type="int" />
+    <Property Name="TIME_ERROR" Type="int" />
+    <Property Name="TIME_BREAK" Type="int" />
+    <Property Name="TIME_OFF" Type="int" />
+    <Property Name="ACTUAL_QTY" Type="int" />
+    <Property Name="UPTIME_STD" Type="float" />
+    <Property Name="UPTIME_ACT" Type="float" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="WORK_TERM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TERM_NAME" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="TIME_START" Type="int" Nullable="false" />
+    <Property Name="TIME_END" Type="int" Nullable="false" />
+  </EntityType>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="javaUTC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bigint">
+    <Parameter Name="this_time" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="P001_StateChange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="STID" Type="int" Mode="In" />
+    <Parameter Name="new_state" Type="int" Mode="In" />
+    <Parameter Name="green" Type="int" Mode="In" />
+    <Parameter Name="red" Type="int" Mode="In" />
+    <Parameter Name="yellow" Type="int" Mode="In" />
+  </Function>
+  <Function Name="P002_SumHourly" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="P003_UpdateNG" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="STID" Type="int" Mode="In" />
+    <Parameter Name="MCID" Type="int" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="ng_qty" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q001_RealtimeStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="sotrang" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q002_Timeline" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q003_QtyHour" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q004_ReportHourly" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Q005_ReportShift" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Q006_ReportDaily" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Q006_ReportMonthly" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nam" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q006_ReportWeekly" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Q007_LiveBoardTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q008_Last5DaysLiveBoardTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q009_DailyChart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q010_WeeklyChart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="year" Type="int" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q011_MonthlyChart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nam" Type="int" Mode="In" />
+    <Parameter Name="thang" Type="int" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q012_MobileTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mac" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Q013_TimelineMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q014_OEEDaily" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q015_OEESupportVariable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="mcid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Q016_ListOEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Q016_ListOEE_Pivot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Q017_ListOEE_Realtime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Sectotime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="seconds" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="SUMIDAModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BROKEN_REASON" EntityType="Self.BROKEN_REASON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_ERROR_LOG" EntityType="Self.PATLITE_ERROR_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_GROUP_ID" EntityType="Self.PATLITE_GROUP_ID" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_HISTORY_LOG" EntityType="Self.PATLITE_HISTORY_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_INFO" EntityType="Self.PATLITE_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_LINE" EntityType="Self.PATLITE_LINE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_PRODUCTS" EntityType="Self.PATLITE_PRODUCTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_STATE_CONTROL" EntityType="Self.PATLITE_STATE_CONTROL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_STATE_TRAN" EntityType="Self.PATLITE_STATE_TRAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_WDR_INFO" EntityType="Self.PATLITE_WDR_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_WDT_INFO" EntityType="Self.PATLITE_WDT_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUM_DAILY" EntityType="Self.SUM_DAILY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUM_DAILY_GROUP" EntityType="Self.SUM_DAILY_GROUP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUM_HOURLY" EntityType="Self.SUM_HOURLY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUM_MONTHLY" EntityType="Self.SUM_MONTHLY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUM_SHIFT" EntityType="Self.SUM_SHIFT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUM_WEEKLY" EntityType="Self.SUM_WEEKLY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORK_TERM" EntityType="Self.WORK_TERM" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,179 @@
+﻿
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wise Management - Notifications</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Content/vendor/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <script src="~/Content/dist/js/jquery.min.js"></script>
+    @*<script src="~/Content/js-vendor/vendor.bundle.base.js"></script>*@
+    <script src="~/Content/js-vendor/dashboard.js"></script>
+    <script src="~/Content/js-vendor/misc.js"></script>
+    <script src="~/Content/js-vendor/hoverable-collapse.js"></script>
+    <script src="~/Content/bootstrap-datetimepicker.js"></script>
+    @*<script src="~/Content/date_directive.js"></script>*@
+
+    <script>
+        $(function () {
+            CKEDITOR.config.extraPlugins = 'justify';
+            CKEDITOR.config.extraPlugins = 'filebrowser';
+        });
+    </script>
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+
+    @*<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />*@
+    <script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>
+    <script src="~/Content/js/Report/Worklogs_GroupCtrl.js?time=@DateTime.Now"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-scroller" ng-controller="NotificationCtrl" ng-app="myApp">
+        <!-- partial:partials/_navbar.html -->
+        <!-- partial -->
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered fixed">
+                    <thead>
+                        <tr>
+                            <th width="50px">STT</th>
+                            <th style="min-width:60px" class="text-center">Is read</th>
+                            <th style="min-width:150px" class="text-center">Comment</th>
+                            <th style="min-width:60px" class="text-center">Date create</th>
+                            <th style="min-width:100px" class="text-center">User create</th>
+                            <th style="min-width:60px" class="text-center">Group</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in listNotification" ng-click="openlink(item.LINK)">
+                            <td class="text-center" ng-class="mahangdachon == $index ? 'deepsky' : ''">
+                                {{($index + 1) + (tranghientai - 1) * 15}}
+                            </td>
+                            <td style="text-align:center;vertical-align:middle">
+                                <div class="form-checkbox">
+                                    <input type="checkbox" ng-model="item.IS_READ" ng-disabled="true" ng-model-options="{debounce:500}" class="ng-valid ng-dirty ng-valid-parse ng-empty ng-touched">
+                                </div>
+
+                            </td>
+                            <td ng-click="ChangeStatusIsRead(item)" style="cursor:pointer;word-break:break-word">{{item.COMMENT}}</td>
+                            <td class="text-center">{{item.DATE_CREATE | date:'dd/MM/yyyy'}}</td>
+                            <td class="text-center">{{item.USER_CREATE_NAME}}</td>
+                            <td>{{item.GROUP_NAME}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-info" type="button" ng-click="ChangeAllStatusIsRead(item)" style="margin-top:10px"><i class="fa fa-file" style="margin-right:5px"></i>Mark all as read</button>
+            </div>
+        </div>
+        <!-- page-body-wrapper ends -->
+        <div class="col-md-12">
+            <div id="phan_trang" style="float:right;margin:0px !important"></div>
+        </div>
+    </div>
+</body>
+<style>
+    table thead tr th, table tbody tr td {
+        border: 1px solid #ccc;
+        border-top: 1px solid #ccc !important;
+    }
+
+    .home-layout {
+        text-align: center;
+        vertical-align: middle;
+        /* height: 100vh; */
+        /* display: flex; */
+        flex-wrap: wrap;
+        vertical-align: middle;
+    }
+
+    .darkgreen {
+        color: white;
+        background-color: #1bcfb4;
+        padding: 5px;
+        border-radius: 20px;
+        text-align: center;
+    }
+
+    .fade {
+        opacity: 1;
+    }
+
+    .checked {
+        text-decoration: line-through;
+        -webkit-text-decoration-color: #198ae3;
+        text-decoration-color: #198ae3;
+    }
+
+    .bootstrap-datetimepicker-widget {
+        display: block !important;
+        top: 0;
+        right: 0;
+    }
+      table thead tr th {
+        background:linear-gradient(to right, #3666b5, #3c6dbd) !important;
+        color:white;
+    }
+    .marginR15 {
+        margin-right: 15px;
+    }
+
+    .marginR30 {
+        margin-right: 30px;
+    }
+            .form-checkbox input[type=checkbox] {
+        outline:none;
+        border: none !important;
+        margin: 0;
+        background-color: #DDD;
+        border-radius: 2px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        /* margin: 2px 0 0 5px; */
+        width: 20px;
+        height: 20px;
+        position: relative;
+    }
+
+    fieldset[disabled] .form-checkbox input[type=checkbox], fieldset[disabled] .form-checkbox input[type=radio], .form-checkbox input[type=checkbox].disabled, .form-checkbox input[type=checkbox][disabled], .form-checkbox input[type=radio].disabled, .form-checkbox input[type=radio][disabled] {
+        background-color: #EEE;
+        cursor: not-allowed;
+    }
+
+    .form-checkbox input[type=checkbox]:checked {
+        background-color: #409fd6;
+        background: #409fd6 url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 5px 5px no-repeat;
+    }
+</style>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,1065 @@
+﻿
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<link href="~/Content/css/kho.css" rel="stylesheet" />
+
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+<script src="~/Content/js/ReportCtrl.js?time=@DateTime.Now"></script>
+<style>
+    .table {
+        color: black;
+    }
+
+    .tong_tien_nhan_vien {
+        font-weight: bold;
+    }
+
+    .tong_tien_tat_ca {
+        font-weight: bold;
+        word-break: break-all;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .showup {
+        display: block !important;
+    }
+
+    .comments {
+        margin: 2.5rem auto 0;
+        max-width: 60.75rem;
+        padding: 0 1.25rem;
+    }
+
+    .comment-wrap {
+        margin-bottom: 1.25rem;
+        display: table;
+        width: 100%;
+        min-height: 5.3125rem;
+    }
+
+    .photo {
+        padding-top: 0.625rem;
+        display: table-cell;
+        width: 3.5rem;
+    }
+
+        .photo .avatar {
+            height: 66px;
+            width: 65px;
+            border-radius: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+    .comment-block {
+        padding: 1rem;
+        background-color: #fff;
+        display: table-cell;
+        vertical-align: top;
+        border-radius: 0.1875rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+    }
+
+        .comment-block textarea {
+            width: 100%;
+            resize: none;
+        }
+
+    .comment-text {
+        margin-bottom: 1.25rem;
+    }
+
+    .bottom-comment {
+        color: #acb4c2;
+        font-size: 0.875rem;
+    }
+
+    .comment-date {
+        float: left;
+    }
+
+    .comment-actions {
+        float: right;
+    }
+
+        .comment-actions li {
+            display: inline;
+            margin: -2px;
+            cursor: pointer;
+        }
+
+            .comment-actions li.complain {
+                padding-right: 0.75rem;
+                border-right: 1px solid #e1e5eb;
+            }
+
+            .comment-actions li.reply {
+                padding-left: 0.75rem;
+                padding-right: 0.125rem;
+            }
+
+            .comment-actions li:hover {
+                color: #0095ff;
+            }
+
+    .skyblue {
+        background: deepskyblue !important;
+        color: white !important;
+    }
+</style>
+<style>
+    .sticky-table thead th {
+        position: -webkit-sticky; /* for Safari */
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .sticky-table tfoot th {
+        position: -webkit-sticky; /* for Safari */
+        position: sticky;
+        bottom: 0;
+        z-index: 999;
+    }
+
+    .sticky-table .top30 {
+        top: 30px;
+    }
+
+    .sticky-table .top40 {
+        top: 40px;
+    }
+
+    .sticky-table .top50 {
+        top: 50px;
+    }
+
+    .sticky-table .top60 {
+        top: 60px;
+    }
+
+    .sticky-table .top90 {
+        top: 90px;
+    }
+
+    .sticky-table .top70 {
+        top: 70px;
+    }
+
+    .sticky-table .top80 {
+        top: 80px;
+    }
+
+    .sticky-table .top120 {
+        top: 120px;
+    }
+
+    .sticky-table .top110 {
+        top: 110px;
+    }
+
+    .sticky-table .top150 {
+        top: 150px;
+    }
+
+    .sticky-table tbody th {
+        position: -webkit-sticky; /* for Safari */
+        position: sticky;
+        left: 0;
+        top: 100px;
+    }
+
+    .childtable th {
+        position: unset !important;
+        left: unset !important;
+        top: unset !important;
+    }
+
+    .form-control {
+        padding: unset;
+    }
+
+    .symbol_filter {
+        width: 100%;
+        height: 34px;
+    }
+</style>
+
+<div class="container-fluid col-md-12 no-padding" ng-app="myApp" ng-controller="ReportCtrl">
+    @*<div class="row">
+            <div class="col-md-12">
+                <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                    <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px">
+                        <h3 style="margin:0;line-height:70px;text-transform:uppercase">Timeline Chart</h3>
+                    </header>
+                    <div class="main-header" style="display:inline-block">
+
+                        Logo
+                        <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                            <span class="logo-mini" style="transform: translateY(10px);">
+                                <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                            </span>
+                            <span class="logo-lg" style="transform: translateY(10px);">
+                                <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="date-time" style="line-height:70px">
+                        <span id="dotter" style="margin-right:5px;top:5px;position:relative"><i class="fa fa-circle" style="color:red;font-size:25px"></i></span>
+                        <span id="date"></span> &nbsp;
+                        <span id='time'></span>
+                        <script>
+                            window.onload = setInterval(clock, 1000);
+                            function clock() {
+                                var d = new Date();
+
+                                var date = d.getDate();
+
+                                var month = d.getMonth();
+                                var montharr = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                month = montharr[month];
+
+                                var year = d.getFullYear();
+
+                                var day = d.getDay();
+                                var dayarr = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+                                day = dayarr[day];
+
+                                var hour = d.getHours();
+                                var min = d.getMinutes();
+                                var sec = d.getSeconds()
+
+                                hour = (hour < 10) ? "0" + hour : hour;
+                                min = (min < 10) ? "0" + min : min;
+                                sec = (sec < 10) ? "0" + sec : sec;
+                                document.getElementById("date").innerHTML = day + " " + date + " " + month + " " + year;
+                                document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
+                            }
+                            $(document).ready(function () {
+                                var dotterFlicker = document.getElementById('dotter');
+                                setInterval(function () {
+                                    dotterFlicker.style.display = (dotterFlicker.style.display == 'none' ? '' : 'none');
+                                }, 1000);
+
+                            });
+                        </script>
+                    </div>
+                    <div class="back-homepage" style="margin:0 15px;line-height:70px">
+                        <a href="/Home/HomeLayout"><i class="fa fa-th-list" style="color:#fff;font-size:22px;top:4px;position:relative"></i></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="back-page col-md-12" style="display:flex;justify-content:space-between;margin-top:40px">
+            <h1 class="start-screen-title text-center" style="font-weight: 800; color: deepskyblue;width:100%;">REPORT MACHINE STATUS</h1>
+            <a href="/Home/HomeLayout" style="position:absolute;right:50px"><i class="fa fa-arrow-left" style="color:#fff;font-size:22px;position:relative"></i></a>
+        </div>
+        <div class="col-md-12" style="margin-top:40px">
+            <div class="row">
+                <div class="col-md-3 col-sm-4">
+                    <div class="wrimagecard wrimagecard-topimage" ng-click="OpenHour()">
+                        <div style="background-image: url('../../Content/images/ICON_Report_Hourly.png');background-size:cover;height:188px;width:188px"></div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="wrimagecard wrimagecard-topimage" ng-click="OpenShift()">
+                        <div style="background-image: url('../../Content/images/ICON_Report_SHIFT.png');background-size:cover;height:188px;width:188px"></div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="wrimagecard wrimagecard-topimage" ng-click="OpenDay()">
+                        <div style="background-image: url('../../Content/images/ICON_Report_Daily.png');background-size:cover;height:188px;width:188px"></div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="wrimagecard wrimagecard-topimage" ng-click="OpenWeek()">
+                        <div style="background-image: url('../../Content/images/ICON_Report_WEEKLY.png');background-size:cover;height:188px;width:188px"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:40px">
+            <div class="row">
+                <div class="col-md-3 col-sm-4">
+                    <div class="wrimagecard wrimagecard-topimage" ng-click="OpenMonth()">
+                        <div style="background-image: url('../../Content/images/ICON_Report_Monthly.png');background-size:cover;height:188px;width:188px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ReportHourModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:100%;">
+            <div class="modal-content" style="min-height: 1000px;">
+                <div class="modal-header">
+                    <button class="btn" ng-click="OpenHour()">Query</button>
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 no-padding" style="max-height:800px;overflow:scroll">
+                        <table class="table sticky-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="15">
+                                        <div style="font-size:24px">REPORT HOURLY</div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="top40">MACHINE NAME</th>
+                                    <th rowspan="2" class="top40">HOUR</th>
+                                    <th colspan="4" class="top40">COUNTER</th>
+                                    <th colspan="4" class="top40">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" class="top40">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat-start="item in ListReportHour" ng-if="$first || item.MCID != ListReportHour[$index - 1].MCID">
+                                <td colspan="15">
+                                    <button class="fa fa-plus" aria-hidden="true" style="display:inline-block;" ng-click="Show(item,'HOUR');hienthi1 = false" ng-show="hienthi1"></button>
+                                    <button class="fa fa-minus" aria-hidden="true" style="display:inline-block;" ng-click="Hide(item,'HOUR');hienthi1 = true" ng-hide="hienthi1"></button>
+                                    <span style="color:deepskyblue;font-size:14px">{{item.MACHINE_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end class="HOUR-{{item.MCID}}">
+                                <td>{{item.MACHINE_NAME}}</td>
+                                <td>{{item.HOUR}}</td>
+                                <td>{{item.COUNT_GREEN}}</td>
+                                <td>{{item.COUNT_YELLOW}}</td>
+                                <td>{{item.COUNT_RED}}</td>
+                                <td>{{item.COUNT_OFF}}</td>
+                                <td>{{item.TIME_GREEN}}</td>
+                                <td>{{item.TIME_YELLOW}}</td>
+                                <td>{{item.TIME_RED}}</td>
+                                <td>{{item.TIME_OFF}}</td>
+                                <td>{{item.UPTIME | currency : '' : 2}}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table" id="Report_Hourly" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="15" class="text-center" style="background-color:white;color:black">
+                                        <div style="font-size:24px">REPORT HOURLY</div>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">MACHINE NAME</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">HOUR</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">COUNTER</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in ListReportHour">
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.MACHINE_NAME}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.HOUR}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.UPTIME | currency: '' : 2}}</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="tableToExcel('Report_Hourly','HOURLY_')">Export Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="QueryHourModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:30%;">
+            <div class="modal-content" style="min-height: 180px;">
+                <div class="modal-header" style="border-bottom:none !important">
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="ngay" ng-model-options="{debounce:700}" id="ngay" placeholder="Ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#ngay").datepicker({ dateFormat: 'dd/mm/yy' });
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:none !important">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="QueryHour()">Lấy dữ liệu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ReportShiftModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:100%;">
+            <div class="modal-content" style="min-height: 1000px;">
+                <div class="modal-header">
+                    <button class="btn" ng-click="OpenShift()">Query</button>
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 no-padding" style="max-height:800px;overflow:scroll">
+                        <table class="table sticky-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="17">
+                                        <div style="font-size:24px">REPORT SHIFT</div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="top40">MACHINE NAME</th>
+                                    <th rowspan="2" class="top40">DATE</th>
+                                    <th rowspan="2" class="top40">SHIFT</th>
+                                    <th colspan="4" class="top40">COUNTER</th>
+                                    <th colspan="4" class="top40">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" class="top40">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat-start="item in ListReportShift" ng-if="$first || item.MCID != ListReportShift[$index - 1].MCID">
+                                <td colspan="17">
+                                    <button class="fa fa-plus" aria-hidden="true" style="display:inline-block;" ng-click="Show(item,'SHIFT');hienthi1 = false" ng-show="hienthi1"></button>
+                                    <button class="fa fa-minus" aria-hidden="true" style="display:inline-block;" ng-click="Hide(item,'SHIFT');hienthi1 = true" ng-hide="hienthi1"></button>
+                                    <span style="color:deepskyblue;font-size:14px">{{item.MACHINE_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end class="SHIFT-{{item.MCID}}">
+                                <td>{{item.MACHINE_NAME}}</td>
+                                <td>{{item.DATE | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{item.SHIFT}}({{item.TIME_START}}h - {{item.TIME_END}}h)</td>
+                                <td>{{item.COUNT_GREEN}}</td>
+                                <td>{{item.COUNT_YELLOW}}</td>
+                                <td>{{item.COUNT_RED}}</td>
+                                <td>{{item.COUNT_OFF}}</td>
+                                <td>{{item.TIME_GREEN}}</td>
+                                <td>{{item.TIME_YELLOW}}</td>
+                                <td>{{item.TIME_RED}}</td>
+                                <td>{{item.TIME_OFF}}</td>
+                                <td>{{item.UPTIME | currency : '' : 2}}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table" id="Report_Shiftly" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="17" class="text-center" style="background-color:white;color:black">
+                                        <div style="font-size:24px">REPORT SHIFT</div>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">MACHINE NAME</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">DATE</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">SHIFT</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">COUNTER</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in ListReportShift">
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.MACHINE_NAME}}</p></td>
+                                <td style="width:9em"><p style="mso-number-format:mm\/dd\/yyyy;width:9em;white-space:nowrap;overflow:hidden">{{item.DATE | date:'dd/MM/yyyy'}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.SHIFT}}({{item.TIME_START}}h - {{item.TIME_END}}h)</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.UPTIME | currency: '' : 2}}</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="tableToExcel('Report_Shiftly','Shift_')">Export Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="QueryShiftModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:30%;">
+            <div class="modal-content" style="min-height: 180px;">
+                <div class="modal-header" style="border-bottom:none !important">
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Từ Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="tungay_shift" ng-model-options="{debounce:700}" id="tungay_shift" placeholder="Từ Ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#tungay_shift").datepicker({ dateFormat: 'dd/mm/yy' });
+                                    </script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Đến Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="denngay_shift" ng-model-options="{debounce:700}" id="denngay_shift" placeholder="Đến Ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#denngay_shift").datepicker({ dateFormat: 'dd/mm/yy' });
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:none !important">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="QueryShift()">Lấy dữ liệu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ReportDailyModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:100%;">
+            <div class="modal-content" style="min-height: 1000px;">
+                <div class="modal-header">
+                    <button class="btn" ng-click="OpenDay()">Query</button>
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 no-padding" style="max-height:800px;overflow:scroll">
+                        <table class="table sticky-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="15">
+                                        <div style="font-size:24px">REPORT DAILY</div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="top40">MACHINE NAME</th>
+                                    <th rowspan="2" class="top40">DATE</th>
+                                    <th colspan="4" class="top40">COUNTER</th>
+                                    <th colspan="4" class="top40">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" class="top40">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat-start="item in ListReportDaily" ng-if="$first || item.MCID != ListReportDaily[$index - 1].MCID">
+                                <td colspan="15">
+                                    <button class="fa fa-plus" aria-hidden="true" style="display:inline-block;" ng-click="Show(item,'DAY');hienthi1 = false" ng-show="hienthi1"></button>
+                                    <button class="fa fa-minus" aria-hidden="true" style="display:inline-block;" ng-click="Hide(item,'DAY');hienthi1 = true" ng-hide="hienthi1"></button>
+                                    <span style="color:deepskyblue;font-size:14px">{{item.MACHINE_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end class="DAY-{{item.MCID}}">
+                                <td>{{item.MACHINE_NAME}}</td>
+                                <td>{{item.DATE | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{item.COUNT_GREEN}}</td>
+                                <td>{{item.COUNT_YELLOW}}</td>
+                                <td>{{item.COUNT_RED}}</td>
+                                <td>{{item.COUNT_OFF}}</td>
+                                <td>{{item.TIME_GREEN}}</td>
+                                <td>{{item.TIME_YELLOW}}</td>
+                                <td>{{item.TIME_RED}}</td>
+                                <td>{{item.TIME_OFF}}</td>
+                                <td>{{item.UPTIME | currency : '' : 2}}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table" id="Report_Daily" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="15" class="text-center" style="background-color:white;color:black">
+                                        <div style="font-size:24px">REPORT DAILY</div>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">MACHINE NAME</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">DATE</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">COUNTER</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in ListReportDaily">
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.MACHINE_NAME}}</p></td>
+                                <td style="width:9em"><p style="mso-number-format:mm\/dd\/yyyy;width:9em;white-space:nowrap;overflow:hidden">{{item.DATE | date:'dd/MM/yyyy'}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.UPTIME | currency: '' : 2}}</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="tableToExcel('Report_Daily','DAILY_')">Export Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="QueryDailyModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:30%;">
+            <div class="modal-content" style="min-height: 180px;">
+                <div class="modal-header" style="border-bottom:none !important">
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Từ Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="tungay_daily" ng-model-options="{debounce:700}" id="tungay_daily" placeholder="Từ Ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#tungay_daily").datepicker({ dateFormat: 'dd/mm/yy' });
+                                    </script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Đến Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="denngay_daily" ng-model-options="{debounce:700}" id="denngay_daily" placeholder="Đến Ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#denngay_daily").datepicker({ dateFormat: 'dd/mm/yy' });
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:none !important">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="QueryDaily()">Lấy dữ liệu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ReportWeeklyModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:100%;">
+            <div class="modal-content" style="min-height: 1000px;">
+                <div class="modal-header">
+                    <button class="btn" ng-click="OpenWeek()">Query</button>
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 no-padding" style="max-height:800px;overflow:scroll">
+                        <table class="table sticky-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="17">
+                                        <div style="font-size:24px">REPORT WEEKLY</div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="top40">MACHINE NAME</th>
+                                    <th rowspan="2" class="top40">START DATE</th>
+                                    <th rowspan="2" class="top40">END DATE</th>
+                                    <th colspan="4" class="top40">COUNTER</th>
+                                    <th colspan="4" class="top40">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" class="top40">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat-start="item in ListReportWeekly" ng-if="$first || item.MCID != ListReportWeekly[$index - 1].MCID">
+                                <td colspan="17">
+                                    <button class="fa fa-plus" aria-hidden="true" style="display:inline-block;" ng-click="Show(item,'WEEK');hienthi1 = false" ng-show="hienthi1"></button>
+                                    <button class="fa fa-minus" aria-hidden="true" style="display:inline-block;" ng-click="Hide(item,'WEEK');hienthi1 = true" ng-hide="hienthi1"></button>
+                                    <span style="color:deepskyblue;font-size:14px">{{item.MACHINE_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end class="WEEK-{{item.MCID}}">
+                                <td>{{item.MACHINE_NAME}}</td>
+                                <td>{{item.BEGIN_DATETIME | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                                <td>{{item.END_DATETIME | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                                <td>{{item.COUNT_GREEN}}</td>
+                                <td>{{item.COUNT_YELLOW}}</td>
+                                <td>{{item.COUNT_RED}}</td>
+                                <td>{{item.COUNT_OFF}}</td>
+                                <td>{{item.TIME_GREEN}}</td>
+                                <td>{{item.TIME_YELLOW}}</td>
+                                <td>{{item.TIME_RED}}</td>
+                                <td>{{item.TIME_OFF}}</td>
+                                <td>{{item.UPTIME | currency : '' : 2}}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table" id="Report_Weekly" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="17" class="text-center" style="background-color:white;color:black">
+                                        <div style="font-size:24px">REPORT WEEKLY</div>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">MACHINE NAME</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">START DATE</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">END DATE</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">COUNTER</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in ListReportWeekly">
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.MACHINE_NAME}}</p></td>
+                                <td style="width:9em"><p style="mso-number-format:mm\/dd\/yyyy;width:9em;white-space:nowrap;overflow:hidden">{{item.BEGIN_DATETIME | date:'dd/MM/yyyy HH:mm:ss'}}</p></td>
+                                <td style="width:9em"><p style="mso-number-format:mm\/dd\/yyyy;width:9em;white-space:nowrap;overflow:hidden">{{item.END_DATETIME | date:'dd/MM/yyyy HH:mm:ss'}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.UPTIME | currency: '' : 2}}</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="tableToExcel('Report_Weekly','WEEKLY_')">Export Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="QueryWeeklyModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:30%;">
+            <div class="modal-content" style="min-height: 180px;">
+                <div class="modal-header" style="border-bottom:none !important">
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Từ Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="tungay_Weekly" id="tungay_Weekly" placeholder="Từ ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#tungay_Weekly").datepicker(
+                                            {
+                                                dateFormat: 'dd/mm/yy',
+                                                beforeShowDay: function (date) {
+                                                    var day = date.getDay();
+                                                    var d = new Date(date)
+                                                    d.setHours(0, 0, 0, 0)
+                                                    var today = new Date()
+                                                    today.setHours(0, 0, 0, 0)
+                                                    return [(day == 1 && d <= today)];
+                                                }
+                                            }
+                                        );
+                                    </script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Đến Ngày</th>
+                                <td>
+                                    <input type="text" autocomplete="off" ng-model="denngay_Weekly" id="denngay_Weekly" placeholder="Đến ngày" class="date form-control datetimepickerKT">
+                                    <script>
+                                        $("#denngay_Weekly").datepicker(
+                                            {
+                                                dateFormat: 'dd/mm/yy',
+                                                beforeShowDay: function (date) {
+                                                    var day = date.getDay();
+                                                    var d = new Date(date)
+                                                    d.setHours(0, 0, 0, 0)
+                                                    var today = new Date()
+                                                    today.setHours(0, 0, 0, 0)
+                                                    return [(day == 0 && d <= today)];
+                                                }
+                                            }
+                                        );
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:none !important">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="QueryWeekly()">Lấy dữ liệu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ReportMonthlyModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:100%;">
+            <div class="modal-content" style="min-height: 1000px;">
+                <div class="modal-header">
+                    <button class="btn" ng-click="OpenMonth()">Query</button>
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 no-padding" style="max-height:800px;overflow:scroll">
+                        <table class="table sticky-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="13">
+                                        <div style="font-size:24px">REPORT MONTHLY</div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="top40">MACHINE NAME</th>
+                                    <th rowspan="2" class="top40">START DATE</th>
+                                    <th rowspan="2" class="top40">END DATE</th>
+                                    <th colspan="4" class="top40">COUNTER</th>
+                                    <th colspan="4" class="top40">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" class="top40">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                    <th class="top70">RUN</th>
+                                    <th class="top70">WAIT</th>
+                                    <th class="top70">ERROR</th>
+                                    <th class="top70">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat-start="item in ListReportMonthly" ng-if="$first || item.MCID != ListReportMonthly[$index - 1].MCID">
+                                <td colspan="17">
+                                    <button class="fa fa-plus" aria-hidden="true" style="display:inline-block;" ng-click="Show(item,'MONTH');hienthi1 = false" ng-show="hienthi1"></button>
+                                    <button class="fa fa-minus" aria-hidden="true" style="display:inline-block;" ng-click="Hide(item,'MONTH');hienthi1 = true" ng-hide="hienthi1"></button>
+                                    <span style="color:deepskyblue;font-size:14px">{{item.MACHINE_NAME}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end class="MONTH-{{item.MCID}}">
+                                <td>{{item.MACHINE_NAME}}</td>
+                                <td>{{item.BEGIN_DATETIME | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                                <td>{{item.END_DATETIME | date : 'dd/MM/yyyy HH:mm:ss'}}</td>
+                                <td>{{item.COUNT_GREEN}}</td>
+                                <td>{{item.COUNT_YELLOW}}</td>
+                                <td>{{item.COUNT_RED}}</td>
+                                <td>{{item.COUNT_OFF}}</td>
+                                <td>{{item.TIME_GREEN}}</td>
+                                <td>{{item.TIME_YELLOW}}</td>
+                                <td>{{item.TIME_RED}}</td>
+                                <td>{{item.TIME_OFF}}</td>
+                                <td>{{item.UPTIME | currency : '' : 2}}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table" id="Report_Monthly" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th colspan="17" class="text-center" style="background-color:white;color:black">
+                                        <div style="font-size:24px">REPORT MONTHLY</div>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">MACHINE NAME</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">START DATE</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">END DATE</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">COUNTER</th>
+                                    <th colspan="4" style="background-color:#ADC7E7">TIME(hh:mm:ss)</th>
+                                    <th rowspan="2" style="width:9em;background-color:#ADC7E7">UPTIME(%)</th>
+                                </tr>
+                                <tr>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                    <th style="width:9em;background-color:#ADC7E7">RUN</th>
+                                    <th style="width:9em;background-color:#ADC7E7">WAIT</th>
+                                    <th style="width:9em;background-color:#ADC7E7">ERROR</th>
+                                    <th style="width:9em;background-color:#ADC7E7">OFF</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in ListReportMonthly">
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.MACHINE_NAME}}</p></td>
+                                <td style="width:9em"><p style="mso-number-format:mm\/dd\/yyyy;width:9em;white-space:nowrap;overflow:hidden">{{item.BEGIN_DATETIME | date:'dd/MM/yyyy HH:mm:ss'}}</p></td>
+                                <td style="width:9em"><p style="mso-number-format:mm\/dd\/yyyy;width:9em;white-space:nowrap;overflow:hidden">{{item.END_DATETIME | date:'dd/MM/yyyy HH:mm:ss'}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.COUNT_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_GREEN}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_YELLOW}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_RED}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.TIME_OFF}}</p></td>
+                                <td style="width:9em"><p style="width:9em;white-space:nowrap;overflow:hidden">{{item.UPTIME | currency: '' : 2}}</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="tableToExcel('Report_Monthly','MONTHLY_')">Export Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="QueryMonthlyModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:30%;">
+            <div class="modal-content" style="min-height: 180px;">
+                <div class="modal-header" style="border-bottom:none !important">
+                    <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <tr>
+                                <th>Năm</th>
+                                <td>
+                                    <select class="form-control" ng-model="nam" data-ng-options="item as item for item in ListNam"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tháng</th>
+                                <td>
+                                    <table class="table">
+                                        <tr ng-repeat="item in ListMonth">
+                                            <td>
+                                                <input type="checkbox" ng-model="item.check" />
+                                            </td>
+                                            <td>
+                                                Tháng {{item.month}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:none !important">
+                    <div class="col-md-12">
+                        <button class="btn" ng-click="QueryMonthly()">Lấy dữ liệu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

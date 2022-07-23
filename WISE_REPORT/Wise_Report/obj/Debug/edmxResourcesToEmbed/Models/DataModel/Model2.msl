@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PatliteModel1StoreContainer" CdmEntityContainer="PatliteEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="PatliteModel1.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Administrators">
+      <EntityTypeMapping TypeName="PatliteModel1.Administrator">
+        <MappingFragment StoreEntitySet="Administrator">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="Isadmin" ColumnName="Isadmin" />
+          <ScalarProperty Name="MaPhongBan" ColumnName="MaPhongBan" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BROKEN_REASON">
+      <EntityTypeMapping TypeName="PatliteModel1.BROKEN_REASON">
+        <MappingFragment StoreEntitySet="BROKEN_REASON">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+          <ScalarProperty Name="REASON" ColumnName="REASON" />
+          <ScalarProperty Name="GHI_CHU" ColumnName="GHI_CHU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_HISTORY_LOG">
+      <EntityTypeMapping TypeName="PatliteModel1.PATLITE_HISTORY_LOG">
+        <MappingFragment StoreEntitySet="PATLITE_HISTORY_LOG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="LOG_DATA" ColumnName="LOG_DATA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_INFO">
+      <EntityTypeMapping TypeName="PatliteModel1.PATLITE_INFO">
+        <MappingFragment StoreEntitySet="PATLITE_INFO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="RED_LIGHT" ColumnName="RED_LIGHT" />
+          <ScalarProperty Name="AMBER_LIGHT" ColumnName="AMBER_LIGHT" />
+          <ScalarProperty Name="GREEN_LIGHT" ColumnName="GREEN_LIGHT" />
+          <ScalarProperty Name="BREAK_LIGHT" ColumnName="BREAK_LIGHT" />
+          <ScalarProperty Name="MODE" ColumnName="MODE" />
+          <ScalarProperty Name="QUANTITY_EACH_TURN" ColumnName="QUANTITY_EACH_TURN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_PRODUCTS">
+      <EntityTypeMapping TypeName="PatliteModel1.PATLITE_PRODUCTS">
+        <MappingFragment StoreEntitySet="PATLITE_PRODUCTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_WDR_INFO">
+      <EntityTypeMapping TypeName="PatliteModel1.PATLITE_WDR_INFO">
+        <MappingFragment StoreEntitySet="PATLITE_WDR_INFO">
+          <ScalarProperty Name="WDR_MAC_ADDRESS" ColumnName="WDR_MAC_ADDRESS" />
+          <ScalarProperty Name="WDR_USERNAME" ColumnName="WDR_USERNAME" />
+          <ScalarProperty Name="WDR_STATUS" ColumnName="WDR_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_WDT_INFO">
+      <EntityTypeMapping TypeName="PatliteModel1.PATLITE_WDT_INFO">
+        <MappingFragment StoreEntitySet="PATLITE_WDT_INFO">
+          <ScalarProperty Name="WDT_MAC_ADDRESS" ColumnName="WDT_MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="MODE" ColumnName="MODE" />
+          <ScalarProperty Name="QUANTITY_EACH_TURN" ColumnName="QUANTITY_EACH_TURN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUCTION_BROKEN">
+      <EntityTypeMapping TypeName="PatliteModel1.PRODUCTION_BROKEN">
+        <MappingFragment StoreEntitySet="PRODUCTION_BROKEN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BROKEN_DATE" ColumnName="BROKEN_DATE" />
+          <ScalarProperty Name="BROKEN_QUANTITY" ColumnName="BROKEN_QUANTITY" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="TERM_ID" ColumnName="TERM_ID" />
+          <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUCTION_TARGET">
+      <EntityTypeMapping TypeName="PatliteModel1.PRODUCTION_TARGET">
+        <MappingFragment StoreEntitySet="PRODUCTION_TARGET">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TARGET_DATE" ColumnName="TARGET_DATE" />
+          <ScalarProperty Name="TARGET_QUANTITY" ColumnName="TARGET_QUANTITY" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="TERM_ID" ColumnName="TERM_ID" />
+          <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="PatliteModel1.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORK_TERM">
+      <EntityTypeMapping TypeName="PatliteModel1.WORK_TERM">
+        <MappingFragment StoreEntitySet="WORK_TERM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TERM_NAME" ColumnName="TERM_NAME" />
+          <ScalarProperty Name="TIME_START" ColumnName="TIME_START" />
+          <ScalarProperty Name="TIME_END" ColumnName="TIME_END" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_CHART" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_CHART">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_CHART_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED0" ColumnName="RED0" />
+          <ScalarProperty Name="GREEN0" ColumnName="GREEN0" />
+          <ScalarProperty Name="AMBER0" ColumnName="AMBER0" />
+          <ScalarProperty Name="OFF0" ColumnName="OFF0" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_CHART_NEW" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_CHART_NEW">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_CHART_NEW_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED0" ColumnName="RED0" />
+          <ScalarProperty Name="GREEN0" ColumnName="GREEN0" />
+          <ScalarProperty Name="AMBER0" ColumnName="AMBER0" />
+          <ScalarProperty Name="OFF0" ColumnName="OFF0" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_CHART_TODAY1" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_CHART_TODAY1">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_CHART_TODAY1_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED0" ColumnName="RED0" />
+          <ScalarProperty Name="GREEN0" ColumnName="GREEN0" />
+          <ScalarProperty Name="AMBER0" ColumnName="AMBER0" />
+          <ScalarProperty Name="OFF0" ColumnName="OFF0" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_CHART_TODAY1_NEW" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_CHART_TODAY1_NEW">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_CHART_TODAY1_NEW_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED0" ColumnName="RED0" />
+          <ScalarProperty Name="GREEN0" ColumnName="GREEN0" />
+          <ScalarProperty Name="AMBER0" ColumnName="AMBER0" />
+          <ScalarProperty Name="OFF0" ColumnName="OFF0" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_DETAIL" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_DETAIL" />
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_NEW" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_NEW">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_NEW_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED_TIME" ColumnName="RED_TIME" />
+          <ScalarProperty Name="AMBER_TIME" ColumnName="AMBER_TIME" />
+          <ScalarProperty Name="GREEN_TIME" ColumnName="GREEN_TIME" />
+          <ScalarProperty Name="OFF_TIME" ColumnName="OFF_TIME" />
+          <ScalarProperty Name="AMBER_GREEN_TIME" ColumnName="AMBER_GREEN_TIME" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="SO_LAN_RED" ColumnName="SO_LAN_RED" />
+          <ScalarProperty Name="SO_LAN_AMBER" ColumnName="SO_LAN_AMBER" />
+          <ScalarProperty Name="SO_LAN_GREEN" ColumnName="SO_LAN_GREEN" />
+          <ScalarProperty Name="SO_LAN_AMBER_GREEN" ColumnName="SO_LAN_AMBER_GREEN" />
+          <ScalarProperty Name="SO_LAN_OFF" ColumnName="SO_LAN_OFF" />
+          <ScalarProperty Name="SAN_PHAM_MUC_TIEU" ColumnName="SAN_PHAM_MUC_TIEU" />
+          <ScalarProperty Name="SAN_PHAM_LOI" ColumnName="SAN_PHAM_LOI" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_NEW2" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_NEW2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_NEW2_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED_TIME" ColumnName="RED_TIME" />
+          <ScalarProperty Name="AMBER_TIME" ColumnName="AMBER_TIME" />
+          <ScalarProperty Name="GREEN_TIME" ColumnName="GREEN_TIME" />
+          <ScalarProperty Name="OFF_TIME" ColumnName="OFF_TIME" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="SO_LAN_RED" ColumnName="SO_LAN_RED" />
+          <ScalarProperty Name="SO_LAN_AMBER" ColumnName="SO_LAN_AMBER" />
+          <ScalarProperty Name="SO_LAN_GREEN" ColumnName="SO_LAN_GREEN" />
+          <ScalarProperty Name="SO_LAN_OFF" ColumnName="SO_LAN_OFF" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_NEW3" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_NEW3">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_NEW3_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="SO_LAN_RED" ColumnName="SO_LAN_RED" />
+          <ScalarProperty Name="SO_LAN_AMBER" ColumnName="SO_LAN_AMBER" />
+          <ScalarProperty Name="SO_LAN_GREEN" ColumnName="SO_LAN_GREEN" />
+          <ScalarProperty Name="SO_LAN_OFF" ColumnName="SO_LAN_OFF" />
+          <ScalarProperty Name="RED_TIME" ColumnName="RED_TIME" />
+          <ScalarProperty Name="AMBER_TIME" ColumnName="AMBER_TIME" />
+          <ScalarProperty Name="GREEN_TIME" ColumnName="GREEN_TIME" />
+          <ScalarProperty Name="OFF_TIME" ColumnName="OFF_TIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_REALTIME" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_REALTIME">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_REALTIME_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="TONG_SAN_PHAM" ColumnName="TONG_SAN_PHAM" />
+          <ScalarProperty Name="SAN_PHAM_MUC_TIEU" ColumnName="SAN_PHAM_MUC_TIEU" />
+          <ScalarProperty Name="SAN_PHAM_LOI" ColumnName="SAN_PHAM_LOI" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_TODAY_DETAIL" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_TODAY_DETAIL" />
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_TODAY_NEW" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_TODAY_NEW">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_TODAY_NEW_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED_TIME" ColumnName="RED_TIME" />
+          <ScalarProperty Name="AMBER_TIME" ColumnName="AMBER_TIME" />
+          <ScalarProperty Name="GREEN_TIME" ColumnName="GREEN_TIME" />
+          <ScalarProperty Name="OFF_TIME" ColumnName="OFF_TIME" />
+          <ScalarProperty Name="AMBER_GREEN_TIME" ColumnName="AMBER_GREEN_TIME" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="SO_LAN_RED" ColumnName="SO_LAN_RED" />
+          <ScalarProperty Name="SO_LAN_AMBER" ColumnName="SO_LAN_AMBER" />
+          <ScalarProperty Name="SO_LAN_GREEN" ColumnName="SO_LAN_GREEN" />
+          <ScalarProperty Name="SO_LAN_AMBER_GREEN" ColumnName="SO_LAN_AMBER_GREEN" />
+          <ScalarProperty Name="SO_LAN_OFF" ColumnName="SO_LAN_OFF" />
+          <ScalarProperty Name="SAN_PHAM_MUC_TIEU" ColumnName="SAN_PHAM_MUC_TIEU" />
+          <ScalarProperty Name="SAN_PHAM_LOI" ColumnName="SAN_PHAM_LOI" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_TODAY_NEW2" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_TODAY_NEW2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_TODAY_NEW2_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED_TIME" ColumnName="RED_TIME" />
+          <ScalarProperty Name="AMBER_TIME" ColumnName="AMBER_TIME" />
+          <ScalarProperty Name="GREEN_TIME" ColumnName="GREEN_TIME" />
+          <ScalarProperty Name="OFF_TIME" ColumnName="OFF_TIME" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="SO_LAN_RED" ColumnName="SO_LAN_RED" />
+          <ScalarProperty Name="SO_LAN_AMBER" ColumnName="SO_LAN_AMBER" />
+          <ScalarProperty Name="SO_LAN_GREEN" ColumnName="SO_LAN_GREEN" />
+          <ScalarProperty Name="SO_LAN_OFF" ColumnName="SO_LAN_OFF" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_TODAY_NEW3" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_TODAY_NEW3">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_TODAY_NEW3_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="SO_LAN_RED" ColumnName="SO_LAN_RED" />
+          <ScalarProperty Name="SO_LAN_AMBER" ColumnName="SO_LAN_AMBER" />
+          <ScalarProperty Name="SO_LAN_GREEN" ColumnName="SO_LAN_GREEN" />
+          <ScalarProperty Name="SO_LAN_OFF" ColumnName="SO_LAN_OFF" />
+          <ScalarProperty Name="RED_TIME" ColumnName="RED_TIME" />
+          <ScalarProperty Name="AMBER_TIME" ColumnName="AMBER_TIME" />
+          <ScalarProperty Name="GREEN_TIME" ColumnName="GREEN_TIME" />
+          <ScalarProperty Name="OFF_TIME" ColumnName="OFF_TIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="LIST_PATLITE_INFO_TODAY_REALTIME" FunctionName="PatliteModel1.Store.LIST_PATLITE_INFO_TODAY_REALTIME">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.LIST_PATLITE_INFO_TODAY_REALTIME_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="RED_LIGHT_CURRENT" ColumnName="RED_LIGHT_CURRENT" />
+          <ScalarProperty Name="GREEN_LIGHT_CURRENT" ColumnName="GREEN_LIGHT_CURRENT" />
+          <ScalarProperty Name="AMBER_LIGHT_CURRENT" ColumnName="AMBER_LIGHT_CURRENT" />
+          <ScalarProperty Name="TONG_SAN_PHAM" ColumnName="TONG_SAN_PHAM" />
+          <ScalarProperty Name="SAN_PHAM_MUC_TIEU" ColumnName="SAN_PHAM_MUC_TIEU" />
+          <ScalarProperty Name="SAN_PHAM_LOI" ColumnName="SAN_PHAM_LOI" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PATLITE_QUANTITIES_NEW" FunctionName="PatliteModel1.Store.PATLITE_QUANTITIES_NEW">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.PATLITE_QUANTITIES_NEW_Result">
+          <ScalarProperty Name="CHI_TIET" ColumnName="CHI_TIET" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="TONG_SAN_PHAM" ColumnName="TONG_SAN_PHAM" />
+          <ScalarProperty Name="SAN_PHAM_MUC_TIEU" ColumnName="SAN_PHAM_MUC_TIEU" />
+          <ScalarProperty Name="SAN_PHAM_LOI" ColumnName="SAN_PHAM_LOI" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PATLITE_QUANTITIES_NEW2" FunctionName="PatliteModel1.Store.PATLITE_QUANTITIES_NEW2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.PATLITE_QUANTITIES_NEW2_Result">
+          <ScalarProperty Name="CHI_TIET" ColumnName="CHI_TIET" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="TONG_SAN_PHAM" ColumnName="TONG_SAN_PHAM" />
+          <ScalarProperty Name="SAN_PHAM_MUC_TIEU" ColumnName="SAN_PHAM_MUC_TIEU" />
+          <ScalarProperty Name="SAN_PHAM_LOI" ColumnName="SAN_PHAM_LOI" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PATLITE_TIMELINE_CHART" FunctionName="PatliteModel1.Store.PATLITE_TIMELINE_CHART">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.PATLITE_TIMELINE_CHART_Result">
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="DEN" ColumnName="DEN" />
+          <ScalarProperty Name="MAX_DATE_TIME" ColumnName="MAX_DATE_TIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PATLITE_TIMELINE_CHART_START" FunctionName="PatliteModel1.Store.PATLITE_TIMELINE_CHART_START">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.PATLITE_TIMELINE_CHART_START_Result">
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="DEN" ColumnName="DEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PATLITE_TIMELINE_CHART_TODAY" FunctionName="PatliteModel1.Store.PATLITE_TIMELINE_CHART_TODAY">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.PATLITE_TIMELINE_CHART_TODAY_Result">
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="DEN" ColumnName="DEN" />
+          <ScalarProperty Name="MAX_DATE_TIME" ColumnName="MAX_DATE_TIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PATLITE_TIMELINE_CHART_TODAY_START" FunctionName="PatliteModel1.Store.PATLITE_TIMELINE_CHART_TODAY_START">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.PATLITE_TIMELINE_CHART_TODAY_START_Result">
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="DEN" ColumnName="DEN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Prod_DanhSachBroken" FunctionName="PatliteModel1.Store.Prod_DanhSachBroken">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.Prod_DanhSachBroken_Result">
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+          <ScalarProperty Name="BROKEN_DATE" ColumnName="BROKEN_DATE" />
+          <ScalarProperty Name="BROKEN_QUANTITY" ColumnName="BROKEN_QUANTITY" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="TERM_ID" ColumnName="TERM_ID" />
+          <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="TERM_NAME" ColumnName="TERM_NAME" />
+          <ScalarProperty Name="TIME_START" ColumnName="TIME_START" />
+          <ScalarProperty Name="TIME_END" ColumnName="TIME_END" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Prod_DanhSachBroken_DemTongSo" FunctionName="PatliteModel1.Store.Prod_DanhSachBroken_DemTongSo" />
+    <FunctionImportMapping FunctionImportName="Prod_DanhSachDenPatlite" FunctionName="PatliteModel1.Store.Prod_DanhSachDenPatlite">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.Prod_DanhSachDenPatlite_Result">
+          <ScalarProperty Name="WDT_MAC_ADDRESS" ColumnName="WDT_MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="MODE" ColumnName="MODE" />
+          <ScalarProperty Name="QUANTITY_EACH_TURN" ColumnName="QUANTITY_EACH_TURN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Prod_DanhSachDenPatlite_DemTongSo" FunctionName="PatliteModel1.Store.Prod_DanhSachDenPatlite_DemTongSo" />
+    <FunctionImportMapping FunctionImportName="Prod_DanhSachTarget" FunctionName="PatliteModel1.Store.Prod_DanhSachTarget">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PatliteModel1.Prod_DanhSachTarget_Result">
+          <ScalarProperty Name="TARGET_ID" ColumnName="TARGET_ID" />
+          <ScalarProperty Name="TARGET_DATE" ColumnName="TARGET_DATE" />
+          <ScalarProperty Name="TARGET_QUANTITY" ColumnName="TARGET_QUANTITY" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="TERM_ID" ColumnName="TERM_ID" />
+          <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="TERM_NAME" ColumnName="TERM_NAME" />
+          <ScalarProperty Name="TIME_START" ColumnName="TIME_START" />
+          <ScalarProperty Name="TIME_END" ColumnName="TIME_END" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Prod_DanhSachTarget_DemTongSo" FunctionName="PatliteModel1.Store.Prod_DanhSachTarget_DemTongSo" />
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="PatliteModel1.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="PatliteModel1.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="PatliteModel1.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="PatliteModel1.Store.sp_helpdiagramdefinition" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="PatliteModel1.Store.sp_helpdiagrams" />
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="PatliteModel1.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="PatliteModel1.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

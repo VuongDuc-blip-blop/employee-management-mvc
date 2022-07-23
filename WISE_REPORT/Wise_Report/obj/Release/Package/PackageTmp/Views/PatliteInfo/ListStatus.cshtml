@@ -1,0 +1,351 @@
+﻿<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<script src="~/Content/js/Wise_ReportCtrl.js?time=@DateTime.Now"></script>
+<link href="~/Content/css/toastr.css?time=@DateTime.Now" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<style>
+    .progress {
+        background-color: black !important;
+    }
+
+    .green {
+        background-color: rgb(0, 193, 9);
+        color: white;
+    }
+
+    .red {
+        background-color: red;
+        color: white;
+    }
+
+    .yellow {
+        background-color: yellow;
+        color: black;
+    }
+
+    .yellow-orange {
+        background-color: #F9A200;
+    }
+
+    .BLUE {
+        background-color: blue;
+        color: white;
+    }
+
+    .ORANGE {
+        background-color: orange;
+        color: white;
+    }
+
+    .OFF {
+        background-color: grey;
+        color: white;
+    }
+
+    td {
+        border-top: 10px solid black !important;
+        padding: 0px !important;
+    }
+
+    .ten {
+        width: 16%;
+        display: inline-block;
+    }
+
+    .main_font {
+        font-size: 22px;
+    }
+
+    .sub_font {
+        font-size: 14px;
+    }
+
+    @@media screen and (max-width: 1600px) {
+        .main_font {
+            font-size: 18px;
+        }
+
+        .sub_font {
+            font-size: 12px;
+        }
+    }
+
+    @@media screen and (max-width: 1366px) {
+        .main_font {
+            font-size: 14px;
+        }
+
+        .sub_font {
+            font-size: 11px;
+        }
+    }
+
+    @@media screen and (max-width: 1280px) {
+        .main_font {
+            font-size: 14px;
+        }
+
+        .sub_font {
+            font-size: 10px;
+        }
+    }
+
+    @@media screen and (max-width: 1024px) {
+        .main_font {
+            font-size: 11px;
+        }
+
+        .sub_font {
+            font-size: 8px;
+        }
+    }
+</style>
+<style>
+    .machine-name__text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 3.5vmin;
+        text-align: center;
+        white-space: nowrap;
+        height: 11%;
+    }
+
+    .info-machine__card-panel {
+        background: rgba(0,0,0, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        height: 89%;
+    }
+
+    .current-state__panel {
+        display: flex;
+        align-items: center;
+        font-size: 2.4vmin;
+        font-weight: bold;
+        height: 10%;
+        padding: 0px 10px 0px 10px;
+    }
+
+    .uptime-progress__panel {
+        padding-top: 5%;
+        height: 32%;
+    }
+
+    .information-time__panel {
+        display: flex;
+        font-size: 2.2vmin;
+        width: 100%;
+        padding: 0px 10px 0px 10px;
+        line-height: 3.4vmin;
+        height: 9%;
+        white-space: nowrap;
+    }
+
+    .current-state-time__text {
+        flex: 1;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .uptime-percentage__panel {
+        display: flex;
+        justify-content: center;
+        height: 50%;
+    }
+
+    .Availability__text {
+        text-align: center;
+        font-size: 2vmin;
+        color: rgba(255, 255, 255, 0.3);
+        height: 28%;
+    }
+
+    .uptime-progress-bar__panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 5px;
+    }
+
+    .uptime-progress__bar {
+        width: 50%;
+        background: grey;
+        height: 100%;
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    .uptime-progress__width {
+        background: rgba(1, 150, 240, 0.8);
+        color: black;
+        height: 100%;
+    }
+
+    .information__text {
+        text-transform: capitalize;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .information-time__text {
+        flex: 1;
+        text-align: right;
+        color: #ffffff;
+    }
+
+    .uptime-percentage-number__text {
+        font-size: 5.5vmin;
+        line-height: 5.5vmin;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .uptime-percentage__text {
+        font-size: 2vmin;
+        line-height: 2vmin;
+        color: rgba(255, 255, 255, 0.4);
+        padding: 3% 0px 0px 1%;
+    }
+
+    .unit-info__text {
+        height: 100%;
+        font-size: 2.2vmin;
+        color: rgba(255, 255, 255, 0.3);
+    }
+</style>
+<style>
+    .progress .progress-bar {
+        transition: unset;
+    }
+</style>
+<div ng-app="myApp" ng-controller="Wise_ReportCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px">
+                    <h3 style="margin:0;line-height:70px;text-transform:uppercase">LIST STATUS</h3>
+                </header>
+                <div class="main-header" style="display:inline-block">
+
+                    Logo
+                    <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                        <span class="logo-mini" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                        </span>
+                        <span class="logo-lg" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                        </span>
+                    </a>
+                </div>
+
+                <div class="date-time" style="line-height:70px">
+                    <span id="dotter" style="margin-right:5px;top:5px;position:relative"><i class="fa fa-circle" style="color:red;font-size:25px"></i></span>
+                    <span id="date"></span> &nbsp;
+                    <span id='time'></span>
+                    <script>
+                        window.onload = setInterval(clock, 1000);
+                        function clock() {
+                            var d = new Date();
+
+                            var date = d.getDate();
+
+                            var month = d.getMonth();
+                            var montharr = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            month = montharr[month];
+
+                            var year = d.getFullYear();
+
+                            var day = d.getDay();
+                            var dayarr = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+                            day = dayarr[day];
+
+                            var hour = d.getHours();
+                            var min = d.getMinutes();
+                            var sec = d.getSeconds()
+
+                            hour = (hour < 10) ? "0" + hour : hour;
+                            min = (min < 10) ? "0" + min : min;
+                            sec = (sec < 10) ? "0" + sec : sec;
+                            document.getElementById("date").innerHTML = day + " " + date + " " + month + " " + year;
+                            document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
+                        }
+                        $(document).ready(function () {
+                            var dotterFlicker = document.getElementById('dotter');
+                            setInterval(function () {
+                                dotterFlicker.style.display = (dotterFlicker.style.display == 'none' ? '' : 'none');
+                            }, 1000);
+
+                        });
+                    </script>
+                </div>
+                <div class="back-homepage" style="margin:0 15px;line-height:70px">
+                    <a href="/Home/HomeLayout"><i class="fa fa-th-list" style="color:#fff;font-size:22px;top:4px;position:relative"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <table class="table" style="color:white">
+        <thead style="background-color:#0b2f4b;font-size:20px">
+            <tr>
+                <th class="text-center" style="width:10%;border-bottom:4px solid black">M/C Name</th>
+                <th class="text-center" style="width:10%;border-bottom:4px solid black">RUN</th>
+                <th class="text-center" style="width:10%;border-bottom:4px solid black">WAIT</th>
+                <th class="text-center" style="width:10%;border-bottom:4px solid black">ERROR</th>
+                <th class="text-center" style="width:10%;border-bottom:4px solid black">OFF</th>
+                <th class="text-center" style="border-bottom:4px solid black">TIME(%)</th>
+                <th style="border-bottom:4px solid black"></th>
+                <th class="text-center" style="width:10%;border-bottom:4px solid black">UPTIME(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in data track by $index" style="background-color:#0b2f4b">
+                <td class="text-center" ng-class="{'yellow' : item.CURRENT_STATE == 30, 'green' : item.CURRENT_STATE == 10, 'red' : item.CURRENT_STATE == 20, 'OFF' : item.CURRENT_STATE == 0}" style="vertical-align:middle">
+                    {{item.WDT_USERNAME}}
+                </td>
+                <td class="text-center" style="vertical-align:middle">
+                    <span>{{item.COUNT_SHIFT_GREEN}}</span>
+                </td>
+                <td class="text-center" style="vertical-align:middle">
+                    <span>{{item.COUNT_SHIFT_YELLOW}}</span>
+                </td>
+                <td class="text-center" style="vertical-align:middle">
+                    <span>{{item.COUNT_SHIFT_RED}}</span>
+                </td>
+                <td class="text-center" style="vertical-align:middle">
+                    <span>{{item.COUNT_SHIFT_OFF}}</span>
+                </td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" title="{{item.TIME_SHIFT_GREEN | secondtotime}}" style="width:{{item.PERCENT_GREEN}}%;background-color:rgb(0, 193, 9)">
+
+                        </div>
+                        <div class="progress-bar" role="progressbar" title="{{item.TIME_SHIFT_YELLOW | secondtotime}}" style="width:{{item.PERCENT_YELLOW}}%;background-color:yellow">
+
+                        </div>
+                        <div class="progress-bar" role="progressbar" title="{{item.TIME_SHIFT_RED | secondtotime}}" style="width:{{item.PERCENT_RED}}%;background-color:red">
+
+                        </div>
+                        <div class="progress-bar" role="progressbar" title="{{item.TIME_SHIFT_OFF | secondtotime}}" style="width:{{item.PERCENT_OFF}}%;background-color:grey">
+
+                        </div>
+                    </div>
+                </td>
+                <td></td>
+                <td style="position:relative">
+                    <div class="progress" style="background-color:black;position:relative">
+                        <div class="progress-bar" role="progressbar" ng-class="{'red' : item.uptime < item.PERCEN_TARGET, 'green' : item.uptime >= item.PERCENT_TARGET}"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{item.uptime | currency : '' : 2}}%">
+                        </div>
+                    </div>
+                    <span style="color:white;position:absolute;top:25%"> {{item.uptime | currency:'':2}} %</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

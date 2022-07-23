@@ -1,0 +1,213 @@
+﻿<script src="~/Content/js/DailyChartCtrl.js?time=@DateTime.Now"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<div ng-app="myApp" ng-controller="DailyChartCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px">
+                    <h3 style="margin:0;line-height:70px;text-transform:uppercase">DAILY CHART</h3>
+                </header>
+                <div class="main-header" style="display:inline-block">
+                    <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                        <span class="logo-mini" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                        </span>
+                        <span class="logo-lg" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                        </span>
+                    </a>
+                </div>
+               
+                <div class="home-page-right" style="display:flex;flex:1;justify-content:flex-end;position:relative">
+                    <div class="col-md-12 text-center no-padding" style="display: flex;justify-content: flex-end;align-items:center;margin-right:15px">
+                        <button id="day_select7" class="btn-fix btn-dayselect" data-toggle="modal" data-target="#SelectDay">...</button>
+                        <button ng-repeat="item in ListDays" ng-click="SelectNgay(item)" class="btn-fix btn-dayselect" ng-class="item.day == ngay ? 'day-selected':''">{{item.dayname}}</button>
+                    </div>
+
+                    
+
+                    <div class="back-homepage" style="margin-right:15px;line-height:70px;display:flex;align-items:center">
+                        <div style="position:relative;z-index:111">
+                            <i class="fas fa-sync-alt" ng-click="reloadcolumn()" style="font-size:30px;float:right;color:white;margin-right:15px;cursor:pointer"></i>
+                        </div>
+                        <div style="position:relative;z-index:111">
+                            <a href="/SmartOKRsInfo/HomeChart"><i class="fa fa-arrow-left" style="font-size:30px;float:right;color:white;cursor:pointer"></i></a>
+                        </div>
+                        <a href="/Home/HomeLayout" class="btn button1" style="display:inline-block;position:relative;z-index:111"><i class="fa fa-th-list" style="color:#fff;font-size:22px;position:relative;cursor:pointer"></i></a>
+                        <div class="section-tab">
+                            <div class="col-md-12" style="margin-top:70px;">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/DailyChart">
+                                                <div style="background-image: url('../../Content/images/ICON_daily.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/WeeklyChart">
+                                                <div style="background-image: url('../../Content/images/ICON_weekly_chart.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/MonthlyChart">
+                                                <div style="background-image: url('../../Content/images/ICON_monthly_chart.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:20px">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/Chart">
+                                                <div style="background-image: url('../../Content/images/ICON_Quantity.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 no-padding" style="background-color:black;margin-top:15px;padding:5px !important">
+
+        <div id="ShowColumn">
+            <div class="col-md-6" ng-repeat="item in DanhSachMay" style="margin-top:10px">
+                <div id="chart{{item.MCID}}" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="SelectDay" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-sm" style="display:flex;align-items:center;margin:0 auto;height:100%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="display:inline">SELECT DAY</h3>
+                    <a style="float:right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close" style="font-size:20px;color:black"></i> </a>
+                </div>
+                <div class="modal-body">
+                    <input type="text" datepicker ng-model="ngay" ng-change="ChangeNgay()" ng-model-options="{debounce:700}" id="ngay" placeholder="Ngày" class="date form-control datetimepickerKT">
+                    <script>
+                        $("#ngay").datepicker({ dateFormat: 'dd/mm/yy' });
+                    </script>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /*g.highcharts-series.highcharts-series-0.highcharts-column-series.highcharts-tracker,g.highcharts-series.highcharts-series-1.highcharts-column-series.highcharts-tracker,g.highcharts-series.highcharts-series-2.highcharts-column-series.highcharts-tracker, g.highcharts-series.highcharts-series-3.highcharts-column-series.highcharts-tracker{
+          transition-duration: 2s;
+    }*/
+
+    .wrimagecard {
+        width: auto;
+    }
+
+    .wrimagecard-topimage_header {
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .wrimagecard .fa {
+        position: relative;
+        font-size: 20px;
+    }
+
+    .wrimagecard .fas {
+        position: relative;
+        font-size: 20px;
+    }
+
+    .wrimagecard .far {
+        position: relative;
+        font-size: 20px;
+    }
+
+    .section-tab {
+        display: none;
+    }
+
+    .back-homepage:hover .section-tab {
+        display: grid;
+        /* position the divs under the navigation links */
+        position: absolute;
+        top: 0;
+        right: 15px;
+        z-index: 99;
+        background: rgba(60, 60, 60, .9);
+    }
+
+    .wrimagecard-topimage_header {
+        height: 50px;
+        padding: 0;
+    }
+
+    .wrimagecard-topimage_title p {
+        line-height: 1.3;
+    }
+
+    .wrimagecard-topimage_title a {
+        color: #fff;
+    }
+</style>
+<style>
+    .btn-fix {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    /*font-weight: 700;*/
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+    margin-right:5px
+}
+
+.btn-dayselect {
+    color: black;
+    background-color: #686868;
+}
+.day-selected{
+    color:black;
+    background-color:white
+}
+</style>

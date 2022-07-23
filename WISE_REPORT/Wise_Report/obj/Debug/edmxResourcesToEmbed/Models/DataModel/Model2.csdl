@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PatliteModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Isadmin" Type="Boolean" Nullable="false" />
+    <Property Name="MaPhongBan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BROKEN_REASON">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BROKEN_ID" Type="Int32" Nullable="false" />
+    <Property Name="REASON" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GHI_CHU" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PATLITE_HISTORY_LOG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LOG_DATA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PATLITE_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="RED_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="AMBER_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="GREEN_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="BREAK_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="MODE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="QUANTITY_EACH_TURN" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PATLITE_PRODUCTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PATLITE_WDR_INFO">
+    <Key>
+      <PropertyRef Name="WDR_MAC_ADDRESS" />
+    </Key>
+    <Property Name="WDR_MAC_ADDRESS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WDR_USERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WDR_STATUS" Type="Boolean" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PATLITE_WDT_INFO">
+    <Key>
+      <PropertyRef Name="WDT_MAC_ADDRESS" />
+    </Key>
+    <Property Name="WDT_MAC_ADDRESS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WDT_USERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WDT_STATUS" Type="Boolean" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MODE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QUANTITY_EACH_TURN" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GROUP_ID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PRODUCTION_BROKEN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BROKEN_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="BROKEN_QUANTITY" Type="Decimal" Precision="28" Scale="2" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TERM_ID" Type="Int32" Nullable="false" />
+    <Property Name="INPUT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="PRODUCTION_TARGET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TARGET_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TARGET_QUANTITY" Type="Decimal" Precision="28" Scale="2" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TERM_ID" Type="Int32" Nullable="false" />
+    <Property Name="INPUT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WORK_TERM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TERM_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TIME_START" Type="Int32" Nullable="false" />
+    <Property Name="TIME_END" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="PatliteEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="Administrators" EntityType="Self.Administrator" />
+    <EntitySet Name="BROKEN_REASON" EntityType="Self.BROKEN_REASON" />
+    <EntitySet Name="PATLITE_HISTORY_LOG" EntityType="Self.PATLITE_HISTORY_LOG" />
+    <EntitySet Name="PATLITE_INFO" EntityType="Self.PATLITE_INFO" />
+    <EntitySet Name="PATLITE_PRODUCTS" EntityType="Self.PATLITE_PRODUCTS" />
+    <EntitySet Name="PATLITE_WDR_INFO" EntityType="Self.PATLITE_WDR_INFO" />
+    <EntitySet Name="PATLITE_WDT_INFO" EntityType="Self.PATLITE_WDT_INFO" />
+    <EntitySet Name="PRODUCTION_BROKEN" EntityType="Self.PRODUCTION_BROKEN" />
+    <EntitySet Name="PRODUCTION_TARGET" EntityType="Self.PRODUCTION_TARGET" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="WORK_TERM" EntityType="Self.WORK_TERM" />
+    <FunctionImport Name="LIST_PATLITE_INFO_CHART" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_CHART_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="hour" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_CHART_NEW" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_CHART_NEW_Result)">
+      <Parameter Name="date1" Mode="In" Type="DateTime" />
+      <Parameter Name="hour" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_CHART_TODAY1" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_CHART_TODAY1_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="hour" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_CHART_TODAY1_NEW" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_CHART_TODAY1_NEW_Result)">
+      <Parameter Name="date1" Mode="In" Type="DateTime" />
+      <Parameter Name="hour" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_DETAIL" ReturnType="Collection(Int32)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+      <Parameter Name="mac_address" Mode="In" Type="String" />
+      <Parameter Name="color" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_NEW" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_NEW_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_NEW2" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_NEW2_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_NEW3" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_NEW3_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_REALTIME" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_REALTIME_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_TODAY_DETAIL" ReturnType="Collection(Int32)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+      <Parameter Name="mac_address" Mode="In" Type="String" />
+      <Parameter Name="color" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_TODAY_NEW" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_TODAY_NEW_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_TODAY_NEW2" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_TODAY_NEW2_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_TODAY_NEW3" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_TODAY_NEW3_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="LIST_PATLITE_INFO_TODAY_REALTIME" ReturnType="Collection(PatliteModel1.LIST_PATLITE_INFO_TODAY_REALTIME_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PATLITE_QUANTITIES_NEW" ReturnType="Collection(PatliteModel1.PATLITE_QUANTITIES_NEW_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PATLITE_QUANTITIES_NEW2" ReturnType="Collection(PatliteModel1.PATLITE_QUANTITIES_NEW2_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PATLITE_TIMELINE_CHART" ReturnType="Collection(PatliteModel1.PATLITE_TIMELINE_CHART_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PATLITE_TIMELINE_CHART_START" ReturnType="Collection(PatliteModel1.PATLITE_TIMELINE_CHART_START_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PATLITE_TIMELINE_CHART_TODAY" ReturnType="Collection(PatliteModel1.PATLITE_TIMELINE_CHART_TODAY_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PATLITE_TIMELINE_CHART_TODAY_START" ReturnType="Collection(PatliteModel1.PATLITE_TIMELINE_CHART_TODAY_START_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+      <Parameter Name="term" Mode="In" Type="Int32" />
+      <Parameter Name="mode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_DanhSachBroken" ReturnType="Collection(PatliteModel1.Prod_DanhSachBroken_Result)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+      <Parameter Name="thang" Mode="In" Type="Int32" />
+      <Parameter Name="nam" Mode="In" Type="Int32" />
+      <Parameter Name="sotrang" Mode="In" Type="Int32" />
+      <Parameter Name="tukhoa1" Mode="In" Type="String" />
+      <Parameter Name="tukhoa2" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_DanhSachBroken_DemTongSo" ReturnType="Collection(Int32)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+      <Parameter Name="thang" Mode="In" Type="Int32" />
+      <Parameter Name="nam" Mode="In" Type="Int32" />
+      <Parameter Name="tukhoa1" Mode="In" Type="String" />
+      <Parameter Name="tukhoa2" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_DanhSachDenPatlite" ReturnType="Collection(PatliteModel1.Prod_DanhSachDenPatlite_Result)">
+      <Parameter Name="sotrang" Mode="In" Type="Int32" />
+      <Parameter Name="tukhoa1" Mode="In" Type="String" />
+      <Parameter Name="tukhoa2" Mode="In" Type="String" />
+      <Parameter Name="tukhoa3" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_DanhSachDenPatlite_DemTongSo" ReturnType="Collection(Int32)">
+      <Parameter Name="tukhoa1" Mode="In" Type="String" />
+      <Parameter Name="tukhoa2" Mode="In" Type="String" />
+      <Parameter Name="tukhoa3" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_DanhSachTarget" ReturnType="Collection(PatliteModel1.Prod_DanhSachTarget_Result)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+      <Parameter Name="thang" Mode="In" Type="Int32" />
+      <Parameter Name="nam" Mode="In" Type="Int32" />
+      <Parameter Name="sotrang" Mode="In" Type="Int32" />
+      <Parameter Name="tukhoa1" Mode="In" Type="String" />
+      <Parameter Name="tukhoa2" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_DanhSachTarget_DemTongSo" ReturnType="Collection(Int32)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+      <Parameter Name="thang" Mode="In" Type="Int32" />
+      <Parameter Name="nam" Mode="In" Type="Int32" />
+      <Parameter Name="tukhoa1" Mode="In" Type="String" />
+      <Parameter Name="tukhoa2" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="LIST_PATLITE_INFO_CHART_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED0" Nullable="true" />
+    <Property Type="Int32" Name="GREEN0" Nullable="true" />
+    <Property Type="Int32" Name="AMBER0" Nullable="true" />
+    <Property Type="Int32" Name="OFF0" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_CHART_NEW_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED0" Nullable="true" />
+    <Property Type="Int32" Name="GREEN0" Nullable="true" />
+    <Property Type="Int32" Name="AMBER0" Nullable="true" />
+    <Property Type="Int32" Name="OFF0" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_CHART_TODAY1_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED0" Nullable="true" />
+    <Property Type="Int32" Name="GREEN0" Nullable="true" />
+    <Property Type="Int32" Name="AMBER0" Nullable="true" />
+    <Property Type="Int32" Name="OFF0" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_CHART_TODAY1_NEW_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED0" Nullable="true" />
+    <Property Type="Int32" Name="GREEN0" Nullable="true" />
+    <Property Type="Int32" Name="AMBER0" Nullable="true" />
+    <Property Type="Int32" Name="OFF0" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_NEW_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_TIME" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OFF_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_RED" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_OFF" Nullable="true" />
+    <Property Type="Decimal" Name="SAN_PHAM_MUC_TIEU" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Decimal" Name="SAN_PHAM_LOI" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_NEW2_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_TIME" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OFF_TIME" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_RED" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_OFF" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_NEW3_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_RED" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_OFF" Nullable="true" />
+    <Property Type="Int32" Name="RED_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_TIME" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OFF_TIME" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_REALTIME_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="GROUP_ID" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="TONG_SAN_PHAM" Nullable="true" />
+    <Property Type="Decimal" Name="SAN_PHAM_MUC_TIEU" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Decimal" Name="SAN_PHAM_LOI" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_TODAY_NEW_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_TIME" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OFF_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_RED" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_OFF" Nullable="true" />
+    <Property Type="Decimal" Name="SAN_PHAM_MUC_TIEU" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Decimal" Name="SAN_PHAM_LOI" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_TODAY_NEW2_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_TIME" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OFF_TIME" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_RED" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_OFF" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_TODAY_NEW3_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_RED" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_AMBER" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="SO_LAN_OFF" Nullable="true" />
+    <Property Type="Int32" Name="RED_TIME" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_TIME" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OFF_TIME" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="LIST_PATLITE_INFO_TODAY_REALTIME_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="GROUP_ID" Nullable="true" />
+    <Property Type="Int32" Name="RED_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="GREEN_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="AMBER_LIGHT_CURRENT" Nullable="true" />
+    <Property Type="Int32" Name="TONG_SAN_PHAM" Nullable="true" />
+    <Property Type="Decimal" Name="SAN_PHAM_MUC_TIEU" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Decimal" Name="SAN_PHAM_LOI" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PATLITE_QUANTITIES_NEW_Result">
+    <Property Type="String" Name="CHI_TIET" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Int32" Name="TONG_SAN_PHAM" Nullable="true" />
+    <Property Type="Decimal" Name="SAN_PHAM_MUC_TIEU" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Decimal" Name="SAN_PHAM_LOI" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PATLITE_QUANTITIES_NEW2_Result">
+    <Property Type="String" Name="CHI_TIET" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Int32" Name="TONG_SAN_PHAM" Nullable="true" />
+    <Property Type="Decimal" Name="SAN_PHAM_MUC_TIEU" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Decimal" Name="SAN_PHAM_LOI" Nullable="true" Precision="28" Scale="2" />
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PATLITE_TIMELINE_CHART_Result">
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="ID" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="DATE_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="DEN" Nullable="true" MaxLength="15" />
+    <Property Type="DateTime" Name="MAX_DATE_TIME" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="PATLITE_TIMELINE_CHART_START_Result">
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="DateTime" Name="START_TIME" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="END_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="DEN" Nullable="true" MaxLength="15" />
+  </ComplexType>
+  <ComplexType Name="PATLITE_TIMELINE_CHART_TODAY_Result">
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Int32" Name="ID" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="DATE_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="DEN" Nullable="true" MaxLength="15" />
+    <Property Type="DateTime" Name="MAX_DATE_TIME" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="PATLITE_TIMELINE_CHART_TODAY_START_Result">
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="DateTime" Name="START_TIME" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="END_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="DEN" Nullable="true" MaxLength="15" />
+  </ComplexType>
+  <ComplexType Name="Prod_DanhSachBroken_Result">
+    <Property Type="Int32" Name="BROKEN_ID" Nullable="false" />
+    <Property Type="DateTime" Name="BROKEN_DATE" Nullable="false" />
+    <Property Type="Decimal" Name="BROKEN_QUANTITY" Nullable="false" Precision="28" Scale="2" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="TERM_ID" Nullable="false" />
+    <Property Type="DateTime" Name="INPUT_DATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="TERM_NAME" Nullable="true" MaxLength="500" />
+    <Property Type="Int32" Name="TIME_START" Nullable="true" />
+    <Property Type="Int32" Name="TIME_END" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Prod_DanhSachDenPatlite_Result">
+    <Property Type="String" Name="WDT_MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="Boolean" Name="WDT_STATUS" Nullable="false" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="MODE" Nullable="true" />
+    <Property Type="Int32" Name="QUANTITY_EACH_TURN" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Prod_DanhSachTarget_Result">
+    <Property Type="Int32" Name="TARGET_ID" Nullable="false" />
+    <Property Type="DateTime" Name="TARGET_DATE" Nullable="false" />
+    <Property Type="Decimal" Name="TARGET_QUANTITY" Nullable="false" Precision="28" Scale="2" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="TERM_ID" Nullable="false" />
+    <Property Type="DateTime" Name="INPUT_DATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="TERM_NAME" Nullable="true" MaxLength="500" />
+    <Property Type="Int32" Name="TIME_START" Nullable="true" />
+    <Property Type="Int32" Name="TIME_END" Nullable="true" />
+  </ComplexType>
+</Schema>

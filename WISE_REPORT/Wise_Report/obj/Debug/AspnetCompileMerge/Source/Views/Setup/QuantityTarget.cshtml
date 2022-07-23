@@ -1,0 +1,180 @@
+﻿<script src="~/Content/js/SetupQuantityTargetCtrl.js?time=@DateTime.Now"></script>
+<link href="~/Content/css/kho.css" rel="stylesheet" />
+<style>
+    .btn{
+        background-color:white;
+        color:deepskyblue;
+        border:1px solid deepskyblue
+    }
+    .numberCircle {
+        behavior: url(PIE.htc);
+        min-width: 30px;
+        padding: 2px 11px !important;
+        background: #fff;
+        border: 2px solid deepskyblue;
+        color: black;
+        text-align: center;
+        font: 15px Arial, sans-serif;
+        display: inline-block;
+    }
+</style>
+<div ng-app="myApp" ng-controller="SetupQuantityTargetCtrl">
+    <h1 class="text-center" style="color:deepskyblue">MỤC TIÊU SỐ LƯỢNG SẢN PHẨM</h1>
+    <div class="col-md-1">
+        <button class="btn" data-toggle="modal" data-target="#NewTarget">Thêm mục tiêu</button>
+    </div>
+
+    <div class="col-md-12 no-padding" style="margin-top:20px">
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="pull-left marginR15 marginT5">Từ ngày </div>
+                <div class="pull-left width100 relative">
+                    <input type="text" datepicker ng-model="tungay" ng-change="TimKiem()" ng-model-options="{debounce:700}" id="tungay" placeholder="Từ ngày..." class="form-control datetimepickerKT">
+                </div>
+            </div>
+            <script>
+                $("#tungay").datetimepicker({ format: 'DD/MM/YYYY' });
+            </script>
+            <div  class="col-md-6">
+                <div class="pull-left marginR15 marginT5">Đến ngày </div>
+                <div class="pull-left width100 relative">
+                    <input type="text" datepicker ng-model="denngay" ng-change="TimKiem()" ng-model-options="{debounce:700}" id="denngay" placeholder="Đến ngày..." class="form-control datetimepickerKT">
+                </div>
+            </div>
+            <script>
+                $("#denngay").datetimepicker({ format: 'DD/MM/YYYY' });
+            </script>
+        </div>
+        <div class="col-md-6" style="padding-right: 14px !important;margin-bottom:10px;float:right">
+            <div class="col-md-4" style="padding-right: 14px !important;margin-bottom:10px;float:right">
+                <div class="numberCircle" title="Năm 2019" style="cursor: pointer" ng-click="DoiNam(2019); doithang = true" ng-class="nam == '2019' ? 'deepsky' : ''">2019</div>
+                <div class="numberCircle" title="Năm 2018" style="cursor: pointer" ng-click="DoiNam(2018); doithang = true" ng-class="nam == '2018' ? 'deepsky' : ''">2018</div>
+                <div class="numberCircle" title="Năm 2017" style="cursor: pointer" ng-click="DoiNam(2017); doithang = true" ng-class="nam == '2017' ? 'deepsky' : ''">2017</div>
+            </div>
+
+            <div class="col-md-8" style="padding-right: 14px !important;float:right">
+                <div class="numberCircle" title="Tháng 1" style="cursor: pointer" ng-click="DoiThang('1'); doithang = true" ng-class="thang == '1' ? 'deepsky' : ''">1</div>
+                <div class="numberCircle" title="Tháng 2" style="cursor: pointer" ng-click="DoiThang('2'); doithang = true" ng-class="thang == '2' ? 'deepsky' : ''">2</div>
+                <div class="numberCircle" title="Tháng 3" style="cursor: pointer" ng-click="DoiThang('3'); doithang = true" ng-class="thang == '3' ? 'deepsky' : ''">3</div>
+                <div class="numberCircle" title="Tháng 4" style="cursor: pointer" ng-click="DoiThang('4'); doithang = true" ng-class="thang == '4' ? 'deepsky' : ''">4</div>
+                <div class="numberCircle" title="Tháng 5" style="cursor: pointer" ng-click="DoiThang('5'); doithang = true" ng-class="thang == '5' ? 'deepsky' : ''">5</div>
+                <div class="numberCircle" title="Tháng 6" style="cursor: pointer" ng-click="DoiThang('6'); doithang = true" ng-class="thang == '6' ? 'deepsky' : ''">6</div>
+                <div class="numberCircle" title="Tháng 7" style="cursor: pointer" ng-click="DoiThang('7'); doithang = true" ng-class="thang == '7' ? 'deepsky' : ''">7</div>
+                <div class="numberCircle" title="Tháng 8" style="cursor: pointer" ng-click="DoiThang('8'); doithang = true" ng-class="thang == '8' ? 'deepsky' : ''">8</div>
+                <div class="numberCircle" title="Tháng 9" style="cursor: pointer" ng-click="DoiThang('9'); doithang = true" ng-class="thang == '9' ? 'deepsky' : ''">9</div>
+                <div class="numberCircle" title="Tháng 10" style="cursor: pointer" ng-click="DoiThang('10'); doithang = true" ng-class="thang == '10' ? 'deepsky' : ''">10</div>
+                <div class="numberCircle" title="Tháng 11" style="cursor: pointer" ng-click="DoiThang('11'); doithang = true" ng-class="thang == '11' ? 'deepsky' : ''">11</div>
+                <div class="numberCircle" title="Tháng 12" style="cursor: pointer" ng-click="DoiThang('12'); doithang = true" ng-class="thang == '12' ? 'deepsky' : ''">12</div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>Ngày mục tiêu</th>
+            <th>Tên máy</th>
+            <th>Ca làm việc</th>
+            <th>Mục tiêu số lượng</th>
+            <th>Ngày nhập dữ liệu</th>
+            <th>Tác vụ</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <input class="form-control" ng-model="tukhoa1" ng-change="TimKiem()" ng-model-options="{debounce:700}"/>
+            </th>
+            <th>
+                <input class="form-control" ng-model="tukhoa2" ng-change="TimKiem()" ng-model-options="{debounce:700}" />
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="item in ListTarget">
+            <td>{{item.TARGET_DATE | date:'dd/MM/yyyy'}}</td>
+            <td>{{item.DESCRIPTION}} {{item.WDT_USERNAME}}</td>
+            <td>{{item.TERM_NAME}} ({{item.TIME_START}}h - {{item.TIME_END}}h)</td>
+            <td>
+                <p ng-hide="hienthi">{{item.TARGET_QUANTITY}}</p>
+                <input class="form-control" ng-show="hienthi" ng-model="item.TARGET_QUANTITY"/>
+            </td>
+            <td>{{item.INPUT_DATE | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>
+                <button class="btn" ng-hide="hienthi" ng-click="hienthi=true">Sửa</button>
+                <button class="btn" ng-show="hienthi" ng-click="hienthi=false;EditTarget(item)">Lưu</button>
+                <button class="btn" ng-show="hienthi" ng-click="hienthi=false">Hủy</button>
+            </td>
+        </tr>
+    </table>
+
+    <div class="col-md-12 text-center">
+        <div id="phan_trang"></div>
+    </div>
+
+    <div class="modal fade" id="NewTarget" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:50%">
+            <form name="NewTarget_Valid">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="fa fa-times" style="float:right" data-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12 no-padding"  style="margin-bottom:20px">
+                            <div class="col-md-2">Ngày đặt mục tiêu</div>
+                            <div class="col-md-2">
+                                <ng-form name="valid_NewTarget_Day">
+                                    <input class="form-control datetimepickerKT" id="NewTarget_Day" name="NewTarget_Day" datepicker ng-model="NewTarget_Day" required />
+                                    <small class="label label-danger" data-ng-show="submitted && valid_NewTarget_Day.NewTarget_Day.$error.required">Không được để trống ngày đặt mục tiêu</small>
+                                </ng-form>
+                                <script>
+                                    $("#NewTarget_Day").datetimepicker({ format: 'DD/MM/YYYY' });
+                                </script>
+                            </div>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th>Tên máy</th>
+                                <th>Ca làm việc</th>
+                                <th>Số lượng</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="item in ListNewTarget">
+                                <td>
+                                    <ng-form name="valid_NewTarget_MAC_ADDRESS">
+                                        <select class="form-control" ng-model="item.MAC_ADDRESS" name="MAC_ADDRESS{{$index}}" required ng-change="KiemTraTrung(item,$index)">
+                                            <option ng-repeat="zitem in ListDen" value="{{zitem.WDT_MAC_ADDRESS}}">{{zitem.DESCRIPTION}} {{zitem.WDT_USERNAME}}</option>
+                                        </select>
+                                        <small class="label label-danger" data-ng-show="submitted && valid_NewTarget_MAC_ADDRESS.MAC_ADDRESS{{$index}}.$error.required">Không được để trống tên máy</small>
+                                    </ng-form>
+                                </td>
+                                <td>
+                                    <ng-form name="valid_NewTarget_TERM_ID">
+                                        <select class="form-control" ng-model="item.TERM_ID" name="TERM_ID$index" required ng-change="KiemTraTrung(item,$index)">
+                                            <option ng-repeat="zitem in ListTerm" value="{{zitem.ID}}">{{zitem.TERM_NAME}} ({{zitem.TIME_START}}h - {{zitem.TIME_END}}h)</option>
+                                        </select>
+                                        <small class="label label-danger" data-ng-show="submitted && valid_NewTarget_TERM_ID.TERM_ID$index.$error.required">Không được để trống ca làm việc</small>
+                                    </ng-form>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" ng-model="item.TARGET_QUANTITY"/>
+                                </td>
+                                <td>
+                                    <center><i class="fa fa-minus-circle" style="color:red;font-size:15px" ng-click="DeleteNewTargetRow($index,item)" aria-hidden="true"></i></center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" ng-click="AddNewTargetRow()">
+                                    Thêm dòng mới
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" ng-click="NewTarget('NewTarget_Valid')">Lưu</button>
+                        <button type="button" data-dismiss="modal" class="btn">Exit</button>
+                    </div>
+                </div>
+            </form>            
+        </div>
+    </div>
+</div>

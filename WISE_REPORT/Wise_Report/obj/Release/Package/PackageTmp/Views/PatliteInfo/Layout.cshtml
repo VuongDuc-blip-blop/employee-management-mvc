@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Layout";
+}
+
+<link href="~/Content/css/Layout.css??time=@DateTime.Now" rel="stylesheet" />
+<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<script src="~/Content/js/LayoutCtrl.js?time=@DateTime.Now"></script>
+<style>
+    .slide-row{
+        min-height:unset !important;
+        border:1px solid black
+    }
+    .bg-red{
+        background-color:red !important
+    }
+    .bg-green{
+        background-color:forestgreen !important
+    }
+    .bg-amber{
+        background-color:yellow !important
+    }
+    .bg-off{
+        background-color:grey !important;
+        color:white !important
+    }
+</style>
+<div ng-app="myApp" ng-controller="LayoutCtrl" class="content">
+
+    <div class="col-md-12 no-padding">
+        <!-- Begin of rows -->
+        <div class="col-md-2 no-padding" style="border:1px solid black" ng-repeat="item in ListSmartOKRs" @*ng-mouseover="(count == 0) ? SmartOKRsDetails(item) : return" ng-mouseleave="SmartOKRsDetailsOut()"*@ ng-model-options="{debounce:700}">
+            <div class="col-md-12 no-padding">
+                <img src="~/Content/images/CNC.jpg" style="width:100%"/>
+            </div>
+            <div style="height:120px">
+                <div class="col-md-6 no-padding">
+                    <p>{{item.DESCRIPTION}}</p>
+                    <p>{{item.WDT_USERNAME}}</p>
+                    <p>
+                        Target/Actual
+                    </p>
+                    <p>{{item.SAN_PHAM_MUC_TIEU}}/{{item.TONG_SAN_PHAM - item.SAN_PHAM_LOI}}</p>
+                </div>
+                <div class="col-md-1 no-padding" style="height:100%">
+                    <div class="col-md-12 no-padding" ng-class="item.RED_LIGHT_CURRENT == 1  ? 'bg-red' : 'bg-off'" style="height:30%;margin-bottom:3px">
+
+                    </div>
+                    <div class="col-md-12 no-padding" ng-class="item.AMBER_LIGHT_CURRENT == 1  ? 'bg-amber' : 'bg-off'" style="height:30%;margin-bottom:3px">
+
+                    </div>
+                    <div class="col-md-12 no-padding" ng-class="item.GREEN_LIGHT_CURRENT == 1  ? 'bg-green' : 'bg-off'" style="height:30%;margin-bottom:3px">
+
+                    </div>
+                </div>
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-3 no-padding">
+                    <div>
+                        <div class="item active">
+                            <button ng-if="item.WDT_STATUS == 1" class="Rec"></button>
+                            <div ng-style="item.RED_LIGHT_CURRENT == 1 && {'background-color':'red','color':'white'}
+                             || (item.AMBER_LIGHT_CURRENT == 1 && item.GREEN_LIGHT_CURRENT == 1 && item.GROUP_ID == 1) && {'background-color':'green','color':'white'}
+                             || (item.GREEN_LIGHT_CURRENT == 1 && item.GROUP_ID == 2) && {'background-color':'green','color':'white'}
+                             || item.AMBER_LIGHT_CURRENT == 1 && {'background-color':'yellow'}
+                             || (item.GREEN_LIGHT_CURRENT == 0 && item.AMBER_LIGHT_CURRENT == 0 && item.RED_LIGHT_CURRENT == 0) && {'background-color':'grey','color':'white'}">
+                                <div>
+                                    <span ng-if="item.WDT_STATUS == 1" class="clock">{{item.TONG_THOI_GIAN_CHAY}}</span>
+                                </div>
+                                <span ng-if="item.WDT_STATUS == 0" style="color: red" class="clock">Mất kết nối</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    <div class="col-md-12 no-padding">
+        <div class="col-md-offset-3" style="margin-top:2% !important">
+            <ul class="legend" style="color: black">
+                <li><span class="bg-green"></span>Thời gian máy chạy</li>
+                <li><span class="bg-red"></span>Thời gian lỗi</li>
+                <li><span class="bg-amber"></span>Thời gian chờ</li>
+                <li><span class="bg-off"></span>Thời gian dừng</li>
+                <li><span class="notawesome Rec"></span>Đang kết nối</li>
+            </ul>
+        </div>
+    </div>
+    @*<section class="grid-1">
+        
+        <div class="den" ng-repeat="item in ListSmartOKRs" ng-style="item.GREEN_LIGHT_CURRENT == 1 && {'background-color':'green'}
+                             || item.AMBER_LIGHT_CURRENT == 1 && {'background-color':'#FFBF00'}
+                             || item.RED_LIGHT_CURRENT == 1 && {'background-color':'red'}
+                             || (item.GREEN_LIGHT_CURRENT == 0 && item.AMBER_LIGHT_CURRENT == 0 && item.RED_LIGHT_CURRENT == 0) && {'background-color':'grey'}">
+            <div>
+                <button ng-if="item.WDT_STATUS == 1" class="Rec"></button>
+                <div class="btn-1 b text-1">
+                    <span ng-if="item.WDT_STATUS == 1" class="clock">{{item.TONG_THOI_GIAN_CHAY}}</span>
+                    <span ng-if="item.WDT_STATUS == 0" style="color: red" class="clock">Mất kết nối</span>
+                </div>
+            </div>
+               
+        </div>
+        
+    </section>*@
+</div>
+
+

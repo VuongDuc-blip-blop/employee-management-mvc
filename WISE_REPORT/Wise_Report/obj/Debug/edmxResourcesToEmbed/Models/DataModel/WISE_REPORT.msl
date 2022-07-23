@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WISE_REPORTModelStoreContainer" CdmEntityContainer="WISE_REPORTEntities">
+    <EntitySetMapping Name="REPORT_CHECK">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_CHECK">
+        <MappingFragment StoreEntitySet="REPORT_CHECK">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="USER_CHECK" ColumnName="USER_CHECK" />
+          <ScalarProperty Name="IS_CHECK" ColumnName="IS_CHECK" />
+          <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORT_COMMENT">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_COMMENT">
+        <MappingFragment StoreEntitySet="REPORT_COMMENT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="USER_COMMENT" ColumnName="USER_COMMENT" />
+          <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORT_CONTENT_2020">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_CONTENT_2020">
+        <MappingFragment StoreEntitySet="REPORT_CONTENT_2020">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="ID_DEPT" ColumnName="ID_DEPT" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="DATE_FROM" ColumnName="DATE_FROM" />
+          <ScalarProperty Name="DATE_TO" ColumnName="DATE_TO" />
+          <ScalarProperty Name="DATE_ACTION" ColumnName="DATE_ACTION" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="WEEK" ColumnName="WEEK" />
+          <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+          <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+          <ScalarProperty Name="IS_PLAN" ColumnName="IS_PLAN" />
+          <ScalarProperty Name="CONTENT_1" ColumnName="CONTENT_1" />
+          <ScalarProperty Name="CONTENT_2" ColumnName="CONTENT_2" />
+          <ScalarProperty Name="CONTENT_3" ColumnName="CONTENT_3" />
+          <ScalarProperty Name="CONTENT_4" ColumnName="CONTENT_4" />
+          <ScalarProperty Name="CONTENT_5" ColumnName="CONTENT_5" />
+          <ScalarProperty Name="CONTENT_6" ColumnName="CONTENT_6" />
+          <ScalarProperty Name="CONTENT_7" ColumnName="CONTENT_7" />
+          <ScalarProperty Name="CONTENT_8" ColumnName="CONTENT_8" />
+          <ScalarProperty Name="CONTENT_9" ColumnName="CONTENT_9" />
+          <ScalarProperty Name="CONTENT_10" ColumnName="CONTENT_10" />
+          <ScalarProperty Name="CONTENT_11" ColumnName="CONTENT_11" />
+          <ScalarProperty Name="CONTENT_12" ColumnName="CONTENT_12" />
+          <ScalarProperty Name="CONTENT_13" ColumnName="CONTENT_13" />
+          <ScalarProperty Name="CONTENT_14" ColumnName="CONTENT_14" />
+          <ScalarProperty Name="CONTENT_15" ColumnName="CONTENT_15" />
+          <ScalarProperty Name="CONTENT_16" ColumnName="CONTENT_16" />
+          <ScalarProperty Name="CONTENT_17" ColumnName="CONTENT_17" />
+          <ScalarProperty Name="CONTENT_18" ColumnName="CONTENT_18" />
+          <ScalarProperty Name="CONTENT_19" ColumnName="CONTENT_19" />
+          <ScalarProperty Name="CONTENT_20" ColumnName="CONTENT_20" />
+          <ScalarProperty Name="CONTENT_21" ColumnName="CONTENT_21" />
+          <ScalarProperty Name="CONTENT_22" ColumnName="CONTENT_22" />
+          <ScalarProperty Name="CONTENT_23" ColumnName="CONTENT_23" />
+          <ScalarProperty Name="CONTENT_24" ColumnName="CONTENT_24" />
+          <ScalarProperty Name="CONTENT_25" ColumnName="CONTENT_25" />
+          <ScalarProperty Name="CONTENT_26" ColumnName="CONTENT_26" />
+          <ScalarProperty Name="CONTENT_27" ColumnName="CONTENT_27" />
+          <ScalarProperty Name="CONTENT_28" ColumnName="CONTENT_28" />
+          <ScalarProperty Name="CONTENT_29" ColumnName="CONTENT_29" />
+          <ScalarProperty Name="CONTENT_30" ColumnName="CONTENT_30" />
+          <ScalarProperty Name="CONTENT_31" ColumnName="CONTENT_31" />
+          <ScalarProperty Name="CONTENT_32" ColumnName="CONTENT_32" />
+          <ScalarProperty Name="CONTENT_33" ColumnName="CONTENT_33" />
+          <ScalarProperty Name="CONTENT_34" ColumnName="CONTENT_34" />
+          <ScalarProperty Name="CONTENT_35" ColumnName="CONTENT_35" />
+          <ScalarProperty Name="CONTENT_36" ColumnName="CONTENT_36" />
+          <ScalarProperty Name="CONTENT_37" ColumnName="CONTENT_37" />
+          <ScalarProperty Name="CONTENT_38" ColumnName="CONTENT_38" />
+          <ScalarProperty Name="CONTENT_39" ColumnName="CONTENT_39" />
+          <ScalarProperty Name="CONTENT_40" ColumnName="CONTENT_40" />
+          <ScalarProperty Name="CONTENT_41" ColumnName="CONTENT_41" />
+          <ScalarProperty Name="CONTENT_42" ColumnName="CONTENT_42" />
+          <ScalarProperty Name="CONTENT_43" ColumnName="CONTENT_43" />
+          <ScalarProperty Name="CONTENT_44" ColumnName="CONTENT_44" />
+          <ScalarProperty Name="CONTENT_45" ColumnName="CONTENT_45" />
+          <ScalarProperty Name="CONTENT_46" ColumnName="CONTENT_46" />
+          <ScalarProperty Name="CONTENT_47" ColumnName="CONTENT_47" />
+          <ScalarProperty Name="CONTENT_48" ColumnName="CONTENT_48" />
+          <ScalarProperty Name="CONTENT_49" ColumnName="CONTENT_49" />
+          <ScalarProperty Name="CONTENT_50" ColumnName="CONTENT_50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORT_DAILY_RESULT_WARRANTY">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_DAILY_RESULT_WARRANTY">
+        <MappingFragment StoreEntitySet="REPORT_DAILY_RESULT_WARRANTY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORT_DAILY_RESULT_WARRANTY_REVERSE">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_DAILY_RESULT_WARRANTY_REVERSE">
+        <MappingFragment StoreEntitySet="REPORT_DAILY_RESULT_WARRANTY_REVERSE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="DA_XU_LY" ColumnName="DA_XU_LY" />
+          <ScalarProperty Name="DANG_XU_LY" ColumnName="DANG_XU_LY" />
+          <ScalarProperty Name="DA_GUI_NCC" ColumnName="DA_GUI_NCC" />
+          <ScalarProperty Name="HOAN_THANH" ColumnName="HOAN_THANH" />
+          <ScalarProperty Name="XUAT_TRUOC_TRA_KHACH" ColumnName="XUAT_TRUOC_TRA_KHACH" />
+          <ScalarProperty Name="CHO_XU_LY" ColumnName="CHO_XU_LY" />
+          <ScalarProperty Name="KHONG_BAO_HANH" ColumnName="KHONG_BAO_HANH" />
+          <ScalarProperty Name="CHUA_NHAN" ColumnName="CHUA_NHAN" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORT_HEADER_MASTER">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_HEADER_MASTER">
+        <MappingFragment StoreEntitySet="REPORT_HEADER_MASTER">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="REPORT_NAME" ColumnName="REPORT_NAME" />
+          <ScalarProperty Name="ID_DEPT" ColumnName="ID_DEPT" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="DATE_UPDATE" ColumnName="DATE_UPDATE" />
+          <ScalarProperty Name="HEADER_1" ColumnName="HEADER_1" />
+          <ScalarProperty Name="HEADER_2" ColumnName="HEADER_2" />
+          <ScalarProperty Name="HEADER_3" ColumnName="HEADER_3" />
+          <ScalarProperty Name="HEADER_4" ColumnName="HEADER_4" />
+          <ScalarProperty Name="HEADER_5" ColumnName="HEADER_5" />
+          <ScalarProperty Name="HEADER_6" ColumnName="HEADER_6" />
+          <ScalarProperty Name="HEADER_7" ColumnName="HEADER_7" />
+          <ScalarProperty Name="HEADER_8" ColumnName="HEADER_8" />
+          <ScalarProperty Name="HEADER_9" ColumnName="HEADER_9" />
+          <ScalarProperty Name="HEADER_10" ColumnName="HEADER_10" />
+          <ScalarProperty Name="HEADER_11" ColumnName="HEADER_11" />
+          <ScalarProperty Name="HEADER_12" ColumnName="HEADER_12" />
+          <ScalarProperty Name="HEADER_13" ColumnName="HEADER_13" />
+          <ScalarProperty Name="HEADER_14" ColumnName="HEADER_14" />
+          <ScalarProperty Name="HEADER_15" ColumnName="HEADER_15" />
+          <ScalarProperty Name="HEADER_16" ColumnName="HEADER_16" />
+          <ScalarProperty Name="HEADER_17" ColumnName="HEADER_17" />
+          <ScalarProperty Name="HEADER_18" ColumnName="HEADER_18" />
+          <ScalarProperty Name="HEADER_19" ColumnName="HEADER_19" />
+          <ScalarProperty Name="HEADER_20" ColumnName="HEADER_20" />
+          <ScalarProperty Name="HEADER_21" ColumnName="HEADER_21" />
+          <ScalarProperty Name="HEADER_22" ColumnName="HEADER_22" />
+          <ScalarProperty Name="HEADER_23" ColumnName="HEADER_23" />
+          <ScalarProperty Name="HEADER_24" ColumnName="HEADER_24" />
+          <ScalarProperty Name="HEADER_25" ColumnName="HEADER_25" />
+          <ScalarProperty Name="HEADER_26" ColumnName="HEADER_26" />
+          <ScalarProperty Name="HEADER_27" ColumnName="HEADER_27" />
+          <ScalarProperty Name="HEADER_28" ColumnName="HEADER_28" />
+          <ScalarProperty Name="HEADER_29" ColumnName="HEADER_29" />
+          <ScalarProperty Name="HEADER_30" ColumnName="HEADER_30" />
+          <ScalarProperty Name="HEADER_31" ColumnName="HEADER_31" />
+          <ScalarProperty Name="HEADER_32" ColumnName="HEADER_32" />
+          <ScalarProperty Name="HEADER_33" ColumnName="HEADER_33" />
+          <ScalarProperty Name="HEADER_34" ColumnName="HEADER_34" />
+          <ScalarProperty Name="HEADER_35" ColumnName="HEADER_35" />
+          <ScalarProperty Name="HEADER_36" ColumnName="HEADER_36" />
+          <ScalarProperty Name="HEADER_37" ColumnName="HEADER_37" />
+          <ScalarProperty Name="HEADER_38" ColumnName="HEADER_38" />
+          <ScalarProperty Name="HEADER_39" ColumnName="HEADER_39" />
+          <ScalarProperty Name="HEADER_40" ColumnName="HEADER_40" />
+          <ScalarProperty Name="HEADER_41" ColumnName="HEADER_41" />
+          <ScalarProperty Name="HEADER_42" ColumnName="HEADER_42" />
+          <ScalarProperty Name="HEADER_43" ColumnName="HEADER_43" />
+          <ScalarProperty Name="HEADER_44" ColumnName="HEADER_44" />
+          <ScalarProperty Name="HEADER_45" ColumnName="HEADER_45" />
+          <ScalarProperty Name="HEADER_46" ColumnName="HEADER_46" />
+          <ScalarProperty Name="HEADER_47" ColumnName="HEADER_47" />
+          <ScalarProperty Name="HEADER_48" ColumnName="HEADER_48" />
+          <ScalarProperty Name="HEADER_49" ColumnName="HEADER_49" />
+          <ScalarProperty Name="HEADER_50" ColumnName="HEADER_50" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORT_SALE_PERFORMENT">
+      <EntityTypeMapping TypeName="WISE_REPORTModel.REPORT_SALE_PERFORMENT">
+        <MappingFragment StoreEntitySet="REPORT_SALE_PERFORMENT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="ID_DEPT" ColumnName="ID_DEPT" />
+          <ScalarProperty Name="WEEK" ColumnName="WEEK" />
+          <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+          <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+          <ScalarProperty Name="IS_PLAN" ColumnName="IS_PLAN" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="USER_CREATE" ColumnName="USER_CREATE" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="SO_CUOI_GOI" ColumnName="SO_CUOI_GOI" />
+          <ScalarProperty Name="SO_BG" ColumnName="SO_BG" />
+          <ScalarProperty Name="DOANH_SO_BG" ColumnName="DOANH_SO_BG" />
+          <ScalarProperty Name="DOANH_SO_SO" ColumnName="DOANH_SO_SO" />
+          <ScalarProperty Name="DOANH_SO_THUC_HIEN" ColumnName="DOANH_SO_THUC_HIEN" />
+          <ScalarProperty Name="TY_LE_TRUNG_DON" ColumnName="TY_LE_TRUNG_DON" />
+          <ScalarProperty Name="SO_KH_PHAT_SINH" ColumnName="SO_KH_PHAT_SINH" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_BG" ColumnName="KH_3THANG_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_SO" ColumnName="KH_3THANG_CHUA_PS_SO" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_BG" ColumnName="KH_6THANG_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_SO" ColumnName="KH_6THANG_CHUA_PS_SO" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_BG" ColumnName="KH_1NAM_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_SO" ColumnName="KH_1NAM_CHUA_PS_SO" />
+          <ScalarProperty Name="TY_LE_CMT_BAO_GIA" ColumnName="TY_LE_CMT_BAO_GIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DynamicPivotTableInSql" FunctionName="WISE_REPORTModel.Store.DynamicPivotTableInSql" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Chart_Sale_Performent" FunctionName="WISE_REPORTModel.Store.Proc_Get_Chart_Sale_Performent" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Get_Report_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="ID_DEPT" ColumnName="ID_DEPT" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="WEEK" ColumnName="WEEK" />
+          <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+          <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+          <ScalarProperty Name="IS_PLAN" ColumnName="IS_PLAN" />
+          <ScalarProperty Name="HEADER_1" ColumnName="HEADER_1" />
+          <ScalarProperty Name="HEADER_2" ColumnName="HEADER_2" />
+          <ScalarProperty Name="HEADER_3" ColumnName="HEADER_3" />
+          <ScalarProperty Name="HEADER_4" ColumnName="HEADER_4" />
+          <ScalarProperty Name="HEADER_5" ColumnName="HEADER_5" />
+          <ScalarProperty Name="HEADER_6" ColumnName="HEADER_6" />
+          <ScalarProperty Name="HEADER_7" ColumnName="HEADER_7" />
+          <ScalarProperty Name="HEADER_8" ColumnName="HEADER_8" />
+          <ScalarProperty Name="HEADER_9" ColumnName="HEADER_9" />
+          <ScalarProperty Name="HEADER_10" ColumnName="HEADER_10" />
+          <ScalarProperty Name="HEADER_11" ColumnName="HEADER_11" />
+          <ScalarProperty Name="HEADER_12" ColumnName="HEADER_12" />
+          <ScalarProperty Name="HEADER_13" ColumnName="HEADER_13" />
+          <ScalarProperty Name="HEADER_14" ColumnName="HEADER_14" />
+          <ScalarProperty Name="HEADER_15" ColumnName="HEADER_15" />
+          <ScalarProperty Name="HEADER_16" ColumnName="HEADER_16" />
+          <ScalarProperty Name="HEADER_17" ColumnName="HEADER_17" />
+          <ScalarProperty Name="HEADER_18" ColumnName="HEADER_18" />
+          <ScalarProperty Name="HEADER_19" ColumnName="HEADER_19" />
+          <ScalarProperty Name="HEADER_20" ColumnName="HEADER_20" />
+          <ScalarProperty Name="header" ColumnName="header" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="HEADER_21" ColumnName="HEADER_21" />
+          <ScalarProperty Name="HEADER_22" ColumnName="HEADER_22" />
+          <ScalarProperty Name="HEADER_23" ColumnName="HEADER_23" />
+          <ScalarProperty Name="HEADER_24" ColumnName="HEADER_24" />
+          <ScalarProperty Name="HEADER_25" ColumnName="HEADER_25" />
+          <ScalarProperty Name="HEADER_26" ColumnName="HEADER_26" />
+          <ScalarProperty Name="HEADER_27" ColumnName="HEADER_27" />
+          <ScalarProperty Name="HEADER_28" ColumnName="HEADER_28" />
+          <ScalarProperty Name="HEADER_29" ColumnName="HEADER_29" />
+          <ScalarProperty Name="HEADER_30" ColumnName="HEADER_30" />
+          <ScalarProperty Name="HEADER_31" ColumnName="HEADER_31" />
+          <ScalarProperty Name="HEADER_32" ColumnName="HEADER_32" />
+          <ScalarProperty Name="HEADER_33" ColumnName="HEADER_33" />
+          <ScalarProperty Name="HEADER_34" ColumnName="HEADER_34" />
+          <ScalarProperty Name="HEADER_35" ColumnName="HEADER_35" />
+          <ScalarProperty Name="HEADER_36" ColumnName="HEADER_36" />
+          <ScalarProperty Name="HEADER_37" ColumnName="HEADER_37" />
+          <ScalarProperty Name="HEADER_38" ColumnName="HEADER_38" />
+          <ScalarProperty Name="HEADER_39" ColumnName="HEADER_39" />
+          <ScalarProperty Name="HEADER_40" ColumnName="HEADER_40" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Count" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Count" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_dynamic" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_dynamic" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_dynamic_Sale" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_dynamic_Sale" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_dynamic_Sale_old" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_dynamic_Sale_old" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Header" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Header">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Get_Report_Header_Result">
+          <ScalarProperty Name="HEADER_1" ColumnName="HEADER_1" />
+          <ScalarProperty Name="HEADER_2" ColumnName="HEADER_2" />
+          <ScalarProperty Name="HEADER_3" ColumnName="HEADER_3" />
+          <ScalarProperty Name="HEADER_4" ColumnName="HEADER_4" />
+          <ScalarProperty Name="HEADER_5" ColumnName="HEADER_5" />
+          <ScalarProperty Name="HEADER_6" ColumnName="HEADER_6" />
+          <ScalarProperty Name="HEADER_7" ColumnName="HEADER_7" />
+          <ScalarProperty Name="HEADER_8" ColumnName="HEADER_8" />
+          <ScalarProperty Name="HEADER_9" ColumnName="HEADER_9" />
+          <ScalarProperty Name="HEADER_10" ColumnName="HEADER_10" />
+          <ScalarProperty Name="HEADER_11" ColumnName="HEADER_11" />
+          <ScalarProperty Name="HEADER_12" ColumnName="HEADER_12" />
+          <ScalarProperty Name="HEADER_13" ColumnName="HEADER_13" />
+          <ScalarProperty Name="HEADER_14" ColumnName="HEADER_14" />
+          <ScalarProperty Name="HEADER_15" ColumnName="HEADER_15" />
+          <ScalarProperty Name="HEADER_16" ColumnName="HEADER_16" />
+          <ScalarProperty Name="HEADER_17" ColumnName="HEADER_17" />
+          <ScalarProperty Name="HEADER_18" ColumnName="HEADER_18" />
+          <ScalarProperty Name="HEADER_19" ColumnName="HEADER_19" />
+          <ScalarProperty Name="HEADER_20" ColumnName="HEADER_20" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Sale_Count" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Sale_Count" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Sale_Performent" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Sale_Performent">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Get_Report_Sale_Performent_Result">
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="SO_CUOI_GOI" ColumnName="SO_CUOI_GOI" />
+          <ScalarProperty Name="SO_BG" ColumnName="SO_BG" />
+          <ScalarProperty Name="DOANH_SO_BG" ColumnName="DOANH_SO_BG" />
+          <ScalarProperty Name="DOANH_SO_SO" ColumnName="DOANH_SO_SO" />
+          <ScalarProperty Name="DOANH_SO_THUC_HIEN" ColumnName="DOANH_SO_THUC_HIEN" />
+          <ScalarProperty Name="TY_LE_TRUNG_DON" ColumnName="TY_LE_TRUNG_DON" />
+          <ScalarProperty Name="SO_KH_PHAT_SINH" ColumnName="SO_KH_PHAT_SINH" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_BG" ColumnName="KH_3THANG_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_SO" ColumnName="KH_3THANG_CHUA_PS_SO" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_BG" ColumnName="KH_6THANG_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_SO" ColumnName="KH_6THANG_CHUA_PS_SO" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_BG" ColumnName="KH_1NAM_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_SO" ColumnName="KH_1NAM_CHUA_PS_SO" />
+          <ScalarProperty Name="TY_LE_CMT_BAO_GIA" ColumnName="TY_LE_CMT_BAO_GIA" />
+          <ScalarProperty Name="SO_CUOI_GOI_ACT" ColumnName="SO_CUOI_GOI_ACT" />
+          <ScalarProperty Name="SO_BG_ACT" ColumnName="SO_BG_ACT" />
+          <ScalarProperty Name="DOANH_SO_BG_ACT" ColumnName="DOANH_SO_BG_ACT" />
+          <ScalarProperty Name="DOANH_SO_SO_ACT" ColumnName="DOANH_SO_SO_ACT" />
+          <ScalarProperty Name="DOANH_SO_THUC_HIEN_ACT" ColumnName="DOANH_SO_THUC_HIEN_ACT" />
+          <ScalarProperty Name="TY_LE_TRUNG_DON_ACT" ColumnName="TY_LE_TRUNG_DON_ACT" />
+          <ScalarProperty Name="SO_KH_PHAT_SINH_ACT" ColumnName="SO_KH_PHAT_SINH_ACT" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_BG_ACT" ColumnName="KH_3THANG_CHUA_PS_BG_ACT" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_SO_ACT" ColumnName="KH_3THANG_CHUA_PS_SO_ACT" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_BG_ACT" ColumnName="KH_6THANG_CHUA_PS_BG_ACT" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_SO_ACT" ColumnName="KH_6THANG_CHUA_PS_SO_ACT" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_BG_ACT" ColumnName="KH_1NAM_CHUA_PS_BG_ACT" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_SO_ACT" ColumnName="KH_1NAM_CHUA_PS_SO_ACT" />
+          <ScalarProperty Name="TY_LE_CMT_BAO_GIA_ACT" ColumnName="TY_LE_CMT_BAO_GIA_ACT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Sale_Performent_dynamic" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Sale_Performent_dynamic" />
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Sale_Performent_Plan" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Sale_Performent_Plan">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Get_Report_Sale_Performent_Plan_Result">
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="WEEK" ColumnName="WEEK" />
+          <ScalarProperty Name="MONTH" ColumnName="MONTH" />
+          <ScalarProperty Name="SO_CUOI_GOI" ColumnName="SO_CUOI_GOI" />
+          <ScalarProperty Name="SO_BG" ColumnName="SO_BG" />
+          <ScalarProperty Name="DOANH_SO_BG" ColumnName="DOANH_SO_BG" />
+          <ScalarProperty Name="DOANH_SO_SO" ColumnName="DOANH_SO_SO" />
+          <ScalarProperty Name="DOANH_SO_THUC_HIEN" ColumnName="DOANH_SO_THUC_HIEN" />
+          <ScalarProperty Name="TY_LE_TRUNG_DON" ColumnName="TY_LE_TRUNG_DON" />
+          <ScalarProperty Name="SO_KH_PHAT_SINH" ColumnName="SO_KH_PHAT_SINH" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_BG" ColumnName="KH_3THANG_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_SO" ColumnName="KH_3THANG_CHUA_PS_SO" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_BG" ColumnName="KH_6THANG_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_SO" ColumnName="KH_6THANG_CHUA_PS_SO" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_BG" ColumnName="KH_1NAM_CHUA_PS_BG" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_SO" ColumnName="KH_1NAM_CHUA_PS_SO" />
+          <ScalarProperty Name="TY_LE_CMT_BAO_GIA" ColumnName="TY_LE_CMT_BAO_GIA" />
+          <ScalarProperty Name="SO_CUOI_GOI_ACT" ColumnName="SO_CUOI_GOI_ACT" />
+          <ScalarProperty Name="SO_BG_ACT" ColumnName="SO_BG_ACT" />
+          <ScalarProperty Name="DOANH_SO_BG_ACT" ColumnName="DOANH_SO_BG_ACT" />
+          <ScalarProperty Name="DOANH_SO_SO_ACT" ColumnName="DOANH_SO_SO_ACT" />
+          <ScalarProperty Name="DOANH_SO_THUC_HIEN_ACT" ColumnName="DOANH_SO_THUC_HIEN_ACT" />
+          <ScalarProperty Name="TY_LE_TRUNG_DON_ACT" ColumnName="TY_LE_TRUNG_DON_ACT" />
+          <ScalarProperty Name="SO_KH_PHAT_SINH_ACT" ColumnName="SO_KH_PHAT_SINH_ACT" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_BG_ACT" ColumnName="KH_3THANG_CHUA_PS_BG_ACT" />
+          <ScalarProperty Name="KH_3THANG_CHUA_PS_SO_ACT" ColumnName="KH_3THANG_CHUA_PS_SO_ACT" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_BG_ACT" ColumnName="KH_6THANG_CHUA_PS_BG_ACT" />
+          <ScalarProperty Name="KH_6THANG_CHUA_PS_SO_ACT" ColumnName="KH_6THANG_CHUA_PS_SO_ACT" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_BG_ACT" ColumnName="KH_1NAM_CHUA_PS_BG_ACT" />
+          <ScalarProperty Name="KH_1NAM_CHUA_PS_SO_ACT" ColumnName="KH_1NAM_CHUA_PS_SO_ACT" />
+          <ScalarProperty Name="TY_LE_CMT_BAO_GIA_ACT" ColumnName="TY_LE_CMT_BAO_GIA_ACT" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Warranty" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Warranty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Get_Report_Warranty_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="DA_XU_LY" ColumnName="DA_XU_LY" />
+          <ScalarProperty Name="DANG_XU_LY" ColumnName="DANG_XU_LY" />
+          <ScalarProperty Name="DA_GUI_NCC" ColumnName="DA_GUI_NCC" />
+          <ScalarProperty Name="HOAN_THANH" ColumnName="HOAN_THANH" />
+          <ScalarProperty Name="XUAT_TRUOC_TRA_KHACH" ColumnName="XUAT_TRUOC_TRA_KHACH" />
+          <ScalarProperty Name="CHO_XU_LY" ColumnName="CHO_XU_LY" />
+          <ScalarProperty Name="KHONG_BAO_HANH" ColumnName="KHONG_BAO_HANH" />
+          <ScalarProperty Name="CHUA_NHAN" ColumnName="CHUA_NHAN" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Warranty_All" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Warranty_All">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Get_Report_Warranty_All_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BRANCH_ID" ColumnName="BRANCH_ID" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="DA_XU_LY" ColumnName="DA_XU_LY" />
+          <ScalarProperty Name="DANG_XU_LY" ColumnName="DANG_XU_LY" />
+          <ScalarProperty Name="DA_GUI_NCC" ColumnName="DA_GUI_NCC" />
+          <ScalarProperty Name="HOAN_THANH" ColumnName="HOAN_THANH" />
+          <ScalarProperty Name="XUAT_TRUOC_TRA_KHACH" ColumnName="XUAT_TRUOC_TRA_KHACH" />
+          <ScalarProperty Name="CHO_XU_LY" ColumnName="CHO_XU_LY" />
+          <ScalarProperty Name="KHONG_BAO_HANH" ColumnName="KHONG_BAO_HANH" />
+          <ScalarProperty Name="CHUA_NHAN" ColumnName="CHUA_NHAN" />
+          <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Get_Report_Warranty_Count" FunctionName="WISE_REPORTModel.Store.Proc_Get_Report_Warranty_Count" />
+    <FunctionImportMapping FunctionImportName="Proc_List_Report" FunctionName="WISE_REPORTModel.Store.Proc_List_Report">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_List_Report_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="REPORT_NAME" ColumnName="REPORT_NAME" />
+          <ScalarProperty Name="ID_DEPT" ColumnName="ID_DEPT" />
+          <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="DATE_UPDATE" ColumnName="DATE_UPDATE" />
+          <ScalarProperty Name="CREATE_USER" ColumnName="CREATE_USER" />
+          <ScalarProperty Name="IS_CHECK" ColumnName="IS_CHECK" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Report_Comment" FunctionName="WISE_REPORTModel.Store.Proc_List_Report_Comment">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_List_Report_Comment_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="USER_COMMENT" ColumnName="USER_COMMENT" />
+          <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+          <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_List_Report_Comment_Count" FunctionName="WISE_REPORTModel.Store.Proc_List_Report_Comment_Count" />
+    <FunctionImportMapping FunctionImportName="Proc_List_Report_Count" FunctionName="WISE_REPORTModel.Store.Proc_List_Report_Count" />
+    <FunctionImportMapping FunctionImportName="Proc_List_User_View_Report" FunctionName="WISE_REPORTModel.Store.Proc_List_User_View_Report">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_List_User_View_Report_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_HEADER" ColumnName="ID_HEADER" />
+          <ScalarProperty Name="USER_CHECK" ColumnName="USER_CHECK" />
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Sale_Performent_DynamicPivotTable" FunctionName="WISE_REPORTModel.Store.Proc_Sale_Performent_DynamicPivotTable" />
+    <FunctionImportMapping FunctionImportName="Proc_Sale_Performent_DynamicPivotTable_Month" FunctionName="WISE_REPORTModel.Store.Proc_Sale_Performent_DynamicPivotTable_Month">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WISE_REPORTModel.Proc_Sale_Performent_DynamicPivotTable_Month_Result">
+          <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+          <ScalarProperty Name="C1" ColumnName="1" />
+          <ScalarProperty Name="C2" ColumnName="2" />
+          <ScalarProperty Name="C3" ColumnName="3" />
+          <ScalarProperty Name="C4" ColumnName="4" />
+          <ScalarProperty Name="C5" ColumnName="5" />
+          <ScalarProperty Name="C6" ColumnName="6" />
+          <ScalarProperty Name="C7" ColumnName="7" />
+          <ScalarProperty Name="C8" ColumnName="8" />
+          <ScalarProperty Name="C9" ColumnName="9" />
+          <ScalarProperty Name="C10" ColumnName="10" />
+          <ScalarProperty Name="C11" ColumnName="11" />
+          <ScalarProperty Name="C12" ColumnName="12" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Proc_Sale_Performent_DynamicPivotTable_Week" FunctionName="WISE_REPORTModel.Store.Proc_Sale_Performent_DynamicPivotTable_Week" />
+  </EntityContainerMapping>
+</Mapping>

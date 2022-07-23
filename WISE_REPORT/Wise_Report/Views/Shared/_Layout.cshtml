@@ -1,0 +1,286 @@
+﻿@{
+    if (Session["Username"] == null)
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Tell the browser to be responsive to screen width -->
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    @*<link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/wise-bootstrap.css">*@
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/wise-bootstrap-demo.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/Content/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="~/Content/dist/css/skins/skin-blue.css">
+    <link rel="stylesheet" href="~/Content/css/pnotify.custom.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.tw.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <script src="~/Content/dist/js/jquery.min.js"></script>
+    <script src="~/Content/dist/js/angular.min.js"></script>
+    <script src="~/Content/js-vendor/angular-idle.js"></script>
+    <script src="~/Content/dist/js/angular-local-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-debounce/0.1.7/angular-debounce.js"></script>
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.4.0/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.10.8/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+    <script src="~/Content/js/app.js?time=@DateTime.Now"></script>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Content/js-vendor/angular-ui.min.js"></script>
+    <script src="~/Content/js-vendor/angular-ui-router.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="~/Content/download/plugins/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/download/plugins/ckfinder/ckfinder.js"></script>
+    <script src="~/Content/js-vendor/angular-filter.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/ng.ckeditor/2.0.2/ng-ckeditor.min.js"></script>*@
+    <script src="~/Content/js-vendor/vendor.bundle.base.js"></script>
+    @*<script src="~/Content/js/SUMIRUBBERCtrl.js"></script>*@
+    <script src="~/Content/pagination.js"></script>
+    <script src="~/Content/moment.min.js"></script>
+
+    <script src="~/Content/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/date_directive.js"></script>
+    <script src="~/Content/plugins/AjaxServices.js"></script>
+    <script src="~/Content/pnotify.custom.min.js"></script>
+    <script src="~/Content/scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    @*<script src="~/Content/download/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>*@
+    <script src="~/Content/download/angular-ui/build/angular-ui.min.js"></script>
+    <script src="~/Content/download/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+
+    <script src="~/Content/dist/js/adminlte.min.js"></script>
+
+    <script src="~/Content/scripts/node_modules/angular-web-notification/node_modules/simple-web-notification/web-notification.js"></script>
+    <script src="~/Content/scripts/node_modules/angular-web-notification/angular-web-notification.js"></script>
+    <script src="~/Content/js/Projects/Notification.js?time=@DateTime.Now"></script>
+    <script type="text/javascript" src="~/Content/scripts/jquery.emojis.js"></script>
+    <script type="text/javascript" src="~/Content/scripts/jquery.emojipicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngMask/3.1.1/ngMask.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+
+    <script src="~/Content/js-vendor/ng-file-upload-shim.js"></script>
+    <script src="~/Content/js-vendor/ng-file-upload.js"></script>
+
+    <script src="~/Content/js-vendor/jquery.signalR-2.2.3.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script src="~/Content/js-vendor/iwc-all.js"></script>
+    <script src="~/Content/js-vendor/signalr-patch.js"></script>
+    <script src="~/Content/js-vendor/iwc-signalr.js"></script>
+    <script src="~/Content/scripts/node_modules/angular-web-notification/node_modules/simple-web-notification/web-notification.js"></script>
+    <script src="~/Content/scripts/node_modules/angular-web-notification/angular-web-notification.js"></script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse" ng-app="myApp" ng-controller="NotificationCtrl" style="padding-right:0;">
+    <div class="wrapper" style="background-color:#fff">
+        <input type="hidden" value="@Session["fullname"]" id="fullname" />
+        <input type="hidden" value="@Session["username"]" id="username" />
+        <input type="hidden" value="@Session["password"]" id="password" />
+        <input type="hidden" value="@Session["userid"]" id="userid" />
+
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="/Home/HomeLayout" style="height:70px;margin:0"><img src="~/Content/images/logo-pme.png" alt="logo" width="240" height="70" style="width:100%;height:70px"/> </a>
+                <a class="navbar-brand brand-logo-mini" href="/Home/HomeLayout" style="margin:0;padding:0" ><img src="~/Content/images/logo-pme-small.png" style="height:50px;width:100%;padding:5px;height:50px" alt="logo" width="80" height="70"/> </a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                <div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                        </div>
+                    </form>
+                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+                                @*<img src="assets/images/faces/face1.jpg" alt="image">*@
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">@Session["fullname"]</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown" style="padding:12px 12px;min-width:auto">
+                            <a class="dropdown-item" href="/Home/ChangePassword">
+                                <i class="mdi mdi-cached mr-2 text-success"></i> Change Password
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Home/Login">
+                                <i class="mdi mdi-logout mr-2 text-primary"></i> Signout
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block full-screen-link">
+                        <a class="nav-link">
+                            <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="mdi mdi-bell-outline" ng-click="LoadListNotification_NotRead();"></i>
+                            <span class="count-symbol" style="background-color:#ff0033;color:white"><b style="top:-1px;display:block;width:16px;text-align:center;position:relative">{{tongso_unread}}</b></span>
+
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <h5 class="p-3 mb-0">Notifications</h5>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item" style="max-height:375px;overflow-y:scroll">
+
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <table class="preview-subject font-weight-normal" style="max-height:400px">
+                                        <thead></thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listNotification" ng-click="openlink(item.LINK)" >
+                                                <td ng-click="ChangeStatusIsRead(item)" style="margin-bottom:10px">
+                                                    <div class="preview-thumbnail" ng-style="!item.IS_READ && {'background-color':'rgb(220, 231, 251)'}">
+                                                        <div class="preview-icon bg-success" style="float:left;margin-right:10px">
+                                                            <i class="mdi mdi-calendar"></i>
+                                                        </div>
+                                                        <p class="list-comment" style="white-space:normal;word-break:break-word;color:#000;margin:0;line-height:1.3;display:table-cell">{{item.COMMENT}}</p>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                            <h5 style="cursor:pointer;color:red" class="p-3 mb-0 text-center" ng-click="openlink('/Notification/Notifications')">See all notifications</h5>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-logout d-none d-lg-block">
+                        <a class="nav-link" href="/Home/Login">
+                            <i class="mdi mdi-power"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-settings d-none d-lg-block">
+                        <a class="nav-link" href="#">
+                            <i class="mdi mdi-format-line-spacing"></i>
+                        </a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- Content Wrapper. Contains page content -->
+
+
+        <div class="page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    @*<li class="nav-item nav-profile">
+                            <a href="#" class="nav-link">
+                                <div class="nav-profile-image">
+                                    <img src="assets/images/faces/face1.jpg" alt="profile">
+                                    <span class="login-status online"></span>
+                                    change to offline or busy as needed
+                                </div>
+                                <div class="nav-profile-text d-flex flex-column">
+                                    <span class="font-weight-bold mb-2">Minh Hieu</span>
+                                    <span class="text-secondary text-small">Project Manager</span>
+                                </div>
+                                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                            </a>
+                        </li>*@
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Configuration">
+                            <span class="menu-title">Configuration</span>
+                            <i class="mdi mdi-contacts menu-icon"></i>
+                        </a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="/MarkettingReport/Mark_daily_report">
+                            <span class="menu-title">Report</span>
+                            <i class="mdi mdi-table-large menu-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="content-wrapper main-panel" style="background-color:0e4c6d !important">
+                <!-- Content Header (Page header) -->
+                <!-- Main content -->
+                <section class="">
+                    @RenderBody()
+                </section>
+                <!-- /.content -->
+            </div>
+        </div>
+
+    </div>
+
+    <style>
+        .preview-item::-webkit-scrollbar {
+            background: #fff;
+            width: 4px;
+        }
+
+        .preview-item::-webkit-scrollbar-thumb {
+            background: #c5c5c5;
+        }
+        body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: left;
+}
+
+    </style>
+</body>
+
+</html>

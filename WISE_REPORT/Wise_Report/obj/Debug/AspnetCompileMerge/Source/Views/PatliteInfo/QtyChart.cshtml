@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+}
+
+<link href="~/Content/css/HomeCSS.css"  rel="stylesheet" />
+<link href="~/Content/css/kho.css" rel="stylesheet" />
+
+<script src="~/Content/js/QtyChartCtrl.js?time=@DateTime.Now"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<style>
+    .pagination {
+        margin: 0px !important;
+    }
+
+    .table > tbody > tr > td {
+        padding: 1px !important;
+    }
+
+    tr:hover {
+        background-color: #71cbf3;
+    }
+</style>
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 30%;
+        height: 34px;
+        margin: 3px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .green {
+        background-color: green;
+    }
+
+    input:focus + .green {
+        box-shadow: 0 0 1px green;
+    }
+
+    input:checked + .orange {
+        background-color: yellow;
+    }
+
+    input:focus + .orange {
+        box-shadow: 0 0 1px yellow;
+    }
+
+    input:checked + .red {
+        background-color: red;
+    }
+
+    input:focus + .red {
+        box-shadow: 0 0 1px red;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+    button {
+        background-color: white;
+        color: #2e3053;
+    }
+
+    .skyblue {
+        background-color: deepskyblue !important;
+        color: white !important;
+    }
+</style>
+<div ng-app="myApp" ng-controller="QtyChartCtrl" class="content">
+    <div class="col-md-12 text-center" style="margin-bottom:10px">
+        <div class="pull-left marginR30">
+            <div class="pull-left marginR15 marginT5"></div>
+            <div class="pull-left width100 relative">
+                <input type="text" datepicker ng-model="ngay" ng-change="ChangeNgay()" ng-model-options="{debounce:700}" id="ngay" placeholder="Ngày" class="form-control datetimepickerKT">
+            </div>
+        </div>
+        @*<div class="pull-left marginR30" style="margin-left:10px">
+            <div class="pull-left marginR15 marginT5"></div>
+            <div class="pull-left width100 relative">
+                <button class="btn" ng-class="{'skyblue': calamviec == 'Sáng', '': ngaybg != item}" ng-click="ChuyenCa('Sáng')">Sáng</button>
+            </div>
+        </div>
+        <div class="pull-left marginR30" style="margin-left:10px">
+            <div class="pull-left marginR15 marginT5"></div>
+            <div class="pull-left width100 relative">
+                <button class="btn" ng-class="{'skyblue': calamviec == 'Chiều', '': ngaybg != item}" ng-click="ChuyenCa('Chiều')">Chiều</button>
+            </div>
+        </div>*@
+
+        <div class="pull-left marginR30" style="margin-left:10px" ng-repeat="item in ListTerm">
+            <div class="pull-left marginR15 marginT5"></div>
+            <div class="pull-left width100 relative">
+                <button class="btn" ng-class="{'skyblue': item.ID == CURRENT_TERM_ID}" ng-click="ChuyenCa(item)">{{item.TERM_NAME}}<br />({{item.TIME_START}}h-{{item.TIME_END}}h)</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#ngay").datetimepicker({ format: 'DD/MM/YYYY' });
+    </script>
+
+
+    <div class="col-md-12 no-padding" style="background-color:black;margin-top:15px;padding:5px !important;">
+        <div class="col-md-12">
+            <i class="fas fa-sync-alt" ng-click="reload()" style="font-size:30px;float:right;color:white"></i>
+        </div>
+        <div id="ShowChart">
+            <div class="col-md-6" ng-repeat="item in QuantitiesChart" style="margin-top:10px">
+                <div id="{{item.MAC_ADDRESS}}" style="height: 400px; width: 100%;">{{item.MAC_ADDRESS}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

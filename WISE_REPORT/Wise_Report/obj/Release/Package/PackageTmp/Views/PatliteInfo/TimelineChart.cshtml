@@ -1,0 +1,356 @@
+﻿
+@{
+    ViewBag.Title = "Chart";
+}
+
+
+<script src="~/Content/js/TimelineChartCtrl.js?time=@DateTime.Now"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+    div.google-visualization-tooltip {
+        width: auto;
+        height: auto;
+        background-color: #ccccff;
+        color: #000000;
+        text-align: center;
+        vertical-align: middle;
+        position:absolute !important; top:0 !important;right:0 !important; z-index:+1;
+    }
+</style>
+<style>
+    .pagination {
+        margin: 0px !important;
+    }
+
+    .table > tbody > tr > td {
+        padding: 1px !important;
+    }
+
+    tr:hover {
+        background-color: #71cbf3;
+    }
+</style>
+<style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30%;
+            height: 34px;
+            margin: 3px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .green {
+            background-color: green;
+        }
+
+        input:focus + .green {
+            box-shadow: 0 0 1px green;
+        }
+
+        input:checked + .orange {
+            background-color: yellow;
+        }
+
+        input:focus + .orange {
+            box-shadow: 0 0 1px yellow;
+        }
+
+        input:checked + .red {
+            background-color: red;
+        }
+
+        input:focus + .red {
+            box-shadow: 0 0 1px red;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+
+        button {
+            background-color: white;
+            color: #2e3053;
+        }
+
+        .skyblue {
+            background-color: deepskyblue !important;
+            color: white !important;
+        }
+
+        .bg-red{
+            background-color:red !important
+        }
+        .bg-green{
+            background-color:#00ff00 !important
+        }
+        .bg-amber{
+            background-color:yellow !important
+        }
+        .bg-off{
+            background-color:grey !important;
+            color:white !important
+        }
+
+        .legend { list-style: none; }
+    .legend li { float: left; margin-right: 35px; }
+    .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+    /* your colors */
+    .legend .superawesome { background-color: green; }
+    .legend .awesome { background-color: yellow; }
+    .legend .kindaawesome { background-color: red; }
+    .legend .notawesome { background-color: red; border-radius: 35px;}
+    .legend .off { background-color: gray; }
+    .legend1 {
+        position: absolute;
+      left: 50%;
+      transform: translatex(-50%);
+    }
+</style>
+<div ng-app="myApp" ng-controller="TimelineChartCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px">
+                    <h3 style="margin:0;line-height:70px;text-transform:uppercase">TIMELINE CHART</h3>
+                </header>
+                <div class="main-header" style="display:inline-block">
+
+                    Logo
+                    <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                        <span class="logo-mini" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                        </span>
+                        <span class="logo-lg" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                        </span>
+                    </a>
+                </div>               
+
+                <div class="home-page-right" style="display:flex;flex:1;justify-content:flex-end;position:relative">
+                    <div class="col-md-12 text-center no-padding" style="display: flex;justify-content: flex-end;align-items:center;margin-right:15px">
+                        <button id="day_select7" class="btn-fix btn-dayselect" data-toggle="modal" data-target="#SelectDay">...</button>
+                        <button ng-repeat="item in ListDays" ng-click="SelectNgay(item)" class="btn-fix btn-dayselect" ng-class="item.day == ngay ? 'day-selected':''">{{item.dayname}}</button>
+                    </div>
+
+
+
+                    <div class="back-homepage" style="margin-right:15px;line-height:70px;display:flex;align-items:center">
+                        <div style="position:relative;z-index:111">
+                            <i class="fas fa-sync-alt" ng-click="reloadcolumn()" style="font-size:30px;float:right;color:white;margin-right:15px;cursor:pointer"></i>
+                        </div>
+                        <a href="/Home/HomeLayout" class="btn button1" style="display:inline-block;position:relative;z-index:111"><i class="fa fa-th-list" style="color:#fff;font-size:22px;position:relative;cursor:pointer"></i></a>
+                        <div class="section-tab">
+                            <div class="col-md-12" style="margin-top:70px;">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/DailyChart">
+                                                <div style="background-image: url('../../Content/images/ICON_daily.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/WeeklyChart">
+                                                <div style="background-image: url('../../Content/images/ICON_weekly_chart.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/MonthlyChart">
+                                                <div style="background-image: url('../../Content/images/ICON_monthly_chart.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-top:20px">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <div class="wrimagecard wrimagecard-topimage">
+                                            <a href="/SmartOKRsInfo/Chart">
+                                                <div style="background-image: url('../../Content/images/ICON_Quantity.png');background-size:cover;height:100px;width:100px"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id='Timeline' style="position:relative;top:100px"></div>
+    <div id=''></div>
+
+    <div id="chart1"></div>
+
+    <div class="modal fade" id="SelectDay" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-sm" style="display:flex;align-items:center;margin:0 auto;height:100%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="display:inline">SELECT DAY</h3>
+                    <a style="float:right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close" style="font-size:20px;color:black"></i> </a>
+                </div>
+                <div class="modal-body">
+                    <input type="text" datepicker ng-model="ngay" ng-change="ChangeNgay()" ng-model-options="{debounce:700}" id="ngay" placeholder="Ngày" class="date form-control datetimepickerKT">
+                    <script>
+                        $("#ngay").datepicker({ dateFormat: 'dd/mm/yy' });
+                    </script>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /*g.highcharts-series.highcharts-series-0.highcharts-column-series.highcharts-tracker,g.highcharts-series.highcharts-series-1.highcharts-column-series.highcharts-tracker,g.highcharts-series.highcharts-series-2.highcharts-column-series.highcharts-tracker, g.highcharts-series.highcharts-series-3.highcharts-column-series.highcharts-tracker{
+          transition-duration: 2s;
+    }*/
+
+    .wrimagecard {
+        width: auto;
+    }
+
+    .wrimagecard-topimage_header {
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .wrimagecard .fa {
+        position: relative;
+        font-size: 20px;
+    }
+
+    .wrimagecard .fas {
+        position: relative;
+        font-size: 20px;
+    }
+
+    .wrimagecard .far {
+        position: relative;
+        font-size: 20px;
+    }
+
+    .section-tab {
+        display: none;
+    }
+
+    .back-homepage:hover .section-tab {
+        display: grid;
+        /* position the divs under the navigation links */
+        position: absolute;
+        top: 0;
+        right: 15px;
+        z-index: 99;
+        background: rgba(60, 60, 60, .9);
+    }
+
+    .wrimagecard-topimage_header {
+        height: 50px;
+        padding: 0;
+    }
+
+    .wrimagecard-topimage_title p {
+        line-height: 1.3;
+    }
+
+    .wrimagecard-topimage_title a {
+        color: #fff;
+    }
+</style>
+<style>
+    .btn-fix {
+        width: 48px;
+        height: 48px;
+        display: inline-block;
+        /*font-weight: 700;*/
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0rem;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .btn-dayselect {
+        color: black;
+        background-color: #686868;
+    }
+
+    .day-selected {
+        color: black;
+        background-color: white;
+    }
+</style>

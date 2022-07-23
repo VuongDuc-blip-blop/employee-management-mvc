@@ -1,0 +1,1507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SMART_OKRSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="COMMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="ID_TASK" Type="Int32" Nullable="false" />
+    <Property Name="COMMENT1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TABLE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DEPARTMENT_NAME" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DEPARTMENT_MANAGER" Type="Int32" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="HR_EMPLOYEE" Relationship="Self.FK__HR_EMPLOY__ID_DE__69FC8776" FromRole="DEPARTMENTS" ToRole="HR_EMPLOYEE" />
+    <NavigationProperty Name="GROUPS" Relationship="Self.FK_GROUPS_DEPARTMENTS" FromRole="DEPARTMENTS" ToRole="GROUPS" />
+    <NavigationProperty Name="TARGETS" Relationship="Self.FK_TARGETS_DEPARTMENTS" FromRole="DEPARTMENTS" ToRole="TARGETS" />
+    <NavigationProperty Name="TASKS" Relationship="Self.FK_TASKS_DEPARTMENTS" FromRole="DEPARTMENTS" ToRole="TASKS" />
+  </EntityType>
+  <EntityType Name="GROUP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GROUP_NAME" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_DEPARTMENT" Type="Int32" />
+    <Property Name="PURPOSE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK_GROUPS_DEPARTMENTS" FromRole="GROUPS" ToRole="DEPARTMENTS" />
+    <NavigationProperty Name="GROUPS_USERS" Relationship="Self.FK_GROUPS_USERS_GROUPS" FromRole="GROUPS" ToRole="GROUPS_USERS" />
+    <NavigationProperty Name="NOTIFICATIONS" Relationship="Self.FK_NOTIFICATIONS_GROUPS" FromRole="GROUPS" ToRole="NOTIFICATIONS" />
+    <NavigationProperty Name="PERMISSION_USERS_GROUP" Relationship="Self.FK_PERMISSION_USERS_GROUP_GROUPS" FromRole="GROUPS" ToRole="PERMISSION_USERS_GROUP" />
+  </EntityType>
+  <EntityType Name="GROUPS_USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_GROUP" Type="Int32" Nullable="false" />
+    <Property Name="ID_USER" Type="Int32" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" Nullable="false" />
+    <Property Name="IS_LEADER" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="GROUP" Relationship="Self.FK_GROUPS_USERS_GROUPS" FromRole="GROUPS_USERS" ToRole="GROUPS" />
+    <NavigationProperty Name="PERMISSION_DETAIL" Relationship="Self.FK__PERMISSIO__ID_GR__5F492382" FromRole="GROUPS_USERS" ToRole="PERMISSION_DETAIL" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_GROUPS_USERS_USERS" FromRole="GROUPS_USERS" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="HR_EMPLOYEE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_USER" Type="Int32" Nullable="false" />
+    <Property Name="ID_DEPARTMENT" Type="Int32" Nullable="false" />
+    <Property Name="AVATAR" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ZALO" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="NUMBER_PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="PERSONAL_EMAIL" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="BIRTH_DAY" Type="DateTime" Precision="0" />
+    <Property Name="DATE_IN" Type="DateTime" Precision="0" />
+    <Property Name="DATE_OUT" Type="DateTime" Precision="0" />
+    <Property Name="DATE_CREATE" Type="DateTime" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK__HR_EMPLOY__ID_DE__69FC8776" FromRole="HR_EMPLOYEE" ToRole="DEPARTMENTS" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__HR_EMPLOY__ID_US__6908633D" FromRole="HR_EMPLOYEE" ToRole="USERS" />
+    <NavigationProperty Name="USER1" Relationship="Self.FK__HR_EMPLOY__USER___6AF0ABAF" FromRole="HR_EMPLOYEE" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="LOG_GROUPS_ACTIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_ACTION" Type="Int32" Nullable="false" />
+    <Property Name="DATE_ACTION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="COMMENT_ACTIONS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOG_USER_ACTIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_ACTION" Type="Int32" Nullable="false" />
+    <Property Name="DATE_ACTION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="COMMENT_ACTIONS" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOG_VIEWS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_LOG" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_LOG" Type="Int32" />
+    <Property Name="VIEW_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_VIEW" Type="Int32" Nullable="false" />
+    <Property Name="TABLE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NOTIFICATION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="LINK" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GROUP_ID" Type="Int32" />
+    <Property Name="USER_ID" Type="Int32" />
+    <Property Name="COMMENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IS_READ" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="GROUP" Relationship="Self.FK_NOTIFICATIONS_GROUPS" FromRole="NOTIFICATIONS" ToRole="GROUPS" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_NOTIFICATIONS_USERS" FromRole="NOTIFICATIONS" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="PERMISSION_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_USER" Type="Int32" />
+    <Property Name="ID_GROUP_USER" Type="Int32" />
+    <Property Name="ID_TARGET" Type="Int32" Nullable="false" />
+    <Property Name="TABLE_NAME" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="GROUPS_USERS" Relationship="Self.FK__PERMISSIO__ID_GR__5F492382" FromRole="PERMISSION_DETAIL" ToRole="GROUPS_USERS" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__PERMISSIO__ID_US__5E54FF49" FromRole="PERMISSION_DETAIL" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="PERMISSION_LIST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PERMISSION_NAME" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VIEW_APPLY" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="TAGS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SUB_PERMISSION" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="ID_PERMISSION_TYPE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PERMISSION_TYPE" Relationship="Self.FK_PERMISSION_LIST_PERMISSION_TYPE" FromRole="PERMISSION_LIST" ToRole="PERMISSION_TYPE" />
+  </EntityType>
+  <EntityType Name="PERMISSION_TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PERMISSION_TYPE1" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PERMISSION_LIST" Relationship="Self.FK_PERMISSION_LIST_PERMISSION_TYPE" FromRole="PERMISSION_TYPE" ToRole="PERMISSION_LIST" />
+  </EntityType>
+  <EntityType Name="PERMISSION_USERS_GROUP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_GROUP" Type="Int32" />
+    <Property Name="ID_USER" Type="Int32" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ID_PERMISSION" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GROUP" Relationship="Self.FK_PERMISSION_USERS_GROUP_GROUPS" FromRole="PERMISSION_USERS_GROUP" ToRole="GROUPS" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_PERMISSION_USERS_GROUP_USERS" FromRole="PERMISSION_USERS_GROUP" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="PROCESSING">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="TRANZITION_TASK" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_STATUS_BEGIN" Type="Int32" Nullable="false" />
+    <Property Name="ID_STATUS_END" Type="Int32" Nullable="false" />
+    <Property Name="STEP" Type="Int32" Nullable="false" />
+    <Property Name="IS_DONE" Type="Boolean" Nullable="false" />
+    <Property Name="ID_TARGET" Type="Int32" Nullable="false" />
+    <Property Name="TABLE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="STATUS" Relationship="Self.FK_PROCESSING_STATUS" FromRole="PROCESSING" ToRole="STATUS" />
+    <NavigationProperty Name="STATUS1" Relationship="Self.FK_PROCESSING_STATUS1" FromRole="PROCESSING" ToRole="STATUS" />
+    <NavigationProperty Name="STATUS2" Relationship="Self.FK_PROCESSING_STATUS2" FromRole="PROCESSING" ToRole="STATUS" />
+  </EntityType>
+  <EntityType Name="PROCESSING_DEFAULT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_NAME_DEFAULT" Type="Int32" Nullable="false" />
+    <Property Name="STEP" Type="Int32" Nullable="false" />
+    <Property Name="ID_STATUS_BEGIN" Type="Int32" Nullable="false" />
+    <Property Name="TRANZITION_TASK" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_STATUS_END" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PROCESSING_DEFAULT_NAME" Relationship="Self.FK_PROCESSING_DEFAULT_PROCESSING_DEFAULT_NAME" FromRole="PROCESSING_DEFAULT" ToRole="PROCESSING_DEFAULT_NAME" />
+  </EntityType>
+  <EntityType Name="PROCESSING_DEFAULT_NAME">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME_DEFAULT" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TYPE_DEFAULT" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IS_ALLOW" Type="Boolean" Nullable="false" />
+    <Property Name="CREATE_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CREATE_USER" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PROCESSING_DEFAULT" Relationship="Self.FK_PROCESSING_DEFAULT_PROCESSING_DEFAULT_NAME" FromRole="PROCESSING_DEFAULT_NAME" ToRole="PROCESSING_DEFAULT" />
+  </EntityType>
+  <EntityType Name="PROJECT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="PROJECT_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PROJECT_OWNER" Type="Int32" Nullable="false" />
+    <Property Name="PROJECT_DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PROJECT_TARGERT" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PROJECT_STATUS" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DATE_START" Type="DateTime" Precision="3" />
+    <Property Name="DATE_END" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_PROJECT_USERS" FromRole="PROJECT" ToRole="USERS" />
+    <NavigationProperty Name="TARGETS" Relationship="Self.FK_TARGETS_PROJECT" FromRole="PROJECT" ToRole="TARGETS" />
+  </EntityType>
+  <EntityType Name="STATUS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="STATUS_NAME" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <NavigationProperty Name="PROCESSINGs" Relationship="Self.FK_PROCESSING_STATUS" FromRole="STATUS" ToRole="PROCESSING" />
+    <NavigationProperty Name="PROCESSINGs1" Relationship="Self.FK_PROCESSING_STATUS1" FromRole="STATUS" ToRole="PROCESSING" />
+    <NavigationProperty Name="PROCESSINGs2" Relationship="Self.FK_PROCESSING_STATUS2" FromRole="STATUS" ToRole="PROCESSING" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SYSTEM_VIEWS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="DATE_LOG" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_LOG" Type="Int32" />
+    <Property Name="VIEW_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CONTROLLER" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VIEW_POSITION" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TARGET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="DEPARTMENT" Type="Int32" Nullable="false" />
+    <Property Name="TARGET_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_PROJECT" Type="Int32" Nullable="false" />
+    <Property Name="ASSIGNEE" Type="Int32" Nullable="false" />
+    <Property Name="DATE_COMPLETE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TARGET_STATUS" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TARGET_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="RECHECK_USER" Type="Int32" />
+    <Property Name="RECHECK_TIME" Type="DateTime" Precision="3" />
+    <Property Name="RECHECK_COMMENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IS_DONE" Type="Boolean" Nullable="false" />
+    <Property Name="DATE_START" Type="DateTime" Precision="3" />
+    <Property Name="DATE_END" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DEPARTMENT1" Relationship="Self.FK_TARGETS_DEPARTMENTS" FromRole="TARGETS" ToRole="DEPARTMENTS" />
+    <NavigationProperty Name="PROJECT" Relationship="Self.FK_TARGETS_PROJECT" FromRole="TARGETS" ToRole="PROJECT" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_TARGETS_USERS" FromRole="TARGETS" ToRole="USERS" />
+    <NavigationProperty Name="USER1" Relationship="Self.FK_TARGETS_USERS1" FromRole="TARGETS" ToRole="USERS" />
+    <NavigationProperty Name="TASKS" Relationship="Self.FK_TASKS_TARGETS" FromRole="TARGETS" ToRole="TASKS" />
+  </EntityType>
+  <EntityType Name="TASK">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="DEPARTMENT" Type="Int32" Nullable="false" />
+    <Property Name="ID_TARGET" Type="Int32" Nullable="false" />
+    <Property Name="TASK_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TASK_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ASSIGNEE" Type="Int32" Nullable="false" />
+    <Property Name="DATE_COMPLETE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TASK_STATUS" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RECHECK_USER" Type="Int32" />
+    <Property Name="RECHECK_TIME" Type="DateTime" Precision="3" />
+    <Property Name="RECHECK_COMMENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IS_DONE" Type="Boolean" Nullable="false" />
+    <Property Name="DATE_START" Type="DateTime" Precision="3" />
+    <Property Name="DATE_END" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DEPARTMENT1" Relationship="Self.FK_TASKS_DEPARTMENTS" FromRole="TASKS" ToRole="DEPARTMENTS" />
+    <NavigationProperty Name="TARGET" Relationship="Self.FK_TASKS_TARGETS" FromRole="TASKS" ToRole="TARGETS" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_TASKS_USERS" FromRole="TASKS" ToRole="USERS" />
+    <NavigationProperty Name="USER1" Relationship="Self.FK_TASKS_USERS1" FromRole="TASKS" ToRole="USERS" />
+    <NavigationProperty Name="USER2" Relationship="Self.FK_TASKS_USERS2" FromRole="TASKS" ToRole="USERS" />
+    <NavigationProperty Name="WORK_LOGS" Relationship="Self.FK_WORK_LOGS_TASKS" FromRole="TASKS" ToRole="WORK_LOGS" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USERNAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FULLNAME" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" Nullable="false" />
+    <Property Name="IS_ALLOWED" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="GROUPS_USERS" Relationship="Self.FK_GROUPS_USERS_USERS" FromRole="USERS" ToRole="GROUPS_USERS" />
+    <NavigationProperty Name="HR_EMPLOYEE" Relationship="Self.FK__HR_EMPLOY__ID_US__6908633D" FromRole="USERS" ToRole="HR_EMPLOYEE" />
+    <NavigationProperty Name="HR_EMPLOYEE1" Relationship="Self.FK__HR_EMPLOY__USER___6AF0ABAF" FromRole="USERS" ToRole="HR_EMPLOYEE" />
+    <NavigationProperty Name="NOTIFICATIONS" Relationship="Self.FK_NOTIFICATIONS_USERS" FromRole="USERS" ToRole="NOTIFICATIONS" />
+    <NavigationProperty Name="PERMISSION_DETAIL" Relationship="Self.FK__PERMISSIO__ID_US__5E54FF49" FromRole="USERS" ToRole="PERMISSION_DETAIL" />
+    <NavigationProperty Name="PERMISSION_USERS_GROUP" Relationship="Self.FK_PERMISSION_USERS_GROUP_USERS" FromRole="USERS" ToRole="PERMISSION_USERS_GROUP" />
+    <NavigationProperty Name="PROJECTs" Relationship="Self.FK_PROJECT_USERS" FromRole="USERS" ToRole="PROJECT" />
+    <NavigationProperty Name="TARGETS" Relationship="Self.FK_TARGETS_USERS" FromRole="USERS" ToRole="TARGETS" />
+    <NavigationProperty Name="TARGETS1" Relationship="Self.FK_TARGETS_USERS1" FromRole="USERS" ToRole="TARGETS" />
+    <NavigationProperty Name="TASKS" Relationship="Self.FK_TASKS_USERS" FromRole="USERS" ToRole="TASKS" />
+    <NavigationProperty Name="TASKS1" Relationship="Self.FK_TASKS_USERS1" FromRole="USERS" ToRole="TASKS" />
+    <NavigationProperty Name="TASKS2" Relationship="Self.FK_TASKS_USERS2" FromRole="USERS" ToRole="TASKS" />
+    <NavigationProperty Name="WORK_LOGS" Relationship="Self.FK_WORK_LOGS_USERS" FromRole="USERS" ToRole="WORK_LOGS" />
+  </EntityType>
+  <EntityType Name="WORK_LOGS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="ID_TASK" Type="Int32" Nullable="false" />
+    <Property Name="RESULT_WORK" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TIME_LOG" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RECHECK_USER" Type="Int32" Nullable="false" />
+    <Property Name="RECHECK_TIME" Type="DateTime" Precision="3" />
+    <Property Name="RECHECK_RECOMMENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TIME_SPENT" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HOUR_SPENT" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="TITLE_WORKLOG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="TASK" Relationship="Self.FK_WORK_LOGS_TASKS" FromRole="WORK_LOGS" ToRole="TASKS" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_WORK_LOGS_USERS" FromRole="WORK_LOGS" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="GROUPS_USERS_DELETED">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ID_GROUP" />
+      <PropertyRef Name="ID_USER" />
+      <PropertyRef Name="IS_LEADER" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID_GROUP" Type="Int32" Nullable="false" />
+    <Property Name="ID_USER" Type="Int32" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="DateTime" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="IS_LEADER" Type="Boolean" Nullable="false" />
+    <Property Name="DATE_DELETE" Type="DateTime" Precision="3" />
+    <Property Name="USER_DELETE" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LOG_GROUPS_USERS_ACTIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="USER_ACTION" />
+      <PropertyRef Name="DATE_ACTION" />
+      <PropertyRef Name="COMMENT_ACTIONS" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_ACTION" Type="Int32" Nullable="false" />
+    <Property Name="DATE_ACTION" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="COMMENT_ACTIONS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__HR_EMPLOY__ID_DE__69FC8776">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="HR_EMPLOYEE" Type="Self.HR_EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_EMPLOYEE">
+        <PropertyRef Name="ID_DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_DEPARTMENTS">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENT" Multiplicity="0..1" />
+    <End Role="GROUPS" Type="Self.GROUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GROUPS">
+        <PropertyRef Name="ID_DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_DEPARTMENTS">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="TARGETS" Type="Self.TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_DEPARTMENTS">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="TASKS" Type="Self.TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_USERS_GROUPS">
+    <End Role="GROUPS" Type="Self.GROUP" Multiplicity="1" />
+    <End Role="GROUPS_USERS" Type="Self.GROUPS_USERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GROUPS_USERS">
+        <PropertyRef Name="ID_GROUP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICATIONS_GROUPS">
+    <End Role="GROUPS" Type="Self.GROUP" Multiplicity="0..1" />
+    <End Role="NOTIFICATIONS" Type="Self.NOTIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NOTIFICATIONS">
+        <PropertyRef Name="GROUP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERMISSION_USERS_GROUP_GROUPS">
+    <End Role="GROUPS" Type="Self.GROUP" Multiplicity="0..1" />
+    <End Role="PERMISSION_USERS_GROUP" Type="Self.PERMISSION_USERS_GROUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_USERS_GROUP">
+        <PropertyRef Name="ID_GROUP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PERMISSIO__ID_GR__5F492382">
+    <End Role="GROUPS_USERS" Type="Self.GROUPS_USERS" Multiplicity="0..1" />
+    <End Role="PERMISSION_DETAIL" Type="Self.PERMISSION_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS_USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_DETAIL">
+        <PropertyRef Name="ID_GROUP_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_USERS_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="GROUPS_USERS" Type="Self.GROUPS_USERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GROUPS_USERS">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_EMPLOY__ID_US__6908633D">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="HR_EMPLOYEE" Type="Self.HR_EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_EMPLOYEE">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_EMPLOY__USER___6AF0ABAF">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="HR_EMPLOYEE" Type="Self.HR_EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_EMPLOYEE">
+        <PropertyRef Name="USER_CREATE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICATIONS_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="NOTIFICATIONS" Type="Self.NOTIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NOTIFICATIONS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PERMISSIO__ID_US__5E54FF49">
+    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="PERMISSION_DETAIL" Type="Self.PERMISSION_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_DETAIL">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERMISSION_LIST_PERMISSION_TYPE">
+    <End Role="PERMISSION_TYPE" Type="Self.PERMISSION_TYPE" Multiplicity="1" />
+    <End Role="PERMISSION_LIST" Type="Self.PERMISSION_LIST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERMISSION_TYPE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_LIST">
+        <PropertyRef Name="ID_PERMISSION_TYPE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERMISSION_USERS_GROUP_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="PERMISSION_USERS_GROUP" Type="Self.PERMISSION_USERS_GROUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_USERS_GROUP">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESSING_STATUS">
+    <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+    <End Role="PROCESSING" Type="Self.PROCESSING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STATUS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROCESSING">
+        <PropertyRef Name="ID_STATUS_BEGIN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESSING_STATUS1">
+    <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+    <End Role="PROCESSING" Type="Self.PROCESSING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STATUS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROCESSING">
+        <PropertyRef Name="ID_STATUS_END" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESSING_STATUS2">
+    <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+    <End Role="PROCESSING" Type="Self.PROCESSING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STATUS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROCESSING">
+        <PropertyRef Name="ID_STATUS_END" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESSING_DEFAULT_PROCESSING_DEFAULT_NAME">
+    <End Role="PROCESSING_DEFAULT_NAME" Type="Self.PROCESSING_DEFAULT_NAME" Multiplicity="1" />
+    <End Role="PROCESSING_DEFAULT" Type="Self.PROCESSING_DEFAULT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROCESSING_DEFAULT_NAME">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROCESSING_DEFAULT">
+        <PropertyRef Name="ID_NAME_DEFAULT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROJECT_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="PROJECT" Type="Self.PROJECT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROJECT">
+        <PropertyRef Name="PROJECT_OWNER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_PROJECT">
+    <End Role="PROJECT" Type="Self.PROJECT" Multiplicity="1" />
+    <End Role="TARGETS" Type="Self.TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJECT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="ID_PROJECT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="TARGETS" Type="Self.TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="RECHECK_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_USERS1">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="TARGETS" Type="Self.TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_TARGETS">
+    <End Role="TARGETS" Type="Self.TARGET" Multiplicity="1" />
+    <End Role="TASKS" Type="Self.TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TARGETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="ID_TARGET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="TASKS" Type="Self.TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_USERS1">
+    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="RECHECK_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_USERS2">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="TASKS" Type="Self.TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WORK_LOGS_TASKS">
+    <End Role="TASKS" Type="Self.TASK" Multiplicity="1" />
+    <End Role="WORK_LOGS" Type="Self.WORK_LOGS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TASKS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORK_LOGS">
+        <PropertyRef Name="ID_TASK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WORK_LOGS_USERS">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="WORK_LOGS" Type="Self.WORK_LOGS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORK_LOGS">
+        <PropertyRef Name="RECHECK_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SMART_OKRSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="COMMENTS" EntityType="Self.COMMENT" />
+    <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENT" />
+    <EntitySet Name="GROUPS" EntityType="Self.GROUP" />
+    <EntitySet Name="GROUPS_USERS" EntityType="Self.GROUPS_USERS" />
+    <EntitySet Name="HR_EMPLOYEE" EntityType="Self.HR_EMPLOYEE" />
+    <EntitySet Name="LOG_GROUPS_ACTIONS" EntityType="Self.LOG_GROUPS_ACTIONS" />
+    <EntitySet Name="LOG_USER_ACTIONS" EntityType="Self.LOG_USER_ACTIONS" />
+    <EntitySet Name="LOG_VIEWS" EntityType="Self.LOG_VIEWS" />
+    <EntitySet Name="NOTIFICATIONS" EntityType="Self.NOTIFICATION" />
+    <EntitySet Name="PERMISSION_DETAIL" EntityType="Self.PERMISSION_DETAIL" />
+    <EntitySet Name="PERMISSION_LIST" EntityType="Self.PERMISSION_LIST" />
+    <EntitySet Name="PERMISSION_TYPE" EntityType="Self.PERMISSION_TYPE" />
+    <EntitySet Name="PERMISSION_USERS_GROUP" EntityType="Self.PERMISSION_USERS_GROUP" />
+    <EntitySet Name="PROCESSINGs" EntityType="Self.PROCESSING" />
+    <EntitySet Name="PROCESSING_DEFAULT" EntityType="Self.PROCESSING_DEFAULT" />
+    <EntitySet Name="PROCESSING_DEFAULT_NAME" EntityType="Self.PROCESSING_DEFAULT_NAME" />
+    <EntitySet Name="PROJECTs" EntityType="Self.PROJECT" />
+    <EntitySet Name="STATUS" EntityType="Self.STATUS" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="SYSTEM_VIEWS" EntityType="Self.SYSTEM_VIEWS" />
+    <EntitySet Name="TARGETS" EntityType="Self.TARGET" />
+    <EntitySet Name="TASKS" EntityType="Self.TASK" />
+    <EntitySet Name="USERS" EntityType="Self.USER" />
+    <EntitySet Name="WORK_LOGS" EntityType="Self.WORK_LOGS" />
+    <EntitySet Name="GROUPS_USERS_DELETED" EntityType="Self.GROUPS_USERS_DELETED" />
+    <EntitySet Name="LOG_GROUPS_USERS_ACTIONS" EntityType="Self.LOG_GROUPS_USERS_ACTIONS" />
+    <AssociationSet Name="FK__HR_EMPLOY__ID_DE__69FC8776" Association="Self.FK__HR_EMPLOY__ID_DE__69FC8776">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="HR_EMPLOYEE" EntitySet="HR_EMPLOYEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_DEPARTMENTS" Association="Self.FK_GROUPS_DEPARTMENTS">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="GROUPS" EntitySet="GROUPS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_DEPARTMENTS" Association="Self.FK_TARGETS_DEPARTMENTS">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_DEPARTMENTS" Association="Self.FK_TASKS_DEPARTMENTS">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_USERS_GROUPS" Association="Self.FK_GROUPS_USERS_GROUPS">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="GROUPS_USERS" EntitySet="GROUPS_USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICATIONS_GROUPS" Association="Self.FK_NOTIFICATIONS_GROUPS">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="NOTIFICATIONS" EntitySet="NOTIFICATIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERMISSION_USERS_GROUP_GROUPS" Association="Self.FK_PERMISSION_USERS_GROUP_GROUPS">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="PERMISSION_USERS_GROUP" EntitySet="PERMISSION_USERS_GROUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PERMISSIO__ID_GR__5F492382" Association="Self.FK__PERMISSIO__ID_GR__5F492382">
+      <End Role="GROUPS_USERS" EntitySet="GROUPS_USERS" />
+      <End Role="PERMISSION_DETAIL" EntitySet="PERMISSION_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_USERS_USERS" Association="Self.FK_GROUPS_USERS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="GROUPS_USERS" EntitySet="GROUPS_USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_EMPLOY__ID_US__6908633D" Association="Self.FK__HR_EMPLOY__ID_US__6908633D">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="HR_EMPLOYEE" EntitySet="HR_EMPLOYEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_EMPLOY__USER___6AF0ABAF" Association="Self.FK__HR_EMPLOY__USER___6AF0ABAF">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="HR_EMPLOYEE" EntitySet="HR_EMPLOYEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICATIONS_USERS" Association="Self.FK_NOTIFICATIONS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="NOTIFICATIONS" EntitySet="NOTIFICATIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PERMISSIO__ID_US__5E54FF49" Association="Self.FK__PERMISSIO__ID_US__5E54FF49">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PERMISSION_DETAIL" EntitySet="PERMISSION_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERMISSION_LIST_PERMISSION_TYPE" Association="Self.FK_PERMISSION_LIST_PERMISSION_TYPE">
+      <End Role="PERMISSION_TYPE" EntitySet="PERMISSION_TYPE" />
+      <End Role="PERMISSION_LIST" EntitySet="PERMISSION_LIST" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERMISSION_USERS_GROUP_USERS" Association="Self.FK_PERMISSION_USERS_GROUP_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PERMISSION_USERS_GROUP" EntitySet="PERMISSION_USERS_GROUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESSING_STATUS" Association="Self.FK_PROCESSING_STATUS">
+      <End Role="STATUS" EntitySet="STATUS" />
+      <End Role="PROCESSING" EntitySet="PROCESSINGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESSING_STATUS1" Association="Self.FK_PROCESSING_STATUS1">
+      <End Role="STATUS" EntitySet="STATUS" />
+      <End Role="PROCESSING" EntitySet="PROCESSINGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESSING_STATUS2" Association="Self.FK_PROCESSING_STATUS2">
+      <End Role="STATUS" EntitySet="STATUS" />
+      <End Role="PROCESSING" EntitySet="PROCESSINGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESSING_DEFAULT_PROCESSING_DEFAULT_NAME" Association="Self.FK_PROCESSING_DEFAULT_PROCESSING_DEFAULT_NAME">
+      <End Role="PROCESSING_DEFAULT_NAME" EntitySet="PROCESSING_DEFAULT_NAME" />
+      <End Role="PROCESSING_DEFAULT" EntitySet="PROCESSING_DEFAULT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROJECT_USERS" Association="Self.FK_PROJECT_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PROJECT" EntitySet="PROJECTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_PROJECT" Association="Self.FK_TARGETS_PROJECT">
+      <End Role="PROJECT" EntitySet="PROJECTs" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_USERS" Association="Self.FK_TARGETS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_USERS1" Association="Self.FK_TARGETS_USERS1">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_TARGETS" Association="Self.FK_TASKS_TARGETS">
+      <End Role="TARGETS" EntitySet="TARGETS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_USERS" Association="Self.FK_TASKS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_USERS1" Association="Self.FK_TASKS_USERS1">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_USERS2" Association="Self.FK_TASKS_USERS2">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WORK_LOGS_TASKS" Association="Self.FK_WORK_LOGS_TASKS">
+      <End Role="TASKS" EntitySet="TASKS" />
+      <End Role="WORK_LOGS" EntitySet="WORK_LOGS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WORK_LOGS_USERS" Association="Self.FK_WORK_LOGS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="WORK_LOGS" EntitySet="WORK_LOGS" />
+    </AssociationSet>
+    <FunctionImport Name="Proc_CheckPermissionCRUD_Permission_List" ReturnType="Collection(Int32)">
+      <Parameter Name="iduser" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_CheckPermissionCRUD_Processing_Default" ReturnType="Collection(Int32)">
+      <Parameter Name="iduser" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_CheckPermissionCRUD_TARGET" ReturnType="Collection(Int32)">
+      <Parameter Name="iduser" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_CheckPermissionCRUD_TASKS" ReturnType="Collection(Int32)">
+      <Parameter Name="iduser" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_CheckPermissionCRUD_USER" ReturnType="Collection(Int32)">
+      <Parameter Name="iduser" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Details_Target" ReturnType="Collection(SMART_OKRSModel.Proc_Details_Target_Result)">
+      <Parameter Name="targetid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Details_Target_Taskid" ReturnType="Collection(SMART_OKRSModel.Proc_Details_Target_Taskid_Result)">
+      <Parameter Name="taskid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Details_Task" ReturnType="Collection(SMART_OKRSModel.Proc_Details_Task_Result)">
+      <Parameter Name="taskid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Filter_Target_ByProject" ReturnType="Collection(SMART_OKRSModel.Proc_Filter_Target_ByProject_Result)">
+      <Parameter Name="projectid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Departments" ReturnType="Collection(SMART_OKRSModel.Proc_List_Departments_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Group_WorkLogs" ReturnType="Collection(SMART_OKRSModel.Proc_List_Group_WorkLogs_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="groupid" Mode="In" Type="Int32" />
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+      <Parameter Name="sotrang" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Groups" ReturnType="Collection(SMART_OKRSModel.Proc_List_Groups_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="groupname" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="purpose" Mode="In" Type="String" />
+      <Parameter Name="deptid" Mode="In" Type="Int32" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Groups_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="groupname" Mode="In" Type="String" />
+      <Parameter Name="descrioption" Mode="In" Type="String" />
+      <Parameter Name="purpose" Mode="In" Type="String" />
+      <Parameter Name="deptid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_GroupUsers" ReturnType="Collection(SMART_OKRSModel.Proc_List_GroupUsers_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="groupid" Mode="In" Type="Int32" />
+      <Parameter Name="userid" Mode="In" Type="Int32" />
+      <Parameter Name="isleader" Mode="In" Type="Boolean" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_GroupUsers_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="groupid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Notification" ReturnType="Collection(SMART_OKRSModel.Proc_List_Notification_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="groupid" Mode="In" Type="Int32" />
+      <Parameter Name="userid_create" Mode="In" Type="Int32" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Notification_NotRead" ReturnType="Collection(SMART_OKRSModel.Proc_List_Notification_NotRead_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Permission" ReturnType="Collection(SMART_OKRSModel.Proc_List_Permission_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="permission_name" Mode="In" Type="String" />
+      <Parameter Name="view" Mode="In" Type="String" />
+      <Parameter Name="usercreate" Mode="In" Type="Int32" />
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="tag" Mode="In" Type="String" />
+      <Parameter Name="subpermission" Mode="In" Type="String" />
+      <Parameter Name="permission_type" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Permission_Users_Group" ReturnType="Collection(SMART_OKRSModel.Proc_List_Permission_Users_Group_Result)">
+      <Parameter Name="permission_name" Mode="In" Type="String" />
+      <Parameter Name="usercreate" Mode="In" Type="Int32" />
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="tag" Mode="In" Type="String" />
+      <Parameter Name="subpermission" Mode="In" Type="String" />
+      <Parameter Name="permission_type" Mode="In" Type="Int32" />
+      <Parameter Name="group" Mode="In" Type="Int32" />
+      <Parameter Name="user" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_ProcessingDefault" ReturnType="Collection(SMART_OKRSModel.Proc_List_ProcessingDefault_Result)">
+      <Parameter Name="id_name_default" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_ProcessingDefaultName" ReturnType="Collection(SMART_OKRSModel.Proc_List_ProcessingDefaultName_Result)">
+      <Parameter Name="name_default" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Projects_Data" ReturnType="Collection(SMART_OKRSModel.Proc_List_Projects_Data_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Status" ReturnType="Collection(SMART_OKRSModel.Proc_List_Status_Result)">
+      <Parameter Name="iduser" Mode="In" Type="Int32" />
+      <Parameter Name="statusname" Mode="In" Type="String" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Users" ReturnType="Collection(SMART_OKRSModel.Proc_List_Users_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="fullname" Mode="In" Type="String" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Users_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="fullname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Target_Recheck" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Target_Recheck_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Target_Work" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Target_Work_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Tasks_Missed" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Tasks_Missed_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Tasks_Missed_ByTargetID" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Tasks_Missed_ByTargetID_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="idtarget" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Tasks_Recheck" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Tasks_Recheck_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Tasks_Recheck_ByTargetID" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Tasks_Recheck_ByTargetID_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="idtarget" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Tasks_Work" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Tasks_Work_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_List_Tasks_Work_By_TargetID" ReturnType="Collection(SMART_OKRSModel.Proc_My_List_Tasks_Work_By_TargetID_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="idtarget" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_My_WorkLog_Report" ReturnType="Collection(SMART_OKRSModel.Proc_My_WorkLog_Report_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Target_Complete_ByDept" ReturnType="Collection(SMART_OKRSModel.Proc_Target_Complete_ByDept_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_UpdateAll_Notification" ReturnType="Collection(Int32)">
+      <Parameter Name="userid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Prod_CheckPermissionCRUD_Project" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SMART_OKRSModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SMART_OKRSModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="SqlQueryNotificationStoredProcedure_bc17f2ce_9e18_45b9_9ef3_20342ab59eb3" ReturnType="Collection(Guid)" />
+  </EntityContainer>
+  <ComplexType Name="Proc_Details_Target_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="false" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PROJECT_TARGERT" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PROJECT_STATUS" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TARGET_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="String" Name="TARGET_DESCRIPTION" Nullable="true" MaxLength="1000" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Int32" Name="PERCENT_DONE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_Details_Target_Taskid_Result">
+    <Property Type="Int32" Name="ID" Nullable="true" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="true" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PROJECT_TARGERT" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="PROJECT_STATUS" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="true" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="true" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TARGET_STATUS" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="TARGET_DESCRIPTION" Nullable="true" MaxLength="1000" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_Details_Task_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="TARGET_STATUS" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="true" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="String" Name="TASK_DESCRIPTION" Nullable="true" MaxLength="1000" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Proc_Filter_Target_ByProject_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="false" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TARGET_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="String" Name="TARGET_DESCRIPTION" Nullable="true" MaxLength="1000" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Int32" Name="PERCENT_DONE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Departments_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID_DEPARTMENT_MANAGER" Nullable="true" />
+    <Property Type="String" Name="DEPARTMENT_MANAGER" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="USER_CREATE" Nullable="true" MaxLength="64" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Group_WorkLogs_Result">
+    <Property Type="String" Name="TITLE_WORKLOG" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="RESULT_WORK" Nullable="false" MaxLength="1000" />
+    <Property Type="Int32" Name="WORKLOG_ID" Nullable="false" />
+    <Property Type="Int32" Name="TARGET_ID" Nullable="true" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="PROJECT_ID" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="USER_CREATE" Nullable="true" />
+    <Property Type="String" Name="USER_CREATE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="ID_TASK" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="false" />
+    <Property Type="String" Name="USER_RECHECK_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="RECHECK_RECOMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Groups_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="PURPOSE" Nullable="true" MaxLength="256" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="USER_CREATE" Nullable="true" MaxLength="64" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_GroupUsers_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_GROUP" Nullable="false" />
+    <Property Type="String" Name="GROUP_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="ID_USER" Nullable="false" />
+    <Property Type="String" Name="USERNAME" Nullable="true" MaxLength="64" />
+    <Property Type="Boolean" Name="IS_LEADER" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="USER_CREATE" Nullable="true" MaxLength="64" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Notification_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="USER_CREATE" Nullable="true" />
+    <Property Type="String" Name="LINK" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="GROUP_ID" Nullable="true" />
+    <Property Type="Int32" Name="USER_ID" Nullable="true" />
+    <Property Type="String" Name="COMMENT" Nullable="false" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_READ" Nullable="false" />
+    <Property Type="String" Name="USER_CREATE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="USER_ID_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="GROUP_NAME" Nullable="true" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Notification_NotRead_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="USER_CREATE" Nullable="true" />
+    <Property Type="String" Name="LINK" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="GROUP_ID" Nullable="true" />
+    <Property Type="Int32" Name="USER_ID" Nullable="true" />
+    <Property Type="String" Name="COMMENT" Nullable="false" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_READ" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Permission_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="PERMISSION_NAME" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="VIEW_APPLY" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="TAGS" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="SUB_PERMISSION" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="PERMISSION_TYPE" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="USER_CREATE" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="ID_PERMISSION_TYPE" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Permission_Users_Group_Result">
+    <Property Type="String" Name="PERMISSION_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" MaxLength="256" />
+    <Property Type="String" Name="SUB_PERMISSION" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="GROUP_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="TAGS" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="USER_CREATE" Nullable="true" MaxLength="64" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_ProcessingDefault_Result">
+    <Property Type="Int32" Name="ID_NAME_DEFAULT" Nullable="false" />
+    <Property Type="String" Name="NAME_DEFAULT" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="STEP" Nullable="false" />
+    <Property Type="Int32" Name="ID_STATUS_BEGIN" Nullable="false" />
+    <Property Type="String" Name="STATUS_BEGIN" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TRANZITION_TASK" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="ID_STATUS_END" Nullable="false" />
+    <Property Type="String" Name="STATUS_END" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TYPE_DEFAULT" Nullable="true" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_ProcessingDefaultName_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="NAME_DEFAULT" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="TYPE_DEFAULT" Nullable="false" MaxLength="128" />
+    <Property Type="Boolean" Name="IS_ALLOW" Nullable="false" />
+    <Property Type="DateTime" Name="CREATE_DATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="CREATE_USER" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Projects_Data_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="PROJECT_DESCRIPTION" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="PROJECT_TARGERT" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="PROJECT_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="PROJECT_OWNER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="PROJECT_OWNER" Nullable="false" />
+    <Property Type="Int32" Name="PERCENT_DONE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Status_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="STATUS_NAME" Nullable="false" MaxLength="128" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="USER_CREATE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Users_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="USERNAME" Nullable="false" MaxLength="25" />
+    <Property Type="String" Name="FULLNAME" Nullable="false" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="String" Name="USER_CREATE" Nullable="true" MaxLength="64" />
+    <Property Type="Boolean" Name="IS_ALLOWED" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Target_Recheck_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="false" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TARGET_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="String" Name="TARGET_DESCRIPTION" Nullable="true" MaxLength="1000" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Int32" Name="PERCENT_DONE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Target_Work_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="false" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TARGET_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="String" Name="TARGET_DESCRIPTION" Nullable="true" MaxLength="1000" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Int32" Name="PERCENT_DONE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Tasks_Missed_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Decimal" Name="TOTAL_TIME_SPENT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Tasks_Missed_ByTargetID_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Decimal" Name="TOTAL_TIME_SPENT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Tasks_Recheck_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Decimal" Name="TOTAL_TIME_SPENT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Tasks_Recheck_ByTargetID_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Decimal" Name="TOTAL_TIME_SPENT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Tasks_Work_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Decimal" Name="TOTAL_TIME_SPENT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_List_Tasks_Work_By_TargetID_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_CREATE" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="TARGET_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_TARGET" Nullable="false" />
+    <Property Type="String" Name="TASK_NAME" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ASSIGNEE" Nullable="false" />
+    <Property Type="String" Name="ASSIGNEE_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="DATE_COMPLETE" Nullable="false" />
+    <Property Type="DateTime" Name="DATE_START" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DATE_END" Nullable="true" Precision="23" />
+    <Property Type="String" Name="TASK_STATUS" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="RECHECK_USER" Nullable="true" />
+    <Property Type="String" Name="RECHECK_USER_NAME" Nullable="true" MaxLength="64" />
+    <Property Type="DateTime" Name="RECHECK_TIME" Nullable="true" Precision="23" />
+    <Property Type="String" Name="RECHECK_COMMENT" Nullable="true" MaxLength="500" />
+    <Property Type="Boolean" Name="IS_DONE" Nullable="false" />
+    <Property Type="Decimal" Name="TOTAL_TIME_SPENT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="ID_PROJECT" Nullable="true" />
+    <Property Type="String" Name="PROJECT_NAME" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_My_WorkLog_Report_Result">
+    <Property Type="String" Name="DATE_CREATE" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="SL_WORK_LOG" Nullable="true" />
+    <Property Type="Decimal" Name="SUM_TOTAL_TIME" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="Proc_Target_Complete_ByDept_Result">
+    <Property Type="Int32" Name="DEPARTMENT" Nullable="false" />
+    <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="MONTH_DATE_END" Nullable="true" />
+    <Property Type="Int32" Name="TOTAL_TARGET" Nullable="true" />
+    <Property Type="Int32" Name="TOTAL_COMPLETE" Nullable="true" />
+    <Property Type="Int32" Name="TOTAL_REMAIN" Nullable="true" />
+    <Property Type="Int32" Name="COMPELTE_PECENT" Nullable="true" />
+    <Property Type="Int32" Name="YEAR_DATE_END" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

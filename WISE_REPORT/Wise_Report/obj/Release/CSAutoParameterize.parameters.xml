@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SmartOKRsEntities-Web.config Connection String" description="SmartOKRsEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.DataModel.Model1.csdl|res://*/Models.DataModel.Model1.ssdl|res://*/Models.DataModel.Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=118.27.193.183,1433;initial catalog=SUMIDA;user id=sa;password=Hoplong6688;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\SUMIDA\\SUMIDA\\SmartOKRs\\SmartOKRs\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SmartOKRsEntities']/@connectionString" />
+  </parameter>
+  <parameter name="sqlConString-Web.config Connection String" description="sqlConString Connection String used in web.config by the application to access the database." defaultValue="data source=118.27.193.183,1433;initial catalog=SUMIDA;user id=sa;password=Hoplong6688;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\SUMIDA\\SUMIDA\\SmartOKRs\\SmartOKRs\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='sqlConString']/@connectionString" />
+  </parameter>
+</parameters>

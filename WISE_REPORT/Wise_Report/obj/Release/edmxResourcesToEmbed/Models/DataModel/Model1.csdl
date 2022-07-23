@@ -1,0 +1,798 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SUMIDAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Isadmin" Type="Boolean" Nullable="false" />
+    <Property Name="MaPhongBan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BROKEN_REASON">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BROKEN_ID" Type="Int32" Nullable="false" />
+    <Property Name="REASON" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GHI_CHU" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_ERROR_LOG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LOG_DATE_CREATE" Type="DateTime" Precision="3" />
+    <Property Name="LOG_USERNAME" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="LOG_DATE" Type="DateTime" Precision="3" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="ERROR_REASON" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NOTE" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_HISTORY_LOG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_TIME" Type="DateTime" Precision="3" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="CURRENT_STATE" Type="Int32" />
+    <Property Name="STATE_TIME" Type="Int32" />
+    <Property Name="IS_READ" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="RED_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="AMBER_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="GREEN_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="BREAK_LIGHT" Type="Int32" Nullable="false" />
+    <Property Name="MODE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="QUANTITY_EACH_TURN" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_LINE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LINE_NAME" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_PRODUCTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ITEM_NAME" Type="String" MaxLength="2560" FixedLength="false" Unicode="true" />
+    <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CYCLE_TIME" Type="Double" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_STATE_CONTROL">
+    <Key>
+      <PropertyRef Name="STID" />
+    </Key>
+    <Property Name="STID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RCID" Type="Int32" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="MAC_ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="THIS_DATE" Type="DateTime" Precision="3" />
+    <Property Name="THIS_HOUR" Type="DateTime" Precision="3" />
+    <Property Name="THIS_SHIFT" Type="DateTime" Precision="3" />
+    <Property Name="THIS_CHANGED" Type="DateTime" Precision="3" />
+    <Property Name="THIS_HR_CHANGED" Type="DateTime" Precision="3" />
+    <Property Name="THIS_SF_CHANGED" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="IS_CONNECTED" Type="Boolean" />
+    <Property Name="CURRENT_STATE" Type="Int32" />
+    <Property Name="STATE_BEFORE_BREAK" Type="Int32" />
+    <Property Name="RED" Type="Int32" />
+    <Property Name="YELLOW" Type="Int32" />
+    <Property Name="GREEN" Type="Int32" />
+    <Property Name="BLUE" Type="Int32" />
+    <Property Name="ORANGE" Type="Int32" />
+    <Property Name="COUNTER_VALUE" Type="Int32" />
+    <Property Name="COUNT_RED" Type="Int32" />
+    <Property Name="COUNT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_GREEN" Type="Int32" />
+    <Property Name="COUNT_ERROR" Type="Int32" />
+    <Property Name="COUNT_BREAK" Type="Int32" />
+    <Property Name="COUNT_OFF" Type="Int32" />
+    <Property Name="COUNT_HOUR_RED" Type="Int32" />
+    <Property Name="COUNT_HOUR_YELLOW" Type="Int32" />
+    <Property Name="COUNT_HOUR_GREEN" Type="Int32" />
+    <Property Name="COUNT_HOUR_ERROR" Type="Int32" />
+    <Property Name="COUNT_HOUR_BREAK" Type="Int32" />
+    <Property Name="COUNT_HOUR_OFF" Type="Int32" />
+    <Property Name="COUNT_SHIFT_RED" Type="Int32" />
+    <Property Name="COUNT_SHIFT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_SHIFT_GREEN" Type="Int32" />
+    <Property Name="COUNT_SHIFT_ERROR" Type="Int32" />
+    <Property Name="COUNT_SHIFT_BREAK" Type="Int32" />
+    <Property Name="COUNT_SHIFT_OFF" Type="Int32" />
+    <Property Name="COUNT_WEEK_RED" Type="Int32" />
+    <Property Name="COUNT_WEEK_YELLOW" Type="Int32" />
+    <Property Name="COUNT_WEEK_GREEN" Type="Int32" />
+    <Property Name="COUNT_WEEK_ERROR" Type="Int32" />
+    <Property Name="COUNT_WEEK_BREAK" Type="Int32" />
+    <Property Name="COUNT_WEEK_OFF" Type="Int32" />
+    <Property Name="COUNT_MONTH_RED" Type="Int32" />
+    <Property Name="COUNT_MONTH_YELLOW" Type="Int32" />
+    <Property Name="COUNT_MONTH_GREEN" Type="Int32" />
+    <Property Name="COUNT_MONTH_ERROR" Type="Int32" />
+    <Property Name="COUNT_MONTH_BREAK" Type="Int32" />
+    <Property Name="COUNT_MONTH_OFF" Type="Int32" />
+    <Property Name="TIME_RED" Type="Int32" />
+    <Property Name="TIME_YELLOW" Type="Int32" />
+    <Property Name="TIME_GREEN" Type="Int32" />
+    <Property Name="TIME_ERROR" Type="Int32" />
+    <Property Name="TIME_BREAK" Type="Int32" />
+    <Property Name="TIME_OFF" Type="Int32" />
+    <Property Name="TIME_HOUR_RED" Type="Int32" />
+    <Property Name="TIME_HOUR_YELLOW" Type="Int32" />
+    <Property Name="TIME_HOUR_GREEN" Type="Int32" />
+    <Property Name="TIME_HOUR_ERROR" Type="Int32" />
+    <Property Name="TIME_HOUR_BREAK" Type="Int32" />
+    <Property Name="TIME_HOUR_OFF" Type="Int32" />
+    <Property Name="TIME_SHIFT_RED" Type="Int32" />
+    <Property Name="TIME_SHIFT_YELLOW" Type="Int32" />
+    <Property Name="TIME_SHIFT_GREEN" Type="Int32" />
+    <Property Name="TIME_SHIFT_ERROR" Type="Int32" />
+    <Property Name="TIME_SHIFT_BREAK" Type="Int32" />
+    <Property Name="TIME_SHIFT_OFF" Type="Int32" />
+    <Property Name="TIME_WEEK_RED" Type="Int32" />
+    <Property Name="TIME_WEEK_YELLOW" Type="Int32" />
+    <Property Name="TIME_WEEK_GREEN" Type="Int32" />
+    <Property Name="TIME_WEEK_ERROR" Type="Int32" />
+    <Property Name="TIME_WEEK_BREAK" Type="Int32" />
+    <Property Name="TIME_WEEK_OFF" Type="Int32" />
+    <Property Name="TIME_MONTH_RED" Type="Int32" />
+    <Property Name="TIME_MONTH_YELLOW" Type="Int32" />
+    <Property Name="TIME_MONTH_GREEN" Type="Int32" />
+    <Property Name="TIME_MONTH_ERROR" Type="Int32" />
+    <Property Name="TIME_MONTH_BREAK" Type="Int32" />
+    <Property Name="TIME_MONTH_OFF" Type="Int32" />
+    <Property Name="ITEM_ID" Type="Int32" />
+    <Property Name="ITEM_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="BREAK_START" Type="DateTime" Precision="3" />
+    <Property Name="IS_BREAK" Type="Boolean" />
+    <Property Name="TIMER_BREAK" Type="Int32" />
+    <Property Name="TIMER_BREAK_HOUR" Type="Int32" />
+    <Property Name="TIMER_BREAK_SHIFT" Type="Int32" />
+    <Property Name="TIMER_BREAK_WEEK" Type="Int32" />
+    <Property Name="TIMER_BREAK_MONTH" Type="Int32" />
+    <Property Name="CYCLE_CLOCK" Type="DateTime" Precision="3" />
+    <Property Name="ACTUAL_QTY" Type="Int32" />
+    <Property Name="ACTUAL_DAY_QTY" Type="Int32" />
+    <Property Name="ACTUAL_HOUR_QTY" Type="Int32" />
+    <Property Name="ACTUAL_SHIFT_QTY" Type="Int32" />
+    <Property Name="ACTUAL_WEEK_QTY" Type="Int32" />
+    <Property Name="ACTUAL_MONTH_QTY" Type="Int32" />
+    <Property Name="NG_QTY" Type="Int32" />
+    <Property Name="UPTIME_STD" Type="Double" />
+    <Property Name="UPTIME_ACT" Type="Double" />
+    <Property Name="IDEAL_RUN_RATE" Type="Double" />
+    <Property Name="IS_RESET" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_STATE_TRAN">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="THIS_DATE" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="BEGIN_TIME" Type="DateTime" Precision="3" />
+    <Property Name="END_TIME" Type="DateTime" Precision="3" />
+    <Property Name="DURATION" Type="Int32" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="CURRENT_STATE" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_WDR_INFO">
+    <Key>
+      <PropertyRef Name="WDR_MAC_ADDRESS" />
+    </Key>
+    <Property Name="WDR_MAC_ADDRESS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WDR_USERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WDR_STATUS" Type="Boolean" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SmartOKRs_WDT_INFO">
+    <Key>
+      <PropertyRef Name="WDT_MAC_ADDRESS" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="GROUP_ID" Type="Int32" />
+    <Property Name="WDT_MAC_ADDRESS" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WDT_USERNAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WDT_STATUS" Type="Boolean" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MODE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="QUANTITY_EACH_TURN" Type="Int32" Nullable="false" />
+    <Property Name="PERCENT_TARGET" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUM_DAILY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="BEGIN_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="END_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="COUNT_RED" Type="Int32" />
+    <Property Name="COUNT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_GREEN" Type="Int32" />
+    <Property Name="COUNT_ERROR" Type="Int32" />
+    <Property Name="COUNT_BREAK" Type="Int32" />
+    <Property Name="COUNT_OFF" Type="Int32" />
+    <Property Name="TIME_RED" Type="Int32" />
+    <Property Name="TIME_YELLOW" Type="Int32" />
+    <Property Name="TIME_GREEN" Type="Int32" />
+    <Property Name="TIME_ERROR" Type="Int32" />
+    <Property Name="TIME_BREAK" Type="Int32" />
+    <Property Name="TIME_OFF" Type="Int32" />
+    <Property Name="ACTUAL_QTY" Type="Int32" />
+    <Property Name="NG_QTY" Type="Int32" />
+    <Property Name="UPTIME_STD" Type="Double" />
+    <Property Name="UPTIME_ACT" Type="Double" />
+    <Property Name="TOTAL_PCS" Type="Int32" />
+    <Property Name="GOOD_PCS" Type="Int32" />
+    <Property Name="REJECT_PCS" Type="Int32" />
+    <Property Name="OEE_TOTAL_TIME" Type="Int32" />
+    <Property Name="OEE_PLAN_TIME" Type="Int32" />
+    <Property Name="OEE_DOWN_TIME" Type="Int32" />
+    <Property Name="OEE_OPERATE_TIME" Type="Int32" />
+    <Property Name="OEE_IDEAL_RUN_RATE" Type="Double" />
+    <Property Name="OEE_A" Type="Double" />
+    <Property Name="OEE_P" Type="Double" />
+    <Property Name="OEE_Q" Type="Double" />
+    <Property Name="OEE" Type="Double" />
+  </EntityType>
+  <EntityType Name="SUM_HOURLY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="THIS_DATE" Type="DateTime" Precision="3" />
+    <Property Name="BEGIN_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="END_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="COUNT_RED" Type="Int32" />
+    <Property Name="COUNT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_GREEN" Type="Int32" />
+    <Property Name="COUNT_ERROR" Type="Int32" />
+    <Property Name="COUNT_BREAK" Type="Int32" />
+    <Property Name="COUNT_OFF" Type="Int32" />
+    <Property Name="TIME_RED" Type="Int32" />
+    <Property Name="TIME_YELLOW" Type="Int32" />
+    <Property Name="TIME_GREEN" Type="Int32" />
+    <Property Name="TIME_ERROR" Type="Int32" />
+    <Property Name="TIME_BREAK" Type="Int32" />
+    <Property Name="TIME_OFF" Type="Int32" />
+    <Property Name="ACTUAL_QTY" Type="Int32" />
+    <Property Name="UPTIME_STD" Type="Double" />
+    <Property Name="UPTIME_ACT" Type="Double" />
+  </EntityType>
+  <EntityType Name="SUM_MONTHLY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="BEGIN_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="END_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="COUNT_RED" Type="Int32" />
+    <Property Name="COUNT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_GREEN" Type="Int32" />
+    <Property Name="COUNT_ERROR" Type="Int32" />
+    <Property Name="COUNT_BREAK" Type="Int32" />
+    <Property Name="COUNT_OFF" Type="Int32" />
+    <Property Name="TIME_RED" Type="Int32" />
+    <Property Name="TIME_YELLOW" Type="Int32" />
+    <Property Name="TIME_GREEN" Type="Int32" />
+    <Property Name="TIME_ERROR" Type="Int32" />
+    <Property Name="TIME_BREAK" Type="Int32" />
+    <Property Name="TIME_OFF" Type="Int32" />
+    <Property Name="ACTUAL_QTY" Type="Int32" />
+    <Property Name="UPTIME_STD" Type="Double" />
+    <Property Name="UPTIME_ACT" Type="Double" />
+  </EntityType>
+  <EntityType Name="SUM_SHIFT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="SHIFT_ID" Type="Int32" />
+    <Property Name="THIS_DATE" Type="DateTime" Precision="3" />
+    <Property Name="BEGIN_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="END_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="COUNT_RED" Type="Int32" />
+    <Property Name="COUNT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_GREEN" Type="Int32" />
+    <Property Name="COUNT_ERROR" Type="Int32" />
+    <Property Name="COUNT_BREAK" Type="Int32" />
+    <Property Name="COUNT_OFF" Type="Int32" />
+    <Property Name="TIME_RED" Type="Int32" />
+    <Property Name="TIME_YELLOW" Type="Int32" />
+    <Property Name="TIME_GREEN" Type="Int32" />
+    <Property Name="TIME_ERROR" Type="Int32" />
+    <Property Name="TIME_BREAK" Type="Int32" />
+    <Property Name="TIME_OFF" Type="Int32" />
+    <Property Name="ACTUAL_QTY" Type="Int32" />
+    <Property Name="UPTIME_STD" Type="Double" />
+    <Property Name="UPTIME_ACT" Type="Double" />
+  </EntityType>
+  <EntityType Name="SUM_WEEKLY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MCID" Type="Int32" />
+    <Property Name="LNID" Type="Int32" />
+    <Property Name="BEGIN_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="END_DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="SERVER_TIME" Type="DateTime" Precision="3" />
+    <Property Name="COUNT_RED" Type="Int32" />
+    <Property Name="COUNT_YELLOW" Type="Int32" />
+    <Property Name="COUNT_GREEN" Type="Int32" />
+    <Property Name="COUNT_ERROR" Type="Int32" />
+    <Property Name="COUNT_BREAK" Type="Int32" />
+    <Property Name="COUNT_OFF" Type="Int32" />
+    <Property Name="TIME_RED" Type="Int32" />
+    <Property Name="TIME_YELLOW" Type="Int32" />
+    <Property Name="TIME_GREEN" Type="Int32" />
+    <Property Name="TIME_ERROR" Type="Int32" />
+    <Property Name="TIME_BREAK" Type="Int32" />
+    <Property Name="TIME_OFF" Type="Int32" />
+    <Property Name="ACTUAL_QTY" Type="Int32" />
+    <Property Name="UPTIME_STD" Type="Double" />
+    <Property Name="UPTIME_ACT" Type="Double" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WORK_TERM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TERM_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TIME_START" Type="Int32" Nullable="false" />
+    <Property Name="TIME_END" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="SmartOKRsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="Administrators" EntityType="Self.Administrator" />
+    <EntitySet Name="BROKEN_REASON" EntityType="Self.BROKEN_REASON" />
+    <EntitySet Name="SmartOKRs_ERROR_LOG" EntityType="Self.SmartOKRs_ERROR_LOG" />
+    <EntitySet Name="SmartOKRs_HISTORY_LOG" EntityType="Self.SmartOKRs_HISTORY_LOG" />
+    <EntitySet Name="SmartOKRs_INFO" EntityType="Self.SmartOKRs_INFO" />
+    <EntitySet Name="SmartOKRs_LINE" EntityType="Self.SmartOKRs_LINE" />
+    <EntitySet Name="SmartOKRs_PRODUCTS" EntityType="Self.SmartOKRs_PRODUCTS" />
+    <EntitySet Name="SmartOKRs_STATE_CONTROL" EntityType="Self.SmartOKRs_STATE_CONTROL" />
+    <EntitySet Name="SmartOKRs_STATE_TRAN" EntityType="Self.SmartOKRs_STATE_TRAN" />
+    <EntitySet Name="SmartOKRs_WDR_INFO" EntityType="Self.SmartOKRs_WDR_INFO" />
+    <EntitySet Name="SmartOKRs_WDT_INFO" EntityType="Self.SmartOKRs_WDT_INFO" />
+    <EntitySet Name="SUM_DAILY" EntityType="Self.SUM_DAILY" />
+    <EntitySet Name="SUM_HOURLY" EntityType="Self.SUM_HOURLY" />
+    <EntitySet Name="SUM_MONTHLY" EntityType="Self.SUM_MONTHLY" />
+    <EntitySet Name="SUM_SHIFT" EntityType="Self.SUM_SHIFT" />
+    <EntitySet Name="SUM_WEEKLY" EntityType="Self.SUM_WEEKLY" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="WORK_TERM" EntityType="Self.WORK_TERM" />
+    <FunctionImport Name="P001_StateChange">
+      <Parameter Name="STID" Mode="In" Type="Int32" />
+      <Parameter Name="new_state" Mode="In" Type="Int32" />
+      <Parameter Name="green" Mode="In" Type="Int32" />
+      <Parameter Name="red" Mode="In" Type="Int32" />
+      <Parameter Name="yellow" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="P002_SumHourly" />
+    <FunctionImport Name="P003_UpdateNG">
+      <Parameter Name="STID" Mode="In" Type="Int32" />
+      <Parameter Name="MCID" Mode="In" Type="Int32" />
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="ng_qty" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q001_RealtimeStatus" ReturnType="Collection(SUMIDAModel.Q001_RealtimeStatus_Result)">
+      <Parameter Name="sotrang" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q002_Timeline" ReturnType="Collection(SUMIDAModel.Q002_Timeline_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="start" Mode="In" Type="Int32" />
+      <Parameter Name="end" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q003_QtyHour" ReturnType="Collection(SUMIDAModel.Q003_QtyHour_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q004_ReportHourly" ReturnType="Collection(SUMIDAModel.Q004_ReportHourly_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="Q005_ReportShift" ReturnType="Collection(SUMIDAModel.Q005_ReportShift_Result)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="Q006_ReportDaily" ReturnType="Collection(SUMIDAModel.Q006_ReportDaily_Result)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="Q006_ReportMonthly">
+      <Parameter Name="nam" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q006_ReportWeekly" ReturnType="Collection(SUMIDAModel.Q006_ReportWeekly_Result)">
+      <Parameter Name="tungay" Mode="In" Type="DateTime" />
+      <Parameter Name="denngay" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="Q007_LiveBoardTime" ReturnType="Collection(SUMIDAModel.Q007_LiveBoardTime_Result)">
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q008_Last5DaysLiveBoardTime" ReturnType="Collection(SUMIDAModel.Q008_Last5DaysLiveBoardTime_Result)">
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q009_DailyChart" ReturnType="Collection(SUMIDAModel.Q009_DailyChart_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q010_WeeklyChart">
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q011_MonthlyChart" ReturnType="Collection(SUMIDAModel.Q011_MonthlyChart_Result)">
+      <Parameter Name="nam" Mode="In" Type="Int32" />
+      <Parameter Name="thang" Mode="In" Type="Int32" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q012_MobileTest" ReturnType="Collection(SUMIDAModel.Q012_MobileTest_Result)">
+      <Parameter Name="mac" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Q013_TimelineMC" ReturnType="Collection(SUMIDAModel.Q013_TimelineMC_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q014_OEEDaily" ReturnType="Collection(SUMIDAModel.Q014_OEEDaily_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Q015_OEESupportVariable" ReturnType="Collection(SUMIDAModel.Q015_OEESupportVariable_Result)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="mcid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SUMIDAModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SUMIDAModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="Q001_RealtimeStatus_Result">
+    <Property Type="Int32" Name="STID" Nullable="false" />
+    <Property Type="Int32" Name="RCID" Nullable="true" />
+    <Property Type="Int32" Name="MCID" Nullable="true" />
+    <Property Type="Int32" Name="LNID" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="THIS_CHANGED" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="SERVER_TIME" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IS_CONNECTED" Nullable="true" />
+    <Property Type="Int32" Name="CURRENT_STATE" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_SHIFT_RED" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_SHIFT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_SHIFT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_SHIFT_OFF" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_SHIFT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_SHIFT_BREAK" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_RED" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_OFF" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_BREAK" Nullable="true" />
+    <Property Type="Int32" Name="work_time" Nullable="true" />
+    <Property Type="Int32" Name="ACTUAL_SHIFT_QTY" Nullable="true" />
+    <Property Type="Int32" Name="NG_QTY" Nullable="true" />
+    <Property Type="DateTime" Name="CYCLE_CLOCK" Nullable="true" Precision="23" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="String" Name="LINE_NAME" Nullable="true" MaxLength="1000" />
+    <Property Type="Decimal" Name="PERCENT_TARGET" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="TIME_SHIFT_TOTAL" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_RUN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_SHIFT_LOSS" Nullable="true" />
+    <Property Type="Double" Name="uptime" Nullable="false" />
+    <Property Type="Decimal" Name="PERCENT_GREEN" Nullable="true" Precision="35" Scale="19" />
+    <Property Type="Decimal" Name="PERCENT_RED" Nullable="true" Precision="35" Scale="19" />
+    <Property Type="Decimal" Name="PERCENT_YELLOW" Nullable="true" Precision="35" Scale="19" />
+    <Property Type="Decimal" Name="PERCENT_OFF" Nullable="true" Precision="35" Scale="19" />
+    <Property Type="Decimal" Name="PERCENT_ERROR" Nullable="true" Precision="35" Scale="19" />
+    <Property Type="Decimal" Name="PERCENT_BREAK" Nullable="true" Precision="35" Scale="19" />
+  </ComplexType>
+  <ComplexType Name="Q002_Timeline_Result">
+    <Property Type="Int32" Name="x" Nullable="true" />
+    <Property Type="Int32" Name="ID" Nullable="true" />
+    <Property Type="String" Name="MACHINE_NAME" Nullable="true" />
+    <Property Type="Int32" Name="TID" Nullable="false" />
+    <Property Type="Int32" Name="CURRENT_STATE" Nullable="true" />
+    <Property Type="Int64" Name="low" Nullable="true" />
+    <Property Type="Int64" Name="high" Nullable="true" />
+    <Property Type="String" Name="BEGIN_TIME" Nullable="true" MaxLength="45" />
+    <Property Type="String" Name="END_TIME" Nullable="true" MaxLength="45" />
+    <Property Type="String" Name="DURATION" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="name" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="TIME_GREEN" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_RED" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_YELLOW" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_OFF" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_ERROR" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_BREAK" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="Q003_QtyHour_Result">
+    <Property Type="String" Name="mc_sname" Nullable="true" />
+    <Property Type="String" Name="series" Nullable="true" MaxLength="2" />
+    <Property Type="Int32" Name="h" Nullable="true" />
+    <Property Type="Int32" Name="ACTUAL_QTY" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Q004_ReportHourly_Result">
+    <Property Type="Int32" Name="MCID" Nullable="true" />
+    <Property Type="String" Name="MACHINE_NAME" Nullable="true" />
+    <Property Type="String" Name="HOUR" Nullable="true" MaxLength="25" />
+    <Property Type="Int32" Name="COUNT_RED" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_OFF" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_BREAK" Nullable="true" />
+    <Property Type="String" Name="TIME_RED" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_YELLOW" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_GREEN" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_OFF" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_ERROR" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_BREAK" Nullable="true" MaxLength="30" />
+    <Property Type="Double" Name="uptime" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q005_ReportShift_Result">
+    <Property Type="Int32" Name="MCID" Nullable="true" />
+    <Property Type="String" Name="MACHINE_NAME" Nullable="true" />
+    <Property Type="DateTime" Name="DATE" Nullable="true" />
+    <Property Type="String" Name="SHIFT" Nullable="true" MaxLength="500" />
+    <Property Type="Int32" Name="TIME_START" Nullable="true" />
+    <Property Type="Int32" Name="TIME_END" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_RED" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_OFF" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_BREAK" Nullable="true" />
+    <Property Type="String" Name="TIME_RED" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_YELLOW" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_GREEN" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_OFF" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_ERROR" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_BREAK" Nullable="true" MaxLength="30" />
+    <Property Type="Double" Name="UPTIME" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q006_ReportDaily_Result">
+    <Property Type="Int32" Name="MCID" Nullable="true" />
+    <Property Type="String" Name="MACHINE_NAME" Nullable="true" />
+    <Property Type="DateTime" Name="DATE" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_RED" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_OFF" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_BREAK" Nullable="true" />
+    <Property Type="String" Name="TIME_RED" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_YELLOW" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_GREEN" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_OFF" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_ERROR" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_BREAK" Nullable="true" MaxLength="30" />
+    <Property Type="Double" Name="UPTIME" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q006_ReportWeekly_Result">
+    <Property Type="Int32" Name="MCID" Nullable="true" />
+    <Property Type="String" Name="MACHINE_NAME" Nullable="true" />
+    <Property Type="DateTime" Name="BEGIN_DATETIME" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="END_DATETIME" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="COUNT_RED" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_OFF" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_BREAK" Nullable="true" />
+    <Property Type="String" Name="TIME_RED" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_YELLOW" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_GREEN" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_OFF" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_ERROR" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_BREAK" Nullable="true" MaxLength="30" />
+    <Property Type="Double" Name="UPTIME" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q007_LiveBoardTime_Result">
+    <Property Type="Int32" Name="STID" Nullable="false" />
+    <Property Type="Int32" Name="RCID" Nullable="true" />
+    <Property Type="Int32" Name="MCID" Nullable="true" />
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="THIS_CHANGED" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="SERVER_TIME" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IS_CONNECTED" Nullable="true" />
+    <Property Type="Int32" Name="CURRENT_STATE" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_RED" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="COUNT_BREAK" Nullable="true" />
+    <Property Type="Int32" Name="TIME_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_RED" Nullable="true" />
+    <Property Type="Int32" Name="TIME_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="TIME_OFF" Nullable="true" />
+    <Property Type="Int32" Name="TIME_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="TIME_BREAK" Nullable="true" />
+    <Property Type="Int32" Name="RUNNING_TIME" Nullable="true" />
+    <Property Type="Int32" Name="ACTUAL_QTY" Nullable="true" />
+    <Property Type="DateTime" Name="CYCLE_CLOCK" Nullable="true" Precision="23" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+    <Property Type="Decimal" Name="PERCENT_TARGET" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="TIME_TOTAL" Nullable="true" />
+    <Property Type="Int32" Name="TIME_RUN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_LOSS" Nullable="true" />
+    <Property Type="Double" Name="uptime" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q008_Last5DaysLiveBoardTime_Result">
+    <Property Type="DateTime" Name="NGAY_CHUNG_TU" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="NGAY" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="TIME_RED" Nullable="true" />
+    <Property Type="Int32" Name="TIME_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="TIME_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_OFF" Nullable="true" />
+    <Property Type="String" Name="TEN_NGAY" Nullable="true" MaxLength="4000" />
+    <Property Type="Int32" Name="TIME_TOTAL" Nullable="true" />
+    <Property Type="Int32" Name="TIME_RUN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_LOSS" Nullable="true" />
+    <Property Type="Double" Name="uptime" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q009_DailyChart_Result">
+    <Property Type="String" Name="mc_sname" Nullable="true" />
+    <Property Type="String" Name="series" Nullable="true" MaxLength="2" />
+    <Property Type="Int32" Name="h" Nullable="true" />
+    <Property Type="Double" Name="tm_gg" Nullable="false" />
+    <Property Type="Double" Name="tm_rr" Nullable="false" />
+    <Property Type="Double" Name="tm_yy" Nullable="false" />
+    <Property Type="Double" Name="tm_off" Nullable="false" />
+    <Property Type="Double" Name="tm_error" Nullable="false" />
+    <Property Type="Double" Name="tm_break" Nullable="false" />
+    <Property Type="Double" Name="uptime_std_min" Nullable="false" />
+    <Property Type="Double" Name="uptime_std" Nullable="false" />
+    <Property Type="Double" Name="uptime_act" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q011_MonthlyChart_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="series" Nullable="true" MaxLength="2" />
+    <Property Type="Double" Name="tm_gg" Nullable="false" />
+    <Property Type="Double" Name="tm_rr" Nullable="false" />
+    <Property Type="Double" Name="tm_yy" Nullable="false" />
+    <Property Type="Double" Name="tm_off" Nullable="false" />
+    <Property Type="Double" Name="tm_error" Nullable="false" />
+    <Property Type="Double" Name="tm_break" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q012_MobileTest_Result">
+    <Property Type="String" Name="MAC_ADDRESS" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="CURRENT_STATE" Nullable="true" />
+    <Property Type="Int32" Name="TIME_OFF" Nullable="true" />
+    <Property Type="Int32" Name="TIME_GREEN" Nullable="true" />
+    <Property Type="Int32" Name="TIME_RED" Nullable="true" />
+    <Property Type="Int32" Name="TIME_YELLOW" Nullable="true" />
+    <Property Type="Int32" Name="TIME_BREAK" Nullable="true" />
+    <Property Type="Int32" Name="TIME_ERROR" Nullable="true" />
+    <Property Type="Int32" Name="ACTUAL_QTY" Nullable="true" />
+    <Property Type="String" Name="WDT_USERNAME" Nullable="true" />
+    <Property Type="String" Name="DESCRIPTION" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Q013_TimelineMC_Result">
+    <Property Type="Int32" Name="x" Nullable="true" />
+    <Property Type="Int32" Name="ID" Nullable="true" />
+    <Property Type="String" Name="MACHINE_NAME" Nullable="true" />
+    <Property Type="Int32" Name="TID" Nullable="false" />
+    <Property Type="Int32" Name="CURRENT_STATE" Nullable="true" />
+    <Property Type="Int64" Name="low" Nullable="true" />
+    <Property Type="Int64" Name="high" Nullable="true" />
+    <Property Type="String" Name="BEGIN_TIME" Nullable="true" MaxLength="45" />
+    <Property Type="String" Name="END_TIME" Nullable="true" MaxLength="45" />
+    <Property Type="String" Name="DURATION" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="name" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="TIME_GREEN" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_RED" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_YELLOW" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_OFF" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_ERROR" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="TIME_BREAK" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="Q015_OEESupportVariable_Result">
+    <Property Type="Int32" Name="TOTAL_PCS" Nullable="true" />
+    <Property Type="Int32" Name="GOOD_PCS" Nullable="true" />
+    <Property Type="Int32" Name="REJECT_PCS" Nullable="true" />
+    <Property Type="Int32" Name="OEE_TOTAL_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OEE_PLAN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OEE_DOWN_TIME" Nullable="true" />
+    <Property Type="Int32" Name="OEE_OPERATE_TIME" Nullable="true" />
+    <Property Type="Double" Name="OEE_IDEAL_RUN_RATE" Nullable="true" />
+    <Property Type="Double" Name="OEE_A" Nullable="true" />
+    <Property Type="Double" Name="OEE_P" Nullable="true" />
+    <Property Type="Double" Name="OEE_Q" Nullable="true" />
+    <Property Type="Double" Name="OEE" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Q014_OEEDaily_Result">
+    <Property Type="Decimal" Name="OEE" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+</Schema>

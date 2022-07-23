@@ -1,0 +1,2172 @@
+﻿
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wise Management</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Content/vendor/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.tw.css">
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+
+    <script src="~/Content/dist/js/jquery.min.js"></script>
+    <script src="~/Content/js-vendor/dashboard.js"></script>
+    <script src="~/Content/js-vendor/misc.js"></script>
+    <script src="~/Content/js-vendor/hoverable-collapse.js"></script>
+    <script src="~/Content/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/Content/scripts/jquery.emojis.js"></script>
+    <script type="text/javascript" src="~/Content/scripts/jquery.emojipicker.js"></script>
+
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+
+    @*<script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>*@
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
+
+</head>
+<body>
+    <div class="container-scroller" ng-controller="ProjectsCtrl" ng-app="myApp">
+        <!-- partial:partials/_navbar.html -->
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper" style="padding-top:0">
+            <div class="content-wrapper" style="background-color:#0e4c6d !important">
+                <div class="page-header">
+                    <h3 class="font-weight-light text-white">Projects Board</h3>
+                    <div style="display:inline-block">
+                        <button class="btn btn-default ribbon  ribbon--orange" style="margin:0 10px;" data-toggle="modal" data-target="#Modal_View_Subordinate" ng-click="View_User_Subordinate(''); xemcapduoi=true"><span style="color:white">Xem cấp dưới</span></button>
+                        @*<button class="btn btn-default" style="background-color: #fff !important" ng-click="View_User_Subordinate(); xemcapduoi=true" ng-hide="xemcapduoi">Xem cấp dưới</button>*@
+                        <button class="btn btn-default ribbon  ribbon--orange" style="" ng-click="Show_self(); xemcapduoi=false" ng-show="xemcapduoi"><span style="color:white">Xem dữ liệu của tôi</span></button>
+                        <br />
+
+
+                    </div>
+
+                    <div class="form-choose-status" style="display:flex">
+                        <form class="panel panel-default panel-body " style="margin-bottom:0">
+                            <label class="checkbox-radio">
+                                <input type="radio" ng-click="LoadListProject()" name="complete"> View All
+                            </label>
+                            
+                        </form>
+                        <form class="panel panel-default panel-body checkbox-radio" style="margin-bottom:0;margin-left:20px">
+                            <label class="checkbox-radio">
+                                <input type="radio" ng-click="GetComplete(false);Filter_Data()" name="complete"> InComplete
+                            </label>
+                            <label>
+                                <input type="radio" ng-click="GetComplete(true);Filter_Data()" name="complete"> Complete
+                            </label>
+                          
+
+                        </form>
+                        <form class="panel panel-default panel-body checkbox-radio" style="margin-bottom:0;margin-left:20px">
+                            <label class="checkbox-radio">
+                                <input type="radio" ng-click="GetStatus('assigned');Filter_Data()" name="status"> Assigned
+                            </label>
+                              
+                            <label class="checkbox-radio">
+                                <input type="radio" ng-click="GetStatus('assign'); Filter_Data()" name="status"> Assign
+                            </label>
+                            
+                            <label class="checkbox-radio">
+                                <input type="radio" ng-click="GetStatus('checker'); Filter_Data()" name="status"> Checker
+                            </label>
+                            
+                            <label class="checkbox-radio">
+                                <input type="radio" ng-click="GetStatus('follow'); Filter_Data()" name="status"> Follow
+                            </label>
+                               
+
+                        </form>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="container-fluid pt-3">
+                        <div class="row flex-row flex-sm-nowrap py-3">
+                            <!--All Projects-->
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>
+                                                    <div class="form-header">
+                                                        <h6 class="card-title text-uppercase text-truncate py-2">Projects</h6>
+                                                        <button class="btn btn-gradient-primary" data-toggle="modal" data-target="#Modal_create_project"><i class="fa fa-plus" style="margin-right:5px"></i>New project</button>
+                                                    </div>
+
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+
+                                        <div class="items border border-light" ng-repeat="item in ListProjectNone = (list_projects | filter:{PROJECT_NAME:searchFish}) " ng-click="projectid=item.ID; View_target_by_project(item.ID);Get_detail_project(item.ID); Get_user_view_project(item.ID);Get_All_Comment_Project(item.ID);LoadTaskDefault(item.ID)">
+                                            <div class="card draggable shadow-sm">
+                                                <div class="card-body p-2" ng-class="{'work-done' : item.PERCENT_DONE == 100, 'work-overdue' : item.IS_OVERDUE == true}">
+                                                    <div class="card-title">
+                                                        <div class="form-header-content">
+                                                            <a class="lead font-weight-light" style="font-weight:bold !important; color:cornflowerblue;cursor:pointer;">{{item.PROJECT_NAME}}</a>
+                                                            <div class="progress-bar bg-gradient-success" style="width:{{item.PERCENT_DONE}}%;position:relative; border:1px;float:none;height:25px;" role="progressbar" aria-valuenow="{{item.PERCENT_DONE}}" aria-valuemin="0" aria-valuemax="100"><em>{{item.PERCENT_DONE}}%</em></div>
+                                                            <icon class="fa fa-trash" style="color:red; position:relative;text-align:right" ng-click="DeleteProject(item.ID)"></icon>
+                                                        </div>
+                                                    </div>
+                                                    <p style="font-size:12px">
+                                                        {{item.PROJECT_TARGERT}}
+                                                    </p>
+                                                    <div class="form-view-detail" style="display:grid;grid-template-columns:2fr 1fr;">
+                                                        <div class="form-left-detail">
+                                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-project-detail" style="background-color:cornflowerblue; border-color:cornflowerblue">View detail</button>
+                                                            <span style="font-size:12px; color:cornflowerblue">Deadline: </span><span style="font-weight:bold; font-style:italic;font-size:11px; color:dimgray">{{item.DATE_END | date : 'dd/MM/yyyy'}}</span>
+                                                        </div>
+
+                                                        <div class="form-right-owner">
+                                                            <span style="font-size:11px; color:cornflowerblue;line-height:30px">PIC: </span>
+                                                            <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.PROJECT_OWNER_AVATAR}}" style="border-radius:50%" width="30" height="30">
+                                                            <span style="font-weight:bold; font-size:11px; font-style:italic; color:dimgray;margin-left:5px">{{item.PROJECT_OWNER_NAME}}</span>
+                                                           
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="dropzone rounded"> &nbsp; </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End all project-->
+                            <!--All Targets-->
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>
+                                                    <div class="form-header">
+                                                        <h6 class="card-title text-uppercase text-truncate py-2">Targets</h6>
+                                                        <button class="btn btn-gradient-primary" data-toggle="modal" data-target="#Modal_create_target"><i class="fa fa-plus" style="margin-right:5px"></i>New target</button>
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+                                        </table>
+
+                                        <div class="panel panel-primary kanban-col" style="border-color:#337ab71f">
+                                            <div class="panel-heading" style="background-color:#0e4c6d !important; border-color:white" ng-repeat-start="item in list_targets" ng-if="$first || item.PROJECT_NAME != list_targets[$index - 1].PROJECT_NAME">
+                                                <h4>{{item.PROJECT_NAME}}</h4>
+                                            </div>
+
+                                            <div class="items border border-light" ng-repeat-end="item in list_targets" ng-dblclick="dbclick_open_target(item.ID)" ng-click="Get_Tasks_By_Target_ID(item.ID, item.TARGET_NAME);Get_All_Comment_Target(item.ID)">
+                                                <div class="card draggable shadow-sm" id="cd1">
+                                                    <div class="card-body p-2" ng-class="{'work-done' : item.PERCENT_DONE ==100, 'work-overdue' : item.IS_OVERDUE == true}">
+                                                        <div class="card-title">
+                                                            <div class="form-header-content">
+                                                                <a class="lead font-weight-light" style="font-weight:bold !important; color:cornflowerblue;">{{item.TARGET_NAME}}</a>
+                                                                <div class="progress-bar bg-gradient-danger" style="width:{{item.PERCENT_DONE}}%;position:relative; border:1px;float:none;height:25px;" role="progressbar" aria-valuenow="{{item.PERCENT_DONE}}" aria-valuemin="0" aria-valuemax="100"><em>{{item.PERCENT_DONE}}%</em></div>
+                                                                <icon class="fa fa-trash" style="color:red; position:relative;text-align:right" ng-click="DeleteTarget(item.ID)"></icon>
+                                                            </div>
+                                                        </div>
+
+                                                        <p>
+                                                            <span style="font-size:12px" ng-bind-html="item.TARGET_DESCRIPTION | unsafe"></span>
+                                                        </p>
+                                                        <div class="form-view-detail" style="display:grid;grid-template-columns:1fr 2.2fr 5fr;">
+                                                            <button class="btn btn-primary btn-sm" ng-click="View_detail_target(item.ID);Get_user_view_target(item.ID)" data-toggle="modal" data-target="#modal-target-detail" style="background-color:cornflowerblue; border-color:cornflowerblue">View detail</button>
+                                                            <div class="form-left-detail" style="display:flex;align-items:center;justify-content:center">
+                                                                <span style="font-size:12px; color:cornflowerblue">Deadline: </span>
+                                                                <span style="font-weight:bold;font-size:11px; font-style:italic; color:dimgray">{{item.DATE_END | date : 'dd/MM/yyyy'}}</span>
+                                                            </div>
+
+                                                            <div class="form-right-owner" style="display:flex">
+                                                                <span style="font-size:12px; color:cornflowerblue;line-height:30px">PIC: </span>
+                                                                <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.USER_ASSIGNEE_AVATAR}}" style="border-radius:50%" width="30" height="30">
+                                                                <span style="font-weight:bold;font-size:11px;font-style:italic;color:dimgray;margin-left:5px;display:flex;align-items:center">{{item.ASSIGNEE_NAME}}</span>
+                                                                 &nbsp;&nbsp; 
+                                                                <span style="font-size:12px; color:cornflowerblue;line-height:30px">Check: </span>
+                                                                <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.USER_RECHECK_AVATAR}}" style="border-radius:50%" width="30" height="30">
+                                                                <span style="font-weight:bold; font-size:11px; font-style:italic;margin-left:5px; color:dimgray;display:flex;align-items:center">{{item.RECHECK_USER_NAME}}</span>
+                                                                
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="dropzone rounded"> &nbsp; </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End All Targets-->
+
+
+                            </div>
+                            <!--All Tasks-->
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>
+                                                    <div class="form-header">
+                                                        <h6 class="card-title text-uppercase text-truncate py-2">Tasks</h6>
+                                                        <button class="btn btn-gradient-primary" data-toggle="modal" data-target="#Modal_create_task"><i class="fa fa-plus" style="margin-right:5px"></i>New task</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <div class="panel panel-primary kanban-col" style="border-color:#337ab71f">
+                                            <div class="panel-heading" style="background-color:#0e4c6d !important;" ng-repeat-start="item in list_tasks" ng-if="$first || item.TARGET_NAME != list_tasks[$index - 1].TARGET_NAME">
+                                                <h4>{{item.TARGET_NAME}}</h4> <span>{{item.PROJECT_NAME}}</span>
+                                            </div>
+                                            <div class="items border border-light" ng-repeat-end="item in list_tasks" ng-dblclick="dbclick_open_task(item.ID)">
+                                                <div class="card draggable shadow-sm" id="cd9">
+                                                    <div class="card-body p-2" ng-class="{'work-done' : item.IS_DONE == true, 'work-overdue' : item.IS_OVERDUE == true}">
+                                                        <div class="card-title">
+                                                            <div class="form-header-content" style="grid-template-columns:6fr 1fr">
+                                                                <a class="lead font-weight-light" style="font-weight:bold !important; color:cornflowerblue;">{{item.TASK_NAME}}</a>
+                                                                <i class="fa fa-trash" style="color:red; position:relative;text-align:right" ng-click="DeleteTask(item.ID)"></i>
+                                                            </div>
+
+                                                        </div>
+                                                        <p style="font-size:12px">{{item.TASK_DESCRIPTIOM}}</p>
+
+                                                        <div class="form-view-detail" style="display:grid;grid-template-columns:1fr 2fr;">
+                                                            <div class="form-left-detail" style="display:flex;align-items:center">
+                                                                <span style="font-size:12px; color:cornflowerblue">Deadline: </span><span style="font-weight:bold; font-size:11px; font-style:italic; color:dimgray">{{item.DATE_END | date : 'dd/MM/yyyy'}}</span>
+                                                            </div>
+
+                                                            <div class="form-right-owner" style="display:flex">
+                                                                <span style="font-size:11px; color:cornflowerblue;line-height:30px">Todo: </span>
+                                                                <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.USER_ASSIGNEE_AVATAR}}" style="border-radius:50%" width="30" height="30">
+                                                                <span style="font-weight:bold; font-size:11px; font-style:italic; color:dimgray;;margin-left:5px;display:flex;align-items:center">{{item.ASSIGNEE_NAME}}</span>
+                                                               &nbsp;&nbsp; <span style="font-size:11px; color:cornflowerblue;line-height:30px">Check: </span>
+                                                                <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.USER_RECHECK_AVATAR}}" style="border-radius:50%" width="30" height="30">
+                                                                <span style="font-weight:bold; font-size:11px; font-style:italic; color:dimgray;margin-left:5px;display:flex;align-items:center">{{item.RECHECK_USER_NAME}}</span>
+                                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End All Tasks-->
+                        </div>
+
+                        @*<div class="title-project input-form-search" style="display:flex;justify-content:space-between">
+
+                                <h4 class="card-title">All projects</h4>
+                                <div class="search-name" style="position:relative;">
+                                    <span class="fa fa-search form-control-feedback"></span>
+                                    <input type="text" class="form-control" id="myInput" ng-model="searchFish" placeholder="Search for names.." autocomplete="off">
+                                </div>
+                            </div>*@
+
+                    </div>
+                </div>
+
+
+                @*<footer class="footer">
+                         <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2020 <a href="https://www.hoplongtech.com/" target="_blank">Hoplongtech</a>. All rights reserved.</span>
+                         </div>
+                    </footer>*@
+                <!--MODAL VIEW SUBORDINATE-->
+                <div class="modal fade" id="Modal_View_Subordinate" role="dialog">
+                    <div class="modal-dialog" style="max-width:30%">
+
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="container">
+                                    <h2>Danh sách nhân viên của bạn</h2>
+                                    <ul class="list-group" ng-repeat-start="item in Subordinate" ng-if="$first || item.GROUP_NAME != Subordinate[$index - 1].GROUP_NAME">
+                                        <li class="list-group-item" style="background-color:steelblue; font-weight:bold; color:white">{{item.GROUP_NAME}}</li>
+                                    </ul>
+                                    <ul class="list-group" ng-repeat-end="item in list_targets">
+                                        <li class="list-group-item" ng-click="Show_subordinate(item.ID)">
+                                            <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.AVATAR}}" style="border-radius:50%" width="40" height="40">
+                                            <span ng-style="item.IS_LEADER == true ? {'color':'steelblue'} : ''">{{item.FULLNAME}}</span>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--END VIEW SUBORDINATE-->
+
+                <!--MODAL CREATE TARGET-->
+                <div class="modal fade" id="Modal_create_target" role="dialog">
+                    <div class="modal-dialog" style="max-width:80%">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="width:100%">Add Targets</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-7">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Content Target</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Tên mục tiêu<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <div class="col-md-9">
+                                                                    <input class="form-control" ng-model="TARGET_NAME" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Mô tả chi tiết</label>
+                                                                <div class="col-md-9">
+                                                                    @*<textarea style="resize:vertical;width:100%" rows="3" ng-model="TARGET_DESCRIPTION" class="form-control" placeholder="Nhập nội dung.."></textarea>*@
+                                                                    <textarea name="TARGET_DESCRIPTION" id="TARGET_DESCRIPTION" class="form-control" ng-model="TARGET_DESCRIPTION"></textarea>
+                                                                    <script>
+                                                                        CKEDITOR.replace('TARGET_DESCRIPTION', {
+                                                                            //extraPlugins: 'uploadimage,image2',
+                                                                            height: 100,
+
+                                                                            // Upload images to a CKFinder connector (note that the response type is set to JSON).
+                                                                            uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+                                                                            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                                                                            filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+                                                                            filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+                                                                            filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+                                                                            filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+                                                                            // The following options are not necessary and are used here for presentation purposes only.
+                                                                            // They configure the Styles drop-down list and widgets to use classes.
+
+                                                                            stylesSet: [
+                                                                                { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                                                                                { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+                                                                            ],
+
+                                                                            // Load the default contents.css file plus customizations for this sample.
+                                                                            contentsCss: [CKEDITOR.basePath + 'contents.css', ''],
+
+                                                                            // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+                                                                            // resizer (because image size is controlled by widget styles or the image takes maximum
+                                                                            // 100% of the editor width).
+                                                                            image2_alignClasses: ['image-align-left', 'image-align-center', 'image-align-right'],
+                                                                            image2_disableResizer: true
+                                                                        });
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Date</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="form-horizontal">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Start Date: </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-detail">
+                                                                        <input type="text" id="ngaybatdau" autocomplete="off" class="form-control datetimepicker">
+
+                                                                        <div class="form-control-feedback">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script>
+                                                                            $("#ngaybatdau").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, });
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">End Date: </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-detail">
+                                                                        <input type="text" id="ngayketthuc" autocomplete="off" class="form-control datetimepicker">
+
+                                                                        <div class="form-control-feedback">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script>
+                                                                            $("#ngayketthuc").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, });
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="margin-top:20px">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Phòng ban</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4">Phòng ban<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-khachhang" style="position:relative">
+                                                                                <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="DEPARTMENT_NAME" ng-change="Find_Dept(DEPARTMENT_NAME)" ng-focus="showtable_Dept = true" ng-blur="showtable_Dept = false" ng-model-options="{debounce:700}" required>
+                                                                                <input type="text" class="form-control" ng-model="DEPARTMENT" style="display:none">
+                                                                                <div class="input-group-btn" style="position:absolute">
+                                                                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_Dept">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                                <thead class="bg-blue text-white">
+                                                                                                    <tr>
+                                                                                                        <th>ID</th>
+                                                                                                        <th>Tên phòng ban </th>
+                                                                                                        <th>Trưởng phòng</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr style="cursor:pointer" ng-mousedown="Getdeptid(dept);" ng-repeat="dept in list_dept_find">
+                                                                                                        <td>{{dept.ID}}</td>
+                                                                                                        <td>{{dept.DEPARTMENT_NAME}}</td>
+                                                                                                        <td>{{dept.DEPARTMENT_MANAGER_NAME}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4">Người thực hiện<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-khachhang" style="position:relative">
+                                                                                <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="ASSIGNEE_NAME" ng-change="Find_User(ASSIGNEE_NAME)" ng-focus="showtable_assignee = true" ng-blur="showtable_assignee = false" ng-model-options="{debounce:700}" required>
+                                                                                <input type="text" class="form-control" ng-model="ASSIGNEE" style="display:none">
+                                                                                <div class="input-group-btn" style="position:absolute">
+                                                                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_assignee">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                                <thead class="bg-blue text-white">
+                                                                                                    <tr>
+                                                                                                        <th>ID</th>
+                                                                                                        <th>Mã nhân viên</th>
+                                                                                                        <th>Tên nhân viên</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr style="cursor:pointer" ng-mousedown="Getassigneeid(user);" ng-repeat="user in list_user_find">
+                                                                                                        <td>{{user.ID}}</td>
+                                                                                                        <td>{{user.USERNAME}}</td>
+                                                                                                        <td>{{user.FULLNAME}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4">Người kiểm tra</label>
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-khachhang" style="position:relative">
+                                                                                <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="RECHECK_USER_NAME" ng-change="Find_User(RECHECK_USER_NAME)" ng-focus="showtable_recheck_user = true" ng-blur="showtable_recheck_user = false" ng-model-options="{debounce:700}" required>
+                                                                                <input type="text" class="form-control" ng-model="RECHECK_USER" style="display:none">
+                                                                                <div class="input-group-btn" style="position:absolute">
+                                                                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_recheck_user">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                                <thead class="bg-blue text-white">
+                                                                                                    <tr>
+                                                                                                        <th>ID</th>
+                                                                                                        <th>Mã nhân viên</th>
+                                                                                                        <th>Tên nhân viên</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr style="cursor:pointer" ng-mousedown="Get_recheckuser_id(user);" ng-repeat="user in list_user_find">
+                                                                                                        <td>{{user.ID}}</td>
+                                                                                                        <td>{{user.USERNAME}}</td>
+                                                                                                        <td>{{user.FULLNAME}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4">List User View:</label>
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-detail" style="position:relative">
+                                                                                <div ng-repeat="item in array_user_view_target"><button>{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_select_user_view_target($index)"></i> </button></div>
+                                                                                <div class="form-userview">
+                                                                                    <input type="text" class="form-control" autocomplete="off" ng-model="name_find" ng-change="Find_User(name_find)" ng-focus="showtable_UserViewTarget = true" ng-blur="showtable_UserViewTarget = false" ng-model-options="{debounce:700}" required>
+                                                                                </div>
+
+                                                                                <div class="input-group-btn" style="position:absolute">
+                                                                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_UserViewTarget">
+                                                                                        <div class="table-responsive">
+                                                                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                                <thead class="bg-blue text-white">
+                                                                                                    <tr>
+                                                                                                        <th>ID</th>
+                                                                                                        <th>Mã nhân viên</th>
+                                                                                                        <th>Tên nhân viên</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr style="cursor:pointer" ng-mousedown="Select_multi_user_target(user);" ng-repeat="user in list_user_find">
+                                                                                                        <td>{{user.ID}}</td>
+                                                                                                        <td>{{user.USERNAME}}</td>
+                                                                                                        <td>{{user.FULLNAME}}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Create_Target()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i>Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--END MODAL CREATE TARGET-->
+                <!--MODAL CREATE PROJECT-->
+                <div class="modal fade" id="Modal_create_project" role="dialog">
+                    <div class="modal-dialog" style="max-width:90%">
+
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="width:100%">TẠO PROJECT</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="col-md-7">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Content Task</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal" style="width:100%">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2">Tên Project<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <div class="col-md-10">
+                                                                    <input class="form-control" ng-model="PROJECT_NAME" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-2">Mục tiêu<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <p>{{kiemtraPtarget}}</p>
+                                                                <div class="col-md-10">
+                                                                    <textarea style="resize:vertical;width:100%" rows="3" ng-model="PROJECT_TARGET" class="form-control" placeholder="Nhập nội dung.."></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-1">Mô tả</label>
+                                                                <div class="col-md-12">
+                                                                    @*<textarea style="resize:vertical;width:100%" rows="5" ng-model="PROJECT_DESCRIPTION" class="form-control" placeholder="Nhập nội dung.."></textarea>*@
+                                                                    <textarea name="PROJECT_DESCRIPTION" id="PROJECT_DESCRIPTION" class="form-control" ng-model="PROJECT_DESCRIPTION"></textarea>
+
+                                                                </div>
+                                                                <script>
+                                                                                CKEDITOR.replace('PROJECT_DESCRIPTION', {
+
+                                                                                    //extraPlugins: 'uploadimage,image2',
+                                                                                    height: 100,
+
+                                                                                    // Upload images to a CKFinder connector (note that the response type is set to JSON).
+                                                                                    uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+                                                                                    // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                                                                                    filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+                                                                                    filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+                                                                                    filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+                                                                                    filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+                                                                                    // The following options are not necessary and are used here for presentation purposes only.
+                                                                                    // They configure the Styles drop-down list and widgets to use classes.
+
+                                                                                    stylesSet: [
+                                                                                        { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                                                                                        { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+                                                                                    ],
+
+                                                                                    // Load the default contents.css file plus customizations for this sample.
+                                                                                    contentsCss: [CKEDITOR.basePath + 'contents.css', ''],
+
+                                                                                    // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+                                                                                    // resizer (because image size is controlled by widget styles or the image takes maximum
+                                                                                    // 100% of the editor width).
+                                                                                    image2_alignClasses: ['image-align-left', 'image-align-center', 'image-align-right'],
+                                                                                    image2_disableResizer: true
+                                                                                });
+
+                                                                                CKEDITOR.on('PROJECT_DESCRIPTION', function () {
+                                                                                    var editor = txtEditor.get_instance();
+
+                                                                                    editor.focusManager.add(new CKEDITOR.dom.element(inputEl));
+                                                                                    editor.focusManager.forceBlur();
+                                                                                    editor.on('focus', function (e) {
+                                                                                        $("body").addClass(fix);
+                                                                                    });
+
+                                                                                    editor.on('blur', function (e) {
+                                                                                        $("body").removeClass(fix);
+                                                                                    });
+                                                                                });
+                                                                </script>
+
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Date & Times</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal" style="width:100%">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Start Date: </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-detail">
+                                                                        <input type="text" id="ngaybatdauP" autocomplete="off" class="form-control datetimepicker">
+
+                                                                        <div class="form-control-feedback">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script>
+                                                                                    $("#ngaybatdauP").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, });
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">End Date: </label>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-detail">
+                                                                        <input type="text" id="ngayketthucP" autocomplete="off" class="form-control datetimepicker">
+
+                                                                        <div class="form-control-feedback">
+                                                                            <i class="icon-calendar"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script>
+                                                                                    $("#ngayketthucP").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, });
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="margin-top:20px">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">People</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal" style="width:100%">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Người phụ trách<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <div class="col-md-8">
+                                                                    <div class="dropdown-content" style="position:relative">
+                                                                        <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="PROJECT_OWNER_NAME" ng-change="Find_User(PROJECT_OWNER_NAME)" ng-focus="showtable_User = true" ng-blur="showtable_User = false" ng-model-options="{debounce:700}" required>
+                                                                        <input type="text" class="form-control" ng-model="PROJECT_OWNER" style="display:none">
+                                                                        <div class="input-group-btn" style="position:absolute">
+                                                                            <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_User">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                        <thead class="bg-blue text-white">
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Mã nhân viên</th>
+                                                                                                <th>Tên nhân viên</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr style="cursor:pointer" ng-mousedown="Getuserid(user);" ng-repeat="user in list_user_find">
+                                                                                                <td>{{user.ID}}</td>
+                                                                                                <td>{{user.USERNAME}}</td>
+                                                                                                <td>{{user.FULLNAME}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">chọn người được xem project: </label>
+                                                                <div class="col-md-8">
+                                                                    <div ng-repeat="item in array_user_view_project_temp"><button type="button">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_select_user_view_project($index)"></i> </button></div>
+                                                                    <div class="form-khachhang" style="position:relative">
+                                                                        <input class="form-control" type="text" autocomplete="off" ng-model="name_find" ng-change="Find_User(name_find)" ng-focus="showtable_UserProject = true" ng-blur="showtable_UserProject = false" ng-model-options="{debounce:700}" required>
+
+                                                                        <div class="input-group-btn" style="position:absolute">
+                                                                            <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_UserProject">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                        <thead class="bg-blue text-white">
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Mã nhân viên</th>
+                                                                                                <th>Tên nhân viên</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr style="cursor:pointer" ng-mousedown="Select_multi_user(user);" ng-repeat="user in list_user_find">
+                                                                                                <td>{{user.ID}}</td>
+                                                                                                <td>{{user.USERNAME}}</td>
+                                                                                                <td>{{user.FULLNAME}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!--end modal body-->
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="Create_Project()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--END MODAL CREATE PROJECT-->
+                <!--MODAL CREATE TASK-->
+                <div class="modal fade" id="Modal_create_task" role="dialog">
+                    <div class="modal-dialog modal-xl" style="max-width:80%">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Create a Task</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-7">
+                                    <div class="card">
+                                        <div class="card-body" style="min-height:354px">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Content Task</h4>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Task's Name:<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" class="form-control" ng-model="TASK_NAME" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Department:<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-khachhang" style="position:relative">
+                                                                        <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="DEPARTMENT_NAME_TASK" ng-change="Find_Dept(DEPARTMENT_NAME_TASK)" ng-focus="showtable_Dept = true" ng-blur="showtable_Dept = false" ng-model-options="{debounce:700}" required>
+                                                                        <input type="text" class="form-control" ng-model="DEPARTMENT_TASK" style="display:none">
+                                                                        <div class="input-group-btn" style="position:absolute">
+                                                                            <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_Dept">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                        <thead class="bg-blue text-white">
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Tên phòng ban </th>
+                                                                                                <th>Trưởng phòng</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr style="cursor:pointer" ng-mousedown="Getdeptid(dept);" ng-repeat="dept in list_dept_find">
+                                                                                                <td>{{dept.ID}}</td>
+                                                                                                <td>{{dept.DEPARTMENT_NAME}}</td>
+                                                                                                <td>{{dept.DEPARTMENT_MANAGER_NAME}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4" style="text-align:left;margin-bottom:10px">Task's Description:</label>
+                                                                <div class="col-md-12">
+                                                                    @*<textarea style="resize:vertical;width:100%" rows="5" ng-model="TASK_DESCRIPTION" class="form-control" placeholder="Nhập kết quả check.."></textarea>*@
+                                                                    <textarea name="TASK_DESCRIPTION" id="TASK_DESCRIPTION" class="form-control" ng-model="TASK_DESCRIPTION"></textarea>
+                                                                    <script>
+                                                                        CKEDITOR.replace('TASK_DESCRIPTION', {
+			                                                                        //extraPlugins: 'uploadimage,image2',
+			                                                                        height: 100,
+
+			                                                                        // Upload images to a CKFinder connector (note that the response type is set to JSON).
+			                                                                        uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+			                                                                        // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+			                                                                        filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+			                                                                        filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+			                                                                        filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+			                                                                        filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+			                                                                        // The following options are not necessary and are used here for presentation purposes only.
+			                                                                        // They configure the Styles drop-down list and widgets to use classes.
+
+			                                                                        stylesSet: [
+				                                                                        { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+				                                                                        { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+			                                                                        ],
+
+			                                                                        // Load the default contents.css file plus customizations for this sample.
+			                                                                        contentsCss: [ CKEDITOR.basePath + 'contents.css', '' ],
+
+			                                                                        // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+			                                                                        // resizer (because image size is controlled by widget styles or the image takes maximum
+			                                                                        // 100% of the editor width).
+			                                                                        image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
+			                                                                        image2_disableResizer: true
+		                                                                        } );
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="card" style="background-color:transparent">
+                                        <div class="card-body" style="height:100%;background-color:white">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">Date & Times</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal" style="width:100%">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Start Date:</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" id="date_start"  ng-model="date_start" datepicker autocomplete="off" class="form-control datetimepicker">
+                                                                </div>
+                                                                <script>
+                                                                    $("#date_start").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, });
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">End Date:</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" id="date_end" ng-model="date_end" datepicker autocomplete="off" class="form-control datetimepicker">
+                                                                </div>
+                                                                <script>
+                                                                    $("#date_end").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: false, });
+                                                                </script>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="card-body" style="height:100%;background-color:white;">
+                                            <div class="title-project" style="display:flex;justify-content:space-between">
+                                                <h4 class="card-title">People</h4>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <form class="form-horizontal" style="width:100%">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Assignee:<span style="color:orangered; font-weight:bold"> (*)</span></label>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-khachhang" style="position:relative">
+                                                                        <input type="text" class="form-control" autocomplete="off" ng-model="ASSIGNEE_TASK_NAME" ng-change="Find_User(ASSIGNEE_TASK_NAME)" ng-focus="showtable_assignee_task = true" ng-blur="showtable_assignee_task = false" ng-model-options="{debounce:700}" required>
+                                                                        <input type="text" class="form-control" ng-model="ASSIGNEE_TASK" style="display:none">
+                                                                        <div class="input-group-btn" style="position:absolute">
+                                                                            <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_assignee_task">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                        <thead class="bg-blue text-white">
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Mã nhân viên</th>
+                                                                                                <th>Tên nhân viên</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr style="cursor:pointer" ng-mousedown="Getassigneeid_task(user);" ng-repeat="user in list_user_find">
+                                                                                                <td>{{user.ID}}</td>
+                                                                                                <td>{{user.USERNAME}}</td>
+                                                                                                <td>{{user.FULLNAME}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">Checker:</label>
+                                                                <div class="col-md-8">
+                                                                    <div class="form-khachhang" style="position:relative">
+                                                                        <input type="text" class="form-control" autocomplete="off" ng-model="RECHECK_USER_TASK_NAME" ng-change="Find_User(RECHECK_USER_TASK_NAME)" ng-focus="showtable_recheck_user_task = true" ng-blur="showtable_recheck_user_task = false" ng-model-options="{debounce:700}" required>
+                                                                        <input type="text" class="form-control" ng-model="RECHECK_USER_TASK" style="display:none">
+                                                                        <div class="input-group-btn" style="position:absolute">
+                                                                            <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_recheck_user_task">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                        <thead class="bg-blue text-white">
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Mã nhân viên</th>
+                                                                                                <th>Tên nhân viên</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr style="cursor:pointer" ng-mousedown="Get_recheckuser_id_TASK(user);" ng-repeat="user in list_user_find">
+                                                                                                <td>{{user.ID}}</td>
+                                                                                                <td>{{user.USERNAME}}</td>
+                                                                                                <td>{{user.FULLNAME}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4">List User View:</label>
+                                                                <div class="col-md-8">
+                                                                    <div ng-repeat="item in array_user_view_task"><button style="border:none;border-radius:20px;padding:3px 10px;color:white;background-color:#32a224;font-size:12px">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_select_user_view_task($index)"></i> </button></div>
+                                                                    <div class="form-khachhang" style="position:relative">
+                                                                        <input type="text" class="form-control" autocomplete="off" ng-model="name_find_task" ng-change="Find_User(name_find_task)" ng-focus="showtable_UserViewTask = true" ng-blur="showtable_UserViewTask = false" ng-model-options="{debounce:700}" required>
+                                                                        <div class="input-group-btn" style="position:absolute">
+                                                                            <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_UserViewTask">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                        <thead class="bg-blue text-white">
+                                                                                            <tr>
+                                                                                                <th>ID</th>
+                                                                                                <th>Mã nhân viên</th>
+                                                                                                <th>Tên nhân viên</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr style="cursor:pointer" ng-mousedown="Select_multi_user_Task(user);" ng-repeat="user in list_user_find">
+                                                                                                <td>{{user.ID}}</td>
+                                                                                                <td>{{user.USERNAME}}</td>
+                                                                                                <td>{{user.FULLNAME}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button ng-click="Create_Task()" type="button" class="btn btn-save"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i>Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--END MODAL CREATE TASK-->
+                <!--Modal detail project-->
+                <div class="modal fade" id="modal-project-detail" role="dialog">
+                    <div class="modal-dialog" style="max-width:80%">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="card-title" style="color:white">Project's details: {{project_details.PROJECT_NAME}}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <table class="table">
+                                                                <thead>
+
+                                                                </thead>
+                                                                <tbody>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label style="margin-right:5px;color:#34960d;font-size:12px">Target: </label><button class="btn btn-default" style="float:right" ng-click="edit_Protarget = true; editdescription(detail_target.TARGET_DESCRIPTION)">Chỉnh sửa</button>
+                                                                            @*<label style="margin-right:5px">Target:</label><button class="fa fa-edit" ng-click="edit_Protarget = true"></button><br />*@
+                                                                            <p style="font-size:12px;white-space:pre-line" class="textarea-detail" ng-hide="edit_Protarget">{{project_details.PROJECT_TARGERT}}</p>
+                                                                            <div ng-show="edit_Protarget">
+                                                                                <textarea style="resize:vertical;width:100%" rows="3" class="form-control" ng-model="project_details.PROJECT_TARGERT"></textarea>
+                                                                                <button style="" class="btn btn-save" ng-click="Update_Project_Target(project_details.ID);edit_Protarget = false ">Lưu</button>
+                                                                                <button class="btn btn-danger" ng-click="edit_Protarget = false " style="margin:10px 0"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @*<tr>
+                                        <td>
+                                            <label style="font-weight:bold">Project' Target</label><br />
+                                            <p style="font-size:14px;white-space:normal">{{project_details.PROJECT_TARGERT}}</p>
+                                        </td>
+                                    </tr>*@
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label style="margin-right:5px;color:#34960d;font-size:12px">Description: </label><button class="btn btn-default" style="float:right" ng-click="edit_Prodes = true; editdescription_project(project_details.PROJECT_DESCRIPTION)">Chỉnh sửa</button>
+
+                                                                            <p style="font-size:12px;white-space:pre-line;word-break:break-word" class="textarea-detail" ng-hide="edit_Prodes" ng-bind-html="project_details.PROJECT_DESCRIPTION | unsafe"></p>
+                                                                            <div ng-show="edit_Prodes">
+                                                                                @*<textarea style="resize:vertical;width:100%" rows="3" class="form-control" ng-model="project_details.PROJECT_DESCRIPTION"></textarea>*@
+                                                                                <textarea name="PROJECT_DESCRIPTION_EDIT" id="PROJECT_DESCRIPTION_EDIT" class="form-control" ng-model="project_details.PROJECT_DESCRIPTION"></textarea>
+                                                                                <br />
+                                                                                <div class="action-button" style="text-align:right">
+                                                                                    <button class="btn btn-save" ng-click="Update_Project_Description(project_details.ID);edit_Prodes = false "><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                                                    <button class="btn btn-danger" ng-click="edit_Prodes = false "><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                            <script>
+                                                                            CKEDITOR.replace('PROJECT_DESCRIPTION_EDIT', {
+                                                                                //extraPlugins: 'uploadimage,image2',
+                                                                                height: 100,
+
+                                                                                // Upload images to a CKFinder connector (note that the response type is set to JSON).
+                                                                                uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+                                                                                // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                                                                                filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+                                                                                filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+                                                                                filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+                                                                                filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+                                                                                // The following options are not necessary and are used here for presentation purposes only.
+                                                                                // They configure the Styles drop-down list and widgets to use classes.
+
+                                                                                stylesSet: [
+                                                                                    { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                                                                                    { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+                                                                                ],
+
+                                                                                // Load the default contents.css file plus customizations for this sample.
+                                                                                contentsCss: [CKEDITOR.basePath + 'contents.css', ''],
+
+                                                                                // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+                                                                                // resizer (because image size is controlled by widget styles or the image takes maximum
+                                                                                // 100% of the editor width).
+                                                                                image2_alignClasses: ['image-align-left', 'image-align-center', 'image-align-right'],
+                                                                                image2_disableResizer: true
+                                                                            });
+                                                                            </script>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <label style="margin-right:5px;color:#34960d;font-size:12px">Date & Times:</label><button class="btn btn-default" style="float:right" ng-click="edit_Prodate = true">Chỉnh sửa</button>
+
+                                                            <div style="font-size:12px" ng-hide="edit_Prodate">
+                                                                <span style="margin-right:5px;font-size:12px">Start Date:</span> <label style="color:#34960d;font-size:12px">{{project_details.DATE_START | date : 'dd/MM/yyyy'}}</label> <br />
+                                                                <span style="margin-right:5px;font-size:12px">End Date:</span><label style="color:#34960d;font-size:12px">{{project_details.DATE_END | date : 'dd/MM/yyyy'}}</label><br />
+                                                                <span style="margin-right:5px;font-size:12px">Create Date: </span><label style="color:#34960d;font-size:12px">{{project_details.DATE_CREATE | date : 'dd/MM/yyyy HH:mm:ss'}}</label>
+                                                                <span style="margin-right:5px;font-size:12px">Create Date: </span><label style="color:#34960d;font-size:12px">{{project_details.DEADLINE_REQUIRE | date : 'dd/MM/yyyy HH:mm:ss'}}</label>
+                                                                
+                                                                <br />
+                                                            </div>
+                                                            <div ng-show="edit_Prodate">
+                                                                <div class="form-detail">
+                                                                    <input type="text" id="startdate" autocomplete="off" class="form-control datetimepicker" style="min-width:150px">
+
+                                                                    <div class="form-control-feedback">
+                                                                        <i class="icon-calendar"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <script>
+                                                                $("#startdate").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, });
+                                                                </script>
+                                                                <!------------------>
+                                                                <div class="form-detail">
+                                                                    <input type="text" id="enddate" autocomplete="off" class="form-control datetimepicker" style="min-width:150px">
+
+                                                                    <div class="form-control-feedback">
+                                                                        <i class="icon-calendar"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <script>
+                                                                $("#enddate").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: false, });
+                                                                </script>
+                                                                <!------------------>
+                                                                Dealine require:
+                                                                <div class="form-detail">
+                                                                    <input type="text" id="deadline_require" ng-disabled="detail_target.RECHECK_USER!=currentuseridlogin" ng-model="detail_target.DEADLINE_REQUIRE | date : 'dd/MM/yyyy'" autocomplete="off" class="form-control datetimepicker" style="min-width:150px">
+
+                                                                    <div class="form-control-feedback">
+                                                                        <i class="icon-calendar"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <script>
+                                                                     $("#deadline_require").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: false, stepping: 5, sideBySide: true });
+                                                                </script>
+
+                                                                <button class="btn btn-save" ng-click="Update_Project_Date(project_details.ID);edit_Prodate = false "><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                                <button class="btn btn-danger" ng-click="edit_Prodate = false "><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="table-responsive">
+
+                                                                        <table class="table">
+                                                                            <thead>
+
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <label style="margin-right:5px;color:#34960d;font-size:12px">People:</label><br />
+
+                                                                                        <span style="margin-right:5px;font-size:12px">Project's Name: </span><label style="color:#34960d;font-size:12px">{{detail_target.PROJECT_NAME}}</label><br />
+                                                                                        <span style="margin-right:5px;font-size:12px">Manager: </span><img src="http://sales.hoplong.com/Content/Images/Avatar/{{project_details.PROJECT_OWNER_AVATAR}}" style="border-radius:50%" width="30" height="30"> <label style="color:#34960d;font-size:12px" ng-hide="show_edit_assignee">{{project_details.PROJECT_OWNER_NAME}}</label><button style="float:right" class="btn btn-default" ng-click="show_edit_assignee = true">Chỉnh sửa</button>  <br />
+                                                                                        <div ng-show="show_edit_assignee">
+                                                                                            <div class="form-khachhang">
+                                                                                                <input type="text" autocomplete="off" ng-model="keyword" ng-change="Find_User(keyword)" ng-focus="showtable_AssigneeEdit = true" ng-blur="showtable_AssigneeEdit = false" ng-model-options="{debounce:700}" required>
+                                                                                                <div class="input-group-btn" style="position:absolute">
+                                                                                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_AssigneeEdit">
+                                                                                                        <div class="table-responsive">
+                                                                                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                                                <thead class="bg-blue text-white">
+                                                                                                                    <tr>
+                                                                                                                        <th>ID</th>
+                                                                                                                        <th>Mã nhân viên</th>
+                                                                                                                        <th>Tên nhân viên</th>
+                                                                                                                    </tr>
+                                                                                                                </thead>
+                                                                                                                <tbody>
+                                                                                                                    <tr style="cursor:pointer" ng-mousedown="GetAssigneeEdit(user);" ng-repeat="user in list_user_find">
+                                                                                                                        <td>{{user.ID}}</td>
+                                                                                                                        <td>{{user.USERNAME}}</td>
+                                                                                                                        <td>{{user.FULLNAME}}</td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <button ng-click="Update_Project_Manager(project_details.ID); show_edit_assignee = false" type="button" class="btn btn-save"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                        <span style="margin-right:5px;font-size:12px">User create: </span><img src="http://sales.hoplong.com/Content/Images/Avatar/{{project_details.PROJECT_OWNER_AVATAR}}" style="border-radius:50%" width="30" height="30"><label style="color:#34960d;font-size:12px">{{project_details.PROJECT_USER_CREATE_NAME}} </label><br />
+
+                                                                                        <span style="margin-right:5px;font-size:12px">People view project: </span>
+                                                                                        <div ng-repeat="item in user_view_project" style="display:inline;white-space:normal;margin-left:5px">
+                                                                                            <button style="border:none;border-radius:20px;padding:3px 10px;color:white;background-color:#32a224;font-size:12px">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="Del_user_view_project(item.ID)"></i></button>
+                                                                                        </div>
+                                                                                        <div class="add-user" style="margin-top:10px">
+                                                                                            <button ng-click="adduserviewproject='True'" type="button" class="btn btn-warning" style="font-size:14px;background-color:#EF7E2D"><i class="fa fa-plus" style="margin-right:5px"></i>Thêm người được xem</button>
+                                                                                        </div>
+
+                                                                                        <div ng-show="adduserviewproject=='True'">
+
+                                                                                            <label>Đã chọn: </label> <div ng-repeat="item in array_user_view_project">
+                                                                                                <button style="border:none;border-radius:20px;padding:3px 10px;color:white;background-color:#32a224;font-size:12px">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_select_user_view_project2($index)"></i> </button>
+                                                                                            </div>
+                                                                                            <div class="form-khachhang">
+                                                                                                <input type="text" autocomplete="off" ng-model="keyword" ng-change="Find_User(keyword)" ng-focus="showtable_UserProject = true" ng-blur="showtable_UserProject = false" ng-model-options="{debounce:700}" required>
+                                                                                            </div>
+
+                                                                                            <div class="input-group-btn" style="position:absolute">
+                                                                                                <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_UserProject">
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                                            <thead class="bg-blue text-white">
+                                                                                                                <tr>
+                                                                                                                    <th>ID</th>
+                                                                                                                    <th>Mã nhân viên</th>
+                                                                                                                    <th>Tên nhân viên</th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                <tr style="cursor:pointer" ng-mousedown="Select_multi_user_project(user);" ng-repeat="user in list_user_find">
+                                                                                                                    <td>{{user.ID}}</td>
+                                                                                                                    <td>{{user.USERNAME}}</td>
+                                                                                                                    <td>{{user.FULLNAME}}</td>
+                                                                                                                </tr>
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <button ng-click="Create_user_viewProject()" type="button" class="btn btn-primary"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                                                            
+                                                                                        </div>
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top:20px">
+                                            <!--comment projects-->
+                                            <div class="card" style="height:100%">
+                                                <div class="card-body">
+                                                    <h4 class="card-title ">Comments project</h4>
+                                                    <div>
+                                                        <textarea style="resize:vertical" class="form-control emojiable-option" rows="2" id="input-comment-project" ng-model="chat_comment" ng-keyup="($event.keyCode == 13 && !$event.shiftKey) ? AddNewComment(): null"> </textarea>
+
+                                                        <script>
+                                                        $('body').on('keyup input', 'textarea', function () {
+                                                            var offset = this.offsetHeight - this.clientHeight;
+                                                            var scroll = $('body').scrollTop();
+                                                            $(this).css('height', 'auto').css('height', this.scrollHeight + offset);
+                                                            $('body').scrollTop(scroll);
+                                                        }).removeAttr('data-autoresize');
+
+
+                                                        </script>
+                                                        <script type="text/javascript">
+                                                        $(document).ready(function(e) {
+
+                                                          $('#input-comment-project').emojiPicker();
+
+                                                          $('#create').click(function(e) {
+                                                            e.preventDefault();
+                                                            $('#text-custom-trigger').emojiPicker({
+                                                              width: '300px',
+                                                              height: '200px',
+                                                              button: false
+                                                            });
+                                                          });
+
+                                                          $('#toggle').click(function(e) {
+                                                            e.preventDefault();
+                                                            $('#text-custom-trigger').emojiPicker('toggle');
+                                                          });
+
+                                                          $('#destroy').click(function(e) {
+                                                            e.preventDefault();
+                                                            $('#text-custom-trigger').emojiPicker('destroy');
+                                                          })
+
+                                                          // keyup event is fired
+                                                          $(".emojiable-question, .emojiable-option").on("keyup", function () {
+                                                            //console.log("emoji added, input val() is: " + $(this).val());
+                                                          });
+
+                                                        });
+                                                        </script>
+                                                    </div>
+                                                    <div class="list-wrapper">
+                                                        <ul class="d-flex flex-column-reverse todo-list todo-list-custom" ng-repeat="item in list_comment_project" style="background-color:#eaeaea;margin-top:20px;padding:0 5px;">
+                                                      
+                                                            <li class="completed-list">
+                                                                <div class="form-check">
+                                                                    <span>
+                                                                        <img src="~/Content/images/icon_avatar_default.png" width="60" height="60" />
+                                                                    </span>
+
+                                                                    <span style="margin-left:10px">
+                                                                        <label>{{item.USER_CREATE_NAME}}</label><br />
+                                                                        <p>{{item.DATE_CREATE | date : 'dd/MM/yyyy HH:mm:ss'}}</p>
+                                                                        <p style="margin-bottom:0; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"><span style="padding:5px;display:block">{{item.COMMENT1}}</span></p>
+                                                                    </span>
+
+                                                                </div>
+
+                                                                <div class="button-delete" style="width:100%;text-align:right">
+                                                                    <i type="button" class="fa fa-trash" style="color:red;margin-right:5px;font-weight:normal;font:normal normal normal 14px/1 FontAwesome" aria-hidden="true" ng-click="RemoveComment(item.ID)"><span style="margin-left:2px">Xóa</span></i>
+                                                                </div>
+                                                            </li>
+
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end comment projects-->
+                                        </div>
+                                    </div>
+                                 
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Modal detail project-->
+                <!--Modal detail target-->
+                <div class="modal fade" id="modal-target-detail" role="dialog">
+                    <div class="modal-dialog" style="max-width:90%">
+
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="card-title">Project: {{project_details.PROJECT_NAME}}</h3>
+                            </div>
+                            <div class="modal-body">
+
+                                    <div class="col-md-6 ">
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title" style="float:left">Target's Details</h3>
+                                                        <div class="nav-link" href="#" style="background-color: #78B717;color: #fff;width:120px;display:inline-block;float:right">
+
+                                                            <label class="form-checkbox" style="display:flex;margin-bottom:0">
+                                                                <input type="checkbox" ng-checked="detail_target.TARGET_STATUS == 'Active'" style="top:0;margin:0">
+                                                                <span class="title" style="line-height:25px;margin-left:5px">
+                                                                    <select ng-model="detail_target.TARGET_STATUS" ng-change="UpdateTargetStatus(detail_target.TARGET_STATUS)" style="color:#fff;background-color:transparent;border:none !important">
+                                                                        <option style="color:black" value="Active">Active</option>
+                                                                        <option style="color:black" value="Stop">Stop</option>
+                                                                        <option style="color:black" value="Delay">Delay</option>
+                                                                    </select>
+                                                                </span>
+                                                         
+                                                                @*<span class="arrow" style="line-height:30px"></span>*@
+                                                            </label>
+                                                        </div>
+                                                        @*<button class="btn fa fa-edit" ng-click="edit_status = true" ng-hide="edit_status"></button>*@
+                                                        @*<div style="float:right">
+                                                         
+
+                                                            <button class="btn " ng-hide="edit_status" ng-class="detail_target.TARGET_STATUS == 'Active' ? 'btn-success' : ''" ng-disabled="detail_target.TARGET_STATUS !='Active'">Active</button>
+                                                            <button class="btn " ng-hide="edit_status" ng-class="detail_target.TARGET_STATUS == 'Stop' ? 'btn-danger' : ''" ng-disabled="detail_target.TARGET_STATUS !='Stop'">Stop</button>
+                                                            <button class="btn " ng-hide="edit_status" ng-class="detail_target.TARGET_STATUS == 'Delay' ? 'btn-warning' : ''" ng-disabled="detail_target.TARGET_STATUS !='Delay'">Delay</button>
+                                                            <button class="btn btn-danger" ng-show="detail_target.IS_DONE==false" ng-disabled="detail_target.IS_DONE !='True'">Chưa hoàn thành</button>
+                                                            <button class="btn btn-success" ng-show="detail_target.IS_DONE" ng-disabled="detail_target.IS_DONE =='True'">Đã hoàn thành</button>
+
+
+                                                            <button class="btn btn-success" ng-show="edit_status" ng-click="UpdateTargetStatus(detail_target.ID, 'Active');edit_status = false;">Active</button>
+                                                            <button class="btn btn-danger" ng-show="edit_status" ng-click="UpdateTargetStatus(detail_target.ID, 'Stop');edit_status = false;">Stop</button>
+                                                            <button class="btn btn-warning" ng-show="edit_status" ng-click="UpdateTargetStatus(detail_target.ID, 'Delay');edit_status = false;">Delay</button>
+                                                            <button class="btn btn-success" ng-show="edit_status" ng-click="UpdateTargetIsDone(detail_target.ID);edit_status = false;">Xác nhận hoàn thành</button>
+
+
+                                                        </div>*@
+                                                        <table class="table">
+                                                            <thead>
+
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+
+                                                                    <td>
+                                                                        <span style="margin-right:5px;font-size:12px">Department: </span><label style="color:#34960d;font-size:12px">{{detail_target.DEPARTMENT_NAME}}</label> <br />
+                                                                        <span style="margin-right:5px;font-size:12px">Target's Name:</span><label style="color:#34960d;font-size:12px">{{detail_target.TARGET_NAME}}</label> <br />
+                                                                        <span style="margin-right:5px;font-size:12px">Target's Description:</span><button style="float:right" class="btn btn-default" ng-click="edit_description = true; editdescription(detail_target.TARGET_DESCRIPTION)">Chỉnh sửa</button> <br />
+                                                                        <p style="white-space:pre-line;word-break:break-word" ng-bind-html="detail_target.TARGET_DESCRIPTION | unsafe"></p>
+                                                                        <div ng-show="edit_description" style="">
+                                                                            <textarea name="TARGET_DESCRIPTION_EDIT" id="TARGET_DESCRIPTION_EDIT" class="form-control" ng-model="detail_target.TARGET_DESCRIPTION"></textarea>
+                                                                            <script>
+                                                                                CKEDITOR.replace('TARGET_DESCRIPTION_EDIT', {
+			                                                            //extraPlugins: 'uploadimage,image2',
+			                                                            height: 100,
+
+			                                                            // Upload images to a CKFinder connector (note that the response type is set to JSON).
+			                                                            uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+			                                                            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+			                                                            filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+			                                                            filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+			                                                            filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+			                                                            filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+			                                                            // The following options are not necessary and are used here for presentation purposes only.
+			                                                            // They configure the Styles drop-down list and widgets to use classes.
+
+			                                                            stylesSet: [
+				                                                            { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+				                                                            { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+			                                                            ],
+
+			                                                            // Load the default contents.css file plus customizations for this sample.
+			                                                            contentsCss: [ CKEDITOR.basePath + 'contents.css', '' ],
+
+			                                                            // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+			                                                            // resizer (because image size is controlled by widget styles or the image takes maximum
+			                                                            // 100% of the editor width).
+			                                                            image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
+			                                                            image2_disableResizer: true
+		                                                            } );
+                                                                            </script>
+
+
+                                                                            <button type="button" class="btn btn-save" ng-click="UpdateTargetDescription(detail_target.ID);edit_description = false " style=""><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                                            <button type="button" class="btn btn-danger" ng-click="edit_description = false " style=""><i class="fa fa-close" style="margin-right:5px"></i>Hủy</button>
+                                                                        </div>
+
+                                                                        <br />
+                                                                        <span style="margin-right:5px;font-size:12px">Result Check:</span><button style="float:right" class="btn btn-default" ng-click="edit_recheckcomment = true; editrecheck(detail_target.RECHECK_COMMENT)">Chỉnh sửa</button>
+                                                                        <p style="white-space:pre-line;word-break:break-word" ng-bind-html="detail_target.RECHECK_COMMENT | unsafe"></p>
+                                                                        <div ng-show="edit_recheckcomment" style="">
+                                                                            <textarea name="RECHECK_COMMENT" id="RECHECK_COMMENT" class="form-control" ng-model="detail_target.RECHECK_COMMENT"></textarea>
+                                                                            <script>
+                                                                CKEDITOR.replace('RECHECK_COMMENT', {
+			                                                            //extraPlugins: 'uploadimage,image2',
+			                                                            height: 100,
+
+			                                                            // Upload images to a CKFinder connector (note that the response type is set to JSON).
+			                                                            uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+			                                                            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+			                                                            filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+			                                                            filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+			                                                            filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+			                                                            filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+			                                                            // The following options are not necessary and are used here for presentation purposes only.
+			                                                            // They configure the Styles drop-down list and widgets to use classes.
+
+			                                                            stylesSet: [
+				                                                            { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+				                                                            { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+			                                                            ],
+
+			                                                            // Load the default contents.css file plus customizations for this sample.
+			                                                            contentsCss: [ CKEDITOR.basePath + 'contents.css', '' ],
+
+			                                                            // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+			                                                            // resizer (because image size is controlled by widget styles or the image takes maximum
+			                                                            // 100% of the editor width).
+			                                                            image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
+			                                                            image2_disableResizer: true
+		                                                            } );
+                                                                            </script>
+
+
+
+
+                                                                            <button type="button" class="btn btn-save" ng-click="UpdateTargetRecheckComment(detail_target.ID);edit_recheckcomment = false "><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                                            <button type="button" class="btn btn-danger" ng-click="edit_recheckcomment = false " style=""><i class="fa fa-close" style="margin-right:5px"></i>Hủy</button>
+                                                                        </div>
+                                                                        <script>
+                                                            $('body').on('keyup input', 'textarea', function () {
+                                                                var offset = this.offsetHeight - this.clientHeight;
+                                                                var scroll = $('body').scrollTop();
+                                                                $(this).css('height', 'auto').css('height', this.scrollHeight + offset);
+                                                                $('body').scrollTop(scroll);
+                                                            }).removeAttr('data-autoresize');
+
+
+                                                                        </script>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin-top:20px">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Task List</h4>
+                                                        <!--=============================List Tasks=====================================================-->
+                                                        <div class="table-responsive">
+                                                            <div>
+                                                                <table class="table" style="margin-bottom:0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> Done </th>
+                                                                            <th> Task's Name </th>
+                                                                            <th> Assignee </th>
+                                                                            <th> Start Date </th>
+                                                                            <th> End Date </th>
+                                                                            <th> Checker </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="item in list_tasks" ng-dblclick="dbclick_open_task(item.ID)">
+                                                                            <td>
+                                                                                <div class="form-checkbox">
+                                                                                    <input type="checkbox" ng-checked="{{item.IS_DONE}}" ng-model="item.checked" ng-disabled="item.ASSIGNEE!=userid" ng-change="UpdateIsDone(item.ID,item.checked)" />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td> {{item.TASK_NAME}} </td>
+                                                                            <td> {{item.ASSIGNEE_NAME}} </td>
+                                                                            <td> {{item.DATE_START|date:'dd/MM/yyyy'}} </td>
+                                                                            <td> {{item.DATE_END|date:'dd/MM/yyyy'}} </td>
+                                                                            <td> {{item.RECHECK_USER}} </td>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--=============================End List Tasks=====================================================-->
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!--====================Target's Details==============================================================-->
+                                    </div>
+                                    <!--==========================Target's People========================================================-->
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="card-title">Target's Date & Time</h3>@*<button class="fa fa-edit" ng-click="edit_tdate = true"></button>*@
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div ng-hide="edit_tdate">
+                                                            <span style="margin-right:5px;font-size:12px">Start Date: </span><label style="color:#34960d;font-size:12px">{{detail_target.DATE_START | date : 'dd/MM/yyyy'}}</label>  <br />
+                                                            <span style="margin-right:5px;font-size:12px">End Date: </span><label style="color:#34960d;font-size:12px">{{detail_target.DATE_END | date : 'dd/MM/yyyy'}}</label> <br />
+                                                            <span style="margin-right:5px;font-size:12px">Complete Date: </span><label style="color:#34960d;font-size:12px">{{detail_target.DATE_COMPLETE | date : 'dd/MM/yyyy'}}</label> <br />
+                                                            <span style="margin-right:5px;font-size:12px; font:red">Deadline require: </span><label style="color:#34960d;font-size:12px">{{detail_target.DEADLINE_REQUIRE | date : 'dd/MM/yyyy'}}</label>  <br />
+
+                                                            <span style="margin-right:5px;font-size:12px">Date Recheck: </span><label style="color:#34960d;font-size:12px">{{detail_target.RECHECK_TIME | date : 'dd/MM/yyyy'}}</label><br />
+                                                        </div>
+
+
+
+                                                        <div ng-show="edit_tdate">
+                                                            Start Date:
+                                                            <div class="form-detail">
+                                                                <input type="text" id="startdate" ng-model="detail_target.DATE_START | date : 'dd/MM/yyyy'" autocomplete="off" class="form-control datetimepicker" >
+
+                                                                <div class="form-control-feedback">
+                                                                    <i class="icon-calendar"></i>
+                                                                </div>
+                                                            </div>
+                                                            <script>
+                                                                    $("#startdate").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: true, stepping: 5, sideBySide: true, minDate: moment().add(-10000, 'days').toDate(), });
+                                                            </script>
+                                                            <!------------------>
+                                                            End Date:
+                                                            <div class="form-detail">
+                                                                <input type="text" id="enddate" ng-model="detail_target.DATE_END | date : 'dd/MM/yyyy'" autocomplete="off" class="form-control datetimepicker">
+
+                                                                <div class="form-control-feedback">
+                                                                    <i class="icon-calendar"></i>
+                                                                </div>
+                                                            </div>
+                                                            <script>
+                                                                    $("#enddate").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: false, stepping: 5, sideBySide: true });
+                                                            </script>
+                                                            <!------------------>
+                                                            Deadline require:
+                                                            <div class="form-detail">
+                                                                <input type="text" id="deadline_require" ng-disabled="detail_target.RECHECK_USER!=currentuseridlogin" ng-model="detail_target.DEADLINE_REQUIRE | date : 'dd/MM/yyyy'" autocomplete="off" class="form-control datetimepicker" >
+
+                                                                <div class="form-control-feedback">
+                                                                    <i class="icon-calendar"></i>
+                                                                </div>
+                                                            </div>
+                                                            <script>
+                                                                    $("#deadline_require").datetimepicker({ format: 'DD/MM/YYYY', useCurrent: false, stepping: 5, sideBySide: true });
+                                                            </script>
+                                                        
+                                                            <button class="btn btn-save" ng-click="Update_Target_Date(detail_target.ID);edit_tdate = false "><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                            <button class="btn btn-danger" ng-click="edit_tdate = false " style="margin:10px 0"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                        </div>
+                                                        <script type="text/javascript">
+                                                                $(function () {
+                                                                    $('#startdate').datetimepicker().on('dp.change', function (e) {
+                                                                        var incrementDay = moment(new Date(e.date));
+                                                                        incrementDay.add(0, 'days');
+                                                                        $('#enddate').data('DateTimePicker').minDate(incrementDay);
+                                                                        $(this).data("DateTimePicker").hide();
+                                                                    });
+
+                                                                    $('#enddate').datetimepicker().on('dp.change', function (e) {
+                                                                        var decrementDay = moment(new Date(e.date));
+                                                                        decrementDay.subtract(0, 'days');
+                                                                        $('#startdate').data('DateTimePicker').maxDate(decrementDay);
+                                                                        $(this).data("DateTimePicker").hide();
+                                                                    });
+
+                                                                });
+                                                        </script>
+                                                        <button style="float:right" class="btn btn-default" ng-click="edit_tdate = true">Chỉnh sửa</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="card" style="margin-top:20px">
+                                            <div class="card-body">
+                                                <h3 class="card-title">PIC</h3>
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+
+
+                                                                    <span style="margin-right:5px;font-size:12px">Assignee: </span> <label style="color:#34960d;font-size:12px">{{detail_target.ASSIGNEE_NAME}}</label> <button style="float:right" class="btn btn-default" ng-click="show_edit_assignee = true">Chỉnh sửa</button> <br />
+                                                                    <div ng-show="show_edit_assignee">
+                                                                        <div class="form-khachhang">
+                                                                            <input type="text" autocomplete="off" ng-model="keyword" ng-change="Find_User(keyword)" ng-focus="showtable_AssigneeEdit_target = true" ng-blur="showtable_AssigneeEdit_target = false" ng-model-options="{debounce:700}" required>
+                                                                            <div class="input-group-btn" style="position:absolute">
+                                                                                <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_AssigneeEdit_target">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                            <thead class="bg-blue text-white">
+                                                                                                <tr>
+                                                                                                    <th>ID</th>
+                                                                                                    <th>Mã nhân viên</th>
+                                                                                                    <th>Tên nhân viên</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr style="cursor:pointer" ng-mousedown="GetAssigneeEdit_target(user);" ng-repeat="user in list_user_find">
+                                                                                                    <td>{{user.ID}}</td>
+                                                                                                    <td>{{user.USERNAME}}</td>
+                                                                                                    <td>{{user.FULLNAME}}</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button ng-click="UpdateTargetAssinee(detail_target.ID); show_edit_assignee = false" type="button" class="btn btn-save"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                                                            <button class="btn btn-danger" ng-click="show_edit_assignee = false " style="margin:10px 0"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                                        </div>
+
+
+
+                                                                    </div>
+
+
+
+
+                                                                    <span style="margin-right:5px;font-size:12px">Checker: </span><label style="color:#34960d;font-size:12px">{{detail_target.RECHECK_USER_NAME}}</label><button style="float:right" class="btn btn-default" ng-click="show_edit_recheck = true">Chỉnh sửa</button>  <br />
+                                                                    <div ng-show="show_edit_recheck">
+                                                                        <div class="form-khachhang">
+                                                                            <input type="text" autocomplete="off" ng-model="keyword" ng-change="Find_User(keyword)" ng-focus="showtable_RecheckEdit_target = true" ng-blur="showtable_RecheckEdit_target = false" ng-model-options="{debounce:700}" required>
+                                                                            <div class="input-group-btn" style="position:absolute">
+                                                                                <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_RecheckEdit_target">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                            <thead class="bg-blue text-white">
+                                                                                                <tr>
+                                                                                                    <th>ID</th>
+                                                                                                    <th>Mã nhân viên</th>
+                                                                                                    <th>Tên nhân viên</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr style="cursor:pointer" ng-mousedown="GetRecheckEdit_target(user);" ng-repeat="user in list_user_find">
+                                                                                                    <td>{{user.ID}}</td>
+                                                                                                    <td>{{user.USERNAME}}</td>
+                                                                                                    <td>{{user.FULLNAME}}</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button ng-click="UpdateTargetRecheckUser(detail_target.ID); show_edit_recheck = false" type="button" class="btn btn-save"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <span style="margin-right:5px;font-size:12px">Viewer </span><br />
+                                                                    <div ng-repeat="item in user_view_target"><button>{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="Del_user_view_target(item.ID)"></i></button></div>
+                                                                    <button ng-click="adduserviewtarget='True'" type="button" class="btn btn-primary"><i class="fa fa-user-plus" style="margin-right:5px"></i>Add Viewer</button>
+                                                                    <div ng-show="adduserviewtarget=='True'">
+
+                                                                        <label>Đã chọn: </label> <div ng-repeat="item in array_user_view_target"><button type="button" style="border:none;border-radius:20px;padding:3px 10px;color:white;background-color:#32a224;font-size:12px">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_select_user_view_target($index)"></i> </button></div>
+                                                                        <div class="form-khachhang">
+                                                                            <input type="text" autocomplete="off" ng-model="keyword" ng-change="Find_User(keyword)" ng-focus="showtable_UserTarget = true" ng-blur="showtable_UserTarget = false" ng-model-options="{debounce:700}" required>
+                                                                            <div class="input-group-btn" style="position:absolute">
+                                                                                <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_UserTarget">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                            <thead class="bg-blue text-white">
+                                                                                                <tr>
+                                                                                                    <th>ID</th>
+                                                                                                    <th>Mã nhân viên</th>
+                                                                                                    <th>Tên nhân viên</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr style="cursor:pointer" ng-mousedown="Select_multi_user_target(user);" ng-repeat="user in list_user_find">
+                                                                                                    <td>{{user.ID}}</td>
+                                                                                                    <td>{{user.USERNAME}}</td>
+                                                                                                    <td>{{user.FULLNAME}}</td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button ng-click="Create_user_viewTarget()" class="btn btn-save" type="button"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--==================================================================================-->
+                                    <!--=============================Comments target=====================================================-->
+                                    <div class="col-md-12" style="margin-top:20px">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title ">Comments target</h4>
+                                                <div>
+                                                    <textarea style="resize:vertical;width:100%" ng-model="chat_comment_target" rows="2"  ng-keypress="($event.keyCode == 13 && !$event.shiftKey) ? AddNewComment_Target(): null"></textarea>
+                                                    
+                                                </div>
+                                                <div class="list-wrapper">
+                                                    <ul class="d-flex flex-column-reverse todo-list todo-list-custom" ng-repeat="item in list_comment_target">
+                                                        <li class="completed-list">
+                                                            <div class="form-check">
+                                                                <span><img src="~/Content/images/icon_avatar_default.png" width="30" height="30" /></span>
+
+                                                                <span>
+                                                                    <label>{{item.USER_CREATE_NAME}}</label><br />
+                                                                    <p>{{item.DATE_CREATE | date : 'dd/MM/yyyy'}}</p><br />
+                                                                    <p style="margin-bottom:0; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);"><span style="padding:5px;display:block">{{item.COMMENT1}}</span></p>
+</span>
+                                                            </div>
+                                                            <div class="button-delete" style="width:100%;text-align:right">
+                                                                <i type="button" class="fa fa-trash" style="color:red;margin-right:5px;font-weight:normal;font:normal normal normal 14px/1 FontAwesome" aria-hidden="true" ng-click="RemoveComment(item.ID)"><span style="margin-left:2px">Xóa</span></i>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--==================================================================================-->
+                                </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <!--End Modal detail target-->
+
+
+            </div><!-- page-body-wrapper ends -->
+        </div>
+    </div>
+
+</body>
+
+<style>
+    .ribbon {
+                top:-5px;
+        width:10em;
+        color:white;
+        white-space:normal;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+  display: block;
+  height: 4rem;
+  background: linear-gradient(to bottom, #999999 0%, #cccccc 100%);
+  color: white;
+  float: left;
+  position: relative;
+  -webkit-filter: drop-shadow(0 0.5rem 0.3em rgba(0, 0, 0, 0.5));
+  transform: translate3d(0, 0, 0);
+}
+.ribbon:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-right: 6rem solid transparent;
+  border-left: 6rem solid transparent;
+  border-top: 1.5rem solid #CCCCCC;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+}
+.ribbon.ribbon--orange {
+  background: linear-gradient(to bottom, #e7711b 0%, #f7981d 100%);
+}
+button.btn.btn-default.ribbon.ribbon--orange:hover {
+    text-decoration: underline;
+    color: white;
+}
+.ribbon.ribbon--orange:after {
+  border-top: 1.5rem solid #F7981D;
+}
+    .home-layout {
+        text-align: center;
+        vertical-align: middle;
+        /* height: 100vh; */
+        /* display: flex; */
+        flex-wrap: wrap;
+        vertical-align: middle;
+    }
+        button.btn.btn-default {
+    font-size: 12px;
+    border: none;
+    color: #146eb5;
+}
+        button.btn.btn-default:hover {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+}
+    button.fa-edit {
+        border: 1px solid #3232bd;
+        padding: 5px;
+        border-radius: 2px;
+        color: #3232bd;
+        background-color: #fff;
+    }
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .form-header-content {
+        display:grid;
+        grid-template-columns:6fr 2fr 1fr;
+    }
+    button.fa-edit {
+        border: 1px solid #3232bd;
+        padding: 5px;
+        border-radius: 2px;
+        color: #3232bd;
+        background-color: #fff;
+    }
+
+    .fade {
+        opacity: 1;
+    }
+
+    .textarea-detail {
+        background-color: #f9f9f9;
+        padding: 5px;
+        min-height: 50px;
+        font-size: 12px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+    }
+
+    .checked {
+        text-decoration: line-through;
+        -webkit-text-decoration-color: #198ae3;
+        text-decoration-color: #198ae3;
+    }
+
+    .thead-content {
+        display: table;
+        width: 100%;
+    }
+
+    .tbody-content {
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        display: table;
+        width: 100%;
+    }
+
+    .input-form-search .form-control-feedback {
+        color: white;
+        right: 0;
+        background: #18af24;
+        vertical-align: middle;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .form-checkbox input[type=checkbox] {
+        border-radius: 50%;
+        border: none !important;
+        background-color: #DDD;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 20px;
+        height: 20px !important;
+        position: relative;
+        top: 5px;
+        margin-right: 5px;
+    }
+
+        fieldset[disabled] .form-checkbox input[type=checkbox], fieldset[disabled] .form-checkbox input[type=radio], .form-checkbox input[type=checkbox].disabled, .form-checkbox input[type=checkbox][disabled], .form-checkbox input[type=radio].disabled, .form-checkbox input[type=radio][disabled] {
+            background-color: #EEE;
+            cursor: not-allowed;
+        }
+
+        .form-checkbox input[type=checkbox]:checked {
+            background-color: #68AD17;
+            background: #68AD17 url(data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==) 5px 5px no-repeat;
+        }
+
+    div.process-bar {
+        position: relative;
+    }
+
+        div.process-bar b {
+            background: #189fd3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+
+    .node circle {
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 3px;
+    }
+
+    .node text {
+        font: 12px sans-serif;
+    }
+
+    .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 2px;
+    }
+    label.checkbox-radio {
+        cursor:pointer;
+    }
+    .card.draggable.shadow-sm:hover {
+    cursor: pointer;
+}
+              .checkbox-radio input[type=radio]:focus
+            {
+                 outline:none;
+            }
+
+         .checkbox-radio input[type=radio]
+            {
+                background-color: #DDD;
+                border-radius: 2px;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                width: 20px;
+                height: 20px !important;
+                margin-right:5px;
+                top:5px;
+                cursor: pointer;
+                position: relative;
+                border-radius:50%;
+            }
+
+        .checkbox-radio input[type=radio]:checked
+            {
+                background-color: #409fd6;
+                background: #409fd6 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAXUlEQVQoU2NkIBIwEqmOAa7w48ePqn/+/JnCyMjoBtL8////XSwsLDn8/Py3QXy4wrdv3+6EKYLZAlIsLCzsjqLw3bt3/7E5Q0hICGwY3ESiFRJtNdGeIRRMRIcjAMeDMAtLh63tAAAAAElFTkSuQmCC") 5px 5px  no-repeat;
+            }
+</style>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+</script>
+<script>
+    $('body').on('keyup input', 'textarea', function () {
+        var offset = this.offsetHeight - this.clientHeight;
+        var scroll = $('body').scrollTop();
+        $(this).css('height', 'auto').css('height', this.scrollHeight + offset);
+        $('body').scrollTop(scroll);
+    }).removeAttr('data-autoresize');
+
+
+</script>
+

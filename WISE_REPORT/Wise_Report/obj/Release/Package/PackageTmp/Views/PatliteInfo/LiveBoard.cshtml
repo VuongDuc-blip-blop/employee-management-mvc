@@ -1,0 +1,609 @@
+﻿<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<script src="~/Content/js/LiveBoardCtrl.js?time=@DateTime.Now"></script>
+<style>
+    body {
+        background-color: black;
+        font-family: 'Tahoma',sans-serif;
+        font-weight: normal;
+        /*disable user select or copy text*/
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .display-none_ {
+        display: none !important;
+    }
+
+    .r {
+        background-color: red;
+    }
+
+    .g {
+        background-color: #00C109;
+    }
+
+    .b {
+        background-color: cornflowerblue;
+    }
+
+    .p {
+        background-color: hotpink;
+    }
+
+    .o {
+        background: orange;
+    }
+
+    #form {
+        /*position: fixed;*/
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .live-board__content-panel {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        /*background: cornflowerblue;*/
+    }
+
+    #menu {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+    }
+
+    .reddot {
+        background-image: url('../Images/Etc/Live_image.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        z-index: 99;
+    }
+
+    .ImageLogo {
+        background-image: url('../Images/Etc/logo.png');
+        background-repeat: no-repeat;
+        background-position: left;
+        background-size: contain;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .font-title {
+        font-size: 4vmin;
+        color: white;
+        text-align: center;
+    }
+
+    .font-time {
+        color: #ffff00;
+        font-size: 2.3vmin;
+        text-align: center;
+    }
+
+    .font-machine--white {
+        /*color: white;*/
+        font-size: 3vmin;
+        text-align: center;
+    }
+
+    .position_absolute {
+        position: absolute;
+    }
+
+    .z-index {
+        z-index: 1;
+    }
+
+    .font-timechangestate--white {
+        font-size: 3.5vmin;
+        /*color: white;*/
+        text-align: center;
+        display: block;
+        font-weight: bold;
+        overflow: hidden;
+    }
+
+    .uptime-status-circle__content {
+        color: #ffffff;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 4.2vmin;
+        text-align: center;
+        border-radius: 50%;
+        width: 200px !important;
+        height: 200px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: grey;
+        /*padding: 0px 56px 0px 56px;*/
+    }
+
+    .uptimepercent--bg__content {
+        background: #747474;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 20.6px;
+        overflow: hidden;
+        /*font-weight: bold;*/
+    }
+
+    .mc_select {
+        cursor: pointer;
+    }
+
+    .machine-box__content {
+        background-color: #202122;
+        display: flex;
+        justify-content: center;
+    }
+
+    .font-uptime-percent--white {
+        color: #ffffff;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .font-info--grey {
+        color: #9c9c9c;
+        padding-right: 13px;
+        font-size: 2.3vmin;
+    }
+
+    .font-timecount--white {
+        color: #ffffff;
+        text-align: right;
+        font-size: 4.5vmin;
+        padding-right: 13px;
+    }
+
+    .font-lastfived--grey {
+        text-align: center;
+        color: #9c9c9c;
+        font-size: 2.3vmin;
+    }
+
+    .lastfiveday__panel {
+        display: flex;
+        justify-content: center;
+    }
+
+    .font-timelastfived--white {
+        color: white;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .progressbar-lastfived__panel {
+        /*padding: 0px 13px 0px 0px;*/
+        /*border-radius: 20.5px;
+        background: #747474;*/
+    }
+
+    .dark {
+        background: #333333;
+    }
+
+    .uptime-bar--green {
+        height: 100%;
+        background: #005608;
+    }
+
+    .uptime-bar--red {
+        height: 100%;
+        background: #910000;
+    }
+
+    .progress {
+        height: 100%;
+        position: relative;
+        border-radius: 20.5px;
+        background: #747474;
+    }
+
+    .progress-bar {
+        background: #747474;
+    }
+
+    .progress span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        color: #ffffff;
+        font-size: 1.8vmin;
+        height: 100% !important;
+    }
+
+    .show {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @@media screen and (max-width: 1850px) and (min-width: 1600px) {
+        .uptime-status-circle__content {
+            margin-top: 5%;
+            font-size: 4vmin;
+            border-radius: 50%;
+            width: 150px !important;
+            height: 150px !important;
+            background: pink;
+        }
+    }
+
+    @@media screen and (max-width:1600px) and (min-width: 1440px) {
+        .uptime-status-circle__content {
+            margin-top: 5%;
+            font-size: 3.9vmin;
+            border-radius: 50%;
+            width: 150px !important;
+            height: 150px !important;
+            /*background: yellow;*/
+        }
+
+        .font-lastfived--grey {
+            text-align: center;
+            color: #9c9c9c;
+            font-size: 2rem;
+        }
+
+        .font-info--grey {
+            color: #9c9c9c;
+            text-align: right;
+            padding-right: 13px;
+            font-size: 2rem;
+        }
+
+        .font-timecount--white {
+            color: #ffffff;
+            text-align: right;
+            font-size: 4rem;
+            padding-right: 13px;
+        }
+    }
+
+    @@media screen and (max-width: 1440px) and (min-width: 1280px) {
+        .uptime-status-circle__content {
+            /*margin-top: 5%;*/
+            font-size: 3.9vmin;
+            border-radius: 50%;
+            width: 130px !important;
+            height: 130px !important;
+            /*background: orange;*/
+        }
+
+        .font-timechangestate--white {
+            font-size: 3.9vmin;
+        }
+
+        .font-uptime-percent--white {
+            color: #ffffff;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .font-lastfived--grey {
+            text-align: center;
+            color: #9c9c9c;
+            font-size: 1.8rem;
+        }
+
+        .font-timecount--white {
+            color: #ffffff;
+            text-align: right;
+            font-size: 3.7rem;
+            padding-right: 13px;
+        }
+
+        .font-timelastfived--white {
+            color: white;
+            font-size: 2vmin;
+            text-align: center;
+        }
+    }
+
+    @@media screen and (max-width: 1280px) {
+        .uptime-status-circle__content {
+            font-size: 3.9vmin;
+            border-radius: 50%;
+            width: 105px !important;
+            height: 105px !important;
+            /*background: purple;*/
+        }
+
+        .font-timechangestate--white {
+            font-size: 2.5vmin;
+        }
+
+        .font-timelastfived--white {
+            color: white;
+            font-size: 2vmin;
+            text-align: center;
+        }
+
+        .font-uptime-percent--white {
+            color: #ffffff;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+    }
+</style>
+<style>
+    .progress {
+        background-color: black !important;
+    }
+
+    .green {
+        background-color: rgb(0, 193, 9);
+        color: white;
+    }
+
+    .red {
+        background-color: red;
+        color: white;
+    }
+
+    .yellow {
+        background-color: yellow;
+        color: black;
+    }
+
+    .BLUE {
+        background-color: blue;
+        color: white;
+    }
+
+    .ORANGE {
+        background-color: orange;
+        color: white;
+    }
+
+    .OFF {
+        background-color: grey;
+        color: white;
+    }
+
+    td {
+        border-top: 1px solid black !important;
+        padding: 0px !important;
+    }
+
+    .ten {
+        width: 16%;
+        display: inline-block;
+    }
+
+    .main_font {
+        font-size: 22px;
+    }
+
+    .sub_font {
+        font-size: 14px;
+    }
+
+    @@media screen and (max-width: 1600px) {
+        .main_font {
+            font-size: 18px;
+        }
+
+        .sub_font {
+            font-size: 12px;
+        }
+    }
+
+    @@media screen and (max-width: 1366px) {
+        .main_font {
+            font-size: 14px;
+        }
+
+        .sub_font {
+            font-size: 11px;
+        }
+    }
+
+    @@media screen and (max-width: 1280px) {
+        .main_font {
+            font-size: 14px;
+        }
+
+        .sub_font {
+            font-size: 10px;
+        }
+    }
+
+    @@media screen and (max-width: 1024px) {
+        .main_font {
+            font-size: 11px;
+        }
+
+        .sub_font {
+            font-size: 8px;
+        }
+    }
+</style>
+<style>
+    .btn-page {
+        background-color: transparent;
+        background-image: url('../../Content/images/Page.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 15px;
+    }
+    .btn-page-focus {
+        background-color: transparent;
+        background-image: url('../../Content/images/PageFocus.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 15px;
+    }
+    .btn-pause {
+        background-color: transparent;
+        background-image: url('../../Content/images/Pause.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 25px;
+    }
+    .btn-play {
+        background-color: transparent;
+        background-image: url('../../Content/images/Play.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 25px;
+    }
+</style>
+<div ng-app="myApp" ng-controller="LiveBoardCtrl" class="col-md-12 no-padding">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px;align-items:center">
+                    <h3 style="margin:0;line-height:70px;text-transform:uppercase">TIME BOARD</h3>
+                    <p ng-class="pause ? 'btn-pause' : 'btn-play'" ng-click="ChangeAuto()"></p>
+                    <p ng-repeat="item in ListTrang" ng-class="item == sotrang ? 'btn-page-focus' : 'btn-page' " ng-click="ChuyenTrang(item)"></p>
+                </header>
+                <div class="main-header" style="display:inline-block">
+                    Logo
+                    <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                        <span class="logo-mini" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                        </span>
+                        <span class="logo-lg" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                        </span>
+                    </a>
+                </div>
+
+                <div class="date-time" style="line-height:70px">
+                    <span id="dotter" style="margin-right:5px;top:5px;position:relative"><i class="fa fa-circle" style="color:red;font-size:25px"></i></span>
+                    <span id="date"></span> &nbsp;
+                    <span id='time'></span>
+                    <script>
+                        window.onload = setInterval(clock, 1000);
+                        function clock() {
+                            var d = new Date();
+
+                            var date = d.getDate();
+
+                            var month = d.getMonth();
+                            var montharr = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            month = montharr[month];
+
+                            var year = d.getFullYear();
+
+                            var day = d.getDay();
+                            var dayarr = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+                            day = dayarr[day];
+
+                            var hour = d.getHours();
+                            var min = d.getMinutes();
+                            var sec = d.getSeconds()
+
+                            hour = (hour < 10) ? "0" + hour : hour;
+                            min = (min < 10) ? "0" + min : min;
+                            sec = (sec < 10) ? "0" + sec : sec;
+                            document.getElementById("date").innerHTML = day + " " + date + " " + month + " " + year;
+                            document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
+                        }
+                        $(document).ready(function () {
+                            var dotterFlicker = document.getElementById('dotter');
+                            setInterval(function () {
+                                dotterFlicker.style.display = (dotterFlicker.style.display == 'none' ? '' : 'none');
+                            }, 1000);
+
+                        });
+                    </script>
+                </div>
+                <div class="back-homepage" style="margin:0 15px;line-height:70px">
+                    <a href="/Home/HomeLayout"><i class="fa fa-th-list" style="color:#fff;font-size:22px;top:4px;position:relative"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-timeboard">
+        <div id="form" style="width:100%;height:100%;display:flex;">
+            <div ng-repeat="data in DanhSachMay" class="machine-box__content boxdata page_1" style="width: 19.32%;margin-right:10px" ng-if="data.ListData[0] != null">
+                <div id="Box{{data.MCID}}" style="width:100%">
+                    <div>
+                        <div class="sub_2  font-machine--white" ng-class="{'yellow' : data.ListData[0].CURRENT_STATE == 20, 'green' : data.ListData[0].CURRENT_STATE == 10, 'red' : data.ListData[0].CURRENT_STATE == 30, 'OFF' : data.ListData[0].CURRENT_STATE == 0, 'BLUE' : data.ListData[0].CURRENT_STATE == 40, 'ORANGE' : data.ListData[0].CURRENT_STATE == 50}" style="top: 8.97222px;width: 100%;height: 52.0389px;line-height: 52.0389px;">{{data.ListData[0].WDT_USERNAME}}</div>
+                        <div class="sub_3  font-timechangestate--white" ng-class="{'yellow' : data.ListData[0].CURRENT_STATE == 20, 'green' : data.ListData[0].CURRENT_STATE == 10, 'red' : data.ListData[0].CURRENT_STATE == 30, 'OFF' : data.ListData[0].CURRENT_STATE == 0, 'BLUE' : data.ListData[0].CURRENT_STATE == 40, 'ORANGE' : data.ListData[0].CURRENT_STATE == 50}" style="top: 55.6278px;width: 100%;height: 53.8333px;line-height: 53.8333px;">{{data.ListData[0].RUNNING_TIME | secondtotime}}</div>
+                        <div class="sub_4  uptime-status-circle__content" ng-class="{'uptime-bar--red' : data.ListData[0].uptime < data.ListData[0].PERCENT_TARGET, 'uptime-bar--green' : data.ListData[0].uptime >= data.ListData[0].PERCENT_TARGET}" style="margin:0 auto;margin-top:20px;margin-bottom:20px">
+                            <span ng-show="data.ListData[0].uptime < data.ListData[0].PERCENT_TARGET">BAD</span>
+                            <span ng-show="data.ListData[0].uptime >= data.ListData[0].PERCENT_TARGET">GOOD</span>
+                        </div>
+                        <div class="test" style="position:relative">
+                            <div class="sub_5  uptimepercent--bg__content" style="top: 358.889px; width: 90%; height: 30px; line-height: 30px;margin:0 auto;">
+                                <div id="baruptime1" style="width: {{data.ListData[0].uptime | currency : '' : 2}}%;" ng-class="{'uptime-bar--red' : data.ListData[0].uptime < data.ListData[0].PERCENT_TARGET, 'uptime-bar--green' : data.ListData[0].uptime >= data.ListData[0].PERCENT_TARGET}"></div>
+                            </div>
+                            <div class="sub_6  font-uptime-percent--white" style="top: 0; width: 90%; height: 30.5056px; line-height: 30.5056px;position:absolute">{{data.ListData[0].uptime | currency : '' : 2}}%</div>
+                        </div>
+
+                        <div class="sub_7  font-info--grey" style="">Up-Time</div>
+                        <div class="sub_8  font-timecount--white" style="">{{data.ListData[0].TIME_GREEN | secondtotime}}</div>
+                        <div class="sub_9  font-info--grey" style="">Down-time</div>
+                        <div class="sub_10  font-timecount--white" style="">{{data.ListData[0].TIME_LOSS | secondtotime}}</div>
+                    </div>
+
+                    <div ng-show="data.ListPastData.length > 0" class="sub_11  font-lastfived--grey font-center--text" style="margin-bottom:10px">Last 5 days</div>
+
+                    <div ng-show="data.ListPastData.length > 0" ng-repeat="item in data.ListPastData" style="margin-bottom:15px">
+                        <div class="sub_12  lastfiveday__panel" style="width: 94%;height: 35px;line-height: 35px">
+                            <div class="lastfived_sub_1  font-info--grey font-info--grey" style="width: 20%;height: 27.8139px;line-height: 27.8139px;">{{item.TEN_NGAY}}</div>
+                            <div class="lastfived_sub_2  font-timelastfived--white" style="width: 40%;height: 27.8139px;line-height: 27.8139px;">{{item.TIME_GREEN | secondtotime}}</div>
+                            <div class="lastfived_sub_3  progressbar-lastfived__panel" style="width: 40%; height: 27.8139px; line-height: 27.8139px;">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{item.uptime | currency : '' : 2}}% !important; background: #910000;"><span class="show">{{item.uptime | currency : '' : 2}}%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="Box99" class="machine-box__content legends-panel__footer" value="" style=" left: 0%; width: 100%; position:fixed;bottom:0; background: transparent; z-index: 2;">
+            <span style="background: #00C109;width: 15px; height: 15px; border-radius: 50%; margin: 0px 10px 0px 10px;"></span>
+            <span style="width: 55px !important; color: #ffffff; line-height: 15px !important; font-size: 1.3vmin">RUN</span>
+            <span style="background: #fce406;width: 15px; height: 15px; border-radius: 50%; margin: 0px 10px 0px 10px;"></span>
+            <span style="width: 55px !important; color: #ffffff; line-height: 15px !important; font-size: 1.3vmin">WAIT</span>
+            <span style="background: #EB1C24;width: 15px; height: 15px; border-radius: 50%; margin: 0px 10px 0px 10px;"></span>
+            <span style="width: 55px !important; color: #ffffff; line-height: 15px !important; font-size: 1.3vmin">ERROR</span>
+            <span style="background: #6d6e71;width: 15px; height: 15px; border-radius: 50%; margin: 0px 10px 0px 10px;"></span>
+            <span style="width: 55px !important; color: #ffffff; line-height: 15px !important; font-size: 1.3vmin">OFF</span>
+        </div>
+    </div>
+  
+</div>

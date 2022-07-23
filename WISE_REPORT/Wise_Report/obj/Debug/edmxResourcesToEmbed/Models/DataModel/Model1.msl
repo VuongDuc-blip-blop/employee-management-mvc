@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SUMIDAModelStoreContainer" CdmEntityContainer="PatliteEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="SUMIDAModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Administrators">
+      <EntityTypeMapping TypeName="SUMIDAModel.Administrator">
+        <MappingFragment StoreEntitySet="Administrator">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PasswordDecode" ColumnName="PasswordDecode" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="Isadmin" ColumnName="Isadmin" />
+          <ScalarProperty Name="MaPhongBan" ColumnName="MaPhongBan" />
+          <ScalarProperty Name="Write" ColumnName="Write" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BROKEN_REASON">
+      <EntityTypeMapping TypeName="SUMIDAModel.BROKEN_REASON">
+        <MappingFragment StoreEntitySet="BROKEN_REASON">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BROKEN_ID" ColumnName="BROKEN_ID" />
+          <ScalarProperty Name="REASON" ColumnName="REASON" />
+          <ScalarProperty Name="GHI_CHU" ColumnName="GHI_CHU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_ERROR_LOG">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_ERROR_LOG">
+        <MappingFragment StoreEntitySet="PATLITE_ERROR_LOG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LOG_DATE_CREATE" ColumnName="LOG_DATE_CREATE" />
+          <ScalarProperty Name="LOG_USERNAME" ColumnName="LOG_USERNAME" />
+          <ScalarProperty Name="LOG_DATE" ColumnName="LOG_DATE" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="ERROR_REASON" ColumnName="ERROR_REASON" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_GROUP_ID">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_GROUP_ID">
+        <MappingFragment StoreEntitySet="PATLITE_GROUP_ID">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_HISTORY_LOG">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_HISTORY_LOG">
+        <MappingFragment StoreEntitySet="PATLITE_HISTORY_LOG">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="STATE_TIME" ColumnName="STATE_TIME" />
+          <ScalarProperty Name="IS_READ" ColumnName="IS_READ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_INFO">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_INFO">
+        <MappingFragment StoreEntitySet="PATLITE_INFO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATE_TIME" ColumnName="DATE_TIME" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="RED_LIGHT" ColumnName="RED_LIGHT" />
+          <ScalarProperty Name="AMBER_LIGHT" ColumnName="AMBER_LIGHT" />
+          <ScalarProperty Name="GREEN_LIGHT" ColumnName="GREEN_LIGHT" />
+          <ScalarProperty Name="BREAK_LIGHT" ColumnName="BREAK_LIGHT" />
+          <ScalarProperty Name="MODE" ColumnName="MODE" />
+          <ScalarProperty Name="QUANTITY_EACH_TURN" ColumnName="QUANTITY_EACH_TURN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_LINE">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_LINE">
+        <MappingFragment StoreEntitySet="PATLITE_LINE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LINE_NAME" ColumnName="LINE_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_PRODUCTS">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_PRODUCTS">
+        <MappingFragment StoreEntitySet="PATLITE_PRODUCTS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
+          <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
+          <ScalarProperty Name="CYCLE_TIME" ColumnName="CYCLE_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_STATE_CONTROL">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_STATE_CONTROL">
+        <MappingFragment StoreEntitySet="PATLITE_STATE_CONTROL">
+          <ScalarProperty Name="STID" ColumnName="STID" />
+          <ScalarProperty Name="RCID" ColumnName="RCID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="THIS_DATE" ColumnName="THIS_DATE" />
+          <ScalarProperty Name="THIS_HOUR" ColumnName="THIS_HOUR" />
+          <ScalarProperty Name="THIS_SHIFT" ColumnName="THIS_SHIFT" />
+          <ScalarProperty Name="THIS_CHANGED" ColumnName="THIS_CHANGED" />
+          <ScalarProperty Name="THIS_HR_CHANGED" ColumnName="THIS_HR_CHANGED" />
+          <ScalarProperty Name="THIS_SF_CHANGED" ColumnName="THIS_SF_CHANGED" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="IS_CONNECTED" ColumnName="IS_CONNECTED" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="STATE_BEFORE_BREAK" ColumnName="STATE_BEFORE_BREAK" />
+          <ScalarProperty Name="RED" ColumnName="RED" />
+          <ScalarProperty Name="YELLOW" ColumnName="YELLOW" />
+          <ScalarProperty Name="GREEN" ColumnName="GREEN" />
+          <ScalarProperty Name="BLUE" ColumnName="BLUE" />
+          <ScalarProperty Name="ORANGE" ColumnName="ORANGE" />
+          <ScalarProperty Name="COUNTER_VALUE" ColumnName="COUNTER_VALUE" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="COUNT_HOUR_RED" ColumnName="COUNT_HOUR_RED" />
+          <ScalarProperty Name="COUNT_HOUR_YELLOW" ColumnName="COUNT_HOUR_YELLOW" />
+          <ScalarProperty Name="COUNT_HOUR_GREEN" ColumnName="COUNT_HOUR_GREEN" />
+          <ScalarProperty Name="COUNT_HOUR_ERROR" ColumnName="COUNT_HOUR_ERROR" />
+          <ScalarProperty Name="COUNT_HOUR_BREAK" ColumnName="COUNT_HOUR_BREAK" />
+          <ScalarProperty Name="COUNT_HOUR_OFF" ColumnName="COUNT_HOUR_OFF" />
+          <ScalarProperty Name="COUNT_SHIFT_RED" ColumnName="COUNT_SHIFT_RED" />
+          <ScalarProperty Name="COUNT_SHIFT_YELLOW" ColumnName="COUNT_SHIFT_YELLOW" />
+          <ScalarProperty Name="COUNT_SHIFT_GREEN" ColumnName="COUNT_SHIFT_GREEN" />
+          <ScalarProperty Name="COUNT_SHIFT_ERROR" ColumnName="COUNT_SHIFT_ERROR" />
+          <ScalarProperty Name="COUNT_SHIFT_BREAK" ColumnName="COUNT_SHIFT_BREAK" />
+          <ScalarProperty Name="COUNT_SHIFT_OFF" ColumnName="COUNT_SHIFT_OFF" />
+          <ScalarProperty Name="COUNT_WEEK_RED" ColumnName="COUNT_WEEK_RED" />
+          <ScalarProperty Name="COUNT_WEEK_YELLOW" ColumnName="COUNT_WEEK_YELLOW" />
+          <ScalarProperty Name="COUNT_WEEK_GREEN" ColumnName="COUNT_WEEK_GREEN" />
+          <ScalarProperty Name="COUNT_WEEK_ERROR" ColumnName="COUNT_WEEK_ERROR" />
+          <ScalarProperty Name="COUNT_WEEK_BREAK" ColumnName="COUNT_WEEK_BREAK" />
+          <ScalarProperty Name="COUNT_WEEK_OFF" ColumnName="COUNT_WEEK_OFF" />
+          <ScalarProperty Name="COUNT_MONTH_RED" ColumnName="COUNT_MONTH_RED" />
+          <ScalarProperty Name="COUNT_MONTH_YELLOW" ColumnName="COUNT_MONTH_YELLOW" />
+          <ScalarProperty Name="COUNT_MONTH_GREEN" ColumnName="COUNT_MONTH_GREEN" />
+          <ScalarProperty Name="COUNT_MONTH_ERROR" ColumnName="COUNT_MONTH_ERROR" />
+          <ScalarProperty Name="COUNT_MONTH_BREAK" ColumnName="COUNT_MONTH_BREAK" />
+          <ScalarProperty Name="COUNT_MONTH_OFF" ColumnName="COUNT_MONTH_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_HOUR_RED" ColumnName="TIME_HOUR_RED" />
+          <ScalarProperty Name="TIME_HOUR_YELLOW" ColumnName="TIME_HOUR_YELLOW" />
+          <ScalarProperty Name="TIME_HOUR_GREEN" ColumnName="TIME_HOUR_GREEN" />
+          <ScalarProperty Name="TIME_HOUR_ERROR" ColumnName="TIME_HOUR_ERROR" />
+          <ScalarProperty Name="TIME_HOUR_BREAK" ColumnName="TIME_HOUR_BREAK" />
+          <ScalarProperty Name="TIME_HOUR_OFF" ColumnName="TIME_HOUR_OFF" />
+          <ScalarProperty Name="TIME_SHIFT_RED" ColumnName="TIME_SHIFT_RED" />
+          <ScalarProperty Name="TIME_SHIFT_YELLOW" ColumnName="TIME_SHIFT_YELLOW" />
+          <ScalarProperty Name="TIME_SHIFT_GREEN" ColumnName="TIME_SHIFT_GREEN" />
+          <ScalarProperty Name="TIME_SHIFT_ERROR" ColumnName="TIME_SHIFT_ERROR" />
+          <ScalarProperty Name="TIME_SHIFT_BREAK" ColumnName="TIME_SHIFT_BREAK" />
+          <ScalarProperty Name="TIME_SHIFT_OFF" ColumnName="TIME_SHIFT_OFF" />
+          <ScalarProperty Name="TIME_WEEK_RED" ColumnName="TIME_WEEK_RED" />
+          <ScalarProperty Name="TIME_WEEK_YELLOW" ColumnName="TIME_WEEK_YELLOW" />
+          <ScalarProperty Name="TIME_WEEK_GREEN" ColumnName="TIME_WEEK_GREEN" />
+          <ScalarProperty Name="TIME_WEEK_ERROR" ColumnName="TIME_WEEK_ERROR" />
+          <ScalarProperty Name="TIME_WEEK_BREAK" ColumnName="TIME_WEEK_BREAK" />
+          <ScalarProperty Name="TIME_WEEK_OFF" ColumnName="TIME_WEEK_OFF" />
+          <ScalarProperty Name="TIME_MONTH_RED" ColumnName="TIME_MONTH_RED" />
+          <ScalarProperty Name="TIME_MONTH_YELLOW" ColumnName="TIME_MONTH_YELLOW" />
+          <ScalarProperty Name="TIME_MONTH_GREEN" ColumnName="TIME_MONTH_GREEN" />
+          <ScalarProperty Name="TIME_MONTH_ERROR" ColumnName="TIME_MONTH_ERROR" />
+          <ScalarProperty Name="TIME_MONTH_BREAK" ColumnName="TIME_MONTH_BREAK" />
+          <ScalarProperty Name="TIME_MONTH_OFF" ColumnName="TIME_MONTH_OFF" />
+          <ScalarProperty Name="ITEM_ID" ColumnName="ITEM_ID" />
+          <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
+          <ScalarProperty Name="BREAK_START" ColumnName="BREAK_START" />
+          <ScalarProperty Name="IS_BREAK" ColumnName="IS_BREAK" />
+          <ScalarProperty Name="TIMER_BREAK" ColumnName="TIMER_BREAK" />
+          <ScalarProperty Name="TIMER_BREAK_HOUR" ColumnName="TIMER_BREAK_HOUR" />
+          <ScalarProperty Name="TIMER_BREAK_SHIFT" ColumnName="TIMER_BREAK_SHIFT" />
+          <ScalarProperty Name="TIMER_BREAK_WEEK" ColumnName="TIMER_BREAK_WEEK" />
+          <ScalarProperty Name="TIMER_BREAK_MONTH" ColumnName="TIMER_BREAK_MONTH" />
+          <ScalarProperty Name="CYCLE_CLOCK" ColumnName="CYCLE_CLOCK" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="ACTUAL_DAY_QTY" ColumnName="ACTUAL_DAY_QTY" />
+          <ScalarProperty Name="ACTUAL_HOUR_QTY" ColumnName="ACTUAL_HOUR_QTY" />
+          <ScalarProperty Name="ACTUAL_SHIFT_QTY" ColumnName="ACTUAL_SHIFT_QTY" />
+          <ScalarProperty Name="ACTUAL_WEEK_QTY" ColumnName="ACTUAL_WEEK_QTY" />
+          <ScalarProperty Name="ACTUAL_MONTH_QTY" ColumnName="ACTUAL_MONTH_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="NG_HOUR_QTY" ColumnName="NG_HOUR_QTY" />
+          <ScalarProperty Name="NG_SHIFT_QTY" ColumnName="NG_SHIFT_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+          <ScalarProperty Name="IDEAL_RUN_RATE" ColumnName="IDEAL_RUN_RATE" />
+          <ScalarProperty Name="IS_RESET" ColumnName="IS_RESET" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_STATE_TRAN">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_STATE_TRAN">
+        <MappingFragment StoreEntitySet="PATLITE_STATE_TRAN">
+          <ScalarProperty Name="TID" ColumnName="TID" />
+          <ScalarProperty Name="THIS_DATE" ColumnName="THIS_DATE" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="BEGIN_TIME" ColumnName="BEGIN_TIME" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="DURATION" ColumnName="DURATION" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_WDR_INFO">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_WDR_INFO">
+        <MappingFragment StoreEntitySet="PATLITE_WDR_INFO">
+          <ScalarProperty Name="WDR_MAC_ADDRESS" ColumnName="WDR_MAC_ADDRESS" />
+          <ScalarProperty Name="WDR_USERNAME" ColumnName="WDR_USERNAME" />
+          <ScalarProperty Name="WDR_STATUS" ColumnName="WDR_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATLITE_WDT_INFO">
+      <EntityTypeMapping TypeName="SUMIDAModel.PATLITE_WDT_INFO">
+        <MappingFragment StoreEntitySet="PATLITE_WDT_INFO">
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="WDT_MAC_ADDRESS" ColumnName="WDT_MAC_ADDRESS" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="WDT_STATUS" ColumnName="WDT_STATUS" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="MODE" ColumnName="MODE" />
+          <ScalarProperty Name="QUANTITY_EACH_TURN" ColumnName="QUANTITY_EACH_TURN" />
+          <ScalarProperty Name="PERCENT_TARGET" ColumnName="PERCENT_TARGET" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUM_DAILY">
+      <EntityTypeMapping TypeName="SUMIDAModel.SUM_DAILY">
+        <MappingFragment StoreEntitySet="SUM_DAILY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+          <ScalarProperty Name="TOTAL_PCS" ColumnName="TOTAL_PCS" />
+          <ScalarProperty Name="GOOD_PCS" ColumnName="GOOD_PCS" />
+          <ScalarProperty Name="REJECT_PCS" ColumnName="REJECT_PCS" />
+          <ScalarProperty Name="OEE_TOTAL_TIME" ColumnName="OEE_TOTAL_TIME" />
+          <ScalarProperty Name="OEE_PLAN_TIME" ColumnName="OEE_PLAN_TIME" />
+          <ScalarProperty Name="OEE_DOWN_TIME" ColumnName="OEE_DOWN_TIME" />
+          <ScalarProperty Name="OEE_OPERATE_TIME" ColumnName="OEE_OPERATE_TIME" />
+          <ScalarProperty Name="OEE_IDEAL_RUN_RATE" ColumnName="OEE_IDEAL_RUN_RATE" />
+          <ScalarProperty Name="OEE_A" ColumnName="OEE_A" />
+          <ScalarProperty Name="OEE_P" ColumnName="OEE_P" />
+          <ScalarProperty Name="OEE_Q" ColumnName="OEE_Q" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUM_DAILY_GROUP">
+      <EntityTypeMapping TypeName="SUMIDAModel.SUM_DAILY_GROUP">
+        <MappingFragment StoreEntitySet="SUM_DAILY_GROUP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+          <ScalarProperty Name="TOTAL_PCS" ColumnName="TOTAL_PCS" />
+          <ScalarProperty Name="GOOD_PCS" ColumnName="GOOD_PCS" />
+          <ScalarProperty Name="REJECT_PCS" ColumnName="REJECT_PCS" />
+          <ScalarProperty Name="OEE_TOTAL_TIME" ColumnName="OEE_TOTAL_TIME" />
+          <ScalarProperty Name="OEE_PLAN_TIME" ColumnName="OEE_PLAN_TIME" />
+          <ScalarProperty Name="OEE_DOWN_TIME" ColumnName="OEE_DOWN_TIME" />
+          <ScalarProperty Name="OEE_OPERATE_TIME" ColumnName="OEE_OPERATE_TIME" />
+          <ScalarProperty Name="OEE_IDEAL_RUN_RATE" ColumnName="OEE_IDEAL_RUN_RATE" />
+          <ScalarProperty Name="OEE_A" ColumnName="OEE_A" />
+          <ScalarProperty Name="OEE_P" ColumnName="OEE_P" />
+          <ScalarProperty Name="OEE_Q" ColumnName="OEE_Q" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUM_HOURLY">
+      <EntityTypeMapping TypeName="SUMIDAModel.SUM_HOURLY">
+        <MappingFragment StoreEntitySet="SUM_HOURLY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="THIS_DATE" ColumnName="THIS_DATE" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUM_MONTHLY">
+      <EntityTypeMapping TypeName="SUMIDAModel.SUM_MONTHLY">
+        <MappingFragment StoreEntitySet="SUM_MONTHLY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUM_SHIFT">
+      <EntityTypeMapping TypeName="SUMIDAModel.SUM_SHIFT">
+        <MappingFragment StoreEntitySet="SUM_SHIFT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="SHIFT_ID" ColumnName="SHIFT_ID" />
+          <ScalarProperty Name="THIS_DATE" ColumnName="THIS_DATE" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUM_WEEKLY">
+      <EntityTypeMapping TypeName="SUMIDAModel.SUM_WEEKLY">
+        <MappingFragment StoreEntitySet="SUM_WEEKLY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="UPTIME_STD" ColumnName="UPTIME_STD" />
+          <ScalarProperty Name="UPTIME_ACT" ColumnName="UPTIME_ACT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SUMIDAModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WORK_TERM">
+      <EntityTypeMapping TypeName="SUMIDAModel.WORK_TERM">
+        <MappingFragment StoreEntitySet="WORK_TERM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TERM_NAME" ColumnName="TERM_NAME" />
+          <ScalarProperty Name="TIME_START" ColumnName="TIME_START" />
+          <ScalarProperty Name="TIME_END" ColumnName="TIME_END" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="P001_StateChange" FunctionName="SUMIDAModel.Store.P001_StateChange" />
+    <FunctionImportMapping FunctionImportName="P002_SumHourly" FunctionName="SUMIDAModel.Store.P002_SumHourly" />
+    <FunctionImportMapping FunctionImportName="P003_UpdateNG" FunctionName="SUMIDAModel.Store.P003_UpdateNG" />
+    <FunctionImportMapping FunctionImportName="Q001_RealtimeStatus" FunctionName="SUMIDAModel.Store.Q001_RealtimeStatus">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q001_RealtimeStatus_Result">
+          <ScalarProperty Name="STID" ColumnName="STID" />
+          <ScalarProperty Name="RCID" ColumnName="RCID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="LNID" ColumnName="LNID" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="THIS_CHANGED" ColumnName="THIS_CHANGED" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="IS_CONNECTED" ColumnName="IS_CONNECTED" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="COUNT_SHIFT_RED" ColumnName="COUNT_SHIFT_RED" />
+          <ScalarProperty Name="COUNT_SHIFT_YELLOW" ColumnName="COUNT_SHIFT_YELLOW" />
+          <ScalarProperty Name="COUNT_SHIFT_GREEN" ColumnName="COUNT_SHIFT_GREEN" />
+          <ScalarProperty Name="COUNT_SHIFT_OFF" ColumnName="COUNT_SHIFT_OFF" />
+          <ScalarProperty Name="COUNT_SHIFT_ERROR" ColumnName="COUNT_SHIFT_ERROR" />
+          <ScalarProperty Name="COUNT_SHIFT_BREAK" ColumnName="COUNT_SHIFT_BREAK" />
+          <ScalarProperty Name="TIME_SHIFT_GREEN" ColumnName="TIME_SHIFT_GREEN" />
+          <ScalarProperty Name="TIME_SHIFT_RED" ColumnName="TIME_SHIFT_RED" />
+          <ScalarProperty Name="TIME_SHIFT_YELLOW" ColumnName="TIME_SHIFT_YELLOW" />
+          <ScalarProperty Name="TIME_SHIFT_OFF" ColumnName="TIME_SHIFT_OFF" />
+          <ScalarProperty Name="TIME_SHIFT_ERROR" ColumnName="TIME_SHIFT_ERROR" />
+          <ScalarProperty Name="TIME_SHIFT_BREAK" ColumnName="TIME_SHIFT_BREAK" />
+          <ScalarProperty Name="work_time" ColumnName="work_time" />
+          <ScalarProperty Name="ACTUAL_SHIFT_QTY" ColumnName="ACTUAL_SHIFT_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="CYCLE_CLOCK" ColumnName="CYCLE_CLOCK" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="LINE_NAME" ColumnName="LINE_NAME" />
+          <ScalarProperty Name="PERCENT_TARGET" ColumnName="PERCENT_TARGET" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="TIME_SHIFT_TOTAL" ColumnName="TIME_SHIFT_TOTAL" />
+          <ScalarProperty Name="TIME_SHIFT_RUN" ColumnName="TIME_SHIFT_RUN" />
+          <ScalarProperty Name="TIME_SHIFT_LOSS" ColumnName="TIME_SHIFT_LOSS" />
+          <ScalarProperty Name="uptime" ColumnName="uptime" />
+          <ScalarProperty Name="PERCENT_GREEN" ColumnName="PERCENT_GREEN" />
+          <ScalarProperty Name="PERCENT_RED" ColumnName="PERCENT_RED" />
+          <ScalarProperty Name="PERCENT_YELLOW" ColumnName="PERCENT_YELLOW" />
+          <ScalarProperty Name="PERCENT_OFF" ColumnName="PERCENT_OFF" />
+          <ScalarProperty Name="PERCENT_ERROR" ColumnName="PERCENT_ERROR" />
+          <ScalarProperty Name="PERCENT_BREAK" ColumnName="PERCENT_BREAK" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q002_Timeline" FunctionName="SUMIDAModel.Store.Q002_Timeline">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q002_Timeline_Result">
+          <ScalarProperty Name="x" ColumnName="x" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MACHINE_NAME" ColumnName="MACHINE_NAME" />
+          <ScalarProperty Name="TID" ColumnName="TID" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="low" ColumnName="low" />
+          <ScalarProperty Name="high" ColumnName="high" />
+          <ScalarProperty Name="BEGIN_TIME" ColumnName="BEGIN_TIME" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="DURATION" ColumnName="DURATION" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q003_QtyHour" FunctionName="SUMIDAModel.Store.Q003_QtyHour">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q003_QtyHour_Result">
+          <ScalarProperty Name="mc_sname" ColumnName="mc_sname" />
+          <ScalarProperty Name="series" ColumnName="series" />
+          <ScalarProperty Name="h" ColumnName="h" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="NG_QTY" ColumnName="NG_QTY" />
+          <ScalarProperty Name="OK_QTY" ColumnName="OK_QTY" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q004_ReportHourly" FunctionName="SUMIDAModel.Store.Q004_ReportHourly">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q004_ReportHourly_Result">
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="MACHINE_NAME" ColumnName="MACHINE_NAME" />
+          <ScalarProperty Name="HOUR" ColumnName="HOUR" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="uptime" ColumnName="uptime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q005_ReportShift" FunctionName="SUMIDAModel.Store.Q005_ReportShift">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q005_ReportShift_Result">
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="MACHINE_NAME" ColumnName="MACHINE_NAME" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="SHIFT" ColumnName="SHIFT" />
+          <ScalarProperty Name="TIME_START" ColumnName="TIME_START" />
+          <ScalarProperty Name="TIME_END" ColumnName="TIME_END" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="UPTIME" ColumnName="UPTIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q006_ReportDaily" FunctionName="SUMIDAModel.Store.Q006_ReportDaily">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q006_ReportDaily_Result">
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="MACHINE_NAME" ColumnName="MACHINE_NAME" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="UPTIME" ColumnName="UPTIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q006_ReportMonthly" FunctionName="SUMIDAModel.Store.Q006_ReportMonthly" />
+    <FunctionImportMapping FunctionImportName="Q006_ReportWeekly" FunctionName="SUMIDAModel.Store.Q006_ReportWeekly">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q006_ReportWeekly_Result">
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="MACHINE_NAME" ColumnName="MACHINE_NAME" />
+          <ScalarProperty Name="BEGIN_DATETIME" ColumnName="BEGIN_DATETIME" />
+          <ScalarProperty Name="END_DATETIME" ColumnName="END_DATETIME" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_OFF" ColumnName="COUNT_OFF" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="UPTIME" ColumnName="UPTIME" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q007_LiveBoardTime" FunctionName="SUMIDAModel.Store.Q007_LiveBoardTime">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q007_LiveBoardTime_Result">
+          <ScalarProperty Name="STID" ColumnName="STID" />
+          <ScalarProperty Name="RCID" ColumnName="RCID" />
+          <ScalarProperty Name="MCID" ColumnName="MCID" />
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="THIS_CHANGED" ColumnName="THIS_CHANGED" />
+          <ScalarProperty Name="SERVER_TIME" ColumnName="SERVER_TIME" />
+          <ScalarProperty Name="IS_CONNECTED" ColumnName="IS_CONNECTED" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="COUNT_RED" ColumnName="COUNT_RED" />
+          <ScalarProperty Name="COUNT_YELLOW" ColumnName="COUNT_YELLOW" />
+          <ScalarProperty Name="COUNT_GREEN" ColumnName="COUNT_GREEN" />
+          <ScalarProperty Name="COUNT_ERROR" ColumnName="COUNT_ERROR" />
+          <ScalarProperty Name="COUNT_BREAK" ColumnName="COUNT_BREAK" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="RUNNING_TIME" ColumnName="RUNNING_TIME" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="CYCLE_CLOCK" ColumnName="CYCLE_CLOCK" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="PERCENT_TARGET" ColumnName="PERCENT_TARGET" />
+          <ScalarProperty Name="TIME_TOTAL" ColumnName="TIME_TOTAL" />
+          <ScalarProperty Name="TIME_RUN" ColumnName="TIME_RUN" />
+          <ScalarProperty Name="TIME_LOSS" ColumnName="TIME_LOSS" />
+          <ScalarProperty Name="uptime" ColumnName="uptime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q008_Last5DaysLiveBoardTime" FunctionName="SUMIDAModel.Store.Q008_Last5DaysLiveBoardTime">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q008_Last5DaysLiveBoardTime_Result">
+          <ScalarProperty Name="NGAY_CHUNG_TU" ColumnName="NGAY_CHUNG_TU" />
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TEN_NGAY" ColumnName="TEN_NGAY" />
+          <ScalarProperty Name="TIME_TOTAL" ColumnName="TIME_TOTAL" />
+          <ScalarProperty Name="TIME_RUN" ColumnName="TIME_RUN" />
+          <ScalarProperty Name="TIME_LOSS" ColumnName="TIME_LOSS" />
+          <ScalarProperty Name="uptime" ColumnName="uptime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q009_DailyChart" FunctionName="SUMIDAModel.Store.Q009_DailyChart">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q009_DailyChart_Result">
+          <ScalarProperty Name="mc_sname" ColumnName="mc_sname" />
+          <ScalarProperty Name="series" ColumnName="series" />
+          <ScalarProperty Name="h" ColumnName="h" />
+          <ScalarProperty Name="tm_gg" ColumnName="tm_gg" />
+          <ScalarProperty Name="tm_rr" ColumnName="tm_rr" />
+          <ScalarProperty Name="tm_yy" ColumnName="tm_yy" />
+          <ScalarProperty Name="tm_off" ColumnName="tm_off" />
+          <ScalarProperty Name="tm_error" ColumnName="tm_error" />
+          <ScalarProperty Name="tm_break" ColumnName="tm_break" />
+          <ScalarProperty Name="uptime_std_min" ColumnName="uptime_std_min" />
+          <ScalarProperty Name="uptime_std" ColumnName="uptime_std" />
+          <ScalarProperty Name="uptime_act" ColumnName="uptime_act" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q010_WeeklyChart" FunctionName="SUMIDAModel.Store.Q010_WeeklyChart" />
+    <FunctionImportMapping FunctionImportName="Q011_MonthlyChart" FunctionName="SUMIDAModel.Store.Q011_MonthlyChart">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q011_MonthlyChart_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="series" ColumnName="series" />
+          <ScalarProperty Name="tm_gg" ColumnName="tm_gg" />
+          <ScalarProperty Name="tm_rr" ColumnName="tm_rr" />
+          <ScalarProperty Name="tm_yy" ColumnName="tm_yy" />
+          <ScalarProperty Name="tm_off" ColumnName="tm_off" />
+          <ScalarProperty Name="tm_error" ColumnName="tm_error" />
+          <ScalarProperty Name="tm_break" ColumnName="tm_break" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q012_MobileTest" FunctionName="SUMIDAModel.Store.Q012_MobileTest">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q012_MobileTest_Result">
+          <ScalarProperty Name="MAC_ADDRESS" ColumnName="MAC_ADDRESS" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="ACTUAL_QTY" ColumnName="ACTUAL_QTY" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q013_TimelineMC" FunctionName="SUMIDAModel.Store.Q013_TimelineMC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q013_TimelineMC_Result">
+          <ScalarProperty Name="x" ColumnName="x" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MACHINE_NAME" ColumnName="MACHINE_NAME" />
+          <ScalarProperty Name="TID" ColumnName="TID" />
+          <ScalarProperty Name="CURRENT_STATE" ColumnName="CURRENT_STATE" />
+          <ScalarProperty Name="low" ColumnName="low" />
+          <ScalarProperty Name="high" ColumnName="high" />
+          <ScalarProperty Name="BEGIN_TIME" ColumnName="BEGIN_TIME" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="DURATION" ColumnName="DURATION" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="TIME_GREEN" ColumnName="TIME_GREEN" />
+          <ScalarProperty Name="TIME_RED" ColumnName="TIME_RED" />
+          <ScalarProperty Name="TIME_YELLOW" ColumnName="TIME_YELLOW" />
+          <ScalarProperty Name="TIME_OFF" ColumnName="TIME_OFF" />
+          <ScalarProperty Name="TIME_ERROR" ColumnName="TIME_ERROR" />
+          <ScalarProperty Name="TIME_BREAK" ColumnName="TIME_BREAK" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q014_OEEDaily" FunctionName="SUMIDAModel.Store.Q014_OEEDaily">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q014_OEEDaily_Result">
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q015_OEESupportVariable" FunctionName="SUMIDAModel.Store.Q015_OEESupportVariable">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q015_OEESupportVariable_Result">
+          <ScalarProperty Name="TOTAL_PCS" ColumnName="TOTAL_PCS" />
+          <ScalarProperty Name="GOOD_PCS" ColumnName="GOOD_PCS" />
+          <ScalarProperty Name="REJECT_PCS" ColumnName="REJECT_PCS" />
+          <ScalarProperty Name="OEE_TOTAL_TIME" ColumnName="OEE_TOTAL_TIME" />
+          <ScalarProperty Name="OEE_PLAN_TIME" ColumnName="OEE_PLAN_TIME" />
+          <ScalarProperty Name="OEE_DOWN_TIME" ColumnName="OEE_DOWN_TIME" />
+          <ScalarProperty Name="OEE_OPERATE_TIME" ColumnName="OEE_OPERATE_TIME" />
+          <ScalarProperty Name="OEE_IDEAL_RUN_RATE" ColumnName="OEE_IDEAL_RUN_RATE" />
+          <ScalarProperty Name="OEE_A" ColumnName="OEE_A" />
+          <ScalarProperty Name="OEE_P" ColumnName="OEE_P" />
+          <ScalarProperty Name="OEE_Q" ColumnName="OEE_Q" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q016_ListOEE" FunctionName="SUMIDAModel.Store.Q016_ListOEE">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q016_ListOEE_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q016_ListOEE_Pivot" FunctionName="SUMIDAModel.Store.Q016_ListOEE_Pivot">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q016_ListOEE_Pivot_Result">
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="NGAY_CHUNG_TU" ColumnName="NGAY_CHUNG_TU" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Q017_ListOEE_Realtime" FunctionName="SUMIDAModel.Store.Q017_ListOEE_Realtime">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.Q017_ListOEE_Realtime_Result">
+          <ScalarProperty Name="mcid" ColumnName="mcid" />
+          <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+          <ScalarProperty Name="WDT_USERNAME" ColumnName="WDT_USERNAME" />
+          <ScalarProperty Name="current_state" ColumnName="current_state" />
+          <ScalarProperty Name="total_time" ColumnName="total_time" />
+          <ScalarProperty Name="operate_time" ColumnName="operate_time" />
+          <ScalarProperty Name="loss_time" ColumnName="loss_time" />
+          <ScalarProperty Name="total_pcs" ColumnName="total_pcs" />
+          <ScalarProperty Name="good_pcs" ColumnName="good_pcs" />
+          <ScalarProperty Name="reject_pcs" ColumnName="reject_pcs" />
+          <ScalarProperty Name="A" ColumnName="A" />
+          <ScalarProperty Name="P" ColumnName="P" />
+          <ScalarProperty Name="Q" ColumnName="Q" />
+          <ScalarProperty Name="OEE" ColumnName="OEE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SUMIDAModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SUMIDAModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SUMIDAModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SUMIDAModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SUMIDAModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SUMIDAModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SUMIDAModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SUMIDAModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

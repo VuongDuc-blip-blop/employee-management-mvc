@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PatliteModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar(max)" />
+    <Property Name="Avatar" Type="nvarchar(max)" />
+    <Property Name="Isadmin" Type="bit" Nullable="false" />
+    <Property Name="MaPhongBan" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="BROKEN_REASON">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BROKEN_ID" Type="int" Nullable="false" />
+    <Property Name="REASON" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GHI_CHU" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PATLITE_HISTORY_LOG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar(max)" />
+    <Property Name="LOG_DATA" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PATLITE_INFO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar" MaxLength="500" />
+    <Property Name="RED_LIGHT" Type="int" Nullable="false" />
+    <Property Name="AMBER_LIGHT" Type="int" Nullable="false" />
+    <Property Name="GREEN_LIGHT" Type="int" Nullable="false" />
+    <Property Name="BREAK_LIGHT" Type="int" Nullable="false" />
+    <Property Name="MODE" Type="nvarchar" MaxLength="500" />
+    <Property Name="QUANTITY_EACH_TURN" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PATLITE_PRODUCTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_TIME" Type="datetime" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PATLITE_WDR_INFO">
+    <Key>
+      <PropertyRef Name="WDR_MAC_ADDRESS" />
+    </Key>
+    <Property Name="WDR_MAC_ADDRESS" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="WDR_USERNAME" Type="nvarchar(max)" />
+    <Property Name="WDR_STATUS" Type="bit" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PATLITE_WDT_INFO">
+    <Key>
+      <PropertyRef Name="WDT_MAC_ADDRESS" />
+    </Key>
+    <Property Name="WDT_MAC_ADDRESS" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="WDT_USERNAME" Type="nvarchar(max)" />
+    <Property Name="WDT_STATUS" Type="bit" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="MODE" Type="nvarchar(max)" />
+    <Property Name="QUANTITY_EACH_TURN" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GROUP_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="PRODUCTION_BROKEN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BROKEN_DATE" Type="date" Nullable="false" />
+    <Property Name="BROKEN_QUANTITY" Type="decimal" Precision="28" Scale="2" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="TERM_ID" Type="int" Nullable="false" />
+    <Property Name="INPUT_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PRODUCTION_TARGET">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TARGET_DATE" Type="date" Nullable="false" />
+    <Property Name="TARGET_QUANTITY" Type="decimal" Precision="28" Scale="2" Nullable="false" />
+    <Property Name="MAC_ADDRESS" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="TERM_ID" Type="int" Nullable="false" />
+    <Property Name="INPUT_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="WORK_TERM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TERM_NAME" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="TIME_START" Type="int" Nullable="false" />
+    <Property Name="TIME_END" Type="int" Nullable="false" />
+  </EntityType>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="LIST_PATLITE_INFO_CHART" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="hour" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_CHART_NEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date1" Type="date" Mode="In" />
+    <Parameter Name="hour" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_CHART_TODAY1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="hour" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_CHART_TODAY1_NEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date1" Type="date" Mode="In" />
+    <Parameter Name="hour" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+    <Parameter Name="mac_address" Type="nvarchar" Mode="In" />
+    <Parameter Name="color" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_NEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_NEW2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_NEW3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_REALTIME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_TODAY_DETAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+    <Parameter Name="mac_address" Type="nvarchar" Mode="In" />
+    <Parameter Name="color" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_TODAY_NEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_TODAY_NEW2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_TODAY_NEW3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="LIST_PATLITE_INFO_TODAY_REALTIME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PATLITE_QUANTITIES_NEW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PATLITE_QUANTITIES_NEW2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PATLITE_TIMELINE_CHART" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PATLITE_TIMELINE_CHART_START" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PATLITE_TIMELINE_CHART_TODAY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="PATLITE_TIMELINE_CHART_TODAY_START" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="start" Type="int" Mode="In" />
+    <Parameter Name="end" Type="int" Mode="In" />
+    <Parameter Name="term" Type="int" Mode="In" />
+    <Parameter Name="mode" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Prod_DanhSachBroken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+    <Parameter Name="thang" Type="int" Mode="In" />
+    <Parameter Name="nam" Type="int" Mode="In" />
+    <Parameter Name="sotrang" Type="int" Mode="In" />
+    <Parameter Name="tukhoa1" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa2" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Prod_DanhSachBroken_DemTongSo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+    <Parameter Name="thang" Type="int" Mode="In" />
+    <Parameter Name="nam" Type="int" Mode="In" />
+    <Parameter Name="tukhoa1" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa2" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Prod_DanhSachDenPatlite" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="sotrang" Type="int" Mode="In" />
+    <Parameter Name="tukhoa1" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa2" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa3" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Prod_DanhSachDenPatlite_DemTongSo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tukhoa1" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa2" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa3" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Prod_DanhSachTarget" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+    <Parameter Name="thang" Type="int" Mode="In" />
+    <Parameter Name="nam" Type="int" Mode="In" />
+    <Parameter Name="sotrang" Type="int" Mode="In" />
+    <Parameter Name="tukhoa1" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa2" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Prod_DanhSachTarget_DemTongSo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+    <Parameter Name="thang" Type="int" Mode="In" />
+    <Parameter Name="nam" Type="int" Mode="In" />
+    <Parameter Name="tukhoa1" Type="nvarchar" Mode="In" />
+    <Parameter Name="tukhoa2" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="PatliteModel1StoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BROKEN_REASON" EntityType="Self.BROKEN_REASON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_HISTORY_LOG" EntityType="Self.PATLITE_HISTORY_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_INFO" EntityType="Self.PATLITE_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_PRODUCTS" EntityType="Self.PATLITE_PRODUCTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_WDR_INFO" EntityType="Self.PATLITE_WDR_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATLITE_WDT_INFO" EntityType="Self.PATLITE_WDT_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRODUCTION_BROKEN" EntityType="Self.PRODUCTION_BROKEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRODUCTION_TARGET" EntityType="Self.PRODUCTION_TARGET" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORK_TERM" EntityType="Self.WORK_TERM" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

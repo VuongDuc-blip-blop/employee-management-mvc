@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WISE_REPORTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="REPORT_CHECK">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HEADER" Type="Int32" />
+    <Property Name="USER_CHECK" Type="Int32" />
+    <Property Name="IS_CHECK" Type="Boolean" />
+    <Property Name="COMMENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CREATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="CREATE_USER" Type="Int32" />
+  </EntityType>
+  <EntityType Name="REPORT_COMMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HEADER" Type="Int32" />
+    <Property Name="USER_COMMENT" Type="Int32" />
+    <Property Name="COMMENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CREATE_DATE" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="REPORT_CONTENT_2020">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HEADER" Type="Int32" />
+    <Property Name="ID_DEPT" Type="Int32" />
+    <Property Name="ID_GROUP" Type="Int32" />
+    <Property Name="ID_USER" Type="Int32" Nullable="false" />
+    <Property Name="VERSION" Type="Int32" Nullable="false" />
+    <Property Name="STATUS" Type="Boolean" />
+    <Property Name="DATE_FROM" Type="DateTime" Precision="0" />
+    <Property Name="DATE_TO" Type="DateTime" Precision="0" />
+    <Property Name="DATE_ACTION" Type="DateTime" Precision="0" />
+    <Property Name="CREATE_DATE" Type="DateTime" Precision="0" />
+    <Property Name="CREATE_USER" Type="Int32" />
+    <Property Name="WEEK" Type="Int32" />
+    <Property Name="MONTH" Type="Int32" />
+    <Property Name="YEAR" Type="Int32" />
+    <Property Name="IS_PLAN" Type="Boolean" />
+    <Property Name="CONTENT_1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_6" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_7" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_8" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_9" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_10" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_11" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_12" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_13" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_14" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_15" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_16" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_17" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_18" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_19" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_20" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_21" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_22" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_23" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_24" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_25" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_26" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_27" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_28" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_29" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_30" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_31" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_32" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_33" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_34" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_35" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_36" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_37" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_38" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_39" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_40" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_41" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_42" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_43" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_44" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_45" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_46" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_47" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_48" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_49" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CONTENT_50" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="REPORT_DAILY_RESULT_WARRANTY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BRANCH_ID" Type="Int32" />
+    <Property Name="DATE" Type="DateTime" Precision="3" />
+    <Property Name="STATUS" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="QUANTITY" Type="Int32" />
+  </EntityType>
+  <EntityType Name="REPORT_DAILY_RESULT_WARRANTY_REVERSE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BRANCH_ID" Type="Int32" />
+    <Property Name="DATE" Type="DateTime" Precision="3" />
+    <Property Name="DA_XU_LY" Type="Int32" />
+    <Property Name="DANG_XU_LY" Type="Int32" />
+    <Property Name="DA_GUI_NCC" Type="Int32" />
+    <Property Name="HOAN_THANH" Type="Int32" />
+    <Property Name="XUAT_TRUOC_TRA_KHACH" Type="Int32" />
+    <Property Name="CHO_XU_LY" Type="Int32" />
+    <Property Name="KHONG_BAO_HANH" Type="Int32" />
+    <Property Name="CHUA_NHAN" Type="Int32" />
+    <Property Name="TOTAL" Type="Int32" />
+  </EntityType>
+  <EntityType Name="REPORT_HEADER_MASTER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REPORT_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="ID_DEPT" Type="Int32" />
+    <Property Name="BRANCH_ID" Type="Int32" />
+    <Property Name="ID_GROUP" Type="Int32" />
+    <Property Name="ID_USER" Type="Int32" />
+    <Property Name="VERSION" Type="Int32" />
+    <Property Name="STATUS" Type="Boolean" />
+    <Property Name="CREATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="CREATE_USER" Type="Int32" />
+    <Property Name="DATE_UPDATE" Type="DateTime" Precision="3" />
+    <Property Name="HEADER_1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_2" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_3" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_4" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_5" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_6" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_7" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_8" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_9" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_10" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_11" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_12" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_13" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_14" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_15" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_16" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_17" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_18" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_19" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_20" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_21" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_22" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_23" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_24" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_25" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_26" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_27" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_28" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_29" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_30" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_31" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_32" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_33" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_34" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_35" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_36" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_37" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_38" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_39" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_40" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_41" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_42" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_43" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_44" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_45" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_46" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_47" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_48" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_49" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HEADER_50" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="REPORT_SALE_PERFORMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HEADER" Type="Int32" Nullable="false" />
+    <Property Name="ID_DEPT" Type="Int32" />
+    <Property Name="WEEK" Type="Int32" Nullable="false" />
+    <Property Name="MONTH" Type="Int32" />
+    <Property Name="YEAR" Type="Int32" Nullable="false" />
+    <Property Name="IS_PLAN" Type="Boolean" />
+    <Property Name="ID_GROUP" Type="Int32" />
+    <Property Name="BRANCH_ID" Type="Int32" />
+    <Property Name="VERSION" Type="Int32" />
+    <Property Name="ID_USER" Type="Int32" />
+    <Property Name="STATUS" Type="Boolean" />
+    <Property Name="CREATE_DATE" Type="DateTime" Precision="3" />
+    <Property Name="USER_CREATE" Type="Int32" />
+    <Property Name="FULLNAME" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="SO_CUOI_GOI" Type="Int32" />
+    <Property Name="SO_BG" Type="Int32" />
+    <Property Name="DOANH_SO_BG" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DOANH_SO_SO" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DOANH_SO_THUC_HIEN" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TY_LE_TRUNG_DON" Type="Decimal" Precision="4" Scale="2" />
+    <Property Name="SO_KH_PHAT_SINH" Type="Int32" />
+    <Property Name="KH_3THANG_CHUA_PS_BG" Type="Int32" />
+    <Property Name="KH_3THANG_CHUA_PS_SO" Type="Int32" />
+    <Property Name="KH_6THANG_CHUA_PS_BG" Type="Int32" />
+    <Property Name="KH_6THANG_CHUA_PS_SO" Type="Int32" />
+    <Property Name="KH_1NAM_CHUA_PS_BG" Type="Int32" />
+    <Property Name="KH_1NAM_CHUA_PS_SO" Type="Int32" />
+    <Property Name="TY_LE_CMT_BAO_GIA" Type="Decimal" Precision="4" Scale="2" />
+  </EntityType>
+  <EntityContainer Name="WISE_REPORTEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="REPORT_CHECK" EntityType="Self.REPORT_CHECK" />
+    <EntitySet Name="REPORT_COMMENT" EntityType="Self.REPORT_COMMENT" />
+    <EntitySet Name="REPORT_CONTENT_2020" EntityType="Self.REPORT_CONTENT_2020" />
+    <EntitySet Name="REPORT_DAILY_RESULT_WARRANTY" EntityType="Self.REPORT_DAILY_RESULT_WARRANTY" />
+    <EntitySet Name="REPORT_DAILY_RESULT_WARRANTY_REVERSE" EntityType="Self.REPORT_DAILY_RESULT_WARRANTY_REVERSE" />
+    <EntitySet Name="REPORT_HEADER_MASTER" EntityType="Self.REPORT_HEADER_MASTER" />
+    <EntitySet Name="REPORT_SALE_PERFORMENT" EntityType="Self.REPORT_SALE_PERFORMENT" />
+    <FunctionImport Name="DynamicPivotTableInSql">
+      <Parameter Name="ColumnToPivot" Mode="In" Type="String" />
+      <Parameter Name="ListToPivot" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Chart_Sale_Performent">
+      <Parameter Name="headerid" Mode="In" Type="String" />
+      <Parameter Name="datachart" Mode="In" Type="String" />
+      <Parameter Name="typetime" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report" ReturnType="Collection(WISE_REPORTModel.Proc_Get_Report_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="content_1" Mode="In" Type="String" />
+      <Parameter Name="content_2" Mode="In" Type="String" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="content_1" Mode="In" Type="String" />
+      <Parameter Name="content_2" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_dynamic">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="deptid" Mode="In" Type="Int32" />
+      <Parameter Name="content_1" Mode="In" Type="String" />
+      <Parameter Name="content_2" Mode="In" Type="String" />
+      <Parameter Name="content_3" Mode="In" Type="String" />
+      <Parameter Name="content_4" Mode="In" Type="String" />
+      <Parameter Name="content_5" Mode="In" Type="String" />
+      <Parameter Name="content_6" Mode="In" Type="String" />
+      <Parameter Name="content_7" Mode="In" Type="String" />
+      <Parameter Name="content_8" Mode="In" Type="String" />
+      <Parameter Name="content_9" Mode="In" Type="String" />
+      <Parameter Name="content_10" Mode="In" Type="String" />
+      <Parameter Name="sort_content_1" Mode="In" Type="String" />
+      <Parameter Name="sort_content_2" Mode="In" Type="String" />
+      <Parameter Name="sort_content_3" Mode="In" Type="String" />
+      <Parameter Name="sort_content_4" Mode="In" Type="String" />
+      <Parameter Name="sort_content_5" Mode="In" Type="String" />
+      <Parameter Name="sort_content_6" Mode="In" Type="String" />
+      <Parameter Name="sort_content_7" Mode="In" Type="String" />
+      <Parameter Name="sort_content_8" Mode="In" Type="String" />
+      <Parameter Name="sort_content_9" Mode="In" Type="String" />
+      <Parameter Name="sort_content_10" Mode="In" Type="String" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_dynamic_Sale">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="week" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="quater" Mode="In" Type="Int32" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_dynamic_Sale_old">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="content_1" Mode="In" Type="String" />
+      <Parameter Name="content_2" Mode="In" Type="String" />
+      <Parameter Name="content_3" Mode="In" Type="String" />
+      <Parameter Name="content_4" Mode="In" Type="String" />
+      <Parameter Name="content_5" Mode="In" Type="String" />
+      <Parameter Name="content_6" Mode="In" Type="String" />
+      <Parameter Name="content_7" Mode="In" Type="String" />
+      <Parameter Name="content_8" Mode="In" Type="String" />
+      <Parameter Name="content_9" Mode="In" Type="String" />
+      <Parameter Name="content_10" Mode="In" Type="String" />
+      <Parameter Name="sort_content_1" Mode="In" Type="String" />
+      <Parameter Name="sort_content_2" Mode="In" Type="String" />
+      <Parameter Name="sort_content_3" Mode="In" Type="String" />
+      <Parameter Name="sort_content_4" Mode="In" Type="String" />
+      <Parameter Name="sort_content_5" Mode="In" Type="String" />
+      <Parameter Name="sort_content_6" Mode="In" Type="String" />
+      <Parameter Name="sort_content_7" Mode="In" Type="String" />
+      <Parameter Name="sort_content_8" Mode="In" Type="String" />
+      <Parameter Name="sort_content_9" Mode="In" Type="String" />
+      <Parameter Name="sort_content_10" Mode="In" Type="String" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Header" ReturnType="Collection(WISE_REPORTModel.Proc_Get_Report_Header_Result)">
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Sale_Count">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="content_1" Mode="In" Type="String" />
+      <Parameter Name="content_2" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Sale_Performent" ReturnType="Collection(WISE_REPORTModel.Proc_Get_Report_Sale_Performent_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Sale_Performent_dynamic">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="week" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="quater" Mode="In" Type="Int32" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Sale_Performent_Plan" ReturnType="Collection(WISE_REPORTModel.Proc_Get_Report_Sale_Performent_Plan_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Warranty" ReturnType="Collection(WISE_REPORTModel.Proc_Get_Report_Warranty_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="branch" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="tungay" Mode="In" Type="String" />
+      <Parameter Name="denngay" Mode="In" Type="String" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Warranty_All" ReturnType="Collection(WISE_REPORTModel.Proc_Get_Report_Warranty_All_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="branch" Mode="In" Type="String" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="tungay" Mode="In" Type="String" />
+      <Parameter Name="denngay" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Get_Report_Warranty_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="branch" Mode="In" Type="Int32" />
+      <Parameter Name="month" Mode="In" Type="Int32" />
+      <Parameter Name="year" Mode="In" Type="Int32" />
+      <Parameter Name="tungay" Mode="In" Type="String" />
+      <Parameter Name="denngay" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Report" ReturnType="Collection(WISE_REPORTModel.Proc_List_Report_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="report_name" Mode="In" Type="String" />
+      <Parameter Name="ischeck" Mode="In" Type="Boolean" />
+      <Parameter Name="deptid" Mode="In" Type="Int32" />
+      <Parameter Name="branch" Mode="In" Type="Int32" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Report_Comment" ReturnType="Collection(WISE_REPORTModel.Proc_List_Report_Comment_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+      <Parameter Name="pagenum" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Report_Comment_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_Report_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="report_name" Mode="In" Type="String" />
+      <Parameter Name="ischeck" Mode="In" Type="Boolean" />
+      <Parameter Name="branch" Mode="In" Type="Int32" />
+      <Parameter Name="deptid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_List_User_View_Report" ReturnType="Collection(WISE_REPORTModel.Proc_List_User_View_Report_Result)">
+      <Parameter Name="currentuserid" Mode="In" Type="Int32" />
+      <Parameter Name="headerid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Sale_Performent_DynamicPivotTable">
+      <Parameter Name="ColumnToPivot" Mode="In" Type="String" />
+      <Parameter Name="ListToPivot" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Sale_Performent_DynamicPivotTable_Month" ReturnType="Collection(WISE_REPORTModel.Proc_Sale_Performent_DynamicPivotTable_Month_Result)">
+      <Parameter Name="headerid" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Proc_Sale_Performent_DynamicPivotTable_Week">
+      <Parameter Name="headerid" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="Proc_Get_Report_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_HEADER" Nullable="true" />
+    <Property Type="Int32" Name="ID_DEPT" Nullable="true" />
+    <Property Type="Int32" Name="ID_GROUP" Nullable="true" />
+    <Property Type="Int32" Name="ID_USER" Nullable="true" />
+    <Property Type="Int32" Name="VERSION" Nullable="true" />
+    <Property Type="Boolean" Name="STATUS" Nullable="true" />
+    <Property Type="String" Name="WEEK" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="MONTH" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="YEAR" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="IS_PLAN" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="HEADER_1" Nullable="true" />
+    <Property Type="String" Name="HEADER_2" Nullable="true" />
+    <Property Type="String" Name="HEADER_3" Nullable="true" />
+    <Property Type="String" Name="HEADER_4" Nullable="true" />
+    <Property Type="String" Name="HEADER_5" Nullable="true" />
+    <Property Type="String" Name="HEADER_6" Nullable="true" />
+    <Property Type="String" Name="HEADER_7" Nullable="true" />
+    <Property Type="String" Name="HEADER_8" Nullable="true" />
+    <Property Type="String" Name="HEADER_9" Nullable="true" />
+    <Property Type="String" Name="HEADER_10" Nullable="true" />
+    <Property Type="String" Name="HEADER_11" Nullable="true" />
+    <Property Type="String" Name="HEADER_12" Nullable="true" />
+    <Property Type="String" Name="HEADER_13" Nullable="true" />
+    <Property Type="String" Name="HEADER_14" Nullable="true" />
+    <Property Type="String" Name="HEADER_15" Nullable="true" />
+    <Property Type="String" Name="HEADER_16" Nullable="true" />
+    <Property Type="String" Name="HEADER_17" Nullable="true" />
+    <Property Type="String" Name="HEADER_18" Nullable="true" />
+    <Property Type="String" Name="HEADER_19" Nullable="true" />
+    <Property Type="String" Name="HEADER_20" Nullable="true" />
+    <Property Type="Int32" Name="header" Nullable="false" />
+    <Property Type="DateTime" Name="CREATE_DATE" Nullable="true" Precision="23" />
+    <Property Type="String" Name="HEADER_21" Nullable="true" />
+    <Property Type="String" Name="HEADER_22" Nullable="true" />
+    <Property Type="String" Name="HEADER_23" Nullable="true" />
+    <Property Type="String" Name="HEADER_24" Nullable="true" />
+    <Property Type="String" Name="HEADER_25" Nullable="true" />
+    <Property Type="String" Name="HEADER_26" Nullable="true" />
+    <Property Type="String" Name="HEADER_27" Nullable="true" />
+    <Property Type="String" Name="HEADER_28" Nullable="true" />
+    <Property Type="String" Name="HEADER_29" Nullable="true" />
+    <Property Type="String" Name="HEADER_30" Nullable="true" />
+    <Property Type="String" Name="HEADER_31" Nullable="true" />
+    <Property Type="String" Name="HEADER_32" Nullable="true" />
+    <Property Type="String" Name="HEADER_33" Nullable="true" />
+    <Property Type="String" Name="HEADER_34" Nullable="true" />
+    <Property Type="String" Name="HEADER_35" Nullable="true" />
+    <Property Type="String" Name="HEADER_36" Nullable="true" />
+    <Property Type="String" Name="HEADER_37" Nullable="true" />
+    <Property Type="String" Name="HEADER_38" Nullable="true" />
+    <Property Type="String" Name="HEADER_39" Nullable="true" />
+    <Property Type="String" Name="HEADER_40" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_Get_Report_Header_Result">
+    <Property Type="String" Name="HEADER_1" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_2" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_3" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_4" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_5" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_6" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_7" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_8" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_9" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_10" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_11" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_12" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_13" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_14" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_15" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_16" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_17" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_18" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_19" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="HEADER_20" Nullable="true" MaxLength="128" />
+  </ComplexType>
+  <ComplexType Name="Proc_Get_Report_Sale_Performent_Result">
+    <Property Type="Int32" Name="ID_USER" Nullable="true" />
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="SO_CUOI_GOI" Nullable="true" />
+    <Property Type="Int32" Name="SO_BG" Nullable="true" />
+    <Property Type="Decimal" Name="DOANH_SO_BG" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_SO" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_THUC_HIEN" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="TY_LE_TRUNG_DON" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="Int32" Name="SO_KH_PHAT_SINH" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_BG" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_SO" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_BG" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_SO" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_BG" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_SO" Nullable="true" />
+    <Property Type="Decimal" Name="TY_LE_CMT_BAO_GIA" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="Int32" Name="SO_CUOI_GOI_ACT" Nullable="true" />
+    <Property Type="Int32" Name="SO_BG_ACT" Nullable="true" />
+    <Property Type="Decimal" Name="DOANH_SO_BG_ACT" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_SO_ACT" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_THUC_HIEN_ACT" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="TY_LE_TRUNG_DON_ACT" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="Int32" Name="SO_KH_PHAT_SINH_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_BG_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_SO_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_BG_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_SO_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_BG_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_SO_ACT" Nullable="true" />
+    <Property Type="Decimal" Name="TY_LE_CMT_BAO_GIA_ACT" Nullable="true" Precision="4" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="Proc_Get_Report_Sale_Performent_Plan_Result">
+    <Property Type="Int32" Name="ID_USER" Nullable="true" />
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="WEEK" Nullable="true" />
+    <Property Type="Int32" Name="MONTH" Nullable="true" />
+    <Property Type="Int32" Name="SO_CUOI_GOI" Nullable="true" />
+    <Property Type="Int32" Name="SO_BG" Nullable="true" />
+    <Property Type="Decimal" Name="DOANH_SO_BG" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_SO" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_THUC_HIEN" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="TY_LE_TRUNG_DON" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="Int32" Name="SO_KH_PHAT_SINH" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_BG" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_SO" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_BG" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_SO" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_BG" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_SO" Nullable="true" />
+    <Property Type="Decimal" Name="TY_LE_CMT_BAO_GIA" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="Int32" Name="SO_CUOI_GOI_ACT" Nullable="true" />
+    <Property Type="Int32" Name="SO_BG_ACT" Nullable="true" />
+    <Property Type="Decimal" Name="DOANH_SO_BG_ACT" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_SO_ACT" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="DOANH_SO_THUC_HIEN_ACT" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="TY_LE_TRUNG_DON_ACT" Nullable="true" Precision="4" Scale="2" />
+    <Property Type="Int32" Name="SO_KH_PHAT_SINH_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_BG_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_3THANG_CHUA_PS_SO_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_BG_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_6THANG_CHUA_PS_SO_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_BG_ACT" Nullable="true" />
+    <Property Type="Int32" Name="KH_1NAM_CHUA_PS_SO_ACT" Nullable="true" />
+    <Property Type="Decimal" Name="TY_LE_CMT_BAO_GIA_ACT" Nullable="true" Precision="4" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="Proc_Get_Report_Warranty_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="BRANCH_ID" Nullable="true" />
+    <Property Type="DateTime" Name="DATE" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="DA_XU_LY" Nullable="true" />
+    <Property Type="Int32" Name="DANG_XU_LY" Nullable="true" />
+    <Property Type="Int32" Name="DA_GUI_NCC" Nullable="true" />
+    <Property Type="Int32" Name="HOAN_THANH" Nullable="true" />
+    <Property Type="Int32" Name="XUAT_TRUOC_TRA_KHACH" Nullable="true" />
+    <Property Type="Int32" Name="CHO_XU_LY" Nullable="true" />
+    <Property Type="Int32" Name="KHONG_BAO_HANH" Nullable="true" />
+    <Property Type="Int32" Name="CHUA_NHAN" Nullable="true" />
+    <Property Type="Int32" Name="TOTAL" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_Get_Report_Warranty_All_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="BRANCH_ID" Nullable="true" />
+    <Property Type="DateTime" Name="DATE" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="DA_XU_LY" Nullable="true" />
+    <Property Type="Int32" Name="DANG_XU_LY" Nullable="true" />
+    <Property Type="Int32" Name="DA_GUI_NCC" Nullable="true" />
+    <Property Type="Int32" Name="HOAN_THANH" Nullable="true" />
+    <Property Type="Int32" Name="XUAT_TRUOC_TRA_KHACH" Nullable="true" />
+    <Property Type="Int32" Name="CHO_XU_LY" Nullable="true" />
+    <Property Type="Int32" Name="KHONG_BAO_HANH" Nullable="true" />
+    <Property Type="Int32" Name="CHUA_NHAN" Nullable="true" />
+    <Property Type="Int32" Name="TOTAL" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Report_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="REPORT_NAME" Nullable="true" MaxLength="256" />
+    <Property Type="Int32" Name="ID_DEPT" Nullable="true" />
+    <Property Type="Int32" Name="ID_GROUP" Nullable="true" />
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+    <Property Type="Int32" Name="VERSION" Nullable="true" />
+    <Property Type="Boolean" Name="STATUS" Nullable="true" />
+    <Property Type="DateTime" Name="DATE_UPDATE" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="CREATE_USER" Nullable="true" />
+    <Property Type="Boolean" Name="IS_CHECK" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_Report_Comment_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_HEADER" Nullable="true" />
+    <Property Type="Int32" Name="USER_COMMENT" Nullable="true" />
+    <Property Type="String" Name="COMMENT" Nullable="true" />
+    <Property Type="DateTime" Name="CREATE_DATE" Nullable="true" Precision="23" />
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="AVATAR" Nullable="true" MaxLength="256" />
+  </ComplexType>
+  <ComplexType Name="Proc_List_User_View_Report_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="ID_HEADER" Nullable="true" />
+    <Property Type="Int32" Name="USER_CHECK" Nullable="true" />
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+  </ComplexType>
+  <ComplexType Name="Proc_Sale_Performent_DynamicPivotTable_Month_Result">
+    <Property Type="String" Name="FULLNAME" Nullable="true" MaxLength="64" />
+    <Property Type="Decimal" Name="C1" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C2" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C3" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C4" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C5" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C6" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C7" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C8" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C9" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C10" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C11" Nullable="true" Precision="38" Scale="0" />
+    <Property Type="Decimal" Name="C12" Nullable="true" Precision="38" Scale="0" />
+  </ComplexType>
+</Schema>

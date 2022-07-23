@@ -1,0 +1,1659 @@
+﻿
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Content/vendor/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/vendor/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <script src="~/Content/dist/js/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Content/js-vendor/vendor.bundle.base.js"></script>*@
+    <script src="~/Content/js-vendor/dashboard.js"></script>
+    <script src="~/Content/js-vendor/misc.js"></script>
+    <script src="~/Content/js-vendor/hoverable-collapse.js"></script>
+    <script src="~/Content/bootstrap-datetimepicker.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    @*<script src="~/Content/date_directive.js"></script>*@
+
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <script src="~/Content/js/Mark_report/Mark_daily_report.js?time=@DateTime.Now"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+</head>
+
+<body>
+    <div class="container-scroller" ng-controller="Mark_daily_reportCtrl" ng-app="myApp">
+        <input type="hidden" value="@Session["userid"]" id="currentuserid" name="currentuserid" />
+        <div class="container-fluid page-body-wrapper">
+            <div class="content-wrapper">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!--============================MODAL REPORT =========================================-->
+                        <div class="change-tab" style="width:100%">
+
+                            <ul class="tabs">
+                                <li class="tab-link current" ng-click="deptid='';LoadReport();Load_Listdept();" data-tab="tab-1">General Report</li>
+                                <li class="tab-link" ng-click="deptid=4;LoadReport();" data-tab="tab-2">Sale Report</li>
+                                <li class="tab-link" ng-click="LoadWarrantyReport();LoadWarrantyChart();" data-tab="tab-3">Warranty Report</li>
+                            </ul>
+
+                            <!--============================TAB GENERAL REPORT =========================================-->
+                            <div id="tab-1" class="tab-content">
+                                <!--==============Show danh sách report============--->
+                                <div class="col-md-6">
+                                    <div class="col-md-5">
+                                        <div class="input-form-search has-search" style="display:flex;width:100%">
+                                            <div class="search-name" style="position:relative;width:100%;">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" autocomplete="off" class="form-control" ng-model="tukhoa1" my-enter="LoadReport()" placeholder="Search for report names.." title="Type in a name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="border:none">
+                                        <div class="col-md-2">
+                                            <label>Phòng:</label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <select ng-model="deptid" ng-change="LoadReport()" class="form-control">
+                                                <option value=""></option>
+                                                <option ng-repeat="item in list_depts" ng-value="{{item.ID}}">
+                                                    {{ item.DEPARTMENT_NAME }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div id="phan_trang_listrp" style="float:right;margin:0px;font-size:12px !important"></div>
+                                    </div>
+
+                                    <table cellspacing="0" class="table table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Report name</th>
+                                                <th style="max-width:50px">Reporter</th>
+                                                <th style="max-width:30px">Date create</th>
+                                                <th style="max-width:20px">
+                                                    <span>Checked</span>
+                                                    <input type="checkbox" ng-model="status" ng-click="LoadReport()" />
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in list_report">
+                                                <td ng-click="LoadListMarkDailyReport(item);LoadListReportComment(item.ID)">
+                                                    <div class="content-textarea">
+                                                        <span ng-dblclick="editColF=true" ng-hide="editColF">{{item.REPORT_NAME}}</span>
+                                                        <input style="resize:vertical;" class="form-control" ng-model="item.REPORT_NAME" ng-dblclick="editColF=false" my-enter="Update_file_name(item);" ng-show="editColF"></input>
+                                                    </div>
+                                                </td>
+                                                <td style="max-width:20px" ng-click="LoadListMarkDailyReport(item);LoadListUserViewReport(item.ID);" data-toggle="modal" data-target="#add_user_view">{{item.FULLNAME}}</td>
+                                                <td style="max-width:20px" ng-click="LoadListMarkDailyReport(item);">{{item.CREATE_DATE | date: dd/MM/yyyy}}</td>
+                                                @*<td ng-click="Update_file_name(item)">{{item.IS_CHECK}}</td>*@
+                                                <td style="max-width:20px">
+                                                    <div class="form-checkbox">
+                                                        <input type="checkbox" ng-model="item.IS_CHECK" ng-click="Update_is_checked(item)" />
+                                                        @*<input ng-show="Editgroupuser" type="checkbox" ng-model="item.IS_CHECK" />*@
+                                                    </div>
+                                                </td>
+                                                @*<td><button type="button" style="border:none;max-width:20px" ng-click="addnewcmt = true">comment</button></td>*@
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--==============End Show danh sách report============--->
+                                <div class="col-md-6">
+                                    <div class="button-modal col-md-5">
+                                        <button class="btn-info" data-toggle="modal" data-target="#add_new_report">Create report</button>
+                                    </div>
+                                    <button type="button" class="btn-info" ng-click="import=true; newtbl=true;" ng-hide="import">Import & create new report</button>
+                                    <!--==============Show Comment report============--->
+                                    <div class="col-md-12">
+                                        <p style="white-space:pre-line;word-break:break-word;background-color:#fbf9e9" class="content-target" ng-bind-html="latest_report_comment.COMMENT | unsafe" ng-hide="edit_description"></p>
+                                        <label style="font-size:9px; float:right;margin:0px;" ng-show="latest_report_comment.COMMENT!=null"><button data-toggle="modal" data-target="#all_report_cmt">see more</button></label>
+                                        <label style="font-size:11px;font-weight: normal;float:right;margin:0px;" ng-show="latest_report_comment.COMMENT!=null">
+                                            <img src="http://sales.hoplong.com/Content/Images/Avatar/{{latest_report_comment.AVATAR}}" width="30" height="30" style="border-radius:50%"> {{latest_report_comment.FULLNAME}}-{{latest_report_comment.CREATE_DATE | date: dd/MM/yyyy}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <hr />
+                                        <label style="font-size:9px; float:left;margin:0px;" ng-show="latest_report_comment.COMMENT!=null"><button data-toggle="modal" data-target="#Add_report_cmt">Add comment</button></label>
+                                    </div>
+                                    <!--==============End Show Commnet report============--->
+                                </div>
+
+
+                                <!--==============Show Detail report============--->
+                                <div ng-show="showdetail">
+                                    @using (Html.BeginForm("ExportData", "MarkettingReport", FormMethod.Post))
+                                    {
+                                        <div class="table-responsive">
+                                            <!--Search on detail report-->
+                                            @*<div class="input-form-search has-search" style="display:flex;width:100%;">
+                                                    <div class="search-name" style="position:relative;width:100%;">
+                                                        <span class="fa fa-search form-control-feedback"></span>
+                                                        <input type="text" autocomplete="off" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for ..." title="Type in a name">
+                                                    </div>
+                                                </div>*@
+                                            <!--End Search on detail report-->
+                                            <table cellspacing="0" class="table table-striped table-hover" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STT</th>
+                                                        <th ng-show="header.HEADER_1!=null && header.HEADER_1!=''" ng-click="Order_1();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_1}}</span>
+                                                                <span ng-show="order_1==1"><i class="up hidden fas fa-angle-up"></i></span>
+                                                                <span ng-show="order_1==2"><i class="down hidden fas fa-angle-down"></i></span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header);" ng-model="header.HEADER_1" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+
+                                                        </th>
+                                                        <th ng-show="header.HEADER_2!=null && header.HEADER_2!=''" ng-click="Order_2();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_2}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header);" ng-model="header.HEADER_2" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_3!=null && header.HEADER_3!=''" ng-click="Order_3();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_3}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_3" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_4!=null && header.HEADER_4!=''" ng-click="Order_4();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_4}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_4" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_5!=null && header.HEADER_5!=''" ng-click="Order_5();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_5}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_5" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_6!=null && header.HEADER_6!=''" ng-click="Order_6();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_6}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_6" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_7!=null && header.HEADER_7!=''" ng-click="Order_7();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_7}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_7" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_8!=null && header.HEADER_8!=''" ng-click="Order_8();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_8}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_8" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_9!=null && header.HEADER_9!=''" ng-click="Order_9();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_9}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_9" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_10!=null && header.HEADER_10!=''" ng-click="Order_10();LoadListMarkDailyReport(header)">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_10}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_10" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_11!=null && header.HEADER_11!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_11}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_11" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_12!=null && header.HEADER_12!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_12}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_12" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_13!=null && header.HEADER_13!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_13}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_13" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_14!=null && header.HEADER_14!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_14}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_14" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_15!=null && header.HEADER_15!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_15}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_15" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_16!=null && header.HEADER_16!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_16}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_16" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_17!=null && header.HEADER_17!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_17}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_17" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_18!=null && header.HEADER_18!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_18}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_18" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_19!=null && header.HEADER_19!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_19}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_19" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="header.HEADER_20!=null && header.HEADER_20!=''">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColH=true" ng-hide="editColH">{{header.HEADER_20}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" my-enter="UpdateHeader(header)" ng-model="header.HEADER_20" ng-dblclick="editColH=false" ng-show="editColH"></textarea>
+                                                            </div>
+                                                        </th>
+                                                        <th ng-show="addCol">
+                                                            <input type="text" placeholder="Nhập tên cột" ng-model="header_name_add" class="form-control" my-enter="addCol=false;AddCol(header_name_add,header)" />
+                                                            @*<button type="button" class="btn btn-save" ng-click="addCol=false;AddCol(header_name_add,header)"><i class="fa fa-save" style="margin-right:5px"></i></button>*@
+                                                        </th>
+                                                        <th><button type="button" class="btn-info" ng-click="addCol=true" ng-hide="addCol">add Col</button></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th ng-show="header.HEADER_1!=null && header.HEADER_1!=''"><input class="form-control" ng-model="content_1" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_2!=null && header.HEADER_2!=''"><input class="form-control" ng-model="content_2" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_3!=null && header.HEADER_3!=''"><input class="form-control" ng-model="content_3" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_4!=null && header.HEADER_4!=''"><input class="form-control" ng-model="content_4" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_5!=null && header.HEADER_5!=''"><input class="form-control" ng-model="content_5" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_6!=null && header.HEADER_6!=''"><input class="form-control" ng-model="content_6" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_7!=null && header.HEADER_7!=''"><input class="form-control" ng-model="content_7" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_8!=null && header.HEADER_8!=''"><input class="form-control" ng-model="content_8" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_9!=null && header.HEADER_9!=''"><input class="form-control" ng-model="content_9" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                        <th ng-show="header.HEADER_10!=null && header.HEADER_10!=''"><input class="form-control" ng-model="content_10" ng-change="LoadListMarkDailyReport(header)" ng-model-options="{debounce:700}" /></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in list_mark_daily_report" ng-style="item.HEADER_1 == 'Target'?{'color':'red'}:{}">
+                                                        <td ng-show="item.header==0">{{$index+ (tranghientai - 1) * 10}}</td>
+                                                        <td ng-show="header.HEADER_1!=null && header.HEADER_1!='' && item.header==0">
+                                                            <div class="content-textarea" ng-dblclick="editColC=true">
+                                                                <span ng-hide="editColC">{{item.HEADER_1.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical;" class="form-control" ng-model="item.HEADER_1" my-enter="UpdateContent(item)" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_2!=null && header.HEADER_2!='' && item.header==0" ng-dblclick="editColC=true">
+                                                            <div class="content-textarea">
+                                                                <span ng-hide="editColC">{{item.HEADER_2.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item);" ng-model="item.HEADER_2" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+
+                                                        </td>
+                                                        <td ng-show="header.HEADER_3!=null && header.HEADER_3!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_3.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_3" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+
+                                                        </td>
+                                                        <td ng-show="header.HEADER_4!=null && header.HEADER_4!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                @*<span ng-dblclick="editColC=true" ng-hide="editColC" ng-show="item.HEADER_4.length<=100">{{item.HEADER_4}}</span>*@
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_4.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_4" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_5!=null && header.HEADER_5!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_5.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_5" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+
+                                                        </td>
+                                                        <td ng-show="header.HEADER_6!=null && header.HEADER_6!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_6.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_6" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+
+                                                        </td>
+                                                        <td ng-show="header.HEADER_7!=null && header.HEADER_7!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_7.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_7" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+
+                                                        </td>
+                                                        <td ng-show="header.HEADER_8!=null && header.HEADER_8!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_8.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_8" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+
+                                                        </td>
+                                                        <td ng-show="header.HEADER_9!=null && header.HEADER_9!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_9.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_9" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_10!=null && header.HEADER_10!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_10.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_10" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_11!=null && header.HEADER_11!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_11.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_11" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_12!=null && header.HEADER_12!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_12.substring(0, 100)}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_12" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_13!=null && header.HEADER_13!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_13}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_13" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_14!=null && header.HEADER_14!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_14}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_14" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_15!=null && header.HEADER_15!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_15}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_15" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_16!=null && header.HEADER_16!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_16}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_16" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_17!=null && header.HEADER_17!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_17}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_17" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_18!=null && header.HEADER_18!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_18}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" my-enter="UpdateContent(item)" ng-model="item.HEADER_18" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_19!=null && header.HEADER_19!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-dblclick="editColC=true" ng-hide="editColC">{{item.HEADER_19}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" ng-model="item.HEADER_19" my-enter="UpdateContent(item)" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_20!=null && header.HEADER_20!='' && item.header==0">
+                                                            <div class="content-textarea">
+                                                                <span ng-hide="editColC">{{item.HEADER_20}}</span>
+                                                                <textarea style="resize:vertical; " class="form-control" ng-model="item.HEADER_20" my-enter="UpdateContent(item)" ng-dblclick="editColC=false" ng-show="editColC"></textarea>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr ng-repeat="item in List_row">
+                                                        <td colspan="2" ng-show="header.HEADER_1!=null && header.HEADER_1!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_1" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_2!=null && header.HEADER_2!=''">
+                                                            @*<input type="text"  class="form-control" />*@
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_2" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_3!=null && header.HEADER_3!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_3" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_4!=null && header.HEADER_4!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_4" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_5!=null && header.HEADER_5!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_5" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_6!=null && header.HEADER_6!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_6" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_7!=null && header.HEADER_7!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_7" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_8!=null && header.HEADER_8!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_8" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_9!=null && header.HEADER_9!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_9" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_10!=null && header.HEADER_10!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_10" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_11!=null && header.HEADER_11!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_11" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_12!=null && header.HEADER_12!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_12" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_13!=null && header.HEADER_13!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_13" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_14!=null && header.HEADER_14!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_14" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_15!=null && header.HEADER_15!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_15" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_16!=null && header.HEADER_16!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_16" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_17!=null && header.HEADER_17!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_17" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_18!=null && header.HEADER_18!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_18" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_19!=null && header.HEADER_19!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_19" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td ng-show="header.HEADER_20!=null && header.HEADER_20!=''">
+                                                            <textarea style="resize:vertical;font-size:12px" class="form-control" ng-model="item.CONTENT_20" my-enter="addRow=false;AddContent();"></textarea>
+                                                        </td>
+                                                        <td><button type="button" style="border:none" ng-click="RemoveRow($index)"><i class="fa fa-trash" style="margin-right:5px" /></button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="21">
+
+                                                            <span><button type="button" class="btn-info" ng-click="addRow=true;AddRow();">Add Row</button></span>
+                                                            <button class="btn-success" type="button" ng-click="tablesToExcelMultiTabsModal(['TemplateUpdate'],['Mẫu upload'],'', 'Excel')"><i class="fa fa-file-excel-o" style="margin-right:5px"></i>Lấy mẫu upload</button>
+                                                            <button type="button" class="alert-success" ng-click="import=true;newtbl=false" ng-hide="import">Import content</button>
+                                                            <button class="btn-success" type="button" ng-click="tablesToExcelMultiTabsModal(['Detail'],['Detail'],'', 'Excel')"><i class="fa fa-file-excel-o" style="margin-right:5px"></i>Export excel</button>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!---======Table for Export Data=======-->
+                                            <table style="display:none" cellspacing="0" class="table table-striped table-hover" style="width:100%" id="Detail" data-SheetName="Detail">
+                                                <tbody>
+                                                    <tr ng-repeat="item in list_mark_daily_report">
+                                                        <td ng-show="item.header==0">{{$index}}</td>
+                                                        <td>{{item.HEADER_1}}</td>
+                                                        <td>{{item.HEADER_2}}</td>
+                                                        <td>{{item.HEADER_3}}</td>
+                                                        <td>{{item.HEADER_4}}</td>
+                                                        <td>{{item.HEADER_5}}</td>
+                                                        <td>{{item.HEADER_6}}</td>
+                                                        <td>{{item.HEADER_7}}</td>
+                                                        <td>{{item.HEADER_8}}</td>
+                                                        <td>{{item.HEADER_9}}</td>
+                                                        <td>{{item.HEADER_10}}</td>
+                                                        <td>{{item.HEADER_11}}</td>
+                                                        <td>{{item.HEADER_12}}</td>
+                                                        <td>{{item.HEADER_13}}</td>
+                                                        <td>{{item.HEADER_14}}</td>
+                                                        <td>{{item.HEADER_15}}</td>
+                                                        <td>{{item.HEADER_16}}</td>
+                                                        <td>{{item.HEADER_17}}</td>
+                                                        <td>{{item.HEADER_18}}</td>
+                                                        <td>{{item.HEADER_19}}</td>
+                                                        <td>{{item.HEADER_20}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <table style="display:none" cellspacing="0" class="table table-striped table-hover" style="width:100%" id="TemplateUpdate" data-SheetName="Mẫu upload">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{header.HEADER_1}}</th>
+                                                        <th>{{header.HEADER_2}}</th>
+                                                        <th>{{header.HEADER_3}}</th>
+                                                        <th>{{header.HEADER_4}}</th>
+                                                        <th>{{header.HEADER_5}}</th>
+                                                        <th>{{header.HEADER_6}}</th>
+                                                        <th>{{header.HEADER_7}}</th>
+                                                        <th>{{header.HEADER_8}}</th>
+                                                        <th>{{header.HEADER_9}}</th>
+                                                        <th>{{header.HEADER_10}}</th>
+                                                        <th>{{header.HEADER_11}}</th>
+                                                        <th>{{header.HEADER_12}}</th>
+                                                        <th>{{header.HEADER_13}}</th>
+                                                        <th>{{header.HEADER_14}}</th>
+                                                        <th>{{header.HEADER_15}}</th>
+                                                        <th>{{header.HEADER_16}}</th>
+                                                        <th>{{header.HEADER_17}}</th>
+                                                        <th>{{header.HEADER_18}}</th>
+                                                        <th>{{header.HEADER_19}}</th>
+                                                        <th>{{header.HEADER_20}}</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            <!---======End Table for Export Data=======-->
+                                            <script>
+                                                $('body').on('keyup input', 'textarea', function () {
+                                                    var offset = this.offsetHeight - this.clientHeight;
+                                                    var scroll = $('body').scrollTop();
+                                                    $(this).css('height', 'auto').css('height', this.scrollHeight + offset);
+                                                    $('body').scrollTop(scroll);
+                                                }).removeAttr('data-autoresize');
+
+                                            </script>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-12" ng-show="showdetail">
+                                    <div id="phan_trang" style="float:right;margin:0px;font-size:12px !important"></div>
+                                </div>
+                                <!--==============End Show Detail report============--->
+                                <div class="table-responsive" ng-show="import">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr ng-show="import">
+                                                <td colspan="60" style="margin-right: 5px!important">
+                                                    <!-------Import Tasks theo mẫu excel-------->
+                                                    <div style="margin-top:12px;padding-top:5px;margin-bottom:12px;" class="col-md-12">
+                                                        <h3>Import dữ liệu</h3>
+                                                        <textarea id="mail_content" name="mail_content" class="row-fluid" style="min-height: 100px;"></textarea>
+                                                    </div>
+                                                    <div style="padding-left:15px; padding-bottom:12px">
+                                                        <br />
+                                                        <br />
+                                                        @*<button type="button" ng-click="showdata();" class="btn btn-primary" style="float:left;margin-right:10px;">Click</button>*@
+                                                        <button type="button" ng-hide="newtbl" ng-click="showdata();upload_content()" class="btn btn-primary" style="float:left;margin-right:12px;">Upload</button>
+                                                        <button type="button" ng-show="newtbl" ng-click="showdata();upload_content_newtbl()" class="btn btn-primary" style="float:left;margin-right:12px;">Upload</button>
+                                                        <p style="display:none;" ng-bind-html="showdatacontent | unsafe" class="showdatacontent"></p>
+
+                                                        @*<button type="button" ng-hide="newtbl" ng-click="upload_content()" class="btn btn-primary">Upload</button>
+                                                            <button type="button" ng-show="newtbl" ng-click="upload_content_newtbl()" class="btn btn-primary">Upload</button>*@
+                                                        <br />
+                                                    </div>
+
+                                                    <script>
+                                                        if (CKEDITOR.instances['mail_content']) {
+                                                            delete CKEDITOR.instances['mail_content']
+                                                        };
+                                                        CKEDITOR.replace('mail_content', {
+                                                            height: 100
+                                                        });
+                                                        //reference to ckeditor data
+                                                    </script>
+                                                    <!-------End Import Tasks theo mẫu excel-------->
+                                                    @*<button type="button" class="btn btn-save" ng-click="Add_Content_CKeditor()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>*@
+                                                    <button type="button" ng-click="import=false" ng-show="import" class="btn btn-primary"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--============================END TAB GENERAL REPORT =========================================-->
+                            <!--============================TAB SALE REPORT =========================================-->
+                            <div id="tab-2" class="tab-content">
+                                <div class="col-md-12" ng-hide="hidelistrp">
+                                    <!--==============Show danh sách report============--->
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">
+                                            <div class="input-form-search has-search" style="display:flex;width:100%">
+                                                <div class="search-name" style="position:relative;width:100%;">
+                                                    <span class="fa fa-search form-control-feedback"></span>
+                                                    <input type="text" autocomplete="off" class="form-control" ng-model="tukhoa1" my-enter="LoadReport()" placeholder="Search for report names.." title="Type in a name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="border:none">
+                                            <div class="col-md-12">
+                                                <label><input type="radio" ng-model="branch" value="1" ng-click="LoadReport();" /> Hà Nội</label>
+                                                <label><input type="radio" ng-model="branch" value="2" ng-click="LoadReport();" /> HCM</label>
+                                                <label><input type="radio" ng-model="branch" value="3" ng-click="LoadReport();" /> Đà Nẵng</label>
+                                                <label><input type="radio" ng-model="branch" value="4" ng-click="LoadReport();" /> Hải Phòng</label><br />
+                                            </div>
+
+                                        </div>
+                                        <table cellspacing="0" class="table table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Report name</th>
+                                                    <th style="max-width:50px">Reporter</th>
+                                                    <th style="max-width:30px">Update</th>
+                                                    <th style="max-width:20px">
+                                                        <span>Checked</span>
+                                                        <input type="checkbox" ng-model="status" ng-click="LoadReport()" />
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in list_report">
+                                                    <td ng-click="LoadDetailSaleReport(item);LoadListReportComment(item.ID);LoadList_Daily_Progress()">
+                                                        <div class="content-textarea">
+                                                            <span ng-dblclick="editColF=true" ng-hide="editColF">{{item.REPORT_NAME}}</span>
+                                                            <input style="resize:vertical;" class="form-control" ng-model="item.REPORT_NAME" ng-dblclick="editColF=false" my-enter="Update_file_name(item);" ng-show="editColF"></input>
+                                                        </div>
+                                                    </td>
+                                                    <td style="max-width:20px" ng-click="LoadDetailSaleReport(item);LoadListUserViewReport(item.ID);" data-toggle="modal" data-target="#add_user_view">{{item.FULLNAME}}</td>
+                                                    <td style="max-width:20px" ng-click="LoadDetailSaleReport(item);">{{item.DATE_UPDATE | date: 'dd/MM/yyyy'}}</td>
+                                                    @*<td ng-click="Update_file_name(item)">{{item.IS_CHECK}}</td>*@
+                                                    <td style="max-width:20px">
+                                                        <div class="form-checkbox">
+                                                            <input type="checkbox" ng-model="item.IS_CHECK" ng-click="Update_is_checked(item)" />
+                                                            @*<input ng-show="Editgroupuser" type="checkbox" ng-model="item.IS_CHECK" />*@
+                                                        </div>
+                                                    </td>
+                                                    @*<td><button type="button" style="border:none;max-width:20px" ng-click="addnewcmt = true">comment</button></td>*@
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="col-md-12">
+                                            <div id="phan_trang_listrp_sale" style="float:right;margin:0px;font-size:12px !important"></div>
+
+                                        </div>
+                                    </div>
+                                    <!--==============End Show danh sách report============--->
+                                    <div class="col-md-6">
+
+                                        <!--==============Show Comment report============--->
+                                        <div class="col-md-12">
+                                            <p style="white-space:pre-line;word-break:break-word;background-color:#fbf9e9" class="content-target" ng-bind-html="latest_report_comment.COMMENT | unsafe" ng-hide="edit_description"></p>
+                                            <label style="font-size:9px; float:right;margin:0px;" ng-show="latest_report_comment.COMMENT!=null"><button data-toggle="modal" data-target="#all_report_cmt">see more</button></label>                                            
+                                            <label style="font-size:11px;font-weight: normal;float:right;margin:0px;" ng-show="latest_report_comment.COMMENT!=null">
+                                                <img src="http://sales.hoplong.com/Content/Images/Avatar/{{latest_report_comment.AVATAR}}" width="30" height="30" style="border-radius:50%"> {{latest_report_comment.FULLNAME}}-{{latest_report_comment.CREATE_DATE | date: dd/MM/yyyy}}
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <hr />
+                                            <label style="font-size:9px; float:left;margin:0px;" ng-show="latest_report_comment.COMMENT!=null"><button data-toggle="modal" data-target="#Add_report_cmt">Add comment</button></label>
+                                        </div>
+                                        
+                                        <!--==============End Show Commnet report============--->
+                                    </div>
+                                </div>
+
+                                <!--==============Show Detail report============--->
+                                <div>
+                                    <div class="col-md-11"><h4>{{reportname}}</h4></div>
+                                    <div class="col-md-1"><label ng-show="hidelistrp" ng-click="hidelistrp=false"><img src="~/Content/Images/drop_down_icon.jpg">show</label></div>
+                                    <div class="col-md-1"><label class="col-md-1" ng-hide="hidelistrp" ng-click="hidelistrp=true">hide</label></div>
+
+                                </div>
+
+                                <div ng-show="showdetail">
+                                    <div class="col-md-12 form-control">
+                                        <div class="col-md-1">
+                                            <label>Năm: <input type="radio" ng-model="year" value="2020" ng-click="SearchDetailSaleReport();" />2020</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Quý: <input type="radio" ng-model="quater" value="1" ng-click="SearchDetailSaleReport();" />Q1</label>
+                                            <label> <input type="radio" ng-model="quater" value="2" ng-click="SearchDetailSaleReport();" />Q2</label>
+                                            <label> <input type="radio" ng-model="quater" value="3" ng-click="SearchDetailSaleReport();" />Q3</label>
+                                            <label> <input type="radio" ng-model="quater" value="4" ng-click="SearchDetailSaleReport();" />Q4</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label>Tháng: <input type="radio" ng-model="month" value="1" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />1</label>
+                                            <label> <input type="radio" ng-model="month" value="2" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />2</label>
+                                            <label> <input type="radio" ng-model="month" value="3" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />3</label>
+                                            <label> <input type="radio" ng-model="month" value="4" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />4</label>
+                                            <label> <input type="radio" ng-model="month" value="5" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />5</label>
+                                            <label> <input type="radio" ng-model="month" value="6" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />6</label>
+                                            <label> <input type="radio" ng-model="month" value="7" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />7</label>
+                                            <label> <input type="radio" ng-model="month" value="8" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />8</label>
+                                            <label> <input type="radio" ng-model="month" value="9" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />9</label>
+                                            <label> <input type="radio" ng-model="month" value="10" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />10</label>
+                                            <label> <input type="radio" ng-model="month" value="11" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />11</label>
+                                            <label> <input type="radio" ng-model="month" value="12" ng-click="SearchDetailSaleReport();" ng-change="ListWeekByMonth();" />12</label>
+                                            <label> <input type="radio" ng-model="month" value="0" ng-click="SearchDetailSaleReport();" />All</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Tuần: <input type="radio" ng-model="week" value="{{week1}}" ng-click="SearchDetailSaleReport();" />{{week1}}</label>
+                                            <label> <input type="radio" ng-model="week" value="{{week2}}" ng-click="SearchDetailSaleReport();" />{{week2}}</label>
+                                            <label> <input type="radio" ng-model="week" value="{{week3}}" ng-click="SearchDetailSaleReport();" />{{week3}}</label>
+                                            <label> <input type="radio" ng-model="week" value="{{week4}}" ng-click="SearchDetailSaleReport();" />{{week4}}</label>
+                                            <label> <input type="radio" ng-model="week" value="{{week5}}" ng-click="SearchDetailSaleReport();" />{{week5}}</label>
+                                            <label> <input type="radio" ng-model="week" value="{{week6}}" ng-click="SearchDetailSaleReport();" />{{week6}}</label>
+                                            <label> <input type="radio" ng-model="week" value="0" ng-click="SearchDetailSaleReport();" />All</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table cellspacing="0" class="table table-striped table-hover" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2">STT</th>
+                                                    <th rowspan="2">Họ tên</th>
+                                                    <th rowspan="2">Số cuộc gọi</th>
+                                                    <th rowspan="2">Số BG</th>
+                                                    <th rowspan="2">DS BG</th>
+                                                    <th rowspan="2">Doanh Số SO</th>
+                                                    <th rowspan="2">Doanh số thực hiện</th>
+                                                    <th rowspan="2">Tỷ lệ trúng đơn</th>
+                                                    <th rowspan="2" ng-show="branch==3">Tỷ lệ CMT BG</th>
+                                                    <th rowspan="2">Số KH PS</th>
+                                                    <th colspan="2" ng-show="branch==1">KH 3 tháng chưa PS</th>
+                                                    <th colspan="2" ng-show="branch==1">KH 6 tháng chưa PS</th>
+                                                    <th colspan="2" ng-show="branch==1">KH 1 năm chưa PS</th>
+                                                </tr>
+                                                <tr ng-show="branch==1">
+                                                    <th>BG</th>
+                                                    <th>SO</th>
+                                                    <th>BG</th>
+                                                    <th>SO</th>
+                                                    <th>BG</th>
+                                                    <th>SO</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in list_sale_report">
+                                                    @*ng-style="item.HEADER_1 == 'Target'?{'color':'red'}:{}"*@
+                                                    <td>{{$index+ (tranghientai - 1) * 10}}</td>
+                                                    <td>
+                                                        <span>{{item.FULLNAME}}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color:rosybrown"> {{item.SO_CUOI_GOI}}</span><br />
+                                                        <span style="font-weight:bold;">{{item.SO_CUOI_GOI_ACT}}</span><br />
+                                                        <span style="color:blue">{{item.SO_CUOI_GOI_ACT/item.SO_CUOI_GOI*100 |number:0}}%</span>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color:rosybrown"> {{item.SO_BG}}</span><br />
+                                                        <span style="font-weight:bold;">{{item.SO_BG_ACT }}</span><br />
+                                                        <span style="color:blue">{{item.SO_BG_ACT/item.SO_BG*100 |number:0}}%</span>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color:rosybrown"> {{item.DOANH_SO_BG |number}}</span><br />
+                                                        <span style="font-weight:bold;">{{item.DOANH_SO_BG_ACT | number}}</span><br />
+                                                        <span style="color:blue">{{item.DOANH_SO_BG_ACT/item.DOANH_SO_BG*100 |number:0}}%</span>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color:rosybrown"> {{item.DOANH_SO_SO |number}}</span><br />
+                                                        <span style="font-weight:bold;">{{item.DOANH_SO_SO_ACT | number}}</span><br />
+                                                        <span style="color:blue">{{item.DOANH_SO_SO_ACT/item.DOANH_SO_SO*100 |number:0}}%</span>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color:rosybrown"> {{item.DOANH_SO_THUC_HIEN |number}}</span><br />
+                                                        <span style="font-weight:bold;">{{item.DOANH_SO_THUC_HIEN_ACT |number }}</span><br />
+                                                        <span style="color:blue">{{item.DOANH_SO_THUC_HIEN_ACT/item.DOANH_SO_THUC_HIEN*100 |number:0}}%</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.TY_LE_TRUNG_DON*100 |number:0}}%</span><br />
+                                                            <span style="font-weight:bold;">{{item.TY_LE_TRUNG_DON_ACT*100|number:0}}%</span><br />
+                                                            <span style="color:blue">{{item.TY_LE_TRUNG_DON_ACT/item.TY_LE_TRUNG_DON*100 |number:0}}%</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==3">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.TY_LE_CMT_BAO_GIA*100 |number:0}}%</span><br />
+                                                            <span style="font-weight:bold;">{{item.TY_LE_CMT_BAO_GIA_ACT*100 |number:0}}%</span><br />
+                                                            <span style="color:blue">{{item.TY_LE_CMT_BAO_GIA_ACT/item.TY_LE_CMT_BAO_GIA*100 |number:0}}%</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.SO_KH_PHAT_SINH}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.SO_KH_PHAT_SINH_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.SO_KH_PHAT_SINH_ACT/item.SO_KH_PHAT_SINH*100 |number:0}}%</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==1">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.KH_3THANG_CHUA_PS_BG}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.KH_3THANG_CHUA_PS_BG_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.KH_3THANG_CHUA_PS_BG_ACT/item.KH_3THANG_CHUA_PS_BG*100 |number:0}}%</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==1">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.KH_3THANG_CHUA_PS_SO}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.KH_3THANG_CHUA_PS_SO_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.KH_3THANG_CHUA_PS_SO_ACT/item.KH_3THANG_CHUA_PS_SO*100 |number:0}}%</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==1">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.KH_6THANG_CHUA_PS_BG}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.KH_6THANG_CHUA_PS_BG_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.KH_6THANG_CHUA_PS_BG_ACT/item.KH_6THANG_CHUA_PS_BG*100 |number:0}}%</span>
+
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==1">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.KH_6THANG_CHUA_PS_SO}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.KH_6THANG_CHUA_PS_SO_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.KH_6THANG_CHUA_PS_SO_ACTitem.KH_6THANG_CHUA_PS_SO*100 |number:0}}%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==1">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.KH_1NAM_CHUA_PS_BG}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.KH_1NAM_CHUA_PS_BG_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.KH_1NAM_CHUA_PS_BG_ACT/item.KH_1NAM_CHUA_PS_BG*100 |number:0}}%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="branch==1">
+                                                        <div class="content-textarea">
+                                                            <span style="color:rosybrown"> {{item.KH_1NAM_CHUA_PS_SO}}</span><br />
+                                                            <span style="font-weight:bold;">{{item.KH_1NAM_CHUA_PS_SO_ACT}}</span><br />
+                                                            <span style="color:blue">{{item.KH_1NAM_CHUA_PS_SO_ACT/item.KH_1NAM_CHUA_PS_SO*100 |number:0}}%</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" ng-show="showdetail">
+                                    <div class="col-md-8"><label>{{reportname}}</label></div>
+                                    <div id="phan_trang" style="float:right;margin:0px;font-size:12px !important"></div>
+                                </div>
+
+                                <!--================================SALE PERFORMENT CHART=======================================-->
+                                <div class="col-md-12">
+                                    <div class="col-md-2"><button type="button" class="btn-info" ng-click="LoadNewPlanSalePerforment()" data-toggle="modal" data-target="#add_new_sale_week_plan">Create new week target</button></div>
+                                    <div class="col-md-2">
+                                        <label>Time: <input type="radio" ng-model="typetime" value="Month" ng-click="LoadList_Daily_Progress();" />Month</label>
+                                        <label> <input type="radio" ng-model="typetime" value="Week" ng-click="LoadList_Daily_Progress();" />Week</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Data: <input type="radio" ng-model="typedata" value="DOANH_SO_BG" ng-click="LoadList_Daily_Progress();" />DS BG</label>
+                                        <label> <input type="radio" ng-model="typedata" value="DOANH_SO_SO" ng-click="LoadList_Daily_Progress();" />DS SO</label>
+                                        <label> <input type="radio" ng-model="typedata" value="DOANH_SO_THUC_HIEN" ng-click="LoadList_Daily_Progress();" />DS thực hiện</label>
+                                        <label> <input type="radio" ng-model="typedata" value="SO_KH_PHAT_SINH" ng-click="LoadList_Daily_Progress();" />Số KH phát sinh</label>
+                                        <label> <input type="radio" ng-model="typedata" value="TY_LE_TRUNG_DON" ng-click="LoadList_Daily_Progress();" />Tỷ lệ trúng đơn</label>
+                                        <label> <input type="radio" ng-model="typedata" value="SO_CUOI_GOI" ng-click="LoadList_Daily_Progress();" />Số cuộc gọi</label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12" id="container-chart">
+
+                                </div>
+                                <!--================================END SALE PERFORMENT CHART=======================================-->
+                                <!--==============End Show Detail report============--->
+                                <div class="modal fade" id="add_new_sale_week_plan" role="dialog">
+                                    <div class="modal-dialog" style="max-width:85%">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">CREATE PLAN WEEK {{weekplan}}/{{monthplan}} </h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="form-horizontal">
+                                                    <div class="col-md-12">
+                                                        <table cellspacing="0" class="table table-striped table-hover" style="width:100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>STT</th>
+                                                                    <th>Họ tên</th>
+                                                                    <th>Số cuộc gọi</th>
+                                                                    <th>Số BG</th>
+                                                                    <th>DS BG</th>
+                                                                    <th>Doanh Số SO</th>
+                                                                    <th>Doanh số thực hiện</th>
+                                                                    <th>Tỷ lệ trúng đơn</th>
+                                                                    <th ng-show="branch==3">Tỷ lệ CMT BG</th>
+                                                                    <th>Số KH PS</th>
+                                                                    <th ng-show="branch==1">KH 3 tháng chưa PS BG</th>
+                                                                    <th ng-show="branch==1">KH 3 tháng chưa PS SO</th>
+                                                                    <th ng-show="branch==1">KH 6 tháng chưa PS BG</th>
+                                                                    <th ng-show="branch==1">KH 6 tháng chưa PS SO</th>
+                                                                    <th ng-show="branch==1">KH 1 năm chưa PS BG</th>
+                                                                    <th ng-show="branch==1">KH 1 năm chưa PS SO</th>
+                                                                </tr>
+
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="item in list_sale_week_plan">
+                                                                    @*ng-style="item.HEADER_1 == 'Target'?{'color':'red'}:{}"*@
+                                                                    <td>{{$index+ (tranghientai - 1) * 10}}</td>
+                                                                    <td><span>{{item.FULLNAME}}</span></td>
+                                                                    <td>
+                                                                        <span><input style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" ng-model="item.SO_CUOI_GOI" placeholder="{{item.SO_CUOI_GOI_ACT}}" /> </span><br />
+                                                                        <span style="color:gray">{{item.SO_CUOI_GOI_ACT}}</span><br />
+                                                                        <span style="color:darkslategrey">{{item.SO_CUOI_GOI_ACT/item.SO_CUOI_GOI*100 |number:0}}%</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span> <input ng-model="item.SO_BG" placeholder="{{item.SO_BG_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /></span><br />
+                                                                        <span style="color:gray">{{item.SO_BG_ACT }}</span><br />
+                                                                        <span style="color:darkslategrey">{{item.SO_BG_ACT/item.SO_BG*100 |number:0}}%</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span><input ng-model="item.DOANH_SO_BG" placeholder="{{item.DOANH_SO_BG_ACT |number}}" format="number" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                        <span style="color:gray">{{item.DOANH_SO_BG_ACT | number}}</span><br />
+                                                                        <span style="color:darkslategrey">{{item.DOANH_SO_BG_ACT/item.DOANH_SO_BG*100 |number:0}}%</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span><input ng-model="item.DOANH_SO_SO" placeholder="{{item.DOANH_SO_SO_ACT |number}}" format="number" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                        <span style="color:gray">{{item.DOANH_SO_SO_ACT | number}}</span><br />
+                                                                        <span style="color:darkslategrey">{{item.DOANH_SO_SO_ACT/item.DOANH_SO_SO*100 |number:0}}%</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span><input ng-model="item.DOANH_SO_THUC_HIEN" placeholder="{{item.DOANH_SO_THUC_HIEN_ACT |number}}" format="number" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                        <span style="color:gray">{{item.DOANH_SO_THUC_HIEN_ACT |number }}</span><br />
+                                                                        <span style="color:darkslategrey">{{item.DOANH_SO_THUC_HIEN_ACT/item.DOANH_SO_THUC_HIEN*100 |number:0}}%</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.TY_LE_TRUNG_DON *100" placeholder="{{item.TY_LE_TRUNG_DON*100}}%" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /></span><br />
+                                                                            <span style="color:gray">{{item.TY_LE_TRUNG_DON_ACT *100 |number:0}}%</span><br />
+                                                                            <span style="color:darkslategrey">{{item.TY_LE_TRUNG_DON_ACT/item.TY_LE_TRUNG_DON*100 |number:0}}%</span>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==3">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.TY_LE_CMT_BAO_GIA *100" placeholder="{{item.TY_LE_CMT_BAO_GIA*100}}%" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /></span><br />
+                                                                            <span style="color:gray">{{item.TY_LE_CMT_BAO_GIA_ACT *100 |number:0}}%</span><br />
+                                                                            <span style="color:darkslategrey">{{item.TY_LE_CMT_BAO_GIA_ACT/item.TY_LE_CMT_BAO_GIA*100 |number:0}}%</span>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.SO_KH_PHAT_SINH" placeholder="{{item.SO_KH_PHAT_SINH_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.SO_KH_PHAT_SINH_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.SO_KH_PHAT_SINH_ACT/item.SO_KH_PHAT_SINH*100 |number:0}}%</span>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==1">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.KH_3THANG_CHUA_PS_BG" placeholder="{{item.KH_3THANG_CHUA_PS_BG_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.KH_3THANG_CHUA_PS_BG_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.KH_3THANG_CHUA_PS_BG_ACT/item.KH_3THANG_CHUA_PS_BG*100 |number:0}}%</span>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==1">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.KH_3THANG_CHUA_PS_SO" placeholder="{{item.KH_3THANG_CHUA_PS_SO_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.KH_3THANG_CHUA_PS_SO_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.KH_3THANG_CHUA_PS_SO_ACT/item.KH_3THANG_CHUA_PS_SO*100 |number:0}}%</span>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==1">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.KH_6THANG_CHUA_PS_BG" placeholder="{{item.KH_6THANG_CHUA_PS_BG_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.KH_6THANG_CHUA_PS_BG_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.KH_6THANG_CHUA_PS_BG_ACT/item.KH_6THANG_CHUA_PS_BG*100 |number:0}}%</span>
+
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==1">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.KH_6THANG_CHUA_PS_SO" placeholder="{{item.KH_6THANG_CHUA_PS_SO_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.KH_6THANG_CHUA_PS_SO_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.KH_6THANG_CHUA_PS_SO_ACT/item.KH_6THANG_CHUA_PS_SO*100 |number:0}}%</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==1">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.KH_1NAM_CHUA_PS_BG" placeholder="{{item.KH_1NAM_CHUA_PS_BG_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.KH_1NAM_CHUA_PS_BG_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.KH_1NAM_CHUA_PS_BG_ACT/item.KH_1NAM_CHUA_PS_BG*100 |number:0}}%</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td ng-show="branch==1">
+                                                                        <div class="content-textarea">
+                                                                            <span><input ng-model="item.KH_1NAM_CHUA_PS_SO" placeholder="{{item.KH_1NAM_CHUA_PS_SO_ACT}}" style="resize:vertical;font-weight:bold; color:lightcoral" class="form-control" /> </span><br />
+                                                                            <span style="color:gray">{{item.KH_1NAM_CHUA_PS_SO_ACT}}</span><br />
+                                                                            <span style="color:darkslategrey">{{item.KH_1NAM_CHUA_PS_SO_ACT/item.KH_1NAM_CHUA_PS_SO*100 |number:0}}%</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Add_new_sale_week_plan()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--============================END TAB SALE REPORT =========================================-->
+                            <!--============================TAB WARRANTY REPORT =========================================-->
+                            <div id="tab-3" class="tab-content">
+                                <div class="table-responsive">
+                                    <div class="col-md-6">
+                                        <div class="col-md-5">
+                                            <label><input type="radio" ng-model="branch" value="1" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> Hà Nội</label>
+                                            <label><input type="radio" ng-model="branch" value="2" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> HCM</label>
+                                            <label><input type="radio" ng-model="branch" value="3" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> Đà Nẵng</label>
+                                            <label><input type="radio" ng-model="branch" value="4" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> Hải Phòng</label><br />
+
+                                        </div>
+                                        <div class="col-md-7">
+                                            <label>Tháng:<input type="radio" ng-model="month" value="1" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 1</label>
+                                            <label><input type="radio" ng-model="month" value="2" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 2</label>
+                                            <label><input type="radio" ng-model="month" value="3" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 3</label>
+                                            <label><input type="radio" ng-model="month" value="4" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 4</label>
+                                            <label><input type="radio" ng-model="month" value="5" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 5</label>
+                                            <label><input type="radio" ng-model="month" value="6" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 6</label>
+                                            <label><input type="radio" ng-model="month" value="7" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 7</label>
+                                            <label><input type="radio" ng-model="month" value="8" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 8</label>
+                                            <label><input type="radio" ng-model="month" value="9" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 9</label>
+                                            <label><input type="radio" ng-model="month" value="10" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 10</label>
+                                            <label><input type="radio" ng-model="month" value="11" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 11</label>
+                                            <label><input type="radio" ng-model="month" value="12" ng-click="LoadWarrantyReport();LoadWarrantyChart();" /> 12</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <table cellspacing="0" class="table table-striped table-hover" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Đã xử lý</th>
+                                                        <th>Đang xử lý</th>
+                                                        <th>Đã gửi NCC</th>
+                                                        <th>Hoàn thành</th>
+                                                        <th>Xuất trước trả khách</th>
+                                                        <th>Chờ xử lý</th>
+                                                        <th>Không bảo hành</th>
+                                                        <th>Chưa nhận</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in list_warranty_rp">
+                                                        <td>{{item.DATE | date: 'dd/MM/yyyy'}}</td>
+                                                        <td style="text-align: center;">{{item.DA_XU_LY}}</td>
+                                                        <td>{{item.DANG_XU_LY}}</td>
+                                                        <td>{{item.DA_GUI_NCC}}</td>
+                                                        <td>{{item.HOAN_THANH}}</td>
+                                                        <td>{{item.XUAT_TRUOC_TRA_KHACH}}</td>
+                                                        <td>{{item.CHO_XU_LY}}</td>
+                                                        <td>{{item.KHONG_BAO_HANH}}</td>
+                                                        <td>{{item.CHUA_NHAN}}</td>
+                                                        <td>{{item.TOTAL}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div id="phan_trang_listwarrantyrp" style="float:right;margin:0px;font-size:12px !important"></div>
+                                        </div>
+                                    </div>
+                                    <!--==========================WARRANTY CHART ==================================-->
+
+                                    <div class="col-md-6">
+                                        <figure class="highcharts-figure">
+                                            <div id="container"></div>
+                                            <p class="highcharts-description">
+                                            </p>
+                                        </figure>
+                                    </div>
+
+                                    <!--==========================END WARRANTY CHART ==================================-->
+                                </div>
+                            </div>
+                            <!--============================END TAB WARRANTY REPORT =========================================-->
+                        </div>
+
+                        <div class="modal fade" id="add_new_report" role="dialog">
+                            <div class="modal-dialog" style="max-width:40%">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">CREATE NEW REPORT</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tên Report</label>
+                                                    <input class="form-control" ng-model="report_name" my-enter="Addnew_report()" />
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Addnew_report()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="add_user_view" role="dialog">
+                            <div class="modal-dialog" style="max-width:40%">
+                                <!--End Modal content-->
+                                <!-- Modal View report-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">USER VIEW REPORT</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">Viewer: </label>
+                                            <div class="col-md-10">
+                                                <div ng-repeat="item in list_user_view_report" style="display:inline-block"><button type="button">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_user_view_project($index,item)"></i> </button></div>
+                                                <div ng-repeat="item in array_user_view_project_temp" style="display:inline-block"><button type="button">{{item.FULLNAME}} <i class="fa fa-times" aria-hidden="true" ng-click="del_select_user_view_project($index)"></i> </button></div>
+                                                <div class="form-khachhang" style="position:relative">
+                                                    <input class="form-control" type="text" autocomplete="off" ng-model="name_find" ng-change="Find_User(name_find)" ng-focus="showtable_UserProject = true" ng-blur="showtable_UserProject = false" ng-model-options="{debounce:700}" required>
+
+                                                    <div class="input-group-btn" style="position:absolute">
+                                                        <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_UserProject">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                    <thead class="bg-blue text-white">
+                                                                        <tr>
+                                                                            <th>ID</th>
+                                                                            <th>Mã nhân viên</th>
+                                                                            <th>Tên nhân viên</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr style="cursor:pointer" ng-mousedown="Select_multi_user_create_project(user);" ng-repeat="user in list_user_find">
+                                                                            <td>{{user.ID}}</td>
+                                                                            <td>{{user.USERNAME}}</td>
+                                                                            <td>{{user.FULLNAME}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Add_Report_Viewer()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                    </div>
+                                </div>
+                                <!-- End Modal View report-->
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" id="all_report_cmt" role="dialog">
+                            <div class="modal-dialog" style="max-width:80%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">ALL REPORT COMMENT</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div ng-repeat="item in list_report_comment">
+                                        
+                                        <label style="font-weight:normal; font-style: italic;float:left;margin:0px;" ng-show="item.COMMENT!=null">
+                                            <img src="http://sales.hoplong.com/Content/Images/Avatar/{{item.AVATAR}}" width="30" height="30" style="border-radius:50%"> {{item.FULLNAME}} - {{item.CREATE_DATE | date: dd/MM/yyyy}}
+                                        </label>
+                                        <hr /><br/>
+                                        <p style="white-space:pre-line;word-break:break-word;" class="content-target" ng-bind-html="item.COMMENT | unsafe" ng-hide="edit_description"></p>                                    
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <div id="phan_trang_rpcmt" style="float:right;margin:0px;font-size:12px !important"></div>
+                                        @*<button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Add_Report_Viewer()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="Add_report_cmt" role="dialog">
+                            <div class="modal-dialog" style="max-width:70%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">CREATE REPORT COMMENT</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea style="resize:vertical;font-size:12px " class="form-control" placeholder="input comment here (press enter to save)" name="COMMENT_SALE" id="COMMENT_SALE" ng-model="COMMENT_SALE"></textarea>
+                                        <script>
+                                                CKEDITOR.replace('COMMENT_SALE', {
+
+                                                    //extraPlugins: 'uploadimage,image2',
+                                                    height: 200,
+
+                                                    // Upload images to a CKFinder connector (note that the response type is set to JSON).
+                                                    uploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&responseType=json',
+
+                                                    // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                                                    filebrowserBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html',
+                                                    filebrowserImageBrowseUrl: '/Content/download/plugins/ckfinder/ckfinder.html?type=Images',
+                                                    filebrowserUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+                                                    filebrowserImageUploadUrl: '/Content/download/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+
+                                                    // The following options are not necessary and are used here for presentation purposes only.
+                                                    // They configure the Styles drop-down list and widgets to use classes.
+
+                                                    stylesSet: [
+                                                        { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                                                        { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+                                                    ],
+
+                                                    // Load the default contents.css file plus customizations for this sample.
+                                                    contentsCss: [CKEDITOR.basePath + 'contents.css', ''],
+
+                                                    // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+                                                    // resizer (because image size is controlled by widget styles or the image takes maximum
+                                                    // 100% of the editor width).
+                                                    image2_alignClasses: ['image-align-left', 'image-align-center', 'image-align-right'],
+                                                    image2_disableResizer: true
+                                                });
+
+                                                CKEDITOR.on('COMMENT_SALE', function () {
+                                                    var editor = txtEditor.get_instance();
+
+                                                    editor.focusManager.add(new CKEDITOR.dom.element(inputEl));
+                                                    editor.focusManager.forceBlur();
+                                                    editor.on('focus', function (e) {
+                                                        $("body").addClass(fix);
+                                                    });
+
+                                                    editor.on('blur', function (e) {
+                                                        $("body").removeClass(fix);
+                                                    });
+                                                });
+                                        </script>
+                                        <lab style="font-size:9px; float:right;margin:0px;"><button ng-click="AddNewCmt(headerid);">save</button></lab>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        @*<button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Add_Report_Viewer()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--============================END MODAL REPORT=========================================-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            $('ul.tabs li').click(function () {
+                var tab_id = $(this).attr('data-tab');
+
+                $('ul.tabs li').removeClass('current');
+                $('.tab-content').removeClass('current');
+
+                $(this).addClass('current');
+                $("#" + tab_id).addClass('current');
+            })
+
+        })
+
+        app.directive('myEnter', function () {
+            return function (scope, element, attrs) {
+                element.bind("keydown keypress", function (event) {
+                    if (event.which === 13) {
+                        scope.$apply(function () {
+                            scope.$eval(attrs.myEnter);
+                        });
+
+                        event.preventDefault();
+                    }
+                });
+            };
+        });
+    </script>
+
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }//----END SEARCH TABLE PHÒNG BAN
+    </script>
+
+    <style>
+        #container {
+            height: 400px;
+        }
+
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 310px;
+            max-width: 800px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+        body {
+            font-size: 12px !important;
+        }
+
+        ul.tabs {
+            margin: 0px;
+            padding: 0px;
+            border-bottom: 1px solid #ccc;
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+            ul.tabs li {
+                background: none;
+                color: #222;
+                display: inline-block;
+                padding: 10px 15px;
+                cursor: pointer;
+            }
+
+                ul.tabs li.current {
+                    background: #ff2424;
+                    color: #fff;
+                }
+
+        .tab-content {
+            display: none;
+            background: #ededed;
+            /*padding: 15px;*/
+        }
+
+            .tab-content.current {
+                display: block;
+                width: 100%;
+            }
+
+
+        td {
+            border-top: 1px solid transparent !important;
+            padding: 0px !important;
+        }
+
+        .ten {
+            display: inline-block;
+        }
+
+        .main_font {
+            font-size: 22px;
+        }
+
+        .sub_font {
+            font-size: 14px;
+        }
+
+        @@media screen and (max-width: 1600px) {
+            .main_font {
+                font-size: 18px;
+            }
+
+            .sub_font {
+                font-size: 12px;
+            }
+        }
+
+        @@media screen and (max-width: 1366px) {
+            .main_font {
+                font-size: 14px;
+            }
+
+            .sub_font {
+                font-size: 11px;
+            }
+        }
+
+        @@media screen and (max-width: 1280px) {
+            .main_font {
+                font-size: 14px;
+            }
+
+            .sub_font {
+                font-size: 10px;
+            }
+        }
+
+        @@media screen and (max-width: 1024px) {
+            .main_font {
+                font-size: 11px;
+            }
+
+            .sub_font {
+                font-size: 10px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+        /*table thead tr th {
+            background;
+        }*/
+
+        ul.tabs {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+
+            ul.tabs li {
+                background: none;
+                color: #222;
+                display: inline-block;
+                padding: 10px 15px;
+                cursor: pointer;
+            }
+
+        .machine-name__text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 3.5vmin;
+            text-align: center;
+            white-space: nowrap;
+            height: 11%;
+        }
+
+        .info-machine__card-panel {
+            background: rgba(0,0,0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 89%;
+        }
+
+        .current-state__panel {
+            display: flex;
+            align-items: center;
+            font-size: 2.4vmin;
+            font-weight: bold;
+            height: 10%;
+            padding: 0px 10px 0px 10px;
+        }
+
+        .uptime-progress__panel {
+            padding-top: 5%;
+            height: 32%;
+        }
+
+        .information-time__panel {
+            display: flex;
+            font-size: 2.2vmin;
+            width: 100%;
+            padding: 0px 10px 0px 10px;
+            line-height: 3.4vmin;
+            height: 9%;
+            white-space: nowrap;
+            margin: 10px 0px;
+        }
+
+        .current-state-time__text {
+            flex: 1;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .uptime-percentage__panel {
+            display: flex;
+            justify-content: center;
+            height: 50%;
+        }
+
+        .Availability__text {
+            text-align: center;
+            font-size: 2vmin;
+            color: rgba(255, 255, 255, 0.3);
+            height: 28%;
+        }
+
+        .uptime-progress-bar__panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 5px;
+        }
+
+        .uptime-progress__bar {
+            width: 50%;
+            background: grey;
+            height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .uptime-progress__width {
+            background: rgba(1, 150, 240, 0.8);
+            color: black;
+            height: 100%;
+        }
+
+        .information__text {
+            text-transform: capitalize;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .information-time__text {
+            flex: 1;
+            text-align: right;
+            color: #ffffff;
+        }
+
+        .uptime-percentage-number__text {
+            font-size: 5.5vmin;
+            line-height: 5.5vmin;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .uptime-percentage__text {
+            font-size: 2vmin;
+            line-height: 2vmin;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 3% 0px 0px 1%;
+        }
+
+        .unit-info__text {
+            height: 100%;
+            font-size: 2.2vmin;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-alarm {
+            margin: 0 auto;
+            transform: translate(3%, 20px);
+            display: inline-block;
+        }
+
+        .production-info__text {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1.8vmin;
+            color: rgba(255, 255, 255, 0.3);
+            height: 10%;
+            padding: 0px 10px 0px 10px;
+        }
+    </style>
+</body>

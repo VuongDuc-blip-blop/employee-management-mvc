@@ -1,0 +1,640 @@
+﻿<link href="~/Content/css/HomeCSS.css" rel="stylesheet" />
+<link href="~/Content/css/kho.css" rel="stylesheet" />
+<script src="~/Content/js/Wise_ReportCtrl.js?time=@DateTime.Now"></script>
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="~/Content/css/toastr.css?time=@DateTime.Now" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
+
+<div ng-controller="Wise_ReportCtrl" ng-app="myApp" class="col-md-12 no-padding">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-navbar" style="display:flex;justify-content:space-between;background: #222d32;">
+                <header class="navbar-custom-menu " style="text-align:center;color:white;display:flex;flex:1;margin-left:15px;align-items: center;">
+                    <h3 style="margin:0;line-height:70px;text-transform:uppercase">MACHINE LAYOUT</h3>
+                    <p ng-class="pause ? 'btn-pause' : 'btn-play'" ng-click="ChangeAuto()"></p>
+                    <p ng-repeat="item in ListTrang" ng-class="item == sotrang ? 'btn-page-focus' : 'btn-page' " ng-click="ChuyenTrang(item)"></p>
+                </header>
+                <div class="main-header" style="display:inline-block">
+                    Logo
+                    <a href="/Home/HomeLayout" class="logo" style="background-color:#222d32">
+                        <span class="logo-mini" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="vertical-align:middle" />
+                        </span>
+                        <span class="logo-lg" style="transform: translateY(10px);">
+                            <img src="/Content/images/logo_hoplong.png" height="60" width="100" style="position:relative;top:10px" />
+                        </span>
+                    </a>
+                </div>
+
+                <div class="date-time" style="line-height:70px">
+                    <span id="dotter" style="margin-right:5px;top:5px;position:relative"><i class="fa fa-circle" style="color:red;font-size:25px"></i></span>
+                    <span id="date"></span> &nbsp;
+                    <span id='time'></span>
+                    <script>
+                        window.onload = setInterval(clock, 1000);
+                        function clock() {
+                            var d = new Date();
+
+                            var date = d.getDate();
+
+                            var month = d.getMonth();
+                            var montharr = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            month = montharr[month];
+
+                            var year = d.getFullYear();
+
+                            var day = d.getDay();
+                            var dayarr = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+                            day = dayarr[day];
+
+                            var hour = d.getHours();
+                            var min = d.getMinutes();
+                            var sec = d.getSeconds()
+
+                            hour = (hour < 10) ? "0" + hour : hour;
+                            min = (min < 10) ? "0" + min : min;
+                            sec = (sec < 10) ? "0" + sec : sec;
+                            document.getElementById("date").innerHTML = day + " " + date + " " + month + " " + year;
+                            document.getElementById("time").innerHTML = hour + ":" + min + ":" + sec;
+                        }
+                        $(document).ready(function () {
+                            var dotterFlicker = document.getElementById('dotter');
+                            setInterval(function () {
+                                dotterFlicker.style.display = (dotterFlicker.style.display == 'none' ? '' : 'none');
+                            }, 1000);
+
+                        });
+                    </script>
+                </div>
+                <div class="back-homepage" style="margin:0 15px;line-height:70px">
+                    <a href="/Home/HomeLayout"><i class="fa fa-th-list" style="color:#fff;font-size:22px;top:4px;position:relative"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="form" style="position: relative; top: 0px; left: 0px; width: 100%; height: 100vh; padding: 17px 0px 0px 15px; background-position: center ;background-image: url('../../Content/images/Layout_BG.png');">
+        <div style="width:100%;display:flex;flex-wrap:wrap" class="form-alarm">
+            <div ng-repeat="item in data track by $index" data-toggle="modal" data-target="#MachineError" ng-click="ChiTietMay(item)" style="height:100%;  -webkit-box-flex: 0;  -ms-flex: 0 0 18%;  flex: 0 0 18%;margin-right:15px;margin-bottom:20px;overflow:hidden" class="palite">
+                <div class="machine-name__text pos_1" style="cursor:pointer">{{item.WDT_USERNAME}}</div>
+                <div class="info-machine__card-panel">
+                    <div class="current-state__panel" ng-class="{'yellow' : item.CURRENT_STATE == 30, 'green' : item.CURRENT_STATE == 10, 'red' : item.CURRENT_STATE == 20, 'OFF' : item.CURRENT_STATE == 0}">
+                        <font class="pos_2" ng-show="item.CURRENT_STATE == 20">ERROR</font><font class="current-state-time__text pos_3" ng-show="item.CURRENT_STATE == 20">{{item.TIME_SHIFT_RED | secondtotime}}</font>
+                        <font class="pos_2" ng-show="item.CURRENT_STATE == 30">WAIT</font><font class="current-state-time__text pos_3" ng-show="item.CURRENT_STATE == 30">{{item.TIME_SHIFT_YELLOW | secondtotime}}</font>
+                        <font class="pos_2" ng-show="item.CURRENT_STATE == 10">RUN</font><font class="current-state-time__text pos_3" ng-show="item.CURRENT_STATE == 10">{{item.TIME_SHIFT_GREEN | secondtotime}}</font>
+                        <font class="pos_2" ng-show="item.CURRENT_STATE == 0">OFF</font><font class="current-state-time__text pos_3" ng-show="item.CURRENT_STATE == 0">{{item.TIME_SHIFT_OFF | secondtotime}}</font>
+                    </div>
+
+                    <div class="uptime-progress__panel">
+                        <div class="uptime-percentage__panel">
+                            <font class="uptime-percentage-number__text pos_4">{{item.uptime | currency : '' : 2}}</font><font class="uptime-percentage__text">%</font>
+                        </div>
+                        @*<div class="Availability__text">Availability</div>*@
+                        <div class="uptime-progress-bar__panel">
+                            <div class="uptime-progress__bar">
+                                <div class="uptime-progress__width pos_5" style="width: {{item.uptime | currency : '' : 2}}%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="information-time__panel"><font class="information__text">Planned</font><font class="information-time__text pos_6">{{item.work_time | secondtotime}}</font></div>
+                    <div class="information-time__panel"><font class="information__text">Total</font><font class="information-time__text pos_7">{{item.TIME_SHIFT_TOTAL | secondtotime}}</font></div>
+                    <div class="information-time__panel"><font class="information__text">Run</font><font class="information-time__text pos_7">{{item.TIME_SHIFT_GREEN | secondtotime}}</font></div>
+                    <div class="information-time__panel"><font class="information__text">Down</font><font class="information-time__text pos_8">{{item.TIME_SHIFT_LOSS | secondtotime}}</font></div>
+                    <div class="production-info__text"><font>Production</font></div>
+                    <div class="information-time__panel"><font class="information__text">Actual Q.ty</font><font class="information-time__text pos_8">{{item.ACTUAL_SHIFT_QTY | number : 0}} pcs</font></div>
+                    <div class="information-time__panel"><font class="information__text">NG Q.ty</font><font class="information-time__text pos_8">{{item.NG_QTY | number : 0}} pcs</font></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="MachineError" role="dialog">`
+        <div class="modal-dialog modal-lg " style="width:15%">
+            <div class="modal-content " style="color:white;">                      
+                <div class="modal-header font-black">
+                    <h4 class="modal-title text-bold" id="myModalLabel">Menu</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary btn-lg btn-block btn-main-click ui-btn ui-shadow ui-corner-all" data-toggle="modal" data-target="#ChangePart" data-dismiss="modal" ng-click="GetProducts()">CHANGE PART</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block btn-main-click ui-btn ui-shadow ui-corner-all" data-toggle="modal" data-target="#InputNG">INPUT NG</button>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-close" style="margin-right:5px"></i>Thoát</button>
+                    </div>
+            </div>       
+        </div>
+    </div>
+
+    <div class="modal fade" id="ChangePart" role="dialog">        
+        <div class="modal-dialog modal-lg " style="width:50%;background-color:white">
+            <div class="modal-content">
+                <div class="modal-header font-black">
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>Machine name</th>
+                            <td>{{chitietmay.WDT_USERNAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>Current part</th>
+                            <td>{{chitietmay.ITEM_NAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>New part</th>
+                            <td>
+                                <input type="text" placeholder="Part name" class="form-control input-md" ng-model="ITEM_NAME" ng-focus="showpart = true" ng-blur="showpart = false" ng-model-options="{debounce:700}">
+                                <div class="input-group-btn">
+                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showpart">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                <thead class="bg-blue text-white">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        <th>Cycle time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr style="cursor:pointer" ng-mousedown="SelectPart(part);" ng-repeat="part in ListProduct | filter : ITEM_NAME">
+                                                        <td>{{part.ITEM_NAME}}</td>
+                                                        <td>{{part.ITEM_DESCRIPTION}}</td>
+                                                        <td>{{part.CYCLE_TIME}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="ChangeNewPart()"><i class="fa fa-save" style="margin-right:5px"></i>Save</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-close" style="margin-right:5px"></i>Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="InputNG" role="dialog">
+        <div class="modal-dialog modal-lg " style="width:50%;background-color:white">
+            <div class="modal-content">
+                <div class="modal-header font-black">
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>Machine name</th>
+                            <td>{{chitietmay.WDT_USERNAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <td>
+                                <input type="text" datepicker autocomplete="off" ng-model="ngay" ng-model-options="{debounce:700}" id="ngay" placeholder="Ngày" class="date form-control datetimepickerKT">
+                                <script>
+                                    $("#ngay").datepicker({ dateFormat: 'dd/mm/yy' });
+                                </script>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>NG number</th>
+                            <td>
+                                <input type="number" step="1" ng-model="NG_QTY"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="UpdateNG()"><i class="fa fa-save" style="margin-right:5px"></i>Save</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-primary"><i class="fa fa-close" style="margin-right:5px"></i>Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#MachineError").modal({
+            show: false,
+            backdrop: 'static'
+        });
+
+        $(".palite").click(function () {
+            $("#MachineError").modal("show");
+        });
+    });
+</script>
+<style>
+/*.modal-content {
+    background:linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("../../Content/images/Layout_BG.png");
+}*/
+.test{
+        background: url(../../Content/images/Layout_BG.png);
+    opacity: 0.7;
+    width: 285px;
+    z-index: -2;
+    height: 245px;
+    position: absolute;
+    top: 26px;
+}
+.modal-content {
+    background-color:transparent;
+}
+.wrapper-buttton {
+       width: 60px;
+    height: 60px;
+    margin: 0px auto;
+    border-radius: 50%;
+    background: linear-gradient(#2d862d, #2d862d);
+    position: relative;
+    cursor: pointer;
+    padding: 5px;
+    box-shadow: inset 0 4px 2px rgba(255,255,255,0.1), 0 4px 4px rgba(0,0,0,0.5), 0 7px 7px 1px rgba(0,0,0,0.3);
+}
+
+/*.wrapper-buttton:after {
+    content: "";
+    position: absolute;
+    left: -20px;
+    right: -20px;
+    top: -20px;
+    bottom: -20px;
+    z-index: -2;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 2px rgba(0,0,0,0.3), 0 0 10px rgba(0,0,0,0.15);
+  
+}
+
+.wrapper-buttton:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    top: -10px;
+    bottom: -10px;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: inset 0 10px 10px rgba(0,0,0,0.13);
+    -webkit-filter: blur(1px);
+    filter: blur(1px);
+}*/
+
+.inner-machine {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(#2d862d, #2d862d);
+    display: block;
+  box-shadow:
+    0 -2px 5px rgba(255,255,255,0.05),
+    0 2px 5px rgba(255,255,255,0.1);
+}
+
+/*.inner-machine:after {
+ 	    position: absolute;
+ 
+    width: 60px;
+    height: 60px;
+    background: white;
+    left: 50%;
+    top: 50%;
+    content: "";
+    border-radius: inherit;
+    margin: -17px 0 0 -15px;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+} 
+
+.inner-machine:before {
+       position: absolute;
+    content: "";
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    border-radius: inherit;
+    background: inherit;
+    margin: -25px 0 0 -24px;
+    z-index: 2;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.3), 0 1px 2px rgba(255,255,255,1);
+}*/
+
+.inner-machine span {
+ 	display: block;
+    width: 15px;
+    height: 15px;
+    background: #2d862d;
+    position: absolute;
+    left: 3%;
+    margin-left: -3px;
+    top: 4px;
+    z-index: 3;
+    position: relative;
+}
+
+/*.inner-machine span:before {
+         content: "";
+    position: absolute;
+    width: 6px;
+    height: 27px;
+    background: linear-gradient(#fff, #cbcbcd);
+    border-radius: 10px;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.3);
+    left: 50%;
+    margin-left: -2px;
+}*/
+.inner-machine span b {
+       color: #fff;
+    position: relative;
+    font-size: 18px;
+    top: 9px;
+    left: -8px;
+}
+    .progress {
+        background-color: black !important;
+    }
+    .btn-mini {
+        color:deepskyblue;
+       border:1px solid;
+    }
+    .green {
+        background-color: rgb(0, 193, 9);
+        color: white;
+    }
+
+    .red {
+        background-color: red;
+        color: white;
+    }
+
+    .yellow {
+        background-color: yellow;
+        color: black;
+    }
+
+    .OFF {
+        background-color: grey;
+        color: white;
+    }
+
+    .BLUE {
+        background-color: blue;
+        color: white;
+    }
+
+    .ORANGE {
+        background-color: orange;
+        color: white;
+    }
+
+    td {
+        border-top: 1px solid transparent !important;
+        padding: 0px !important;
+    }
+
+    .ten {
+        width: 16%;
+        display: inline-block;
+    }
+
+    .main_font {
+        font-size: 22px;
+    }
+
+    .sub_font {
+        font-size: 14px;
+    }
+
+    @@media screen and (max-width: 1600px) {
+        .main_font {
+            font-size: 18px;
+        }
+
+        .sub_font {
+            font-size: 12px;
+        }
+    }
+
+    @@media screen and (max-width: 1366px) {
+        .main_font {
+            font-size: 14px;
+        }
+
+        .sub_font {
+            font-size: 11px;
+        }
+    }
+
+    @@media screen and (max-width: 1280px) {
+        .main_font {
+            font-size: 14px;
+        }
+
+        .sub_font {
+            font-size: 10px;
+        }
+    }
+
+    @@media screen and (max-width: 1024px) {
+        .main_font {
+            font-size: 11px;
+        }
+
+        .sub_font {
+            font-size: 8px;
+        }
+    }
+</style>
+<style>
+    .machine-name__text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 3.5vmin;
+        text-align: center;
+        white-space: nowrap;
+        height: 11%;
+    }
+
+    .info-machine__card-panel {
+        background: rgba(0,0,0, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        height: 89%;
+    }
+
+    .current-state__panel {
+        display: flex;
+        align-items: center;
+        font-size: 2.4vmin;
+        font-weight: bold;
+        height: 10%;
+        padding: 0px 10px 0px 10px;
+    }
+
+    .uptime-progress__panel {
+        padding-top: 5%;
+        height: 32%;
+    }
+
+    .information-time__panel {
+        display: flex;
+        font-size: 2.2vmin;
+        width: 100%;
+        padding: 0px 10px 0px 10px;
+        line-height: 3.4vmin;
+        height: 9%;
+        white-space: nowrap;
+        margin : 10px 0px
+    }
+
+    .current-state-time__text {
+        flex: 1;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .uptime-percentage__panel {
+        display: flex;
+        justify-content: center;
+        height: 50%;
+    }
+
+    .Availability__text {
+        text-align: center;
+        font-size: 2vmin;
+        color: rgba(255, 255, 255, 0.3);
+        height: 28%;
+    }
+
+    .uptime-progress-bar__panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 5px;
+    }
+
+    .uptime-progress__bar {
+        width: 50%;
+        background: grey;
+        height: 100%;
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    .uptime-progress__width {
+        background: rgba(1, 150, 240, 0.8);
+        color: black;
+        height: 100%;
+    }
+
+    .information__text {
+        text-transform: capitalize;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .information-time__text {
+        flex: 1;
+        text-align: right;
+        color: #ffffff;
+    }
+
+    .uptime-percentage-number__text {
+        font-size: 5.5vmin;
+        line-height: 5.5vmin;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .uptime-percentage__text {
+        font-size: 2vmin;
+        line-height: 2vmin;
+        color: rgba(255, 255, 255, 0.4);
+        padding: 3% 0px 0px 1%;
+    }
+
+    .unit-info__text {
+        height: 100%;
+        font-size: 2.2vmin;
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-alarm {
+        margin: 0 auto;
+        transform: translate(3%, 20px);
+        display: inline-block;
+    }
+
+    .production-info__text {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        font-weight: bold;
+        font-size: 1.8vmin;
+        color: rgba(255, 255, 255, 0.3);
+        height: 10%;
+        padding: 0px 10px 0px 10px;
+    }
+</style>
+<style>
+    .btn-page {
+        background-color: transparent;
+        background-image: url('../../Content/images/Page.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 15px;
+    }
+
+    .btn-page-focus {
+        background-color: transparent;
+        background-image: url('../../Content/images/PageFocus.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 15px;
+    }
+
+    .btn-pause {
+        background-color: transparent;
+        background-image: url('../../Content/images/Pause.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 25px;
+    }
+
+    .btn-play {
+        background-color: transparent;
+        background-image: url('../../Content/images/Play.png');
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+        margin: 0 5px 0px 25px;
+    }
+</style>

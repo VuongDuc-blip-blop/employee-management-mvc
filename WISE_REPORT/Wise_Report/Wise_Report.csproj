@@ -1,0 +1,1529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8715984F-FECD-4929-A1D2-B148A136EAAE}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Wise_Report</RootNamespace>
+    <AssemblyName>Wise_Report</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NuGet.Client, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Client.4.2.0\lib\net45\NuGet.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Common, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Common.4.2.0\lib\net45\NuGet.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.ContentModel, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.ContentModel.4.2.0\lib\net45\NuGet.ContentModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Frameworks, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Frameworks.4.2.0\lib\net45\NuGet.Frameworks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Packaging.4.2.0\lib\net45\NuGet.Packaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging.Core, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Packaging.Core.4.2.0\lib\net45\NuGet.Packaging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Packaging.Core.Types, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Packaging.Core.Types.4.2.0\lib\net45\NuGet.Packaging.Core.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Repositories, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Repositories.4.2.0\lib\net45\NuGet.Repositories.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.RuntimeModel, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.RuntimeModel.4.2.0\lib\net45\NuGet.RuntimeModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Versioning, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.Versioning.4.2.0\lib\net45\NuGet.Versioning.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\Mark_report\Api_Mark_Daily_ReportController.cs" />
+    <Compile Include="Api\Setting\Api_DepartmentsController.cs" />
+    <Compile Include="Api\Setting\Api_Groups_UsersController.cs" />
+    <Compile Include="Api\Setting\Api_PermissionController.cs" />
+    <Compile Include="Api\Setting\Api_UsersController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MarkettingReportController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\Wise_ReportController.cs" />
+    <Compile Include="Controllers\SetupController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Hub\Notifications.cs" />
+    <Compile Include="Migrations\201812210927511_addre.cs" />
+    <Compile Include="Migrations\201812210927511_addre.Designer.cs">
+      <DependentUpon>201812210927511_addre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BusinessModel\Commons.cs" />
+    <Compile Include="Models\BusinessModel\ProjectManagements.cs" />
+    <Compile Include="Models\BusinessModel\ThamSo.cs" />
+    <Compile Include="Models\BusinessModel\XuLyNgayThang.cs" />
+    <Compile Include="Models\DataModel\BRANCH.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\COMMENT.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\DEPARTMENT.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\GROUP.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\GROUPS_USERS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\GROUPS_USERS_DELETED.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\HISTORY_DAILY_TASK_PROGRESS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\HR_EMPLOYEE.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\HR_JOB_POSITION.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\List_Meeting_Rooms_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\LOG_GROUPS_ACTIONS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\LOG_GROUPS_USERS_ACTIONS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\LOG_USER_ACTIONS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\LOG_VIEWS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\MARK_REPORT_DAILY.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\MEETING_ROOMS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\NOTIFICATION.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PERMISSION_DETAIL.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PERMISSION_LIST.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PERMISSION_TYPE.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PERMISSION_USERS_GROUP.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Daily_Progress_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Details_Target_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Details_Target_Taskid_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Details_Task_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_FilterWork_List_Projects_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_FilterWork_List_Target_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_FilterWork_List_Tasks_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Filter_Target_ByProject_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Filter_Task_ByProject_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Filter_Task_ByTarget_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_GetAll_List_tasks_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_Report_Header_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_Report_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_Report_Sale_Performent_Plan_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_Report_Sale_Performent_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_Report_Warranty_All_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_Report_Warranty_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_User_Hierarchy_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Get_User_Subordinate_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_listProject_user_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_ListTargets_Project_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Departments01_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Departments_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Groups_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_GroupUsers_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Group_UserGroup_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Group_WorkLogs_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_HR_Employee_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Mark_Daily_Report_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Meeting_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Notification01_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Notification_NotRead_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Notification_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Permission01_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Permission_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Permission_UsersGroup_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Permission_Users_Group_old_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Projects_Data_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Projects_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Projects_UserViewer_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Project_Scheduler_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Report_Comment_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Report_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Targets_Tasks_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_ToDoList_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Users_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_Users_WithPermission_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_List_User_View_Report_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Target_Recheck_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Target_Work_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Missed_ByTargetID_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Missed_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Notyetstart_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Onprogress_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Overdue_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Recheck_ByTargetID_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Recheck_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Work_By_TargetID_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Work_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_My_WorkLog_Report_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Project_Gantt_target_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Project_Gantt_task_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Project_name_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Project_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Report_Daily_progress_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Report_Daily_Task_Detail_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Report_Daily_Task_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_report_task_assignment_by_member_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Sale_Performent_DynamicPivotTable_Month_Result.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Target_Complete_ByDept_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Tasks_by_Target_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Task_GetAllTask_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Task_GetTodolist_By_Task_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Workflow_get_WFDetail_by_ID_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Workflow_get_WFTransition_by_ID_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Workflow_get_WF_by_DEPT_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\Proc_Workflow_List_Data_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PROJECT.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PROJECT_SCHEDULER.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\PROJECT_SCHEDULER_HISTORY.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_CHECK.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_COMMENT.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_CONTENT_2020.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_DAILY_RESULT_WARRANTY.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_DAILY_RESULT_WARRANTY_REVERSE.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_HEADER_MASTER.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\REPORT_SALE_PERFORMENT.cs">
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\SMART_OKRS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMART_OKRS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\SMART_OKRS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\SMART_OKRS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\sp_helpdiagrams_Result.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\sysdiagram.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\SYSTEM_VIEWS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\TARGET.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\TASK.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\TASK_CHECK_LIST.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\TEMP_USER_POSITION.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\TEMP_WORKFLOW_POSITION.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\USER.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WISE_REPORT.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WISE_REPORT.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WISE_REPORT.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WISE_REPORT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WISE_REPORT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WORKFLOW.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WORKFLOW_DETAIL.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WORKFLOW_TRANSITION.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel\WORK_LOGS.cs">
+      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushMessaging.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Antlr3.Runtime.pdb" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\EntityFramework.xml" />
+    <Content Include="bin\Microsoft.AI.Agent.Intercept.dll" />
+    <Content Include="bin\Microsoft.AI.DependencyCollector.dll" />
+    <Content Include="bin\Microsoft.AI.DependencyCollector.xml" />
+    <Content Include="bin\Microsoft.AI.PerfCounterCollector.dll" />
+    <Content Include="bin\Microsoft.AI.ServerTelemetryChannel.dll" />
+    <Content Include="bin\Microsoft.AI.ServerTelemetryChannel.xml" />
+    <Content Include="bin\Microsoft.AI.Web.dll" />
+    <Content Include="bin\Microsoft.AI.Web.xml" />
+    <Content Include="bin\Microsoft.AI.WindowsServer.dll" />
+    <Content Include="bin\Microsoft.AI.WindowsServer.xml" />
+    <Content Include="bin\Microsoft.ApplicationInsights.dll" />
+    <Content Include="bin\Microsoft.ApplicationInsights.xml" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Core.xml" />
+    <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.xml" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Owin.xml" />
+    <Content Include="bin\Microsoft.AspNet.SignalR.Core.dll" />
+    <Content Include="bin\Microsoft.AspNet.SignalR.Core.pdb" />
+    <Content Include="bin\Microsoft.AspNet.SignalR.Core.xml" />
+    <Content Include="bin\Microsoft.AspNet.SignalR.SystemWeb.dll" />
+    <Content Include="bin\Microsoft.AspNet.SignalR.SystemWeb.pdb" />
+    <Content Include="bin\Microsoft.AspNet.SignalR.SystemWeb.xml" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Microsoft.Owin.dll" />
+    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Cookies.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Facebook.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Google.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.OAuth.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Twitter.xml" />
+    <Content Include="bin\Microsoft.Owin.Security.xml" />
+    <Content Include="bin\Microsoft.Owin.xml" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\NuGet.Client.dll" />
+    <Content Include="bin\NuGet.Client.xml" />
+    <Content Include="bin\NuGet.Common.dll" />
+    <Content Include="bin\NuGet.Common.xml" />
+    <Content Include="bin\NuGet.ContentModel.dll" />
+    <Content Include="bin\NuGet.ContentModel.xml" />
+    <Content Include="bin\NuGet.Frameworks.dll" />
+    <Content Include="bin\NuGet.Frameworks.xml" />
+    <Content Include="bin\NuGet.Packaging.Core.dll" />
+    <Content Include="bin\NuGet.Packaging.Core.Types.dll" />
+    <Content Include="bin\NuGet.Packaging.Core.Types.xml" />
+    <Content Include="bin\NuGet.Packaging.Core.xml" />
+    <Content Include="bin\NuGet.Packaging.dll" />
+    <Content Include="bin\NuGet.Packaging.xml" />
+    <Content Include="bin\NuGet.Repositories.dll" />
+    <Content Include="bin\NuGet.Repositories.xml" />
+    <Content Include="bin\NuGet.RuntimeModel.dll" />
+    <Content Include="bin\NuGet.RuntimeModel.xml" />
+    <Content Include="bin\NuGet.Versioning.dll" />
+    <Content Include="bin\NuGet.Versioning.xml" />
+    <Content Include="bin\Owin.dll" />
+    <Content Include="bin\Patlite.pdb" />
+    <Content Include="bin\roslyn\csc.exe" />
+    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="bin\roslyn\vbc.exe" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Helpers.xml" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.xml" />
+    <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Optimization.xml" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\angular-chart.js" />
+    <Content Include="Content\bootstrap-datetimepicker.js" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\HomeCSS.css" />
+    <Content Include="Content\css\kho.css" />
+    <Content Include="Content\css\Layout.css" />
+    <Content Include="Content\css\pnotify.custom.min.css" />
+    <Content Include="Content\css\toastr.css" />
+    <Content Include="Content\date_directive.js" />
+    <Content Include="Content\dist\css\AdminLTE.css" />
+    <Content Include="Content\dist\css\AdminLTE.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-bootstrap-social.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-bootstrap-social.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-fullcalendar.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-fullcalendar.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-select2.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-select2.min.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-without-plugins.css" />
+    <Content Include="Content\dist\css\alt\AdminLTE-without-plugins.min.css" />
+    <Content Include="Content\dist\css\skins\skin-black-light.css" />
+    <Content Include="Content\dist\css\skins\skin-black-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-black.css" />
+    <Content Include="Content\dist\css\skins\skin-black.min.css" />
+    <Content Include="Content\dist\css\skins\skin-blue-light.css" />
+    <Content Include="Content\dist\css\skins\skin-blue-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-blue.css" />
+    <Content Include="Content\dist\css\skins\skin-blue.min.css" />
+    <Content Include="Content\dist\css\skins\skin-green-light.css" />
+    <Content Include="Content\dist\css\skins\skin-green-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-green.css" />
+    <Content Include="Content\dist\css\skins\skin-green.min.css" />
+    <Content Include="Content\dist\css\skins\skin-purple-light.css" />
+    <Content Include="Content\dist\css\skins\skin-purple-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-purple.css" />
+    <Content Include="Content\dist\css\skins\skin-purple.min.css" />
+    <Content Include="Content\dist\css\skins\skin-red-light.css" />
+    <Content Include="Content\dist\css\skins\skin-red-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-red.css" />
+    <Content Include="Content\dist\css\skins\skin-red.min.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow-light.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow-light.min.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow.css" />
+    <Content Include="Content\dist\css\skins\skin-yellow.min.css" />
+    <Content Include="Content\dist\css\skins\_all-skins.css" />
+    <Content Include="Content\dist\css\skins\_all-skins.min.css" />
+    <Content Include="Content\dist\img\avatar.png" />
+    <Content Include="Content\dist\img\avatar04.png" />
+    <Content Include="Content\dist\img\avatar2.png" />
+    <Content Include="Content\dist\img\avatar3.png" />
+    <Content Include="Content\dist\img\avatar5.png" />
+    <Content Include="Content\dist\img\credit\american-express.png" />
+    <Content Include="Content\dist\img\credit\cirrus.png" />
+    <Content Include="Content\dist\img\credit\mastercard.png" />
+    <Content Include="Content\dist\img\credit\mestro.png" />
+    <Content Include="Content\dist\img\credit\paypal.png" />
+    <Content Include="Content\dist\img\credit\paypal2.png" />
+    <Content Include="Content\dist\img\credit\visa.png" />
+    <Content Include="Content\dist\img\default-50x50.gif" />
+    <Content Include="Content\dist\img\icons.png" />
+    <Content Include="Content\dist\img\photo1.png" />
+    <Content Include="Content\dist\img\photo2.png" />
+    <Content Include="Content\dist\img\photo3.jpg" />
+    <Content Include="Content\dist\img\photo4.jpg" />
+    <Content Include="Content\dist\img\user1-128x128.jpg" />
+    <Content Include="Content\dist\img\user2-160x160.jpg" />
+    <Content Include="Content\dist\img\user3-128x128.jpg" />
+    <Content Include="Content\dist\img\user4-128x128.jpg" />
+    <Content Include="Content\dist\img\user5-128x128.jpg" />
+    <Content Include="Content\dist\img\user6-128x128.jpg" />
+    <Content Include="Content\dist\img\user7-128x128.jpg" />
+    <Content Include="Content\dist\img\user8-128x128.jpg" />
+    <Content Include="Content\dist\js\adminlte.js" />
+    <Content Include="Content\dist\js\adminlte.min.js" />
+    <Content Include="Content\dist\js\angular-ui-router.js" />
+    <Content Include="Content\dist\js\angular.min.js" />
+    <Content Include="Content\dist\js\demo.js" />
+    <Content Include="Content\dist\js\dirPagination.js" />
+    <Content Include="Content\dist\js\jquery-2.2.3.min.js" />
+    <Content Include="Content\dist\js\jquery.js" />
+    <Content Include="Content\dist\js\jquery.min.js" />
+    <Content Include="Content\dist\js\pages\dashboard.js" />
+    <Content Include="Content\dist\js\pages\dashboard2.js" />
+    <Content Include="Content\images\default.svg" />
+    <Content Include="Content\images\drop_down_icon.jpg" />
+    <Content Include="Content\images\ICON_daily.png" />
+    <Content Include="Content\images\ICON_monthly_chart.png" />
+    <Content Include="Content\images\ICON_Quantity.png" />
+    <Content Include="Content\images\ICON_Report_Daily.png" />
+    <Content Include="Content\images\ICON_Report_Hourly.png" />
+    <Content Include="Content\images\ICON_Report_Monthly.png" />
+    <Content Include="Content\images\ICON_Report_SHIFT.png" />
+    <Content Include="Content\images\ICON_Report_WEEKLY.png" />
+    <Content Include="Content\images\ICON_weekly_chart.png" />
+    <Content Include="Content\images\Layout_BG.png" />
+    <Content Include="Content\images\logo_hoplong.png" />
+    <Content Include="Content\images\Page.png" />
+    <Content Include="Content\images\PageFocus.png" />
+    <Content Include="Content\images\Pause.png" />
+    <Content Include="Content\images\Play.png" />
+    <Content Include="Content\js\app.js" />
+    <Content Include="Content\js\ChartCtrl.js" />
+    <Content Include="Content\js\DailyChartCtrl.js" />
+    <Content Include="Content\js\ListOEECtrl.js" />
+    <Content Include="Content\js\LiveBoardCtrl.js" />
+    <Content Include="Content\js\Mark_report\Mark_daily_report.js" />
+    <Content Include="Content\js\MonthlyChartCtrl.js" />
+    <Content Include="Content\js\OEEHistoryCtrl.js" />
+    <Content Include="Content\js\OverAllCtrl.js" />
+    <Content Include="Content\js\PermisstionUserGroupCtrl.js" />
+    <Content Include="Content\js\Projects\Notification.js" />
+    <Content Include="Content\js\Projects\Projects.js" />
+    <Content Include="Content\js\Projects\Project_Meeting.js" />
+    <Content Include="Content\js\Projects\Project_Scheduler.js" />
+    <Content Include="Content\js\Projects\Targets.js" />
+    <Content Include="Content\js\Projects\Tasks.js" />
+    <Content Include="Content\js\ReportCtrl.js" />
+    <Content Include="Content\js\PatliteCtrl.js" />
+    <Content Include="Content\js\LayoutCtrl.js" />
+    <Content Include="Content\js\QtyChartCtrl.js" />
+    <Content Include="Content\js\SetupPatliteCtrl.js" />
+    <Content Include="Content\js\SetupProductCtrl.js" />
+    <Content Include="Content\js\SetupQuantityBrokenCtrl.js" />
+    <Content Include="Content\js\SetupQuantityTargetCtrl.js" />
+    <Content Include="Content\js\SetupUserCtrl.js" />
+    <Content Include="Content\js\TimelineChartCtrl.js" />
+    <Content Include="Content\js\WeeklyChartCtrl.js" />
+    <Content Include="Content\Metro UI.js" />
+    <Content Include="Content\modernizr.js" />
+    <Content Include="Content\moment.min.js" />
+    <Content Include="Content\nav_hoplong_multilevel.js" />
+    <Content Include="Content\number_directive.js" />
+    <Content Include="Content\pagination.js" />
+    <Content Include="Content\plugins\AjaxServices.js" />
+    <Content Include="Content\plugins\bootstrap-slider\bootstrap-slider.js" />
+    <Content Include="Content\plugins\bootstrap-slider\slider.css" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
+    <Content Include="Content\plugins\iCheck\all.css" />
+    <Content Include="Content\plugins\iCheck\flat\aero%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\aero.css" />
+    <Content Include="Content\plugins\iCheck\flat\aero.png" />
+    <Content Include="Content\plugins\iCheck\flat\blue%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\blue.css" />
+    <Content Include="Content\plugins\iCheck\flat\blue.png" />
+    <Content Include="Content\plugins\iCheck\flat\flat%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\flat.css" />
+    <Content Include="Content\plugins\iCheck\flat\flat.png" />
+    <Content Include="Content\plugins\iCheck\flat\green%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\green.css" />
+    <Content Include="Content\plugins\iCheck\flat\green.png" />
+    <Content Include="Content\plugins\iCheck\flat\grey%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\grey.css" />
+    <Content Include="Content\plugins\iCheck\flat\grey.png" />
+    <Content Include="Content\plugins\iCheck\flat\orange%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\orange.css" />
+    <Content Include="Content\plugins\iCheck\flat\orange.png" />
+    <Content Include="Content\plugins\iCheck\flat\pink%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\pink.css" />
+    <Content Include="Content\plugins\iCheck\flat\pink.png" />
+    <Content Include="Content\plugins\iCheck\flat\purple%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\purple.css" />
+    <Content Include="Content\plugins\iCheck\flat\purple.png" />
+    <Content Include="Content\plugins\iCheck\flat\red%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\red.css" />
+    <Content Include="Content\plugins\iCheck\flat\red.png" />
+    <Content Include="Content\plugins\iCheck\flat\yellow%402x.png" />
+    <Content Include="Content\plugins\iCheck\flat\yellow.css" />
+    <Content Include="Content\plugins\iCheck\flat\yellow.png" />
+    <Content Include="Content\plugins\iCheck\flat\_all.css" />
+    <Content Include="Content\plugins\iCheck\futurico\futurico%402x.png" />
+    <Content Include="Content\plugins\iCheck\futurico\futurico.css" />
+    <Content Include="Content\plugins\iCheck\futurico\futurico.png" />
+    <Content Include="Content\plugins\iCheck\icheck.js" />
+    <Content Include="Content\plugins\iCheck\icheck.min.js" />
+    <Content Include="Content\plugins\iCheck\line\aero.css" />
+    <Content Include="Content\plugins\iCheck\line\blue.css" />
+    <Content Include="Content\plugins\iCheck\line\green.css" />
+    <Content Include="Content\plugins\iCheck\line\grey.css" />
+    <Content Include="Content\plugins\iCheck\line\line%402x.png" />
+    <Content Include="Content\plugins\iCheck\line\line.css" />
+    <Content Include="Content\plugins\iCheck\line\line.png" />
+    <Content Include="Content\plugins\iCheck\line\orange.css" />
+    <Content Include="Content\plugins\iCheck\line\pink.css" />
+    <Content Include="Content\plugins\iCheck\line\purple.css" />
+    <Content Include="Content\plugins\iCheck\line\red.css" />
+    <Content Include="Content\plugins\iCheck\line\yellow.css" />
+    <Content Include="Content\plugins\iCheck\line\_all.css" />
+    <Content Include="Content\plugins\iCheck\minimal\aero%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\aero.css" />
+    <Content Include="Content\plugins\iCheck\minimal\aero.png" />
+    <Content Include="Content\plugins\iCheck\minimal\blue%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\blue.css" />
+    <Content Include="Content\plugins\iCheck\minimal\blue.png" />
+    <Content Include="Content\plugins\iCheck\minimal\green%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\green.css" />
+    <Content Include="Content\plugins\iCheck\minimal\green.png" />
+    <Content Include="Content\plugins\iCheck\minimal\grey%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\grey.css" />
+    <Content Include="Content\plugins\iCheck\minimal\grey.png" />
+    <Content Include="Content\plugins\iCheck\minimal\minimal%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\minimal.css" />
+    <Content Include="Content\plugins\iCheck\minimal\minimal.png" />
+    <Content Include="Content\plugins\iCheck\minimal\orange%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\orange.css" />
+    <Content Include="Content\plugins\iCheck\minimal\orange.png" />
+    <Content Include="Content\plugins\iCheck\minimal\pink%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\pink.css" />
+    <Content Include="Content\plugins\iCheck\minimal\pink.png" />
+    <Content Include="Content\plugins\iCheck\minimal\purple%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\purple.css" />
+    <Content Include="Content\plugins\iCheck\minimal\purple.png" />
+    <Content Include="Content\plugins\iCheck\minimal\red%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\red.css" />
+    <Content Include="Content\plugins\iCheck\minimal\red.png" />
+    <Content Include="Content\plugins\iCheck\minimal\yellow%402x.png" />
+    <Content Include="Content\plugins\iCheck\minimal\yellow.css" />
+    <Content Include="Content\plugins\iCheck\minimal\yellow.png" />
+    <Content Include="Content\plugins\iCheck\minimal\_all.css" />
+    <Content Include="Content\plugins\iCheck\polaris\polaris%402x.png" />
+    <Content Include="Content\plugins\iCheck\polaris\polaris.css" />
+    <Content Include="Content\plugins\iCheck\polaris\polaris.png" />
+    <Content Include="Content\plugins\iCheck\square\aero%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\aero.css" />
+    <Content Include="Content\plugins\iCheck\square\aero.png" />
+    <Content Include="Content\plugins\iCheck\square\blue%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\blue.css" />
+    <Content Include="Content\plugins\iCheck\square\blue.png" />
+    <Content Include="Content\plugins\iCheck\square\green%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\green.css" />
+    <Content Include="Content\plugins\iCheck\square\green.png" />
+    <Content Include="Content\plugins\iCheck\square\grey%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\grey.css" />
+    <Content Include="Content\plugins\iCheck\square\grey.png" />
+    <Content Include="Content\plugins\iCheck\square\orange%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\orange.css" />
+    <Content Include="Content\plugins\iCheck\square\orange.png" />
+    <Content Include="Content\plugins\iCheck\square\pink%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\pink.css" />
+    <Content Include="Content\plugins\iCheck\square\pink.png" />
+    <Content Include="Content\plugins\iCheck\square\purple%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\purple.css" />
+    <Content Include="Content\plugins\iCheck\square\purple.png" />
+    <Content Include="Content\plugins\iCheck\square\red%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\red.css" />
+    <Content Include="Content\plugins\iCheck\square\red.png" />
+    <Content Include="Content\plugins\iCheck\square\square%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\square.css" />
+    <Content Include="Content\plugins\iCheck\square\square.png" />
+    <Content Include="Content\plugins\iCheck\square\yellow%402x.png" />
+    <Content Include="Content\plugins\iCheck\square\yellow.css" />
+    <Content Include="Content\plugins\iCheck\square\yellow.png" />
+    <Content Include="Content\plugins\iCheck\square\_all.css" />
+    <Content Include="Content\plugins\input-mask\jquery.inputmask.date.extensions.js" />
+    <Content Include="Content\plugins\input-mask\jquery.inputmask.extensions.js" />
+    <Content Include="Content\plugins\input-mask\jquery.inputmask.js" />
+    <Content Include="Content\plugins\input-mask\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Content\plugins\input-mask\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Content\plugins\input-mask\jquery.inputmask.regex.extensions.js" />
+    <Content Include="Content\plugins\input-mask\phone-codes\readme.txt" />
+    <Content Include="Content\plugins\jQueryUI\jquery-ui.js" />
+    <Content Include="Content\plugins\jQueryUI\jquery-ui.min.js" />
+    <Content Include="Content\plugins\jvectormap\jquery-jvectormap-1.2.2.css" />
+    <Content Include="Content\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="Content\plugins\jvectormap\jquery-jvectormap-usa-en.js" />
+    <Content Include="Content\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Content\plugins\pace\pace.css" />
+    <Content Include="Content\plugins\pace\pace.js" />
+    <Content Include="Content\plugins\pace\pace.min.css" />
+    <Content Include="Content\plugins\pace\pace.min.js" />
+    <Content Include="Content\plugins\timepicker\bootstrap-timepicker.css" />
+    <Content Include="Content\plugins\timepicker\bootstrap-timepicker.js" />
+    <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Content\pnotify.custom.min.css" />
+    <Content Include="Content\pnotify.custom.min.js" />
+    <Content Include="Content\responsive.min.js" />
+    <Content Include="Content\scripts\iwc-all.js" />
+    <Content Include="Content\scripts\iwc-signalr.js" />
+    <Content Include="Content\scripts\jquery.signalR-2.3.0.js" />
+    <Content Include="Content\scripts\jquery.signalR-2.3.0.min.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.eslintrc.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\angular-web-notification.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\docs\index.html" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.eslintrc.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\docs\index.html" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\karma.conf.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\stylelint.config.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\web-notification.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\project\config\karma.conf.js" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\stylelint.config.js" />
+    <Content Include="Content\scripts\signalr-patch.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="index.html" />
+    <Content Include="Models\DataModel\SMART_OKRS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
+      <LastGenOutput>SMART_OKRS.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DataModel\SMART_OKRS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
+      <LastGenOutput>SMART_OKRS.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DataModel\WISE_REPORT.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
+      <LastGenOutput>WISE_REPORT.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DataModel\WISE_REPORT.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
+      <LastGenOutput>WISE_REPORT.cs</LastGenOutput>
+    </Content>
+    <Content Include="obj\Release\CSAutoParameterize.parameters.xml" />
+    <Content Include="obj\Release\Package\FilePreviewParameter.xml" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Antlr3.Runtime.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\EntityFramework.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\EntityFramework.SqlServer.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AI.Agent.Intercept.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AI.DependencyCollector.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AI.PerfCounterCollector.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AI.ServerTelemetryChannel.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AI.Web.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AI.WindowsServer.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.ApplicationInsights.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.SignalR.Core.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.AspNet.SignalR.SystemWeb.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Host.SystemWeb.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Facebook.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Google.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Owin.Security.Twitter.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Newtonsoft.Json.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Client.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Common.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.ContentModel.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Frameworks.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Packaging.Core.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Packaging.Core.Types.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Packaging.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Repositories.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.RuntimeModel.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\NuGet.Versioning.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Owin.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csc.exe" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Collections.Immutable.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Reflection.Metadata.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\vbc.exe" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\VBCSCompiler.exe" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Net.Http.Formatting.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Helpers.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Http.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Http.WebHost.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Mvc.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Optimization.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Razor.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.WebPages.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\WebGrease.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\angular-chart.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap-datetimepicker.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.min.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\css\HomeCSS.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\css\kho.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\css\Layout.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\css\pnotify.custom.min.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\css\toastr.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\date_directive.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\dist\js\angular-ui-router.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\dist\js\angular.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\dist\js\dirPagination.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\dist\js\jquery-2.2.3.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\dist\js\jquery.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\dist\js\jquery.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\default.svg" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_daily.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_monthly_chart.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_Quantity.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_Report_Daily.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_Report_Hourly.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_Report_Monthly.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_Report_SHIFT.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_Report_WEEKLY.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\ICON_weekly_chart.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\Layout_BG.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\logo_hoplong.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\Page.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\PageFocus.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\Pause.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\images\Play.png" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\app.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\ChartCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\DailyChartCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\LayoutCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\LiveBoardCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\MonthlyChartCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\OverAllCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\PatliteCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\QtyChartCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\ReportCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\SetupPatliteCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\SetupQuantityBrokenCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\SetupQuantityTargetCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\TimelineChartCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\js\WeeklyChartCtrl.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\Metro UI.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\modernizr.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\moment.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\nav_hoplong_multilevel.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\number_directive.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\pagination.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\plugins\AjaxServices.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\pnotify.custom.min.css" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\pnotify.custom.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\responsive.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\iwc-all.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\iwc-signalr.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\jquery.signalR-2.3.0.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\jquery.signalR-2.3.0.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.eslintrc.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.gitattributes" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\angular-web-notification.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\docs\index.html" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.eslintrc.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.gitattributes" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\docs\index.html" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\karma.conf.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\stylelint.config.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\web-notification.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\project\config\karma.conf.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\stylelint.config.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\signalr-patch.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\Site.css" />
+    <Content Include="obj\Release\Package\PackageTmp\favicon.ico" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="obj\Release\Package\PackageTmp\Global.asax" />
+    <Content Include="obj\Release\Package\PackageTmp\index.html" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\ai.0.22.9-build00167.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.signalR-2.4.1.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\modernizr-2.6.2.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\respond.js" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\respond.min.js" />
+    <Content Include="obj\Release\Package\Patlite.SourceManifest.xml" />
+    <Content Include="obj\Release\Patlite.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\Patlite.pdb" />
+    <Content Include="obj\Release\TempPE\Models.DataModel.Model1.cs.dll" />
+    <Content Include="obj\Release\TempPE\Models.DataModel.Model1.Designer.cs.dll" />
+    <Content Include="obj\Release\_WPPLastBuildInfo.txt" />
+    <Content Include="Scripts\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.atom-build.yml" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.bithoundrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.editorconfig" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.gitattributes" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.jsbeautifyrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.jscs.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.jshintrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\.jslintrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\bower.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\docs\api.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\docs\CHANGELOG.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\inch.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\LICENSE" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.atom-build.yml" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.bithoundrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.editorconfig" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.gitattributes" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jsbeautifyrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jscs.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jshintrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jslintrc" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.npmignore" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\bower.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\docs\api.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\docs\CHANGELOG.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\inch.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\LICENSE" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\package.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\jshintrc-common.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\README-footer-template.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\README-template.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\README.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\package.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\project\config\jshintrc-common.json" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\project\config\README-footer-template.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\project\config\README-template.md" />
+    <Content Include="Content\scripts\node_modules\angular-web-notification\README.md" />
+    <Content Include="bin\ApplicationInsights.config" />
+    <Content Include="bin\Patlite.dll.config" />
+    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="Content\dist\css\adminlte.css.map" />
+    <Content Include="Content\dist\css\adminlte.min.css.map" />
+    <Content Include="Content\plugins\input-mask\phone-codes\phone-be.json" />
+    <Content Include="Content\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="obj\Release\CSAutoParameterize\original\Views\Web.config" />
+    <Content Include="obj\Release\CSAutoParameterize\original\Web.config" />
+    <Content Include="obj\Release\CSAutoParameterize\transformed\Views\Web.config" />
+    <Content Include="obj\Release\CSAutoParameterize\transformed\Web.config" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\Models\DataModel\Model1.csdl" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\Models\DataModel\Model1.msl" />
+    <Content Include="obj\Release\edmxResourcesToEmbed\Models\DataModel\Model1.ssdl" />
+    <Content Include="obj\Release\Package\PackageTmp\ApplicationInsights.config" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ApplicationInsights.config" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CSharp.Core.targets" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.VisualBasic.Core.targets" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.atom-build.yml" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.bithoundrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.editorconfig" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.jsbeautifyrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.jscs.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.jshintrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\.jslintrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\bower.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\docs\api.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\docs\CHANGELOG.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\inch.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\LICENSE" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.atom-build.yml" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.bithoundrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.editorconfig" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jsbeautifyrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jscs.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jshintrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.jslintrc" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\.npmignore" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\bower.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\docs\api.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\docs\CHANGELOG.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\inch.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\LICENSE" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\package.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\jshintrc-common.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\README-footer-template.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\project\config\README-template.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\node_modules\simple-web-notification\README.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\package.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\project\config\jshintrc-common.json" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\project\config\README-footer-template.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\project\config\README-template.md" />
+    <Content Include="obj\Release\Package\PackageTmp\Content\scripts\node_modules\angular-web-notification\README.md" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="obj\Release\Package\PackageTmp\Models\DataModel\Model1.edmx.diagram" />
+    <Content Include="obj\Release\Package\PackageTmp\packages.config" />
+    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-1.10.2.min.map" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\HomeLayout.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\Index.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\Login.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Home\Register.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\Chart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\DailyChart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\HomeChart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\Index.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\Layout.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\ListStatus.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\LiveBoard.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\MonthlyChart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\OverAll.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\QtyChart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\Report.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\SetupHome.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\TimelineChart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\PatliteInfo\WeeklyChart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Setup\PatliteInfo.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Setup\QuantityBroken.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Setup\QuantityTarget.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\Web.config" />
+    <Content Include="obj\Release\Package\PackageTmp\Views\_ViewStart.cshtml" />
+    <Content Include="obj\Release\Package\PackageTmp\Web.config" />
+    <Content Include="obj\Release\Patlite.csproj.GenerateResource.Cache" />
+    <Content Include="obj\Release\Patlite.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
+    <EntityDeploy Include="Models\DataModel\SMART_OKRS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SMART_OKRS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataModel\SMART_OKRS.edmx.diagram">
+      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\DataModel\WISE_REPORT.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WISE_REPORT.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataModel\WISE_REPORT.edmx.diagram">
+      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Home\ViewProject.cshtml" />
+    <Content Include="Views\MarkettingReport\Mark_daily_report.cshtml" />
+    <Content Include="Views\Notification\Notifications.cshtml" />
+    <None Include="Views\Shared\_EmptyLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\HomeLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="aspnet_client\system_web\2_0_50727\" />
+    <Folder Include="aspnet_client\system_web\4_0_30319\" />
+    <Folder Include="Content\bower_components\" />
+    <Folder Include="Content\build\" />
+    <Folder Include="obj\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812210927511_addre.resx">
+      <DependentUpon>201812210927511_addre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\Release\Patlite.Migrations.addre.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54258</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54257/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

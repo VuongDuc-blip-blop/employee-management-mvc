@@ -1,0 +1,1651 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SMART_OKRSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BRANCH">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BRANCH_CODE" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="BRANCH_NAME" Type="nvarchar" MaxLength="64" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="COMMENTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="ID_TASK" Type="int" Nullable="false" />
+    <Property Name="COMMENT" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="TABLE" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTMENTS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DEPARTMENT_NAME" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="DEPARTMENT_MANAGER" Type="int" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" Nullable="false" />
+    <Property Name="STATUS" Type="bit" />
+  </EntityType>
+  <EntityType Name="GROUPS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GROUP_NAME" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ID_DEPARTMENT" Type="int" />
+    <Property Name="PURPOSE" Type="nvarchar" MaxLength="256" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" Nullable="false" />
+    <Property Name="MANAGER_ID" Type="int" />
+    <Property Name="PARENT_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="GROUPS_USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_GROUP" Type="int" Nullable="false" />
+    <Property Name="ID_USER" Type="int" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" Nullable="false" />
+    <Property Name="IS_LEADER" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SMART_OKRS.dbo.GROUPS_USERS_DELETED' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="GROUPS_USERS_DELETED">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ID_GROUP" />
+      <PropertyRef Name="ID_USER" />
+      <PropertyRef Name="IS_LEADER" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID_GROUP" Type="int" Nullable="false" />
+    <Property Name="ID_USER" Type="int" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="IS_LEADER" Type="bit" Nullable="false" />
+    <Property Name="DATE_DELETE" Type="datetime" />
+    <Property Name="USER_DELETE" Type="int" />
+  </EntityType>
+  <EntityType Name="HISTORY_DAILY_TASK_PROGRESS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ASSIGNEE" Type="int" Nullable="false" />
+    <Property Name="TOTAL_TASK" Type="int" Nullable="false" />
+    <Property Name="ONTIME_TASK" Type="int" Nullable="false" />
+    <Property Name="DONE_LATE_TASK" Type="int" Nullable="false" />
+    <Property Name="OVERDUE_TASK" Type="int" Nullable="false" />
+    <Property Name="ONPROGRESS_TASK" Type="int" Nullable="false" />
+    <Property Name="INREVIEW_TASK" Type="int" Nullable="false" />
+    <Property Name="DATE" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HR_EMPLOYEE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_USER" Type="int" Nullable="false" />
+    <Property Name="ID_DEPARTMENT" Type="int" />
+    <Property Name="AVATAR" Type="nvarchar" MaxLength="256" />
+    <Property Name="ZALO" Type="varchar" MaxLength="64" />
+    <Property Name="NUMBER_PHONE" Type="varchar" MaxLength="25" />
+    <Property Name="PERSONAL_EMAIL" Type="varchar" MaxLength="64" />
+    <Property Name="BIRTH_DAY" Type="date" />
+    <Property Name="DATE_IN" Type="date" />
+    <Property Name="DATE_OUT" Type="date" />
+    <Property Name="DATE_CREATE" Type="datetime" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="DATE_OFFICIAL_EMPLOYEE" Type="date" />
+  </EntityType>
+  <EntityType Name="HR_JOB_POSITION">
+    <Key>
+      <PropertyRef Name="JD_ID" />
+    </Key>
+    <Property Name="JD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JD_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="JD_DEPARTMENT" Type="int" />
+    <Property Name="JD_GROUP_ID" Type="int" />
+    <Property Name="JD_INTERVIEWER" Type="int" />
+    <Property Name="JD_DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="JD_REQUIREMENT" Type="nvarchar(max)" />
+    <Property Name="JD_BENEFIT" Type="nvarchar" MaxLength="1000" />
+    <Property Name="JD_CAPACITY" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="LOG_GROUPS_ACTIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_ACTION" Type="int" Nullable="false" />
+    <Property Name="DATE_ACTION" Type="datetime" Nullable="false" />
+    <Property Name="COMMENT_ACTIONS" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SMART_OKRS.dbo.LOG_GROUPS_USERS_ACTIONS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="LOG_GROUPS_USERS_ACTIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="USER_ACTION" />
+      <PropertyRef Name="DATE_ACTION" />
+      <PropertyRef Name="COMMENT_ACTIONS" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_ACTION" Type="int" Nullable="false" />
+    <Property Name="DATE_ACTION" Type="datetime" Nullable="false" />
+    <Property Name="COMMENT_ACTIONS" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOG_USER_ACTIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_ACTION" Type="int" Nullable="false" />
+    <Property Name="DATE_ACTION" Type="datetime" Nullable="false" />
+    <Property Name="COMMENT_ACTIONS" Type="nvarchar" MaxLength="1000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOG_VIEWS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_LOG" Type="datetime" Nullable="false" />
+    <Property Name="USER_LOG" Type="int" />
+    <Property Name="VIEW_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ID_VIEW" Type="int" Nullable="false" />
+    <Property Name="TABLE" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MARK_REPORT_DAILY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="COMPANY_NAME" Type="nvarchar" MaxLength="256" />
+    <Property Name="ADDRESS" Type="nvarchar" MaxLength="256" />
+    <Property Name="DATE_MEET_CLIENT" Type="date" />
+    <Property Name="TYPE_COMPANY" Type="nvarchar" MaxLength="64" />
+    <Property Name="CONTACT" Type="nvarchar" MaxLength="128" />
+    <Property Name="GENERAL_INFO" Type="nvarchar(max)" />
+    <Property Name="PRODUCT" Type="nvarchar" MaxLength="256" />
+    <Property Name="COMPETITOR" Type="nvarchar" MaxLength="128" />
+    <Property Name="APPRECIATE" Type="nvarchar" MaxLength="256" />
+    <Property Name="PURPOSE" Type="nvarchar" MaxLength="256" />
+    <Property Name="ACTION" Type="nvarchar" MaxLength="256" />
+    <Property Name="RESULT" Type="nvarchar" MaxLength="256" />
+    <Property Name="CREATE_USER" Type="int" />
+    <Property Name="CREATE_DATE" Type="date" />
+  </EntityType>
+  <EntityType Name="MEETING_ROOMS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MEETING_ROOM" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="BRANH_ID" Type="int" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="NOTIFICATIONS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="LINK" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="GROUP_ID" Type="int" />
+    <Property Name="USER_ID" Type="int" />
+    <Property Name="COMMENT" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="IS_READ" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PERMISSION_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_USER" Type="int" />
+    <Property Name="ID_GROUP_USER" Type="int" />
+    <Property Name="ID_TARGET" Type="int" Nullable="false" />
+    <Property Name="TABLE_NAME" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PERMISSION_LIST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PERMISSION_NAME" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="VIEW_APPLY" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="TAGS" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="SUB_PERMISSION" Type="varchar" MaxLength="128" />
+    <Property Name="ID_PERMISSION_TYPE" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PERMISSION_TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PERMISSION_TYPE" Type="nvarchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PERMISSION_USERS_GROUP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_GROUP" Type="int" />
+    <Property Name="ID_USER" Type="int" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="256" />
+    <Property Name="ID_PERMISSION" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PROJECT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="PROJECT_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="PROJECT_OWNER" Type="int" Nullable="false" />
+    <Property Name="PROJECT_DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="PROJECT_TARGERT" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="PROJECT_STATUS" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="DATE_START" Type="datetime" />
+    <Property Name="DATE_END" Type="datetime" />
+    <Property Name="DEADLINE_REQUIRE" Type="datetime" />
+    <Property Name="DEPT" Type="nvarchar" MaxLength="256" />
+    <Property Name="BRANCH" Type="nvarchar" MaxLength="128" />
+    <Property Name="IS_MEETING" Type="bit" />
+    <Property Name="TIME_START" Type="time" Precision="5" />
+    <Property Name="TIME_END" Type="time" Precision="5" />
+    <Property Name="PLACE" Type="nvarchar" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="PROJECT_SCHEDULER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_PROJECT" Type="int" Nullable="false" />
+    <Property Name="FREQUENTLY" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NUMBER" Type="int" Nullable="false" />
+    <Property Name="DATE_START" Type="date" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="DATE_CREATE" Type="date" />
+    <Property Name="STATUS" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PROJECT_SCHEDULER_HISTORY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_PROJECT" Type="int" Nullable="false" />
+    <Property Name="DATE_CLONE" Type="date" Nullable="false" />
+    <Property Name="NEXT_DATE_CLONE" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="SYSTEM_VIEWS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="DATE_LOG" Type="datetime" Nullable="false" />
+    <Property Name="USER_LOG" Type="int" />
+    <Property Name="VIEW_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="CONTROLLER" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="VIEW_POSITION" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TARGETS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="DEPARTMENT" Type="int" Nullable="false" />
+    <Property Name="TARGET_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="ID_PROJECT" Type="int" Nullable="false" />
+    <Property Name="ASSIGNEE" Type="int" Nullable="false" />
+    <Property Name="DATE_COMPLETE" Type="date" />
+    <Property Name="TARGET_STATUS" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="TARGET_DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="RECHECK_USER" Type="int" />
+    <Property Name="RECHECK_TIME" Type="datetime" />
+    <Property Name="RECHECK_COMMENT" Type="nvarchar" MaxLength="500" />
+    <Property Name="IS_DONE" Type="bit" Nullable="false" />
+    <Property Name="DATE_START" Type="datetime2" Precision="7" />
+    <Property Name="DATE_END" Type="datetime" />
+    <Property Name="DEADLINE_REQUIRE" Type="datetime" />
+    <Property Name="BRANCH" Type="nvarchar" MaxLength="256" />
+    <Property Name="DEPT_RELATED" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="TASK_CHECK_LIST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_TASK" Type="int" Nullable="false" />
+    <Property Name="CONTENT_CHECKLIST" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="IS_DONE" Type="bit" Nullable="false" />
+    <Property Name="DATE_DONE" Type="datetime" />
+    <Property Name="ASSIGNEE" Type="int" />
+    <Property Name="DEADLINE" Type="date" />
+    <Property Name="DATE_CREATE" Type="datetime" />
+    <Property Name="ID_WORKFLOW_DETAIL" Type="int" />
+    <Property Name="NEED_CHECK" Type="bit" Nullable="false" />
+    <Property Name="IS_CHECK_OK" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TASKS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="DEPARTMENT" Type="int" />
+    <Property Name="ID_TARGET" Type="int" Nullable="false" />
+    <Property Name="TASK_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="TASK_DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="ASSIGNEE" Type="int" />
+    <Property Name="DATE_COMPLETE" Type="date" />
+    <Property Name="TASK_STATUS" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="RECHECK_USER" Type="int" />
+    <Property Name="RECHECK_TIME" Type="datetime" />
+    <Property Name="RECHECK_COMMENT" Type="nvarchar" MaxLength="500" />
+    <Property Name="IS_DONE" Type="bit" Nullable="false" />
+    <Property Name="DATE_START" Type="datetime" />
+    <Property Name="DATE_END" Type="datetime" />
+    <Property Name="DEADLINE_REQUIRE" Type="datetime" />
+    <Property Name="BRANCH" Type="nvarchar" MaxLength="128" />
+    <Property Name="DEPT_RELATED" Type="nvarchar" MaxLength="256" />
+    <Property Name="WORKFLOW_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="TEMP_USER_POSITION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_USER" Type="int" />
+    <Property Name="JD_ID" Type="int" />
+  </EntityType>
+  <EntityType Name="TEMP_WORKFLOW_POSITION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WORKFLOW_ID" Type="int" Nullable="false" />
+    <Property Name="JD_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USERNAME" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="FULLNAME" Type="nvarchar" MaxLength="64" Nullable="false" />
+    <Property Name="PASSWORD" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" Nullable="false" />
+    <Property Name="IS_ALLOWED" Type="bit" Nullable="false" />
+    <Property Name="AVATAR" Type="nvarchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="WORK_LOGS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="USER_CREATE" Type="int" />
+    <Property Name="ID_TASK" Type="int" Nullable="false" />
+    <Property Name="RESULT_WORK" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TIME_LOG" Type="datetime" Nullable="false" />
+    <Property Name="RECHECK_USER" Type="int" />
+    <Property Name="RECHECK_TIME" Type="datetime" />
+    <Property Name="RECHECK_RECOMMENT" Type="nvarchar" MaxLength="500" />
+    <Property Name="TIME_SPENT" Type="varchar" MaxLength="64" />
+    <Property Name="HOUR_SPENT" Type="decimal" Precision="4" Scale="2" />
+    <Property Name="TITLE_WORKLOG" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="TIME_START" Type="datetime" />
+    <Property Name="TIME_END" Type="datetime" />
+    <Property Name="ID_CHECK_LIST" Type="int" />
+    <Property Name="IS_WORKING" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WORKFLOW">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WORKFLOW_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="JOB_TITLE" Type="nvarchar" MaxLength="256" />
+    <Property Name="DESCRIPTIONS" Type="nvarchar(max)" />
+    <Property Name="IS_USING" Type="bit" Nullable="false" />
+    <Property Name="WORKFLOW_VERSION" Type="float" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WORKFLOW_DETAIL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WORKFLOW_ID" Type="int" Nullable="false" />
+    <Property Name="STEP" Type="int" Nullable="false" />
+    <Property Name="STEP_NAME" Type="nvarchar" MaxLength="256" />
+    <Property Name="ASSIGNEE" Type="int" />
+    <Property Name="DESCRIPTIONS" Type="nvarchar(max)" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="figure" Type="varchar" MaxLength="100" />
+    <Property Name="fill" Type="varchar" MaxLength="100" />
+    <Property Name="keystep" Type="int" />
+    <Property Name="loc" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="WORKFLOW_TRANSITION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WORKFLOW_ID" Type="int" Nullable="false" />
+    <Property Name="NEED_CHECK" Type="bit" Nullable="false" />
+    <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
+    <Property Name="IS_CHECK_OK" Type="bit" Nullable="false" />
+    <Property Name="fromnode" Type="int" />
+    <Property Name="tonode" Type="int" />
+    <Property Name="fromPort" Type="varchar" MaxLength="25" />
+    <Property Name="toPort" Type="varchar" MaxLength="25" />
+    <Property Name="points" Type="varchar" MaxLength="600" />
+  </EntityType>
+  <Association Name="FK__HR_EMPLOY__ID_DE__69FC8776">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+    <End Role="HR_EMPLOYEE" Type="Self.HR_EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_EMPLOYEE">
+        <PropertyRef Name="ID_DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_EMPLOY__ID_US__6908633D">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="HR_EMPLOYEE" Type="Self.HR_EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_EMPLOYEE">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_EMPLOY__USER___6AF0ABAF">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="HR_EMPLOYEE" Type="Self.HR_EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_EMPLOYEE">
+        <PropertyRef Name="USER_CREATE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_JOB_PO__JD_DE__4D41E3E5">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+    <End Role="HR_JOB_POSITION" Type="Self.HR_JOB_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_JOB_POSITION">
+        <PropertyRef Name="JD_DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_JOB_PO__JD_GR__4E36081E">
+    <End Role="GROUPS" Type="Self.GROUPS" Multiplicity="0..1" />
+    <End Role="HR_JOB_POSITION" Type="Self.HR_JOB_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_JOB_POSITION">
+        <PropertyRef Name="JD_GROUP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__HR_JOB_PO__JD_IN__4F2A2C57">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="HR_JOB_POSITION" Type="Self.HR_JOB_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HR_JOB_POSITION">
+        <PropertyRef Name="JD_INTERVIEWER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PERMISSIO__ID_GR__5F492382">
+    <End Role="GROUPS_USERS" Type="Self.GROUPS_USERS" Multiplicity="0..1" />
+    <End Role="PERMISSION_DETAIL" Type="Self.PERMISSION_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS_USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_DETAIL">
+        <PropertyRef Name="ID_GROUP_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PERMISSIO__ID_US__5E54FF49">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="PERMISSION_DETAIL" Type="Self.PERMISSION_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_DETAIL">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TASK_CHEC__ASSIG__694925B6">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TASK_CHECK_LIST" Type="Self.TASK_CHECK_LIST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASK_CHECK_LIST">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TASK_CHEC__ID_TA__4BCD0611">
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="1" />
+    <End Role="TASK_CHECK_LIST" Type="Self.TASK_CHECK_LIST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TASKS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASK_CHECK_LIST">
+        <PropertyRef Name="ID_TASK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TASK_CHEC__ID_WO__6A3D49EF">
+    <End Role="WORKFLOW_DETAIL" Type="Self.WORKFLOW_DETAIL" Multiplicity="0..1" />
+    <End Role="TASK_CHECK_LIST" Type="Self.TASK_CHECK_LIST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WORKFLOW_DETAIL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASK_CHECK_LIST">
+        <PropertyRef Name="ID_WORKFLOW_DETAIL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TASKS__WORKFLOW___035DFD74">
+    <End Role="WORKFLOW" Type="Self.WORKFLOW" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WORKFLOW">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="WORKFLOW_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TEMP_USER__ID_US__59A7BACA">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TEMP_USER_POSITION" Type="Self.TEMP_USER_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TEMP_USER_POSITION">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TEMP_USER__JD_ID__5A9BDF03">
+    <End Role="HR_JOB_POSITION" Type="Self.HR_JOB_POSITION" Multiplicity="0..1" />
+    <End Role="TEMP_USER_POSITION" Type="Self.TEMP_USER_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HR_JOB_POSITION">
+        <PropertyRef Name="JD_ID" />
+      </Principal>
+      <Dependent Role="TEMP_USER_POSITION">
+        <PropertyRef Name="JD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TEMP_WORK__JD_ID__52FABD3B">
+    <End Role="HR_JOB_POSITION" Type="Self.HR_JOB_POSITION" Multiplicity="1" />
+    <End Role="TEMP_WORKFLOW_POSITION" Type="Self.TEMP_WORKFLOW_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HR_JOB_POSITION">
+        <PropertyRef Name="JD_ID" />
+      </Principal>
+      <Dependent Role="TEMP_WORKFLOW_POSITION">
+        <PropertyRef Name="JD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TEMP_WORK__WORKF__52069902">
+    <End Role="WORKFLOW" Type="Self.WORKFLOW" Multiplicity="1" />
+    <End Role="TEMP_WORKFLOW_POSITION" Type="Self.TEMP_WORKFLOW_POSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WORKFLOW">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TEMP_WORKFLOW_POSITION">
+        <PropertyRef Name="WORKFLOW_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WORK_LOGS__ID_CH__04115F34">
+    <End Role="TASK_CHECK_LIST" Type="Self.TASK_CHECK_LIST" Multiplicity="0..1" />
+    <End Role="WORK_LOGS" Type="Self.WORK_LOGS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TASK_CHECK_LIST">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORK_LOGS">
+        <PropertyRef Name="ID_CHECK_LIST" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WORKFLOW___ASSIG__7D85288D">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="WORKFLOW_DETAIL" Type="Self.WORKFLOW_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORKFLOW_DETAIL">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WORKFLOW___WORKF__04872BD7">
+    <End Role="WORKFLOW" Type="Self.WORKFLOW" Multiplicity="1" />
+    <End Role="WORKFLOW_TRANSITION" Type="Self.WORKFLOW_TRANSITION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WORKFLOW">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORKFLOW_TRANSITION">
+        <PropertyRef Name="WORKFLOW_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WORKFLOW___WORKF__7C910454">
+    <End Role="WORKFLOW" Type="Self.WORKFLOW" Multiplicity="1" />
+    <End Role="WORKFLOW_DETAIL" Type="Self.WORKFLOW_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WORKFLOW">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORKFLOW_DETAIL">
+        <PropertyRef Name="WORKFLOW_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_DEPARTMENTS">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+    <End Role="GROUPS" Type="Self.GROUPS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GROUPS">
+        <PropertyRef Name="ID_DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_USERS_GROUPS">
+    <End Role="GROUPS" Type="Self.GROUPS" Multiplicity="1" />
+    <End Role="GROUPS_USERS" Type="Self.GROUPS_USERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GROUPS_USERS">
+        <PropertyRef Name="ID_GROUP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GROUPS_USERS_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="GROUPS_USERS" Type="Self.GROUPS_USERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GROUPS_USERS">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICATIONS_GROUPS">
+    <End Role="GROUPS" Type="Self.GROUPS" Multiplicity="0..1" />
+    <End Role="NOTIFICATIONS" Type="Self.NOTIFICATIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NOTIFICATIONS">
+        <PropertyRef Name="GROUP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICATIONS_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="NOTIFICATIONS" Type="Self.NOTIFICATIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NOTIFICATIONS">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERMISSION_LIST_PERMISSION_TYPE">
+    <End Role="PERMISSION_TYPE" Type="Self.PERMISSION_TYPE" Multiplicity="1" />
+    <End Role="PERMISSION_LIST" Type="Self.PERMISSION_LIST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERMISSION_TYPE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_LIST">
+        <PropertyRef Name="ID_PERMISSION_TYPE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERMISSION_USERS_GROUP_GROUPS">
+    <End Role="GROUPS" Type="Self.GROUPS" Multiplicity="0..1" />
+    <End Role="PERMISSION_USERS_GROUP" Type="Self.PERMISSION_USERS_GROUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GROUPS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_USERS_GROUP">
+        <PropertyRef Name="ID_GROUP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PERMISSION_USERS_GROUP_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="PERMISSION_USERS_GROUP" Type="Self.PERMISSION_USERS_GROUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PERMISSION_USERS_GROUP">
+        <PropertyRef Name="ID_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROJECT_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="PROJECT" Type="Self.PROJECT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PROJECT">
+        <PropertyRef Name="PROJECT_OWNER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_DEPARTMENTS">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="1" />
+    <End Role="TARGETS" Type="Self.TARGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_PROJECT">
+    <End Role="PROJECT" Type="Self.PROJECT" Multiplicity="1" />
+    <End Role="TARGETS" Type="Self.TARGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJECT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="ID_PROJECT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TARGETS" Type="Self.TARGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="RECHECK_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TARGETS_USERS1">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+    <End Role="TARGETS" Type="Self.TARGETS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TARGETS">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_DEPARTMENTS">
+    <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENTS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="DEPARTMENT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_TARGETS">
+    <End Role="TARGETS" Type="Self.TARGETS" Multiplicity="1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TARGETS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="ID_TARGET" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_USERS1">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="RECHECK_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TASKS_USERS2">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TASKS">
+        <PropertyRef Name="ASSIGNEE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WORK_LOGS_TASKS">
+    <End Role="TASKS" Type="Self.TASKS" Multiplicity="1" />
+    <End Role="WORK_LOGS" Type="Self.WORK_LOGS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TASKS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORK_LOGS">
+        <PropertyRef Name="ID_TASK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WORK_LOGS_USERS">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="WORK_LOGS" Type="Self.WORK_LOGS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WORK_LOGS">
+        <PropertyRef Name="RECHECK_USER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="Func_IsAdd_Project" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Func_IsAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Func_IsAdminOrHCNS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Func_IsAdminOrIT_Code" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Func_IsAdminOrIT_CodeOrConfig" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Func_IsAdminOrVanHanh" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+  </Function>
+  <Function Name="List_Meeting_Rooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_call_Proc_CLONE_PROJECT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Proc_CheckPermissionCRUD_Permission_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="iduser" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_CheckPermissionCRUD_Processing_Default" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="iduser" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_CheckPermissionCRUD_TARGET" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="iduser" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_CheckPermissionCRUD_TASKS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="iduser" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_CheckPermissionCRUD_USER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="iduser" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_CLONE_PROJECT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Proc_Daily_Progress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+    <Parameter Name="tungay" Type="varchar" Mode="In" />
+    <Parameter Name="denngay" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_Details_Target" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="targetid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Details_Target_Taskid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="taskid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Details_Task" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="taskid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Filter_Target_ByProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectid" Type="int" Mode="In" />
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Filter_Task_ByProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectid" Type="int" Mode="In" />
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Filter_Task_ByTarget" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="targetid" Type="int" Mode="In" />
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Filter_Task_ByTarget_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="targetid" Type="int" Mode="In" />
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_FilterWork_List_Projects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Proc_FilterWork_List_Target" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Proc_FilterWork_List_Tasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Proc_Get_User_Hierarchy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Get_User_Subordinate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_GetAll_List_tasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="projectid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_InsertTASKS_To_HISTORY_DAILY_TASK_PROGRESS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Proc_List_Departments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Departments_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Departments01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Group_UserGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="managerid" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Group_UserGroup_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="managerid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Group_WorkLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="tungay" Type="datetime" Mode="In" />
+    <Parameter Name="denngay" Type="datetime" Mode="In" />
+    <Parameter Name="sotrang" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Groups" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupname" Type="varchar" Mode="In" />
+    <Parameter Name="description" Type="nvarchar" Mode="In" />
+    <Parameter Name="purpose" Type="nvarchar" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Groups_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupname" Type="varchar" Mode="In" />
+    <Parameter Name="descrioption" Type="nvarchar" Mode="In" />
+    <Parameter Name="purpose" Type="nvarchar" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_GroupUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="isleader" Type="bit" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_GroupUsers_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="isleader" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_HR_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_HR_Employee_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Mark_Daily_Report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Mark_Daily_Report_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Meeting" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Notification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid_create" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Notification_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid_create" Type="int" Mode="In" />
+    <Parameter Name="isread" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Notification_NotRead" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Notification_NotRead_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Notification01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid_create" Type="int" Mode="In" />
+    <Parameter Name="isread" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Permission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="permission_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="view" Type="nvarchar" Mode="In" />
+    <Parameter Name="usercreate" Type="int" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="tag" Type="nvarchar" Mode="In" />
+    <Parameter Name="subpermission" Type="nvarchar" Mode="In" />
+    <Parameter Name="permission_type" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Permission_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="permission_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="view" Type="nvarchar" Mode="In" />
+    <Parameter Name="usercreate" Type="int" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="tag" Type="nvarchar" Mode="In" />
+    <Parameter Name="subpermission" Type="nvarchar" Mode="In" />
+    <Parameter Name="permission_type" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Permission_Users_Group_old" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="permission_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="usercreate" Type="int" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="tag" Type="nvarchar" Mode="In" />
+    <Parameter Name="subpermission" Type="nvarchar" Mode="In" />
+    <Parameter Name="permission_type" Type="int" Mode="In" />
+    <Parameter Name="group" Type="int" Mode="In" />
+    <Parameter Name="user" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Permission_UsersGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="permissionid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="permissiontpyeid" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Permission_UsersGroup_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="permissionid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+    <Parameter Name="permissiontpyeid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Permission01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="permission_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="view" Type="nvarchar" Mode="In" />
+    <Parameter Name="usercreate" Type="int" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="tag" Type="nvarchar" Mode="In" />
+    <Parameter Name="subpermission" Type="nvarchar" Mode="In" />
+    <Parameter Name="permission_type" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_ProcessingDefault" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id_name_default" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_ProcessingDefault_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="id_name_default" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_ProcessingDefault01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="id_name_default" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_ProcessingDefaultName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name_default" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Project_Scheduler" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="projectname" Type="nvarchar" Mode="In" />
+    <Parameter Name="frequently" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="int" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Project_Scheduler_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="projectname" Type="nvarchar" Mode="In" />
+    <Parameter Name="frequently" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Projects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="branch" Type="nvarchar" Mode="In" />
+    <Parameter Name="deptname" Type="nvarchar" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Projects_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Projects_UserViewer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="statusname" Type="nvarchar" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Status_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="iduser" Type="int" Mode="In" />
+    <Parameter Name="statusname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Targets_Tasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="projectid" Type="int" Mode="In" />
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_ToDoList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idtask" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Users" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="fullname" Type="nvarchar" Mode="In" />
+    <Parameter Name="pagenum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Users_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="fullname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_List_Users_WithPermission" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="fullname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_listProject_user" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_ListTargets_Project" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id_project" Type="int" Mode="In" />
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Target_Recheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Target_Work" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Missed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Missed_ByTargetID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="idtarget" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Notyetstart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Onprogress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Overdue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Recheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Recheck_ByTargetID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="idtarget" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Work" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_List_Tasks_Work_By_TargetID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="idtarget" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_My_WorkLog_Report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="month" Type="int" Mode="In" />
+    <Parameter Name="year" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Project" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Proc_Project_Gantt_target" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Project_Gantt_task" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="targetid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Project_name" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id_project" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Report_Daily_progress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+    <Parameter Name="tungay" Type="varchar" Mode="In" />
+    <Parameter Name="denngay" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_Report_Daily_Task" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Proc_Report_Daily_Task_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="nvarchar" Mode="In" />
+    <Parameter Name="tungay" Type="date" Mode="In" />
+    <Parameter Name="denngay" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Proc_report_task_assignment_by_member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="groupid" Type="int" Mode="In" />
+    <Parameter Name="deptid" Type="int" Mode="In" />
+    <Parameter Name="tungay" Type="varchar" Mode="In" />
+    <Parameter Name="denngay" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_Target_Complete_ByDept" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="month" Type="int" Mode="In" />
+    <Parameter Name="year" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Task_GetAllTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+    <Parameter Name="keyword" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Proc_Task_GetTodolist_By_Task" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="taskid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Tasks_by_Target" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id_Target" Type="int" Mode="In" />
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_UpdateAll_Notification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Workflow_get_WF_by_DEPT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="deptid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Workflow_get_WFDetail_by_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="workflowid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Workflow_get_WFTransition_by_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="workflowid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Proc_Workflow_List_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Prod_CheckPermissionCRUD_Project" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="currentuserid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SqlQueryNotificationStoredProcedure_6d8c4273_1eb1_4b03_8fa8_eb96570dc1b4" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="SqlQueryNotificationStoredProcedure-6d8c4273-1eb1-4b03-8fa8-eb96570dc1b4" />
+  <Function Name="SqlQueryNotificationStoredProcedure_bbf1e713_65fe_4eb0_8a87_c64423e6be2b" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="SqlQueryNotificationStoredProcedure-bbf1e713-65fe-4eb0-8a87-c64423e6be2b" />
+  <EntityContainer Name="SMART_OKRSModelStoreContainer">
+    <EntitySet Name="BRANCH" EntityType="Self.BRANCH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COMMENTS" EntityType="Self.COMMENTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GROUPS" EntityType="Self.GROUPS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GROUPS_USERS" EntityType="Self.GROUPS_USERS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HISTORY_DAILY_TASK_PROGRESS" EntityType="Self.HISTORY_DAILY_TASK_PROGRESS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HR_EMPLOYEE" EntityType="Self.HR_EMPLOYEE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HR_JOB_POSITION" EntityType="Self.HR_JOB_POSITION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOG_GROUPS_ACTIONS" EntityType="Self.LOG_GROUPS_ACTIONS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOG_USER_ACTIONS" EntityType="Self.LOG_USER_ACTIONS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOG_VIEWS" EntityType="Self.LOG_VIEWS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MARK_REPORT_DAILY" EntityType="Self.MARK_REPORT_DAILY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MEETING_ROOMS" EntityType="Self.MEETING_ROOMS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NOTIFICATIONS" EntityType="Self.NOTIFICATIONS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERMISSION_DETAIL" EntityType="Self.PERMISSION_DETAIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERMISSION_LIST" EntityType="Self.PERMISSION_LIST" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERMISSION_TYPE" EntityType="Self.PERMISSION_TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERMISSION_USERS_GROUP" EntityType="Self.PERMISSION_USERS_GROUP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROJECT" EntityType="Self.PROJECT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROJECT_SCHEDULER" EntityType="Self.PROJECT_SCHEDULER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROJECT_SCHEDULER_HISTORY" EntityType="Self.PROJECT_SCHEDULER_HISTORY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SYSTEM_VIEWS" EntityType="Self.SYSTEM_VIEWS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TARGETS" EntityType="Self.TARGETS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TASK_CHECK_LIST" EntityType="Self.TASK_CHECK_LIST" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TASKS" EntityType="Self.TASKS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEMP_USER_POSITION" EntityType="Self.TEMP_USER_POSITION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEMP_WORKFLOW_POSITION" EntityType="Self.TEMP_WORKFLOW_POSITION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORK_LOGS" EntityType="Self.WORK_LOGS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORKFLOW" EntityType="Self.WORKFLOW" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORKFLOW_DETAIL" EntityType="Self.WORKFLOW_DETAIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORKFLOW_TRANSITION" EntityType="Self.WORKFLOW_TRANSITION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GROUPS_USERS_DELETED" EntityType="Self.GROUPS_USERS_DELETED" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [GROUPS_USERS_DELETED].[ID] AS [ID], 
+    [GROUPS_USERS_DELETED].[ID_GROUP] AS [ID_GROUP], 
+    [GROUPS_USERS_DELETED].[ID_USER] AS [ID_USER], 
+    [GROUPS_USERS_DELETED].[DATE_CREATE] AS [DATE_CREATE], 
+    [GROUPS_USERS_DELETED].[USER_CREATE] AS [USER_CREATE], 
+    [GROUPS_USERS_DELETED].[IS_LEADER] AS [IS_LEADER], 
+    [GROUPS_USERS_DELETED].[DATE_DELETE] AS [DATE_DELETE], 
+    [GROUPS_USERS_DELETED].[USER_DELETE] AS [USER_DELETE]
+    FROM [dbo].[GROUPS_USERS_DELETED] AS [GROUPS_USERS_DELETED]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="LOG_GROUPS_USERS_ACTIONS" EntityType="Self.LOG_GROUPS_USERS_ACTIONS" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [LOG_GROUPS_USERS_ACTIONS].[ID] AS [ID], 
+    [LOG_GROUPS_USERS_ACTIONS].[USER_ACTION] AS [USER_ACTION], 
+    [LOG_GROUPS_USERS_ACTIONS].[DATE_ACTION] AS [DATE_ACTION], 
+    [LOG_GROUPS_USERS_ACTIONS].[COMMENT_ACTIONS] AS [COMMENT_ACTIONS]
+    FROM [dbo].[LOG_GROUPS_USERS_ACTIONS] AS [LOG_GROUPS_USERS_ACTIONS]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__HR_EMPLOY__ID_DE__69FC8776" Association="Self.FK__HR_EMPLOY__ID_DE__69FC8776">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="HR_EMPLOYEE" EntitySet="HR_EMPLOYEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_EMPLOY__ID_US__6908633D" Association="Self.FK__HR_EMPLOY__ID_US__6908633D">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="HR_EMPLOYEE" EntitySet="HR_EMPLOYEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_EMPLOY__USER___6AF0ABAF" Association="Self.FK__HR_EMPLOY__USER___6AF0ABAF">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="HR_EMPLOYEE" EntitySet="HR_EMPLOYEE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_JOB_PO__JD_DE__4D41E3E5" Association="Self.FK__HR_JOB_PO__JD_DE__4D41E3E5">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="HR_JOB_POSITION" EntitySet="HR_JOB_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_JOB_PO__JD_GR__4E36081E" Association="Self.FK__HR_JOB_PO__JD_GR__4E36081E">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="HR_JOB_POSITION" EntitySet="HR_JOB_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__HR_JOB_PO__JD_IN__4F2A2C57" Association="Self.FK__HR_JOB_PO__JD_IN__4F2A2C57">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="HR_JOB_POSITION" EntitySet="HR_JOB_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PERMISSIO__ID_GR__5F492382" Association="Self.FK__PERMISSIO__ID_GR__5F492382">
+      <End Role="GROUPS_USERS" EntitySet="GROUPS_USERS" />
+      <End Role="PERMISSION_DETAIL" EntitySet="PERMISSION_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PERMISSIO__ID_US__5E54FF49" Association="Self.FK__PERMISSIO__ID_US__5E54FF49">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PERMISSION_DETAIL" EntitySet="PERMISSION_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TASK_CHEC__ASSIG__694925B6" Association="Self.FK__TASK_CHEC__ASSIG__694925B6">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASK_CHECK_LIST" EntitySet="TASK_CHECK_LIST" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TASK_CHEC__ID_TA__4BCD0611" Association="Self.FK__TASK_CHEC__ID_TA__4BCD0611">
+      <End Role="TASKS" EntitySet="TASKS" />
+      <End Role="TASK_CHECK_LIST" EntitySet="TASK_CHECK_LIST" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TASK_CHEC__ID_WO__6A3D49EF" Association="Self.FK__TASK_CHEC__ID_WO__6A3D49EF">
+      <End Role="WORKFLOW_DETAIL" EntitySet="WORKFLOW_DETAIL" />
+      <End Role="TASK_CHECK_LIST" EntitySet="TASK_CHECK_LIST" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TASKS__WORKFLOW___035DFD74" Association="Self.FK__TASKS__WORKFLOW___035DFD74">
+      <End Role="WORKFLOW" EntitySet="WORKFLOW" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TEMP_USER__ID_US__59A7BACA" Association="Self.FK__TEMP_USER__ID_US__59A7BACA">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TEMP_USER_POSITION" EntitySet="TEMP_USER_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TEMP_USER__JD_ID__5A9BDF03" Association="Self.FK__TEMP_USER__JD_ID__5A9BDF03">
+      <End Role="HR_JOB_POSITION" EntitySet="HR_JOB_POSITION" />
+      <End Role="TEMP_USER_POSITION" EntitySet="TEMP_USER_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TEMP_WORK__JD_ID__52FABD3B" Association="Self.FK__TEMP_WORK__JD_ID__52FABD3B">
+      <End Role="HR_JOB_POSITION" EntitySet="HR_JOB_POSITION" />
+      <End Role="TEMP_WORKFLOW_POSITION" EntitySet="TEMP_WORKFLOW_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TEMP_WORK__WORKF__52069902" Association="Self.FK__TEMP_WORK__WORKF__52069902">
+      <End Role="WORKFLOW" EntitySet="WORKFLOW" />
+      <End Role="TEMP_WORKFLOW_POSITION" EntitySet="TEMP_WORKFLOW_POSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WORK_LOGS__ID_CH__04115F34" Association="Self.FK__WORK_LOGS__ID_CH__04115F34">
+      <End Role="TASK_CHECK_LIST" EntitySet="TASK_CHECK_LIST" />
+      <End Role="WORK_LOGS" EntitySet="WORK_LOGS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WORKFLOW___ASSIG__7D85288D" Association="Self.FK__WORKFLOW___ASSIG__7D85288D">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="WORKFLOW_DETAIL" EntitySet="WORKFLOW_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WORKFLOW___WORKF__04872BD7" Association="Self.FK__WORKFLOW___WORKF__04872BD7">
+      <End Role="WORKFLOW" EntitySet="WORKFLOW" />
+      <End Role="WORKFLOW_TRANSITION" EntitySet="WORKFLOW_TRANSITION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WORKFLOW___WORKF__7C910454" Association="Self.FK__WORKFLOW___WORKF__7C910454">
+      <End Role="WORKFLOW" EntitySet="WORKFLOW" />
+      <End Role="WORKFLOW_DETAIL" EntitySet="WORKFLOW_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_DEPARTMENTS" Association="Self.FK_GROUPS_DEPARTMENTS">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="GROUPS" EntitySet="GROUPS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_USERS_GROUPS" Association="Self.FK_GROUPS_USERS_GROUPS">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="GROUPS_USERS" EntitySet="GROUPS_USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GROUPS_USERS_USERS" Association="Self.FK_GROUPS_USERS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="GROUPS_USERS" EntitySet="GROUPS_USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICATIONS_GROUPS" Association="Self.FK_NOTIFICATIONS_GROUPS">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="NOTIFICATIONS" EntitySet="NOTIFICATIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICATIONS_USERS" Association="Self.FK_NOTIFICATIONS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="NOTIFICATIONS" EntitySet="NOTIFICATIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERMISSION_LIST_PERMISSION_TYPE" Association="Self.FK_PERMISSION_LIST_PERMISSION_TYPE">
+      <End Role="PERMISSION_TYPE" EntitySet="PERMISSION_TYPE" />
+      <End Role="PERMISSION_LIST" EntitySet="PERMISSION_LIST" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERMISSION_USERS_GROUP_GROUPS" Association="Self.FK_PERMISSION_USERS_GROUP_GROUPS">
+      <End Role="GROUPS" EntitySet="GROUPS" />
+      <End Role="PERMISSION_USERS_GROUP" EntitySet="PERMISSION_USERS_GROUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PERMISSION_USERS_GROUP_USERS" Association="Self.FK_PERMISSION_USERS_GROUP_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PERMISSION_USERS_GROUP" EntitySet="PERMISSION_USERS_GROUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROJECT_USERS" Association="Self.FK_PROJECT_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PROJECT" EntitySet="PROJECT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_DEPARTMENTS" Association="Self.FK_TARGETS_DEPARTMENTS">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_PROJECT" Association="Self.FK_TARGETS_PROJECT">
+      <End Role="PROJECT" EntitySet="PROJECT" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_USERS" Association="Self.FK_TARGETS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TARGETS_USERS1" Association="Self.FK_TARGETS_USERS1">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TARGETS" EntitySet="TARGETS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_DEPARTMENTS" Association="Self.FK_TASKS_DEPARTMENTS">
+      <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_TARGETS" Association="Self.FK_TASKS_TARGETS">
+      <End Role="TARGETS" EntitySet="TARGETS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_USERS" Association="Self.FK_TASKS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_USERS1" Association="Self.FK_TASKS_USERS1">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TASKS_USERS2" Association="Self.FK_TASKS_USERS2">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="TASKS" EntitySet="TASKS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WORK_LOGS_TASKS" Association="Self.FK_WORK_LOGS_TASKS">
+      <End Role="TASKS" EntitySet="TASKS" />
+      <End Role="WORK_LOGS" EntitySet="WORK_LOGS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WORK_LOGS_USERS" Association="Self.FK_WORK_LOGS_USERS">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="WORK_LOGS" EntitySet="WORK_LOGS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

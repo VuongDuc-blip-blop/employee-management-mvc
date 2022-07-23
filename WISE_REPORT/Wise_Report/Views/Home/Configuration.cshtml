@@ -1,0 +1,2512 @@
+﻿<link rel="stylesheet" href="~/Content/vendor/materialdesignicons.min.css">
+<link rel="stylesheet" href="~/Content/vendor/vendor.bundle.base.css">
+<script src="~/Content/js/OverAllCtrl.js?time=@DateTime.Now"></script>
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="~/Content/js-vendor/dashboard.js"></script>
+<script src="~/Content/js-vendor/misc.js"></script>
+<script src="~/Content/js-vendor/hoverable-collapse.js"></script>
+<link href="~/Content/css/toastr.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+<div ng-controller="OverAllCtrl" ng-app="myApp">
+    <div class="container-fluid page-body-wrapper">
+        <div class="content-wrapper">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="change-tab" style="width:100%">
+
+                        <ul class="tabs">
+
+                            <li class="tab-link current" ng-click="Load_Listdept()" data-tab="tab-1"><i class="fa fa-clipboard" style="margin-right:5px;font-size:20px"></i>Departments</li>
+                            <li class="tab-link" ng-click="LoadListuser()" data-tab="tab-2"><i class="fa fa-user" style="margin-right:5px;font-size:20px"></i>Users</li>
+
+                            @*<li class="tab-link" ng-click="LoadListGroups()" data-tab="tab-3"><i class="fa fa-university" style="margin-right:5px;font-size:20px"></i>Groups</li>
+                            <li class="tab-link" ng-click="LoadListUserGroup()" data-tab="tab-5"><i class="fa fa-users" style="margin-right:5px;font-size:20px"></i>Group User</li>*@
+                            <li class="tab-link" ng-click="LoadListGroup_GroupUser()" data-tab="tab-10"><i class="fa fa-users" style="margin-right:5px;font-size:20px"></i>Group-Group User</li>
+                            <li class="tab-link" ng-click="LoadListPermission();ListPermissionType()" data-tab="tab-6"><i class="fa fa-address-book" style="margin-right:5px;font-size:20px"></i>Permissions</li>
+                            <li class="tab-link" ng-click="LoadListPermissionUserGroup();ListPermissionType()" data-tab="tab-9"><i class="fa fa-question-circle" style="margin-right:5px;font-size:20px"></i>Permission Users Group</li>
+                            <li class="tab-link" ng-click="LoadListProcessingDefault()" data-tab="tab-4"><i class="fa fa-star" style="margin-right:5px;font-size:20px"></i>Processing default</li>
+                            <li class="tab-link" ng-click="LoadStatus()" data-tab="tab-7"><i class="fa fa-question-circle" style="margin-right:5px;font-size:20px"></i>Status</li>
+                            <li class="tab-link" ng-click="LoadListHR_Employee()" data-tab="tab-8"><i class="fa fa-question-circle" style="margin-right:5px;font-size:20px"></i>HR Employee</li>
+                            
+                        </ul>
+
+                        <div id="tab-1" class="tab-content current">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="input-form-search has-search" style="display:flex;width:100%">
+                                        <div class="search-name" style="position:relative;width:40%;">
+                                            <span class="fa fa-search form-control-feedback"></span>
+                                            <input type="text" autocomplete="off" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for department names.." title="Type in a name">
+                                        </div>
+
+                                        <button style="margin-left:10px" class="btn btn-success " data-toggle="modal" data-target="#Modal_addnew_department"><i class="fa fa-plus-square" style="margin-right:5px"></i>Thêm phòng ban</button>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="myTable" cellspacing="0" class="table table-striped table-hover table-bordered fixed" style="margin-top:20px">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width:60px" class="text-center">STT</th>
+                                                    <th style="min-width:80px" class="text-center">Tên phòng ban</th>
+                                                    <th style="min-width:100px" class="text-center">Trưởng phòng</th>
+                                                    <th style="min-width:100px" class="text-center">Ngày tạo</th>
+                                                    <th style="min-width:60px" class="text-center">Tác vụ</th>
+
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in list_depts">
+                                                    <td>{{($index + 1) + (tranghientai - 1) * 15}}</td>
+                                                    <td class="text-center">{{item.DEPARTMENT_NAME}}</td>
+                                                    <td class="text-center">{{item.DEPARTMENT_MANAGER}}</td>
+                                                    <td class="text-center">{{item.DATE_CREATE | date : 'dd/MM/yyyy' }}</td>
+                                                    <td class="text-center">
+                                                        <button class="btn-success btn" data-toggle="modal" data-target="#Modal_edit_department" ng-click="get_detail_dept(item)"><i class="fa fa-save" style="margin-right:5px"></i>Sửa</button>
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                           
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="phan_trang_dept" style="float:right;margin:0px !important"></div>
+                        </div>
+                        <!--============================MODAL PHÒNG BAN=========================================-->
+                        <div class="modal fade" id="Modal_edit_department" role="dialog">
+                            <div class="modal-dialog" style="max-width:60%">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">SỬA PHÒNG BAN</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal">
+                                                <div class="col-md-6">
+                                                     <div class="form-group">
+                                                         <label class="control-label col-md-4">Tên phòng ban</label>
+                                                         <div class="col-md-8">
+                                                             <input class="form-control" ng-model="details.DEPARTMENT_NAME" />
+                                                         </div>
+                                                     </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4">Trưởng phòng</label>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control" ng-model="details.DEPARTMENT_MANAGER" />
+                                                            <div class="form-khachhang" style="position:relative">
+                                                                <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="DEPARTMENT_MANAGER_NAME" ng-change="Find_User(DEPARTMENT_MANAGER_NAME)" ng-focus="showtable_User = true" ng-blur="showtable_User = false" ng-model-options="{debounce:700}" required>
+                                                                <input type="text" class="form-control" ng-model="details.DEPARTMENT_MANAGER" style="display:none">
+
+                                                                <div class="input-group-btn" style="position:absolute">
+                                                                    <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_User">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                                <thead class="bg-blue text-white">
+                                                                                    <tr>
+                                                                                        <th>ID</th>
+                                                                                        <th>Mã nhân viên</th>
+                                                                                        <th>Tên nhân viên</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr style="cursor:pointer" ng-mousedown="Getuserid(user);" ng-repeat="user in list_user_find">
+                                                                                        <td>{{user.ID}}</td>
+                                                                                        <td>{{user.USERNAME}}</td>
+                                                                                        <td>{{user.FULLNAME}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button class="btn-mini fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#myModal" type="button"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Update_Dept(); Load_Listdept();"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                        </div>
+                                    </div>
+                               
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="Modal_addnew_department" role="dialog">
+                            <div class="modal-dialog" style="max-width:60%">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">THÊM PHÒNG BAN</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">Tên phòng ban</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" ng-model="DEPARTMENT_NAME" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">Trưởng phòng</label>
+                                                    <div class="col-md-8">
+                                                        <div class="form-khachhang" style="position:relative">
+                                                            <input type="text" class="form-control" name="ten_cong_ty" autocomplete="off" ng-model="DEPARTMENT_MANAGER_NAME" ng-change="FindUser(DEPARTMENT_MANAGER_NAME)" ng-focus="showtable_User = true" ng-blur="showtable_User = false" ng-model-options="{debounce:700}" required>
+                                                            <input type="text" class="form-control" ng-model="DEPARTMENT_MANAGER" style="display:none">
+
+                                                            <div class="input-group-btn" style="position:absolute">
+                                                                <div class="dropdown-menu dropdown-menu-center borderRadius0 padding0" style="display: block;max-height: 400px;overflow:auto;position:relative" ng-show="showtable_User">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-hover" st-table="KhachHangBGCollection" st-safe-src="arrayNewKH_BaoGiaFinded">
+                                                                            <thead class="bg-blue text-white">
+                                                                                <tr>
+                                                                                    <th>ID</th>
+                                                                                    <th>Mã nhân viên</th>
+                                                                                    <th>Tên nhân viên</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr style="cursor:pointer" ng-mousedown="Getuserid(user);" ng-repeat="user in listuser2">
+                                                                                    <td>{{user.ID}}</td>
+                                                                                    <td>{{user.USERNAME}}</td>
+                                                                                    <td>{{user.FULLNAME}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn-mini fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#myModal" type="button"></button>
+                                                      
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save" data-dismiss="modal" ng-click="Addnew_Dept()"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                    </div>
+                                </div>
+                          
+                            </div>
+
+                        </div>
+
+                        <!--============================END MODAL PHÒNG BAN=========================================-->
+                        <!--============================MODAL USER=========================================-->
+                        <div id="tab-2" class="tab-content">
+                            <div class="col-md-12" style="margin-bottom:10px">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="text" ng-model="USERNAME" class="form-control" placeholder="username mới.." />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" ng-model="FULLNAME" class="form-control" placeholder="Họ tên.." />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" ng-model="PASSWORD" class="form-control" placeholder="Password" />
+                                    </div>
+                                    <button class="btn-info btn" ng-click="CreateUser()"><i class="fa fa-plus" style="margin-right:5px"></i>Tạo mới</button>
+                                </div>
+                        
+                            </div>
+                            @*<div class="button-modal col-md-12" style="margin:10px 0">
+                                <button class="btn" data-toggle="modal" data-target="#myModal" style="padding:5px !important"><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                            </div>*@
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table cellspacing="0" class="table table-striped table-hover table-bordered fixed">
+                                        <thead>
+                                            <tr>
+                                                <th style="min-width:60px" class="text-center">STT</th>
+                                                <th style="min-width:80px" class="text-center">Username</th>
+                                                <th style="min-width:100px" class="text-center">Họ và tên</th>
+                                                <th style="min-width:100px" class="text-center">Ngày tạo</th>
+                                                <th style="min-width:100px" class="text-center">Người tạo</th>
+                                                <th style="min-width:100px" class="text-center">Trạng thái</th>
+                                                <th style="min-width:60px" class="text-center">Tác vụ</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th><input type="text" class="form-control" ng-model="username" ng-change="SearchUser()" placeholder="Username.." ng-model-options="{debounce:500}" /></th>
+                                                <th><input type="text" class="form-control" ng-model="fullname" ng-change="SearchUser()" placeholder="Họ và tên..." ng-model-options="{debounce:500}" /></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listusers">
+                                                <td>{{($index + 1) + (tranghientai - 1) * 15}}</td>
+                                                <td>{{item.USERNAME}}</td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Edit">{{item.FULLNAME}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.FULLNAME" ng-show="Edit" />
+                                                </td>
+                                                <td>{{item.DATE_CREATE | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{item.USER_CREATE}}</td>
+                                                <td data-toggle="modal" style="vertical-align:middle;text-align:center">
+                                                    <div class="form-checkbox">
+                                                        <input ng-hide="Edit" type="checkbox" ng-model="item.IS_ALLOWED" ng-disabled="true" />
+                                                        <input ng-show="Edit" type="checkbox" ng-model="item.IS_ALLOWED" />
+                                                    </div>
+                                             
+                                                </td>
+                                                <td align="center" style="vertical-align:middle">
+                                                    <button class="btn btn-info" ng-hide="Edit" ng-click="Edit = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                    <button class="btn btn-save" ng-show="Edit" ng-click="Edit = false; UpdateUser(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                    <button ng-show="Edit" class="btn btn-primary" ng-click="Edit=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>    
+                            <div class="col-md-12">
+                                <div id="phan_trang_user" style="float:right;margin:0px !important"></div>
+                            </div>                        
+                        </div>
+
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog" style="max-width:80%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thêm nhân viên mới</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>Fullname</th>
+                                                    <th>PassWord</th>
+                                                    <th>Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="button-modal col-md-12" style="margin:10px 0">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#myModal" style="padding:5px !important"><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    
+                        </div>
+                        <!--============================END MODAL USER=========================================-->
+                        <!--============================MODAL GROUP=========================================-->
+                        <div id="tab-3" class="tab-content">
+                            <div class="col-md-12">
+                                <div class="button-modal col-md-12" style="margin:10px 0">
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#add_group" ><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                </div>
+                                <div class="col-md-12">
+                                    <table class="table table-striped table-hover table-bordered fixed" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">STT</th>
+                                                <th class="text-center">Group name</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Department</th>
+                                                <th class="text-center">Purpose</th>
+                                                <th class="text-center">Date create</th>
+                                                <th class="text-center">User create</th>
+                                                <th class="text-center">Tác vụ</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th><input type="text" class="form-control" ng-model="groupname" ng-change="SearchGroup()" placeholder="group name.." ng-model-options="{debounce:500}" /></th>
+                                                <th><input type="text" class="form-control" ng-model="description" ng-change="SearchGroup()" placeholder="desciption.." ng-model-options="{debounce:500}" /></th>
+                                                <th></th>
+                                                <th><input type="text" class="form-control" ng-model="purpose" ng-change="SearchGroup()" placeholder="desciption.." ng-model-options="{debounce:500}" /></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    
+                                       <tbody>
+                                           <tr ng-repeat="item in listgroups">
+                                               <td>{{$index+1}}</td>
+                                               <td data-toggle="modal">
+                                                   <span ng-hide="Editgroup">{{item.GROUP_NAME}}</span>
+                                                   <input type="text" style="width:100%" class="input-form" ng-model="item.GROUP_NAME" ng-show="Editgroup" />
+                                               </td>
+                                               <td data-toggle="modal">
+                                                   <span ng-hide="Editgroup">{{item.DESCRIPTION}}</span>
+                                                   <input type="text" style="width:100%" class="input-form" ng-model="item.DESCRIPTION" ng-show="Editgroup" />
+                                               </td>
+                                               <td data-toggle="modal">
+                                                   <span ng-hide="Editgroup">{{item.DEPARTMENT_NAME}}</span>
+                                                   <input type="text" style="width:100%" class="input-form" ng-model="item.ID_DEPARTMENT" ng-show="Editgroup" />
+                                               </td>
+                                               <td data-toggle="modal">
+                                                   <span ng-hide="Editgroup">{{item.PURPOSE}}</span>
+                                                   <input type="text" style="width:100%" class="input-form" ng-model="item.PURPOSE" ng-show="Editgroup" />
+                                               </td>
+
+                                               <td>{{item.DATE_CREATE | date:'dd/MM/yyyy'}}</td>
+                                               <td>{{item.USER_CREATE}}</td>
+                                               <td align="center" style="vertical-align:middle">
+                                                   <button class="btn btn-success" ng-hide="Editgroup" ng-click="Editgroup = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                   <button class="btn btn-primary" ng-show="Editgroup" ng-click="Editgroup = false; UpdateGroup(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                   <button ng-show="Editgroup" class="btn btn-primary" ng-click="Editgroup=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                               </td>
+                                           </tr>
+                                       </tbody>
+                               
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="phan_trang_group" style="float:right;margin:0px !important"></div>
+                                </div>  
+                                
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="add_group" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                        <h4 class="modal-title">Thêm mới nhóm</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-striped table-hover table-bordered fixed">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>Tên nhóm</td>
+                                                            <td><input type="text" ng-model="GROUP_NAME" class="form-control" placeholder="Nhập tên nhóm.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Diễn giải</td>
+                                                            <td><input type="text" ng-model="DESCRIPTION" class="form-control" placeholder="Nhập diễn giải.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Phòng ban</td>
+                                                            <td><input type="text" ng-model="ID_DEPARTMENT" class="form-control" placeholder="Nhập phòng ban.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Mục đích</td>
+                                                            <td><input type="text" ng-model="PURPOSE" class="form-control" placeholder="Nhập mục đích.." /></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save"  ng-click="CreateGroup()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                        <button type="button" class="btn btn-close"  data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--============================END MODAL GROUP=========================================-->
+                        <!--============================MODAL USERS GROUP=========================================-->
+                        <div id="tab-5" class="tab-content">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <div class="button-modal col-md-12" style="margin:10px 0">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#add_group_user" ><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                    </div>
+                                    <table cellspacing="0" class="table table-striped table-hover table-bordered fixed" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th style="min-width:60px" class="text-center">Tên nhóm</th>
+                                                <th style="min-width:80px" class="text-center">Nhân viên</th>
+                                                <th style="min-width:100px" class="text-center">Leader</th>
+                                                <th class="text-center">Ngày tạo</th>
+                                                <th class="text-center">Người tạo</th>
+                                                <th class="text-center" style="min-width:60px">Tác vụ</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>
+                                                    <input type="text" class="form-control" ng-model="groupname2" ng-change="FindGroup(groupname2)" placeholder="Tên nhóm.." ng-focus="showGroup2=true" ng-blur="showGroup2=false" ng-model-options="{debounce:500}" />
+                                                    <input type="text" ng-model="groupid" style="display:none" />
+                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showGroup2 && groupname2!=null && groupname2!=''">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover" st-table="GroupCollection2" st-safe-src="array_Group_Finded2">
+                                                                <thead class="bg-blue text-white">
+                                                                    <tr>
+                                                                        <th>ID</th>
+                                                                        <th>Tên nhóm</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="cursor:pointer" ng-mousedown="SelectGroup2(group);SearchUserGroup()" ng-repeat="group in listgroups">
+                                                                        <td>{{group.ID}}</td>
+                                                                        <td>{{group.GROUP_NAME}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <input class="form-control" type="text" name="" ng-model="fullname1" ng-change="FindUser(fullname1)" placeholder="Điền tên nhân viên" ng-focus="showUser1=true" ng-blur="showUser1=false" ng-model-options="{debounce:500}" />
+                                                    <input type="text" name="" ng-model="userid" style="display:none" />
+                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser1 && fullname1!='' && fullname1!=null">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover" st-table="UserCollection1" st-safe-src="array_User_Finded1">
+                                                                <thead class="bg-blue text-white">
+                                                                    <tr>
+                                                                        <th>ID</th>
+                                                                        <th>Username</th>
+                                                                        <th>Họ và tên</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="cursor:pointer" ng-mousedown="SelectUser1(user);SearchUserGroup()" ng-repeat="user in listuser2">
+                                                                        <td>{{user.ID}}</td>
+                                                                        <td>{{user.USERNAME}}</td>
+                                                                        <td>{{user.FULLNAME}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th style="text-align:center;vertical-align:middle">
+                                                <div class="form-checkbox">
+                                                    <input type="checkbox" ng-model="isleader" ng-change="SearchUserGroup()" ng-model-options="{debounce:500}" />
+                                                </div>
+                                                   </th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listusersgroup">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{item.GROUP_NAME}}</td>
+                                                <td>{{item.USERNAME}}</td>
+                                                <td data-toggle="modal" style="text-align:center;vertical-align:middle">
+                                                    <div class="form-checkbox">
+                                                        <input ng-hide="Editgroupuser" type="checkbox" ng-model="item.IS_LEADER" ng-disabled="true" />
+                                                        <input ng-show="Editgroupuser" type="checkbox" ng-model="item.IS_LEADER" />
+                                                    </div>
+                                                   
+                                                </td>
+                                                <td>{{item.DATE_CREATE | date : 'dd/MM/yyyy'}}</td>
+                                                <td>{{item.USER_CREATE}}</td>
+                                                <td align="center" style="vertical-align:middle">
+                                                    <button class="btn btn-success" ng-hide="Editgroupuser" ng-click="Editgroupuser = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                    <button class="btn btn-primary" ng-show="Editgroupuser" ng-click="Editgroupuser = false; UpdateUsersGroup(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                    <button ng-show="Editgroupuser" class="btn btn-primary" ng-click="Editgroupuser=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                    <button class="btn btn-danger" ng-show="Editgroupuser" ng-click="Editgroupuser = false; DeleteUsersGroup(item);"><i class="fa fa-trash" style="margin-right:5px"> </i>Xóa</button>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="phan_trang_groupuser" style="float:right;margin:0px !important"></div>
+                            </div>  
+                        </div>
+
+                        <div class="modal fade" id="add_group_user" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                        <h4 class="modal-title">Thêm mới nhân viên vào nhóm</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Tên nhóm</td>
+                                                <td>
+                                                    <input class="form-control" type="text" ng-model="groupname1" ng-change="FindGroup(groupname1)" placeholder="Nhập tên nhóm" ng-focus="showtable_group=true" ng-blur="showtable_group=false" />
+                                                    <input type="text" name="" ng-model="groupid1" style="display:none" />
+                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_group">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover" st-table="GroupCollection" st-safe-src="array_Group_Finded">
+                                                                <thead class="bg-blue text-white">
+                                                                    <tr>
+                                                                        <th>ID</th>
+                                                                        <th>Tên nhóm</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="cursor:pointer" ng-mousedown="SelectGroup(group)" ng-repeat="group in listgroups">
+                                                                        <td>{{group.ID}}</td>
+                                                                        <td>{{group.GROUP_NAME}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th colspan="2">Danh sách Nhân viên</th>
+                                                        </tr>
+                                                        <tr ng-repeat="item in ListUser">
+                                                            <td>
+                                                                <input class="form-control" type="text" name="" ng-change="FindUser(item.FULLNAME)" ng-model="item.FULLNAME" placeholder="Điền tên nhân viên" ng-focus="showUser=true" ng-blur="showUser=false" />
+                                                                <input type="text" name="" ng-model="item.ID" style="display:none" />
+                                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped table-hover" st-table="UserCollection" st-safe-src="array_User_Finded">
+                                                                            <thead class="bg-blue text-white">
+                                                                                <tr>
+                                                                                    <th>ID</th>
+                                                                                    <th>Username</th>
+                                                                                    <th>Họ và tên</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr style="cursor:pointer" ng-mousedown="SelectUser(item,user)" ng-repeat="user in listuser2">
+                                                                                    <td>{{user.ID}}</td>
+                                                                                    <td>{{user.USERNAME}}</td>
+                                                                                    <td>{{user.FULLNAME}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-danger" ng-click="RemoveRow($index)">Xóa</button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" ng-click="AddRow()">
+                                                                Thêm nhân viên
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save"  ng-click="AddGroupUser()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                        <button type="button" class="btn btn-close"  data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--============================END MODAL USERS GROUP=========================================-->
+                        <!--============================MODAL PERMISSION=========================================-->
+                        <div id="tab-6" class="tab-content">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <div class="button-modal col-md-12" style="margin:10px 0">
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#add_permission" ><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                    </div>
+                                    <table cellspacing="0" class="table table-striped table-hover table-bordered fixed" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th style="min-width:60px" class="text-center">Tên quyền</th>
+                                                <th style="min-width:80px" class="text-center">View</th>
+                                                <th style="min-width:100px" class="text-center">Diễn giải</th>
+                                                <th style="min-width:100px" class="text-center">Phòng liên quan</th>
+                                                <th style="min-width:100px" class="text-center">Quyền phụ</th>
+                                                <th class="text-center">Quyền</th>
+                                                <th class="text-center">Ngày tạo</th>
+                                                <th class="text-center">Người tạo</th>
+                                                <th class="text-center" style="min-width:60px">Tác vụ</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th><input type="text" class="form-control" ng-model="permissionname" ng-change="SearchPermission()" placeholder="Tên quyền.." ng-model-options="{debounce:500}" /></th>
+                                                <th><input type="text" class="form-control" ng-model="view" ng-change="SearchPermission()" placeholder="Tên quyền.." ng-model-options="{debounce:500}" /></th>
+                                                <th></th>
+                                                <th><input type="text" class="form-control" ng-model="tag" ng-change="SearchPermission()" placeholder="Tên quyền.." ng-model-options="{debounce:500}" /></th>
+                                                <th><input type="text" class="form-control" ng-model="subpermission" ng-change="SearchPermission()" placeholder="Tên quyền.." ng-model-options="{debounce:500}" /></th>
+                                                <th>
+                                                    <select ng-model="id_permissiontype" ng-change="SearchPermission()" class="form-control">
+                                                        <option value=""></option>
+                                                        <option ng-repeat="item in listpermissiontype" ng-value="{{item.ID}}">
+                                                            {{ item.PERMISSION_TYPE1 }}
+                                                        </option>
+                                                    </select>
+                                                </th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listpermission1">
+                                                <td>{{$index+1}}</td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editpermission">{{item.PERMISSION_NAME}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.PERMISSION_NAME" ng-show="Editpermission" />
+                                                </td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editpermission">{{item.VIEW_APPLY}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.VIEW_APPLY" ng-show="Editpermission" />
+                                                </td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editpermission">{{item.DESCRIPTION}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.DESCRIPTION" ng-show="Editpermission" />
+                                                </td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editpermission">{{item.TAGS}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.TAGS" ng-show="Editpermission" />
+                                                </td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editpermission">{{item.SUB_PERMISSION}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.SUB_PERMISSION" ng-show="Editpermission" />
+                                                </td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editpermission">{{item.PERMISSION_TYPE}}</span>
+                                                    <select ng-model="item.ID_PERMISSION_TYPE" ng-show="Editpermission">
+                                                        <option ng-repeat="item1 in listpermissiontype" ng-value="{{item1.ID}}">
+                                                            {{ item1.PERMISSION_TYPE1 }}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>{{item.DATE_CREATE|date:'dd/MM/yyyy'}}</td>
+                                                <td>{{item.USER_CREATE}}</td>
+                                                <td align="center" style="vertical-align:middle">
+                                                    <button class="btn btn-success" ng-hide="Editpermission" ng-click="Editpermission = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                    <button class="btn btn-primary" ng-show="Editpermission" ng-click="Editpermission = false; UpdatePermission(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                    <button ng-show="Editpermission" class="btn btn-primary" ng-click="Editpermission=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                    <button class="btn btn-danger" ng-show="Editpermission" ng-click="Editpermission = false; DeleteUsersGroup(item);"><i class="fa fa-trash" style="margin-right:5px"></i>Xóa</button>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="phan_trang_permission" style="float:right;margin:0px !important"></div>
+                            </div>  
+                        </div>
+
+                        <div class="modal fade" id="add_permission" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                        <h4 class="modal-title">Thêm mới quyền</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-striped table-hover table-bordered fixed">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>Tên quyền</td>
+                                                            <td><input type="text" ng-model="PERMISSION_NAME" class="form-control" placeholder="Nhập tên quyền.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>View</td>
+                                                            <td><input type="text" ng-model="VIEW_APPLY" class="form-control" placeholder="Nhập view.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Diễn giải</td>
+                                                            <td><input type="text" ng-model="DESCRIPTION" class="form-control" placeholder="Nhập diễn giải.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Phòng liên quan</td>
+                                                            <td><input type="text" ng-model="TAGS" class="form-control" placeholder="Nhập các phòng tiên quan.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Quyền phụ</td>
+                                                            <td><input type="text" ng-model="SUB_PERMISSION" class="form-control" placeholder="Quyền phụ.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Quyền được phép</td>
+                                                            <td>
+                                                                <select ng-model="ID_PERMISSION_TYPE" ng-change="SearchPermission()">
+                                                                    <option ng-repeat="item in listpermissiontype" ng-value="{{item.ID}}">
+                                                                        {{ item.PERMISSION_TYPE1 }}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save"  ng-click="CreatePermission()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                        <button type="button" class="btn btn-close"  data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--============================END MODAL PERMISSION=========================================-->
+                        <!--============================MODAL PROCESSING DEFAULT=========================================-->
+                        <div id="tab-4" class="tab-content">
+                            <div class="col-md-12">
+                                <div class="button-modal col-md-12" style="margin:10px 0">
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#add_process_default" s><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                </div>
+                                <table cellspacing="0" class="table table-striped table-hover table-bordered fixed" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="50px" class="text-center">STT</th>
+                                            <th style="min-width:60px" class="text-center">Processing name</th>
+                                            <th class="text-center">Step</th>
+                                            <th style="min-width:80px" class="text-center">Status begin</th>
+                                            <th class="text-center">Tranzition task</th>
+                                            <th class="text-center" style="min-width:100px">Status end</th>
+                                            <th class="text-center">Type default</th>
+                                            <th class="text-center" style="min-width:60px">Tác vụ</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <input class="form-control" type="text" ng-model="processname" ng-change="FindProcessingDefaultName(processname)" placeholder="Nhập tên quy trình" ng-focus="showtable_process=true" ng-blur="showtable_process=false" ng-model-options="{debounce:500}" />
+                                                <input type="text" name="" ng-model="id_process" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_process">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="ProcesingDefaultCollection" st-safe-src="array_Process_Finded">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Tên quy trình</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectProcessingDefaultName(process);SearchProcessingDefault()" ng-repeat="process in listProcessingDefaultName">
+                                                                    <td>{{process.ID}}</td>
+                                                                    <td>{{process.NAME_DEFAULT}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listProcessingDefault">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.NAME_DEFAULT}}</td>
+                                            <td>{{item.STEP}}</td>
+                                            <td data-toggle="modal">
+                                                <span ng-hide="Editprocessingdefault">{{item.STATUS_BEGIN}}</span>
+                                                <input type="text" style="width:100%" class="input-form" ng-model="item.STATUS_BEGIN" ng-show="Editprocessingdefault" />
+                                            </td>
+                                            <td data-toggle="modal">
+                                                <span ng-hide="Editprocessingdefault">{{item.TRANZITION_TASK}}</span>
+                                                <input type="text" style="width:100%" class="input-form" ng-model="item.TRANZITION_TASK" ng-show="Editprocessingdefault" />
+                                            </td>
+                                            <td data-toggle="modal">
+                                                <span ng-hide="Editprocessingdefault">{{item.STATUS_END}}</span>
+                                                <input type="text" style="width:100%" class="input-form" ng-model="item.STATUS_END" ng-show="Editprocessingdefault" />
+                                            </td>
+                                            <td>{{item.TYPE_DEFAULT}}</td>
+                                            <td align="center" style="vertical-align:middle">
+                                                <button class="btn btn-success" ng-hide="Editprocessingdefault" ng-click="Editprocessingdefault = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                <button class="btn btn-primary" ng-show="Editprocessingdefault" ng-click="Editprocessingdefault = false; UpdateProcessingDefault(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                <button ng-show="Editprocessingdefault" class="btn btn-primary" ng-click="Editprocessingdefault=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                <button class="btn btn-danger" ng-show="Editgroupuser" ng-click="Editgroupuser = false; DeleteUsersGroup(item);"><i class="fa fa-trash" style="margin-right:5px"></i>Xóa</button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="phan_trang_processdefault" style="float:right;margin:0px !important"></div>
+                            </div> 
+                        </div>
+                        <div class="modal fade" id="add_process_default" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                        <h4 class="modal-title">Thêm quy trình mới</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Tên quy trình</td>
+                                                <td>
+                                                    <input class="form-control" type="text" ng-model="processname1" ng-change="FindProcessingDefaultName1(processname1)" placeholder="Nhập tên quy trình" ng-focus="showtable_process1=true" ng-blur="showtable_process1=false" ng-model-options="{debounce:500}" />
+                                                    <input type="text" name="" ng-model="id_process_add" style="display:none" />
+                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_process1">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover" st-table="ProcesingDefaultCollection" st-safe-src="array_Process_Finded">
+                                                                <thead class="bg-blue text-white">
+                                                                    <tr>
+                                                                        <th>ID</th>
+                                                                        <th>Tên quy trình</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr style="cursor:pointer" ng-mousedown="SelectProcessingDefaultName1(process1)" ng-repeat="process1 in listProcessingDefaultName1">
+                                                                        <td>{{process1.ID}}</td>
+                                                                        <td>{{process1.NAME_DEFAULT}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><button class="btn" data-toggle="modal" data-target="#add_process_default_name" style="padding:5px !important"><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table table-striped table-hover table-bordered fixed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th colspan="5">Danh sách các bước quy trình</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Step</th>
+                                                                <th>Status begin</th>
+                                                                <th>Tranzition</th>
+                                                                <th>Status end</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in ListStep">
+                                                                <td><input class="form-control" type="text" name="" ng-model="item.STEP" placeholder="Nhập step" /></td>
+                                                                @*<td>
+                                                                    <select>
+                                                                        <option value="1">1</option>
+                                                                        <option value="2">2</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="4">4</option>
+                                                                    </select>
+                                                                </td>*@
+                                                                <td>
+                                                                    <input class="form-control" type="text" name="" ng-model="item.status_begin" ng-change="SearchStatus(item.status_begin)" ng-focus="showtable_statusbegin1=true" ng-blur="showtable_statusbegin1=false" ng-model-options="{debounce:500}" placeholder="Nhập status end" />
+                                                                    <input type="text" name="" ng-model="item.ID_STATUS_BEGIN" style="display:none" />
+                                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_statusbegin1">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table" st-table="StatusCollection1" st-safe-src="array_Status_Finded">
+                                                                                <thead class="bg-blue text-white">
+                                                                                    <tr>
+                                                                                        <th>ID</th>
+                                                                                        <th>Tên status end</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr style="cursor:pointer" ng-mousedown="Selectstatusbegin(item,statusbegin1)" ng-repeat="statusbegin1 in liststatus">
+                                                                                        <td>{{statusbegin1.ID}}</td>
+                                                                                        <td>{{statusbegin1.STATUS_NAME}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><input class="form-control" type="text" name="" ng-model="item.TRANZITION_TASK" placeholder="Nhập tranzition" /></td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" name="" ng-model="item.status_end" ng-change="SearchStatus(item.status_end)" ng-focus="showtable_status1=true" ng-blur="showtable_status1=false" ng-model-options="{debounce:500}" placeholder="Nhập status end" />
+                                                                    <input type="text" name="" ng-model="item.ID_STATUS_END" style="display:none" />
+                                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_status1">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table" st-table="StatusCollection1" st-safe-src="array_Status_Finded">
+                                                                                <thead class="bg-blue text-white">
+                                                                                    <tr>
+                                                                                        <th>ID</th>
+                                                                                        <th>Tên status end</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr style="cursor:pointer" ng-mousedown="Selectstatusend(item,statusend1)" ng-repeat="statusend1 in liststatus">
+                                                                                        <td>{{statusend1.ID}}</td>
+                                                                                        <td>{{statusend1.STATUS_NAME}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-danger" ng-click="RemoveRowStep($index)">Xóa</button>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="5" ng-click="AddRowStep()">Thêm step</td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save"  ng-click="AddProcessingDefault()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                        <button type="button" class="btn btn-close"  data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--===Thêm tên processing default  mới-->
+                        <div class="modal fade" id="add_process_default_name" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thêm quy trình mới</h4>
+                                        <button type="button" class="close" data-dismiss="modal" style="opacity:1;" >&times;</button>
+                                      
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-striped table-hover table-bordered fixed">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>Tên quy trình</td>
+                                                            <td><input type="text" ng-model="processname2" class="form-control" placeholder="Nhập tên quy trình.." /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Loại quy trình</td>
+                                                            <td>
+                                                                <select ng-model="type_default">
+                                                                    <option value="Project">Project</option>
+                                                                    <option value="Task">Task</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save" ng-click="AddProcessingDefaultName()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                        <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--============================END MODAL PROCESSING DEFAULT=========================================-->
+                        <!--============================MODAL STATUS=========================================-->
+                        <div id="tab-7" class="tab-content">
+                            <div class="col-md-12">
+                                <div class="button-modal col-md-12" style="margin:10px 0">
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#add_status" ><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                </div>
+                                <div class="col-md-12">
+                                    <table class="table table-striped table-hover table-bordered fixed">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Status name</th>
+                                                <th>Date create</th>
+                                                <th>User create</th>
+                                                <th>Tác vụ</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th><input type="text" class="form-control" ng-model="statusname" ng-change="SearchStatus(statusname)" placeholder="status name.." ng-model-options="{debounce:500}" /></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in liststatus">
+                                                <td>{{$index+1}}</td>
+                                                <td data-toggle="modal">
+                                                    <span ng-hide="Editstatus">{{item.STATUS_NAME}}</span>
+                                                    <input type="text" style="width:100%" class="input-form" ng-model="item.STATUS_NAME" ng-show="Editstatus" />
+                                                </td>
+                                                <td>{{item.DATE_CREATE | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{item.USER_CREATE}}</td>
+                                                <td align="center" style="vertical-align:middle">
+                                                    <button class="btn btn-success" ng-hide="Editstatus" ng-click="Editstatus = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                    <button class="btn btn-primary" ng-show="Editstatus" ng-click="Editstatus = false; UpdateStatus(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                    <button ng-show="Editstatus" class="btn btn-primary" ng-click="Editstatus=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                  
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="phan_trang_status" style="float:right;margin:0px !important"></div>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="add_status" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                        <h4 class="modal-title">Thêm status</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-striped table-hover table-bordered fixed">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>Tên status</td>
+                                                            <td><input type="text" ng-model="STATUS_NAME" class="form-control" placeholder="Nhập tên status.." /></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-save"  ng-click="AddStatus()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                        <button type="button" class="btn btn-close"  data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--============================END MODAL STATUS=========================================-->
+                        
+                    <!--============================MODAL HR EMPLOYEE=========================================-->
+                    <div id="tab-8" class="tab-content">
+                        <div class="col-md-12">
+                            <div class="button-modal col-md-12" style="margin:10px 0">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#add_hr_employee"><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-striped table-hover table-bordered fixed">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Fullname</th>
+                                            <th>Department</th>
+                                            <th>Avatar</th>
+                                            <th>Zalo</th>
+                                            <th>Phone number</th>
+                                            <th>Mail</th>
+                                            <th>Birthday</th>
+                                            <th>Date in</th>
+                                            <th>Date out</th>
+                                            <th>Date create</th>
+                                            <th>User create</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <input type="text" class="form-control" ng-model="fullnamehr_find" ng-change="FindUser(fullnamehr_find);" placeholder="Nhập họ tên.." ng-focus="showUserhr_find=true" ng-blur="showUserhr_find=false" ng-model-options="{debounce:500}" />
+                                                <input type="text" name="" ng-model="useridhr_find" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUserhr_find && fullnamehr_find!='' && fullnamehr_find!=null">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="UserCollection1" st-safe-src="array_User_Finded1">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Username</th>
+                                                                    <th>Họ và tên</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectUser_hr(user);SearchHR_Employee(user.ID);" ng-repeat="user in listuser2">
+                                                                    <td>{{user.ID}}</td>
+                                                                    <td>{{user.USERNAME}}</td>
+                                                                    <td>{{user.FULLNAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listshremp">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.FULLNAME}}</td>
+                                            <td>{{item.DEPARTMENT_NAME}}</td>
+                                            @*<td>{{item.AVATAR}}</td>*@
+                                            <td>
+                                                <img id="blah_view" src="~/Content/images/Avatar/{{item.AVATAR}}" height="120" width="120" />
+                                                @*<img id="blah_view" src="http://sales.hoplong.com/Content/Images/Avatar/{{item.AVATAR}}" height="120" width="120" />*@
+                                            </td>
+                                            <td>{{item.ZALO}}</td>
+                                            <td>{{item.NUMBER_PHONE}}</td>
+                                            <td>{{item.PERSONAL_EMAIL}}</td>
+                                            <td>{{item.BIRTH_DAY | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{item.DATE_IN | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{item.DATE_OUT | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{item.DATE_CREATE | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{item.USER_CREATE_NAME}}</td>
+                                            <td align="center" style="vertical-align:middle">
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#update_hr_employee" ng-click="get_detail_hremp(item)" ><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="phan_trang_hremp" style="float:right;margin:0px !important"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="add_hr_employee" role="dialog">
+                        <div class="modal-dialog" style="max-width:50%">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Tạo mới thông tin nhân viên</h4>
+                                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                                   
+                                </div>                                
+                                <div class="modal-body">
+                                    <fieldset class="col-md-12" >
+                                        <legend>Ảnh đại diện</legend>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-body col-md-12">
+                                                <form class="form-horizontal" action="/Home/Upload" method="post" enctype="multipart/form-data">
+                                                    <div class="col-md-3 ">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="file" name="files" id="imgInp" />
+                                                        <img id="blah" src="#" height="250" width="400" style="margin-bottom:20px" />
+                                                    </div>
+                                                       
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Chọn tên nhân viên</label>
+                                                                <div class="col-md-9">
+                                                                    <input class="form-control" type="text" name="" ng-model="fullname_hr" ng-change="FindUser(fullname_hr)" placeholder="Điền tên nhân viên" ng-focus="showUserhr=true" ng-blur="showUserhr=false" ng-model-options="{debounce:500}" />
+                                                                    <input type="text" name="" ng-model="userid_hr" style="display:none" />
+                                                                    <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUserhr && fullname_hr!='' && fullname_hr!=null">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-hover" st-table="UserCollection1" st-safe-src="array_User_Finded1">
+                                                                                <thead class="bg-blue text-white">
+                                                                                    <tr>
+                                                                                        <th>ID</th>
+                                                                                        <th>Username</th>
+                                                                                        <th>Họ và tên</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr style="cursor:pointer" ng-mousedown="SelectUser_hr(user);Getdept(user.ID);" ng-repeat="user in listuser2">
+                                                                                        <td>{{user.ID}}</td>
+                                                                                        <td>{{user.USERNAME}}</td>
+                                                                                        <td>{{user.FULLNAME}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Phòng ban</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="deptname_hr" class="form-control" placeholder="" ng-disabled="true" />
+                                                                    <input type="text" ng-model="deptid_hr" class="form-control" style="display:none" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Zalo</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="ZALO" class="form-control" placeholder="Nhập tài khoản zalo.." />
+                                                                </div>
+                                                            </div><div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Số điện thoại</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="NUMBER_PHONE" class="form-control" placeholder="Nhập số điện thoại.." />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Email</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="PERSONAL_EMAIL" class="form-control" placeholder="Nhập email.." />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Birthday</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="BIRTH_DAY" class="form-control" placeholder="Nhập ngày sinh.." />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Ngày Vào Làm</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="DATE_IN" class="form-control" placeholder="Nhập ngày vào công ty.." />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3" style="text-align:left">Ngày Nghỉ Việc</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" ng-model="DATE_OUT" class="form-control" placeholder="Nhập ngày nghỉ việc.." />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12" style="margin-top: 20px;text-align:right">
+                                                            <input type="submit" class="btn btn-default" value="Lưu" ng-click="AddHR_Employee()" style="background: #1191BF; color:#fff;" />
+                                                            <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                                        </div>
+
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button type="button" class="btn btn-save" ng-click="AddStatus()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                    <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="update_hr_employee" role="dialog">
+                        <div class="modal-dialog" style="max-width:50%">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Cập nhật thông tin nhân viên</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <fieldset class="col-md-12">
+                                        <legend>Ảnh đại diện</legend>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-body col-md-12">
+                                                <form class="form-horizontal" action="/Home/Upload_update" method="post" enctype="multipart/form-data">
+                                                    <div class="col-md-3 ">
+                                                        @Html.AntiForgeryToken()
+
+                                                        <input type="file" name="files_update" id="imgInp_update" />
+                                                        @*<img id="blah_update" src="http://sales.hoplong.com/Content/Images/Avatar/{{details.AVATAR}}" height="250" width="400" style="margin-bottom:20px" />*@
+                                                        @*<img id="blah_update" src="#" height="250" width="400" style="margin-bottom:20px" />*@
+                                                        <img id="blah_view" src="~/Content/images/Avatar/{{details.AVATAR}}" height="120" width="120" />
+                                                        @*<input type="submit" value="Gửi ảnh lên server" style="margin-top: 30px;" />*@
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Họ và tên</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.FULLNAME" class="form-control" placeholder="" ng-disabled="true" />
+                                                                <input type="text" name="" ng-model="details.ID_USER" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Phòng ban</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.DEPARTMENT_NAME" class="form-control" placeholder="" ng-disabled="true" />
+                                                                <input type="text" ng-model="details.ID_DEPARTMENT" class="form-control" style="display:none" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Zalo</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.ZALO" class="form-control" placeholder="Nhập tài khoản zalo.." />
+                                                            </div>
+                                                        </div><div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Số điện thoại</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.NUMBER_PHONE" class="form-control" placeholder="Nhập số điện thoại.." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Email</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.PERSONAL_EMAIL" class="form-control" placeholder="Nhập email.." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Birthday</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.BIRTH_DAY | date:'dd/MM/yyyy'" class="form-control" placeholder="Nhập ngày sinh.." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Ngày Vào Làm</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.DATE_IN | date:'dd/MM/yyyy'" class="form-control" placeholder="Nhập ngày vào công ty.." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" style="text-align:left">Ngày Nghỉ Việc</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" ng-model="details.DATE_OUT | date:'dd/MM/yyyy'" class="form-control" placeholder="Nhập ngày nghỉ việc.." />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12" style="margin-top: 20px;text-align:right">
+                                                        <input type="submit" class="btn btn-default" value="Lưu" ng-click="Update_hr_emp(details)" style="background: #1191BF; color:#fff;" />
+                                                        <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button type="button" class="btn btn-save" ng-click="AddStatus()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                        <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--============================END MODAL HR EMPLOYEE=========================================-->
+
+                    <!--============================MODAL PERMISSION USERS GROUP=========================================-->
+                    <div id="tab-9" class="tab-content">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <div class="button-modal col-md-12" style="margin:10px 0">
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#add_permission_group_user"><i class="fa fa-plus" style="margin-right:5px;"></i>Thêm Mới</button>
+                                </div>
+                                <table cellspacing="0" class="table table-striped table-hover table-bordered fixed" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th style="min-width:60px" class="text-center">Permission name</th>
+                                            <th style="min-width:80px" class="text-center">Group name</th>
+                                            <th style="min-width:100px" class="text-center">User name</th>
+                                            <th class="text-center">Permission type</th>
+                                            <th class="text-center">User create</th>
+                                            <th class="text-center">Date create</th>
+                                            <th class="text-center" style="min-width:60px"></th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <input type="text" class="form-control" ng-model="permission_name" ng-change="FindPermission(permission_name)" placeholder="Permission name.." ng-focus="showPermission2=true" ng-blur="showPermission2=false" ng-model-options="{debounce:500}" />
+                                                <input type="text" ng-model="permissionid" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showPermission2">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="PermissionCollection2" st-safe-src="array_Per_Finded2">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Permission name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectPermission(per);SearchPermissionUserGroup()" ng-repeat="per in listpermission1">
+                                                                    <td>{{per.ID}}</td>
+                                                                    <td>{{per.PERMISSION_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <input type="text" class="form-control" ng-model="groupname2" ng-change="FindGroup(groupname2)" placeholder="Tên nhóm.." ng-focus="showGroup2=true" ng-blur="showGroup2=false" ng-model-options="{debounce:500}" />
+                                                <input type="text" ng-model="groupid" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showGroup2 && groupname2!=null && groupname2!=''">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="GroupCollection2" st-safe-src="array_Group_Finded2">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Tên nhóm</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectGroup2(group);SearchPermissionUserGroup()" ng-repeat="group in listgroups">
+                                                                    <td>{{group.ID}}</td>
+                                                                    <td>{{group.GROUP_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <input class="form-control" type="text" name="" ng-model="fullname1" ng-change="FindUser(fullname1)" placeholder="Điền tên nhân viên" ng-focus="showUser1=true" ng-blur="showUser1=false" ng-model-options="{debounce:500}" />
+                                                <input type="text" name="" ng-model="userid" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser1 && fullname1!='' && fullname1!=null">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="UserCollection1" st-safe-src="array_User_Finded1">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Username</th>
+                                                                    <th>Họ và tên</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectUser1(user);SearchPermissionUserGroup()" ng-repeat="user in listuser2">
+                                                                    <td>{{user.ID}}</td>
+                                                                    <td>{{user.USERNAME}}</td>
+                                                                    <td>{{user.FULLNAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <select ng-model="permissiontpyeid" ng-change="SearchPermissionUserGroup()" class="form-control">
+                                                    <option value=""></option>
+                                                    <option ng-repeat="item in listpermissiontype" ng-value="{{item.ID}}">
+                                                        {{ item.PERMISSION_TYPE1 }}
+                                                    </option>
+                                                </select>
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listperusersgroup">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{item.PERMISSION_NAME}}</td>
+                                            <td>{{item.GROUP_NAME}}</td>
+                                            <td>{{item.ID_USER_NAME}}</td>
+                                            <td data-toggle="modal">{{item.PERMISSION_TYPE}}                                                
+                                            </td>
+                                            <td>{{item.USER_CREATE_NAME}}</td>
+                                            <td>{{item.DATE_CREATE | date : 'dd/MM/yyyy'}}</td>
+                                            <td align="center" style="vertical-align:middle">
+                                                <button class="btn btn-success" ng-hide="Editgroupuserper" ng-click="Editgroupuserper = true; sua(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Sửa</button>
+                                                <button class="btn btn-primary" ng-show="Editgroupuserper" ng-click="Editgroupuserper = false; UpdateUsersGroup(item);"><i class="fa fa-save" style="margin-right:5px"></i>Lưu</button>
+                                                <button ng-show="Editgroupuserper" class="btn btn-primary" ng-click="Editgroupuserper=false"><i class="fa fa-times-circle" style="margin-right:5px"></i>Hủy</button>
+                                                <button class="btn btn-danger" ng-show="Editgroupuserper" ng-click="Editgroupuserper = false; DeleteUsersGroup(item);"><i class="fa fa-trash" style="margin-right:5px"> </i>Xóa</button>
+
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="phan_trang_pergroupuser" style="float:right;margin:0px !important"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="add_permission_group_user" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                    <h4 class="modal-title">Thêm mới nhân viên vào nhóm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Tên permission</td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="permission_name_add" ng-change="FindPermission(permission_name_add)" placeholder="Input permission" ng-focus="showtable_permission4=true" ng-blur="showtable_permission4=false" />
+                                                <input type="text" name="" ng-model="permissiontype_id_add" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_permission4">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="GroupCollection" st-safe-src="array_Group_Finded">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Tên nhóm</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectPermission_add(per);" ng-repeat="per in listpermission1">
+                                                                    <td>{{per.ID}}</td>
+                                                                    <td>{{per.PERMISSION_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th colspan="2">Danh sách nhóm</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item2 in ListGroup">
+                                                        <td>
+                                                            <input class="form-control" type="text" name="" ng-change="FindGroup(item2.GROUP_NAME)" ng-model="item2.GROUP_NAME" placeholder="Điền tên nhóm" ng-focus="showGroupPer=true" ng-blur="showGroupPer=false" />
+                                                            <input type="text" name="" ng-model="item2.ID" style="display:none" />
+                                                            <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showGroupPer">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" st-table="GroupPerCollection" st-safe-src="array_GroupPer_Finded">
+                                                                        <thead class="bg-blue text-white">
+                                                                            <tr>
+                                                                                <th>ID</th>
+                                                                                <th>Group name</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr style="cursor:pointer" ng-mousedown="SelectGroup_Add_Per(item2,group)" ng-repeat="group in listgroups">
+                                                                                <td>{{group.ID}}</td>
+                                                                                <td>{{group.GROUP_NAME}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger" ng-click="RemoveRow_Group($index)">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" ng-click="AddRow_Group()">
+                                                            Thêm nhóm
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th colspan="2">Danh sách Nhân viên</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item in ListUser">
+                                                        <td>
+                                                            <input class="form-control" type="text" name="" ng-change="FindUser(item.FULLNAME)" ng-model="item.FULLNAME" placeholder="Điền tên nhân viên" ng-focus="showUser=true" ng-blur="showUser=false" />
+                                                            <input type="text" name="" ng-model="item.ID" style="display:none" />
+                                                            <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" st-table="UserCollection" st-safe-src="array_User_Finded">
+                                                                        <thead class="bg-blue text-white">
+                                                                            <tr>
+                                                                                <th>ID</th>
+                                                                                <th>Username</th>
+                                                                                <th>Họ và tên</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr style="cursor:pointer" ng-mousedown="SelectUser(item,user)" ng-repeat="user in listuser2">
+                                                                                <td>{{user.ID}}</td>
+                                                                                <td>{{user.USERNAME}}</td>
+                                                                                <td>{{user.FULLNAME}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger" ng-click="RemoveRow($index)">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" ng-click="AddRow()">
+                                                            Thêm nhân viên
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-save" ng-click="AddPermissionUserGroup()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                    <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--============================END MODAL PERMISSION USERS GROUP=========================================-->
+
+                    <!--============================MODAL GROUP - USERS GROUP=========================================-->
+                    <div id="tab-10" class="tab-content">
+                        <div class="col-md-12">
+                            <div class="button-modal col-md-12" style="margin:10px 0">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#add_group_usergroup_new"><i class="fa fa-plus" style="margin-right:5px;"></i>Add Group</button>
+                            </div>
+                            <div class="content-wrapper">
+                                <table cellspacing="0" class="table table-striped table-hover table-bordered fixed" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>Sub Group</th>
+                                            <th>Employee</th>
+                                            <th>Manager</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">
+                                                <input class="form-control" type="text" ng-model="groupname_find" ng-change="FindGroup(groupname_find)" placeholder="Chọn nhóm .." ng-focus="showtable_group_find=true" ng-blur="showtable_group_find=false" />
+                                                <input type="text" name="" ng-model="groupid" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_group_find">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="GroupCollectionPa" st-safe-src="array_Group_Finded_pa">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Tên nhóm</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectGroup_Find(group);LoadListGroup_GroupUser();" ng-repeat="group in listgroups">
+                                                                    <td>{{group.ID}}</td>
+                                                                    <td>{{group.GROUP_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th colspan="2">
+                                                <input class="form-control" type="text" name="" ng-change="FindUser(username_find)" ng-model="username_find" placeholder="Chọn manager.." ng-focus="showUser8=true" ng-blur="showUser8=false" />
+                                                <input type="text" name="" ng-model="userid" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser8">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="UserCollection8" st-safe-src="array_User_Finded8">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Username</th>
+                                                                    <th>Họ và tên</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectUser_gru(user);LoadListGroup_GroupUser();" ng-repeat="user in listuser2">
+                                                                    <td>{{user.ID}}</td>
+                                                                    <td>{{user.USERNAME}}</td>
+                                                                    <td>{{user.FULLNAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat-start="item in listgru" ng-if="$first || item.GROUP_NAME != listgru[$index-1].GROUP_NAME">
+                                            <td colspan="3" class="text-left" ng-show="item.GROUP_NAME!=''">
+                                                <span>{{item.GROUP_NAME}}</span>
+                                            </td>    
+                                            <td ng-show="item.GROUP_NAME!=''"> {{item.MANAGER_NAME}}</td>                                        
+                                            <td ng-show="item.GROUP_NAME!=''">
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#add_user_into_group" ng-click="SelectGroupAddUser(item);"><i class="fa fa-plus" style="margin-right:5px;"></i>Add User</button>
+                                                <button class="btn btn-success" ng-show="item.MANAGER_ID!=''" data-toggle="modal" data-target="#update_group_user_group" ng-click="LoadDetailGroup(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Edit Group</button>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat-end >
+                                            <td></td>
+                                            <td><span ng-show="item.SUB_GROUP != listgru[$index-1].SUB_GROUP">{{item.SUB_GROUP}}</span></td>
+                                            <td>{{item.FULLNAME}}</td>
+                                            <td>
+                                                <span ng-show="item.MANAGER_ID!='' && item.SUB_GROUP !='' && item.SUB_GROUP != listgru[$index-1].SUB_GROUP ">{{item.MANAGER_NAME}}</span>                                                                                               
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-info" ng-show="item.MANAGER_ID!='' && item.SUB_GROUP !='' && item.SUB_GROUP != listgru[$index-1].SUB_GROUP " data-toggle="modal" ng-click="SelectGroupAddUser(item);" data-target="#add_user_into_group"><i class="fa fa-plus" style="margin-right:5px;"></i>Add User</button>                                                
+                                                
+                                                <button class="btn btn-success" ng-show="item.MANAGER_ID!='' && item.MANAGER_ID != listgru[$index-1].MANAGER_ID && item.SUB_GROUP !=''" data-toggle="modal" data-target="#update_group_user_group" ng-click="LoadDetailGroup(item)"><i class="fa fa-edit" style="margin-right:5px"></i>Edit Group</button>
+                                                <button class="btn btn-danger" ng-show="item.ID!=''" ng-click="DeleteUsersGroup(item);LoadListGroup_GroupUser();"><i class="fa fa-trash" style="margin-right:5px"> </i>Xóa User</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="add_user_into_group" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                    <h4 class="modal-title">Thêm mới nhân viên vào nhóm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Tên nhóm</td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-disabled="true" ng-model="groupname_selected"/>
+                                                <input type="text" name="" ng-model="ID_GROUP" style="display:none" />                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th colspan="2">Danh sách Nhân viên</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item in ListUser">
+                                                        <td>
+                                                            <input class="form-control" type="text" name="" ng-change="FindUser(item.FULLNAME)" ng-model="item.FULLNAME" placeholder="Điền tên nhân viên" ng-focus="showUser=true" ng-blur="showUser=false" />
+                                                            <input type="text" name="" ng-model="item.ID" style="display:none" />
+                                                            <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" st-table="UserCollection" st-safe-src="array_User_Finded">
+                                                                        <thead class="bg-blue text-white">
+                                                                            <tr>
+                                                                                <th>ID</th>
+                                                                                <th>Username</th>
+                                                                                <th>Họ và tên</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr style="cursor:pointer" ng-mousedown="SelectUser(item,user)" ng-repeat="user in listuser2">
+                                                                                <td>{{user.ID}}</td>
+                                                                                <td>{{user.USERNAME}}</td>
+                                                                                <td>{{user.FULLNAME}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger" ng-click="RemoveRow($index)">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" ng-click="AddRow()">
+                                                            Thêm nhân viên
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-save" ng-click="AddGroupUser2()"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                    <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="add_group_usergroup_new" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                    <h4 class="modal-title">Thêm mới nhân viên vào nhóm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td><span>Group name</span><span style="color:red">*</span></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="groupname_add" placeholder="Nhập tên nhóm."/>
+                                                <input type="text" name="" ng-model="groupid_add" style="display:none" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description</td>
+                                            <td><input type="text" ng-model="DESCRIPTION" class="form-control" placeholder="Nhập diễn giải.." /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Dept</span><span style="color:red">*</span></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="deptname" ng-change="Find_Dept(deptname)" placeholder="Nhập phòng ban.." ng-focus="showtable_dept=true" ng-blur="showtable_dept=false" />
+                                                <input type="text" name="" ng-model="ID_DEPARTMENT" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_dept">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="DeptCollection" st-safe-src="array_Dept_Finded">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>DEPT NAME</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectDept(dept)" ng-repeat="dept in list_dept_find">
+                                                                    <td>{{dept.ID}}</td>
+                                                                    <td>{{dept.DEPARTMENT_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Purpose</td>
+                                            <td><input type="text" ng-model="PURPOSE" class="form-control" placeholder="Nhập mục đích.." /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Manager</span><span style="color:red">*</span></td>
+                                            <td>
+                                                <input class="form-control" type="text" name="" ng-change="FindUser(manager_goup)" ng-model="manager_goup" placeholder="Chọn manager.." ng-focus="showUser7=true" ng-blur="showUser7=false" />
+                                                <input type="text" name="" ng-model="MANAGER_ID" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser7">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="UserCollection7" st-safe-src="array_User_Finded7">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Username</th>
+                                                                    <th>Họ và tên</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectUser_add_gr(user)" ng-repeat="user in listuser2">
+                                                                    <td>{{user.ID}}</td>
+                                                                    <td>{{user.USERNAME}}</td>
+                                                                    <td>{{user.FULLNAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Parrent Group</td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="groupparent_name" ng-change="FindGroup(groupparent_name)" placeholder="Chọn nhóm cha.." ng-focus="showtable_group_parent=true" ng-blur="showtable_group_parent=false" />
+                                                <input type="text" name="" ng-model="PARENT_ID" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_group_parent">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="GroupCollectionPa" st-safe-src="array_Group_Finded_pa">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Tên nhóm</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectGroup_Parent(group)" ng-repeat="group in listgroups">
+                                                                    <td>{{group.ID}}</td>
+                                                                    <td>{{group.GROUP_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th colspan="2">Danh sách Nhân viên</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item in ListUser">
+                                                        <td>
+                                                            <input class="form-control" type="text" name="" ng-change="FindUser(item.FULLNAME)" ng-model="item.FULLNAME" placeholder="Điền tên nhân viên" ng-focus="showUser=true" ng-blur="showUser=false" />
+                                                            <input type="text" name="" ng-model="item.ID" style="display:none" />
+                                                            <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-hover" st-table="UserCollection" st-safe-src="array_User_Finded">
+                                                                        <thead class="bg-blue text-white">
+                                                                            <tr>
+                                                                                <th>ID</th>
+                                                                                <th>Username</th>
+                                                                                <th>Họ và tên</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr style="cursor:pointer" ng-mousedown="SelectUser(item,user)" ng-repeat="user in listuser2">
+                                                                                <td>{{user.ID}}</td>
+                                                                                <td>{{user.USERNAME}}</td>
+                                                                                <td>{{user.FULLNAME}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger" ng-click="RemoveRow($index)">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" ng-click="AddRow()">
+                                                            Thêm nhân viên
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-save" ng-click="AddGroup_UserGroup();"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                    <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="update_group_user_group" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" style="opacity:1;" style="padding:5px !important">&times;</button>
+                                    <h4 class="modal-title">Thêm mới nhân viên vào nhóm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td><span>Group name</span><span style="color:red">*</span></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="GROUP_NAME"  />
+                                                <input type="text" name="" ng-model="ID_GROUP" style="display:none" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description</td>
+                                            <td><input type="text" ng-model="DESCRIPTION" class="form-control" placeholder="Nhập diễn giải.." /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Dept</span><span style="color:red">*</span></td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="deptname" ng-change="Find_Dept(deptname)" placeholder="Nhập phòng ban.." ng-focus="showtable_dept=true" ng-blur="showtable_dept=false" />
+                                                <input type="text" name="" ng-model="ID_DEPARTMENT" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_dept">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="DeptCollection" st-safe-src="array_Dept_Finded">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>DEPT NAME</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectDept(dept)" ng-repeat="dept in list_dept_find">
+                                                                    <td>{{dept.ID}}</td>
+                                                                    <td>{{dept.DEPARTMENT_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Purpose</td>
+                                            <td><input type="text" ng-model="PURPOSE" class="form-control" placeholder="Nhập mục đích.." /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Manager</span><span style="color:red">*</span></td>
+                                            <td>
+                                                <input class="form-control" type="text" name="" ng-change="FindUser(manager_goup)" ng-model="manager_goup" placeholder="Chọn manager.." ng-focus="showUser7=true" ng-blur="showUser7=false" />
+                                                <input type="text" name="" ng-model="MANAGER_ID" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showUser7">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="UserCollection7" st-safe-src="array_User_Finded7">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Username</th>
+                                                                    <th>Họ và tên</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectUser_add_gr(user)" ng-repeat="user in listuser2">
+                                                                    <td>{{user.ID}}</td>
+                                                                    <td>{{user.USERNAME}}</td>
+                                                                    <td>{{user.FULLNAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Parrent Group</td>
+                                            <td>
+                                                <input class="form-control" type="text" ng-model="groupparent_name" ng-change="FindGroup(groupparent_name)" placeholder="Chọn nhóm cha.." ng-focus="showtable_group_parent=true" ng-blur="showtable_group_parent=false" />
+                                                <input type="text" name="" ng-model="PARENT_ID" style="display:none" />
+                                                <div class="" style="display: block;max-height: 400px;overflow:auto;position:absolute" ng-show="showtable_group_parent">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover" st-table="GroupCollectionPa" st-safe-src="array_Group_Finded_pa">
+                                                            <thead class="bg-blue text-white">
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Tên nhóm</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr style="cursor:pointer" ng-mousedown="SelectGroup_Parent(group)" ng-repeat="group in listgroups">
+                                                                    <td>{{group.ID}}</td>
+                                                                    <td>{{group.GROUP_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                                                                
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-save" ng-click="UpdateGroup2();"><i class="fa fa-save" style="margin-right:5px"></i> Lưu</button>
+                                    <button type="button" class="btn btn-close" data-dismiss="modal"><i class="fa fa-close" style="margin-right:5px"></i> Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--============================END MODAL GROUP - USERS GROUP=========================================-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+       
+
+    <script>
+        $(document).ready(function () {
+
+            $('ul.tabs li').click(function () {
+                var tab_id = $(this).attr('data-tab');
+
+                $('ul.tabs li').removeClass('current');
+                $('.tab-content').removeClass('current');
+
+                $(this).addClass('current');
+                $("#" + tab_id).addClass('current');
+            })
+
+        })
+    </script>
+    <style>
+        ul.tabs {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+
+            ul.tabs li {
+                background: none;
+                color: #222;
+                display: inline-block;
+                padding: 10px 15px;
+                cursor: pointer;
+            }
+     </style>
+
+<script>
+    function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}//----END SEARCH TABLE PHÒNG BAN
+</script>
+<style>
+ 	ul.tabs{
+		margin: 0px;
+    padding: 0px;
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+    margin-bottom: 10px;
+		}
+		ul.tabs li{
+			background: none;
+			color: #222;
+			display: inline-block;
+			padding: 10px 15px;
+			cursor: pointer;
+		}
+
+		ul.tabs li.current{
+		    background: #ff2424;
+            color: #fff;
+		}
+
+		.tab-content{
+			display: none;
+			background: #ededed;
+			/*padding: 15px;*/
+		}
+
+		.tab-content.current{
+			display: block;
+            width:100%
+		}
+
+
+        td {
+            border-top: 1px solid transparent !important;
+            padding: 0px !important;
+        }
+
+        .ten {
+            width: 16%;
+            display: inline-block;
+        }
+
+        .main_font {
+            font-size: 22px;
+        }
+
+        .sub_font {
+            font-size: 14px;
+        }
+
+        @@media screen and (max-width: 1600px) {
+            .main_font {
+                font-size: 18px;
+            }
+
+            .sub_font {
+                font-size: 12px;
+            }
+        }
+
+        @@media screen and (max-width: 1366px) {
+            .main_font {
+                font-size: 14px;
+            }
+
+            .sub_font {
+                font-size: 11px;
+            }
+        }
+
+        @@media screen and (max-width: 1280px) {
+            .main_font {
+                font-size: 14px;
+            }
+
+            .sub_font {
+                font-size: 10px;
+            }
+        }
+
+        @@media screen and (max-width: 1024px) {
+            .main_font {
+                font-size: 11px;
+            }
+
+            .sub_font {
+                font-size: 8px;
+            }
+        }
+    </style>
+    <style>
+        .machine-name__text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 3.5vmin;
+            text-align: center;
+            white-space: nowrap;
+            height: 11%;
+        }
+
+        .info-machine__card-panel {
+            background: rgba(0,0,0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 89%;
+        }
+
+        .current-state__panel {
+            display: flex;
+            align-items: center;
+            font-size: 2.4vmin;
+            font-weight: bold;
+            height: 10%;
+            padding: 0px 10px 0px 10px;
+        }
+
+        .uptime-progress__panel {
+            padding-top: 5%;
+            height: 32%;
+        }
+
+        .information-time__panel {
+            display: flex;
+            font-size: 2.2vmin;
+            width: 100%;
+            padding: 0px 10px 0px 10px;
+            line-height: 3.4vmin;
+            height: 9%;
+            white-space: nowrap;
+            margin: 10px 0px;
+        }
+
+        .current-state-time__text {
+            flex: 1;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .uptime-percentage__panel {
+            display: flex;
+            justify-content: center;
+            height: 50%;
+        }
+
+        .Availability__text {
+            text-align: center;
+            font-size: 2vmin;
+            color: rgba(255, 255, 255, 0.3);
+            height: 28%;
+        }
+
+        .uptime-progress-bar__panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 5px;
+        }
+
+        .uptime-progress__bar {
+            width: 50%;
+            background: grey;
+            height: 100%;
+            border-radius: 9px;
+            overflow: hidden;
+        }
+
+        .uptime-progress__width {
+            background: rgba(1, 150, 240, 0.8);
+            color: black;
+            height: 100%;
+        }
+
+        .information__text {
+            text-transform: capitalize;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .information-time__text {
+            flex: 1;
+            text-align: right;
+            color: #ffffff;
+        }
+
+        .uptime-percentage-number__text {
+            font-size: 5.5vmin;
+            line-height: 5.5vmin;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .uptime-percentage__text {
+            font-size: 2vmin;
+            line-height: 2vmin;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 3% 0px 0px 1%;
+        }
+
+        .unit-info__text {
+            height: 100%;
+            font-size: 2.2vmin;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-alarm {
+            margin: 0 auto;
+            transform: translate(3%, 20px);
+            display: inline-block;
+        }
+
+        .production-info__text {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1.8vmin;
+            color: rgba(255, 255, 255, 0.3);
+            height: 10%;
+            padding: 0px 10px 0px 10px;
+        }
+    </style>
+    <style>
+        .btn-page {
+            background-color: transparent;
+            background-image: url('../../Content/images/Page.png');
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            cursor: pointer;
+            margin: 0 5px 0px 15px;
+        }
+
+        .btn-page-focus {
+            background-color: transparent;
+            background-image: url('../../Content/images/PageFocus.png');
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            cursor: pointer;
+            margin: 0 5px 0px 15px;
+        }
+
+        .btn-pause {
+            background-color: transparent;
+            background-image: url('../../Content/images/Pause.png');
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            cursor: pointer;
+            margin: 0 5px 0px 25px;
+        }
+
+        .btn-play {
+            background-color: transparent;
+            background-image: url('../../Content/images/Play.png');
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            cursor: pointer;
+            margin: 0 5px 0px 25px;
+        }
+                #oee_variable td {
+            line-height: 2.5;
+            padding-left: 10px !important;
+            border-top: 2px solid black !important;
+            background-color: #343a40;
+        }
+        .fade {
+            opacity:1;
+        }
+        .input-form-search .form-control-feedback {
+            color: white;
+            right: 0;
+            background: #18af24;
+            vertical-align: middle;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        table thead tr th {
+            background-color: #5482b5;
+            color: white;
+        }
+    .form-checkbox input[type=checkbox] {
+        outline:none;
+        border: none !important;
+        margin: 0;
+        background-color: #DDD;
+        border-radius: 2px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        /* margin: 2px 0 0 5px; */
+        width: 20px;
+        height: 20px;
+        position: relative;
+    }
+    fieldset[disabled] .form-checkbox input[type=checkbox], fieldset[disabled] .form-checkbox input[type=radio], .form-checkbox input[type=checkbox].disabled, .form-checkbox input[type=checkbox][disabled], .form-checkbox input[type=radio].disabled, .form-checkbox input[type=radio][disabled] {
+        background-color: #EEE;
+        cursor: not-allowed;
+    }
+
+    .form-checkbox input[type=checkbox]:checked {
+        background-color: #409fd6;
+        background: #409fd6 url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 5px 5px no-repeat;
+    }
+    </style>

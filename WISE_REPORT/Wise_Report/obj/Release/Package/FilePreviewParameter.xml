@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="https://wiseiot.hoplongtech.com/" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\SUMIDA\\SUMIDA\\SmartOKRs\\SmartOKRs\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\SUMIDA\\SUMIDA\\SmartOKRs\\SmartOKRs\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=118-27-193-183\SQLEXPRESS;Initial Catalog=SUMIDA;User ID=sa;Password=Hoplong6688" tags="" />
+  <parameter name="SmartOKRsEntities-Web.config Connection String" description="" value="Data Source=118-27-193-183\SQLEXPRESS;Initial Catalog=SUMIDA;User ID=sa;Password=Hoplong6688" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\SUMIDA\\SUMIDA\\SmartOKRs\\SmartOKRs\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SmartOKRsEntities']/@connectionString" />
+  </parameter>
+  <parameter name="ProjectManagements-Web.config Connection String" description="" value="Data Source=118-27-193-183\SQLEXPRESS;Initial Catalog=SUMIDA;User ID=sa;Password=Hoplong6688" tags="" />
+  <parameter name="sqlConString-Web.config Connection String" description="sqlConString Connection String used in web.config by the application to access the database." value="data source=118.27.193.183,1433;initial catalog=SUMIDA;user id=sa;password=Hoplong6688;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\SUMIDA\\SUMIDA\\SmartOKRs\\SmartOKRs\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='sqlConString']/@connectionString" />
+  </parameter>
+</parameters>
