@@ -96,7 +96,7 @@ namespace Wise_Report.Models.BusinessModel
         public int week { get; set; }
         public int quater { get; set; }
 
-
+        public int quaterq { get; set; }
     }
     public class ListThang
     {
