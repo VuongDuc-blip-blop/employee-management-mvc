@@ -7,18 +7,9 @@ using System.Web.Http;
 
 namespace Wise_Report.Api.Setting
 {
-    public class Api_TestController : ApiController
+    public class Api_Test2Controller : ApiController
     {
-        #region Code 1
-        #endregion
-
-        #region Code 2
-        #endregion
-
-        #region Code 3
-        #endregion
-
-        #region Code 4
+        #region hello
         #endregion
     }
 }
