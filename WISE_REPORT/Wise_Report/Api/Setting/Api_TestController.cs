@@ -14,5 +14,8 @@ namespace Wise_Report.Api.Setting
 
         #region Code 2
         #endregion
+
+        #region Code 3
+        #endregion
     }
 }
