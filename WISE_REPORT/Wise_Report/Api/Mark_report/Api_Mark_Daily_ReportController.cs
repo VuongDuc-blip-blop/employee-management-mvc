@@ -1003,5 +1003,25 @@ namespace Wise_Report.Api.Mark_report
             db.Dispose();
             return Ok(result);
         }
+        [HttpPost]
+        [Route("api/Api_Mark_Daily_Report/DetaiWarrantyReport")]
+        public IHttpActionResult DetaiWarrantyReport1(ThamSo thamso)
+        {
+            var query = db.Database.SqlQuery<Proc_Get_Report_Warranty_Result>("Proc_Get_Report_Warranty @currentuserid,@branch,@month,@year,@tungay,@denngay,@pagenum", new SqlParameter("currentuserid", thamso.currentuserid), new SqlParameter("branch", thamso.branch), new SqlParameter("month", thamso.month), new SqlParameter("year", thamso.year), new SqlParameter("tungay", thamso.tungay), new SqlParameter("denngay", thamso.denngay), new SqlParameter("pagenum", thamso.sotrang));
+            db.Database.CommandTimeout = 600;
+            var result = query.ToList();
+            db.Dispose();
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("api/Api_Mark_Daily_Report/DetaiWarrantyReport")]
+        public IHttpActionResult DetaiWarrantyReport2(ThamSo thamso)
+        {
+            var query = db.Database.SqlQuery<Proc_Get_Report_Warranty_Result>("Proc_Get_Report_Warranty @currentuserid,@branch,@month,@year,@tungay,@denngay,@pagenum", new SqlParameter("currentuserid", thamso.currentuserid), new SqlParameter("branch", thamso.branch), new SqlParameter("month", thamso.month), new SqlParameter("year", thamso.year), new SqlParameter("tungay", thamso.tungay), new SqlParameter("denngay", thamso.denngay), new SqlParameter("pagenum", thamso.sotrang));
+            db.Database.CommandTimeout = 600;
+            var result = query.ToList();
+            db.Dispose();
+            return Ok(result);
+        }
     }
 }

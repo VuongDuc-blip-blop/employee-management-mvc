@@ -97,6 +97,8 @@ namespace Wise_Report.Models.BusinessModel
         public int quater { get; set; }
 
         public int quaterq { get; set; }
+        public int quaterqt { get; set; }
+        public int quaterqtt { get; set; }
     }
     public class ListThang
     {
