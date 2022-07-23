@@ -11,5 +11,8 @@ namespace Wise_Report.Api.Setting
     {
         #region Code chij nef
         #endregion
+
+        #region Code 1
+        #endregion
     }
 }
