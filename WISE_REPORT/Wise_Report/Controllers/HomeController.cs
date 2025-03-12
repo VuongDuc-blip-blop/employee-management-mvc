@@ -13,7 +13,7 @@ namespace Wise_Report.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        SMART_OKRSEntities db = new SMART_OKRSEntities();
+        TestEntities db = new TestEntities();
 
         public ActionResult HomeLayout()
         {
@@ -27,12 +27,16 @@ namespace Wise_Report.Controllers
         {
             return View();
         }
+        public ActionResult Index()
+        {
+            return View();
+        }
         [HttpPost]
-        public ActionResult Login( string username, string password)
+        public ActionResult Login(string username, string password)
         {
             string passwordMD5 = Commons.MD5Hash(password);
-            var user = db.USERS.SingleOrDefault(x => x.USERNAME == username && x.PASSWORD == passwordMD5 && x.IS_ALLOWED==true);
-            if(user != null)
+            var user = db.USERS.SingleOrDefault(x => x.USERNAME == username );
+            if (user != null)
             {
 
                 Session["username"] = user.USERNAME;
@@ -40,7 +44,7 @@ namespace Wise_Report.Controllers
                 Session["userid"] = user.ID;
 
 
-                return RedirectToAction("Mark_daily_report", "MarkettingReport");
+                return RedirectToAction("HomeLayout", "Home");
                 //return RedirectToAction("Dashboard/Index");
             }
             ViewBag.error = "User and Password wrong!!!";
@@ -62,27 +66,7 @@ namespace Wise_Report.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string fullname, string Username, string password)
-        {
-            //string passwordMD5 = Commons.MD5Hash(password);
-            //var user = db.USERS.SingleOrDefault(x => x.USERNAME == Username);
-            //if (user == null)
-            //{
-            //    var admin = new USER()
-            //    {
-            //        Username = Username,
-            //        Password = passwordMD5,
-            //        Fullname = fullname,
-            //        Avatar = "/Content/dist/img/avatar04.png",
-            //        Isadmin = false,
-            //    };
-            //    db.Administrators.Add(admin);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Login");
-            //}
-            //ViewBag.error = "Tài khoản đã có!";
-            return View();
-        }
+      
         
         public ActionResult ChangePassword(string username, string password_old, string password_new, string password_new_confirm)
         {
@@ -106,7 +90,7 @@ namespace Wise_Report.Controllers
                 }
                 else
                 {
-                    var user = db.USERS.SingleOrDefault(x => x.USERNAME == username && x.PASSWORD == passwordMD5_old && x.IS_ALLOWED == true);
+                    var user = db.USERS.SingleOrDefault(x => x.USERNAME == username && x.PASSWORD == passwordMD5_old );
                     if (user != null)
                     {
                         try
