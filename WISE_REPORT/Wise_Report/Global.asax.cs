@@ -15,7 +15,7 @@ namespace Wise_Report
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        string connString = ConfigurationManager.ConnectionStrings["sqlConString"].ConnectionString;
+        //string connString = ConfigurationManager.ConnectionStrings["TestEntities"].ConnectionString;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -27,22 +27,22 @@ namespace Wise_Report
             // Khởi tạo cơ sở dl nếu có sự thay đổi về model
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ProjectManagements>());
             //Database.SetInitializer(new DatabaseInitializer());
-            SqlDependency.Start(connString);
-            System.Data.SqlClient.SqlDependency.Start(connString);
+            //SqlDependency.Start(connString);
+            //System.Data.SqlClient.SqlDependency.Start(connString);
         }
-        protected void Session_Start()
-        {
-            Session["Username"] = null;
-            Session["Fullname"] = null;
-            Session["Isadmin"] = null;
-            Session["Avatar"] = null;
-        }
+        //protected void Session_Start()
+        //{
+        //    Session["Username"] = null;
+        //    Session["Fullname"] = null;
+        //    Session["Isadmin"] = null;
+        //    Session["Avatar"] = null;
+        //}
 
-        protected void Application_End()
-        {
-            //Stop SQL dependency
-            SqlDependency.Stop(connString);
-            System.Data.SqlClient.SqlDependency.Stop(connString);
-        }
+        //protected void Application_End()
+        //{
+        //    //Stop SQL dependency
+        //    SqlDependency.Stop(connString);
+        //    System.Data.SqlClient.SqlDependency.Stop(connString);
+        //}
     }
 }

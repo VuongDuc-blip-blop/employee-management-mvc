@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wise_Report</RootNamespace>
     <AssemblyName>Wise_Report</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -25,6 +25,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.1\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -51,6 +59,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=6.0.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.0.3\lib\net452\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.0.0\lib\net452\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.0.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.0.0\lib\net452\EPPlus.System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -96,11 +113,26 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.11.1\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.11.1\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.11.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="NuGet.Client, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\NuGet.Client.4.2.0\lib\net45\NuGet.Client.dll</HintPath>
       <Private>True</Private>
@@ -141,21 +173,33 @@
       <HintPath>..\packages\NuGet.Versioning.4.2.0\lib\net45\NuGet.Versioning.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.11.1\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -197,6 +241,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -254,11 +299,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Mark_report\Api_Mark_Daily_ReportController.cs" />
+    <Compile Include="Api\Setting\Api_UserController.cs" />
     <Compile Include="Api\Setting\Api_DepartmentsController.cs" />
-    <Compile Include="Api\Setting\Api_Groups_UsersController.cs" />
-    <Compile Include="Api\Setting\Api_PermissionController.cs" />
-    <Compile Include="Api\Setting\Api_UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -267,9 +309,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarkettingReportController.cs" />
-    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\Wise_ReportController.cs" />
-    <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -284,401 +324,23 @@
     <Compile Include="Models\BusinessModel\ProjectManagements.cs" />
     <Compile Include="Models\BusinessModel\ThamSo.cs" />
     <Compile Include="Models\BusinessModel\XuLyNgayThang.cs" />
-    <Compile Include="Models\DataModel\BRANCH.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\COMMENT.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\DEPARTMENT.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\GROUP.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\GROUPS_USERS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\GROUPS_USERS_DELETED.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\HISTORY_DAILY_TASK_PROGRESS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\HR_EMPLOYEE.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\HR_JOB_POSITION.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\List_Meeting_Rooms_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\LOG_GROUPS_ACTIONS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\LOG_GROUPS_USERS_ACTIONS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\LOG_USER_ACTIONS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\LOG_VIEWS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\MARK_REPORT_DAILY.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\MEETING_ROOMS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\NOTIFICATION.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PERMISSION_DETAIL.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PERMISSION_LIST.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PERMISSION_TYPE.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PERMISSION_USERS_GROUP.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Daily_Progress_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Details_Target_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Details_Target_Taskid_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Details_Task_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_FilterWork_List_Projects_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_FilterWork_List_Target_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_FilterWork_List_Tasks_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Filter_Target_ByProject_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Filter_Task_ByProject_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Filter_Task_ByTarget_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_GetAll_List_tasks_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_Report_Header_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_Report_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_Report_Sale_Performent_Plan_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_Report_Sale_Performent_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_Report_Warranty_All_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_Report_Warranty_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_User_Hierarchy_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Get_User_Subordinate_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_listProject_user_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_ListTargets_Project_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Departments01_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Departments_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Groups_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_GroupUsers_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Group_UserGroup_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Group_WorkLogs_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_HR_Employee_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Mark_Daily_Report_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Meeting_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Notification01_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Notification_NotRead_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Notification_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Permission01_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Permission_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Permission_UsersGroup_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Permission_Users_Group_old_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Projects_Data_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Projects_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Projects_UserViewer_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Project_Scheduler_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Report_Comment_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Report_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Targets_Tasks_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_ToDoList_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Users_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_Users_WithPermission_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_List_User_View_Report_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Target_Recheck_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Target_Work_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Missed_ByTargetID_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Missed_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Notyetstart_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Onprogress_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Overdue_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Recheck_ByTargetID_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Recheck_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Work_By_TargetID_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_List_Tasks_Work_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_My_WorkLog_Report_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Project_Gantt_target_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Project_Gantt_task_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Project_name_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Project_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Report_Daily_progress_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Report_Daily_Task_Detail_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Report_Daily_Task_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_report_task_assignment_by_member_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Sale_Performent_DynamicPivotTable_Month_Result.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Target_Complete_ByDept_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Tasks_by_Target_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Task_GetAllTask_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Task_GetTodolist_By_Task_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Workflow_get_WFDetail_by_ID_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Workflow_get_WFTransition_by_ID_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Workflow_get_WF_by_DEPT_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\Proc_Workflow_List_Data_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PROJECT.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PROJECT_SCHEDULER.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\PROJECT_SCHEDULER_HISTORY.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_CHECK.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_COMMENT.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_CONTENT_2020.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_DAILY_RESULT_WARRANTY.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_DAILY_RESULT_WARRANTY_REVERSE.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_HEADER_MASTER.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\REPORT_SALE_PERFORMENT.cs">
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\SMART_OKRS.Context.cs">
+    <Compile Include="Models\DataModel\Database.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SMART_OKRS.Context.tt</DependentUpon>
+      <DependentUpon>Database.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataModel\SMART_OKRS.cs">
+    <Compile Include="Models\DataModel\Database.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+      <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataModel\SMART_OKRS.Designer.cs">
+    <Compile Include="Models\DataModel\Database.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\sp_helpdiagrams_Result.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\sysdiagram.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\SYSTEM_VIEWS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\TARGET.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\TASK.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\TASK_CHECK_LIST.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\TEMP_USER_POSITION.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\TEMP_WORKFLOW_POSITION.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+      <DependentUpon>Database.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DataModel\USER.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WISE_REPORT.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WISE_REPORT.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WISE_REPORT.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WISE_REPORT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WISE_REPORT.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WORKFLOW.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WORKFLOW_DETAIL.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WORKFLOW_TRANSITION.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModel\WORK_LOGS.cs">
-      <DependentUpon>SMART_OKRS.tt</DependentUpon>
+      <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -896,15 +558,9 @@
     <Content Include="Content\images\Pause.png" />
     <Content Include="Content\images\Play.png" />
     <Content Include="Content\js\app.js" />
-    <Content Include="Content\js\ChartCtrl.js" />
-    <Content Include="Content\js\DailyChartCtrl.js" />
-    <Content Include="Content\js\ListOEECtrl.js" />
     <Content Include="Content\js\LiveBoardCtrl.js" />
     <Content Include="Content\js\Mark_report\Mark_daily_report.js" />
-    <Content Include="Content\js\MonthlyChartCtrl.js" />
-    <Content Include="Content\js\OEEHistoryCtrl.js" />
     <Content Include="Content\js\OverAllCtrl.js" />
-    <Content Include="Content\js\PermisstionUserGroupCtrl.js" />
     <Content Include="Content\js\Projects\Notification.js" />
     <Content Include="Content\js\Projects\Projects.js" />
     <Content Include="Content\js\Projects\Project_Meeting.js" />
@@ -913,15 +569,6 @@
     <Content Include="Content\js\Projects\Tasks.js" />
     <Content Include="Content\js\ReportCtrl.js" />
     <Content Include="Content\js\PatliteCtrl.js" />
-    <Content Include="Content\js\LayoutCtrl.js" />
-    <Content Include="Content\js\QtyChartCtrl.js" />
-    <Content Include="Content\js\SetupPatliteCtrl.js" />
-    <Content Include="Content\js\SetupProductCtrl.js" />
-    <Content Include="Content\js\SetupQuantityBrokenCtrl.js" />
-    <Content Include="Content\js\SetupQuantityTargetCtrl.js" />
-    <Content Include="Content\js\SetupUserCtrl.js" />
-    <Content Include="Content\js\TimelineChartCtrl.js" />
-    <Content Include="Content\js\WeeklyChartCtrl.js" />
     <Content Include="Content\Metro UI.js" />
     <Content Include="Content\modernizr.js" />
     <Content Include="Content\moment.min.js" />
@@ -1094,25 +741,15 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="index.html" />
-    <Content Include="Models\DataModel\SMART_OKRS.Context.tt">
+    <Content Include="Models\DataModel\Database.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
-      <LastGenOutput>SMART_OKRS.Context.cs</LastGenOutput>
+      <DependentUpon>Database.edmx</DependentUpon>
+      <LastGenOutput>Database.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\DataModel\SMART_OKRS.tt">
+    <Content Include="Models\DataModel\Database.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
-      <LastGenOutput>SMART_OKRS.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DataModel\WISE_REPORT.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
-      <LastGenOutput>WISE_REPORT.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\DataModel\WISE_REPORT.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
-      <LastGenOutput>WISE_REPORT.cs</LastGenOutput>
+      <DependentUpon>Database.edmx</DependentUpon>
+      <LastGenOutput>Database.cs</LastGenOutput>
     </Content>
     <Content Include="obj\Release\CSAutoParameterize.parameters.xml" />
     <Content Include="obj\Release\Package\FilePreviewParameter.xml" />
@@ -1412,19 +1049,12 @@
     <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
     <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
-    <EntityDeploy Include="Models\DataModel\SMART_OKRS.edmx">
+    <EntityDeploy Include="Models\DataModel\Database.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SMART_OKRS.Designer.cs</LastGenOutput>
+      <LastGenOutput>Database.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DataModel\SMART_OKRS.edmx.diagram">
-      <DependentUpon>SMART_OKRS.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\DataModel\WISE_REPORT.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WISE_REPORT.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DataModel\WISE_REPORT.edmx.diagram">
-      <DependentUpon>WISE_REPORT.edmx</DependentUpon>
+    <Content Include="Models\DataModel\Database.edmx.diagram">
+      <DependentUpon>Database.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1441,7 +1071,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Views\Home\ViewProject.cshtml" />
     <Content Include="Views\MarkettingReport\Mark_daily_report.cshtml" />
-    <Content Include="Views\Notification\Notifications.cshtml" />
     <None Include="Views\Shared\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config">

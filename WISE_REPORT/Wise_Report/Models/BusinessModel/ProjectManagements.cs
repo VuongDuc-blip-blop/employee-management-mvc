@@ -13,6 +13,6 @@ namespace Wise_Report.Models.BusinessModel
         {
 
         }
-        public DbSet<SMART_OKRSEntities> Administrators { get; set; }
+        public DbSet<TestEntities> Administrators { get; set; }
     }
 }

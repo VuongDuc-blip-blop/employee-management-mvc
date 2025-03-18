@@ -118,49 +118,7 @@ namespace Wise_Report.Models.BusinessModel
         public int ID_PROJECT { get; set; }
         public string BRANCH { get; set; }
     }
-    public class newproject : Proc_List_Projects_Data_Result
-    {
-        public List<Proc_Filter_Target_ByProject_Result> projectTarget { get; set; }
-        public List<Proc_List_Projects_UserViewer_Result> listUserViewProject { get; set; }
-    }
-
-    public class newTarget : Proc_ListTargets_Project_Result
-    {
-        public List<Proc_Filter_Task_ByTarget_Result> targetTask { get; set; }
-    }
-
-    public class WorkFlowFull : WORKFLOW
-    {
-        public List<WF_Detail> listWorkFlowDetail { set; get; }
-        public List<WF_transition> listWorkFlowTransition { set; get; }
-    }
-    public class WF_Detail: Proc_Workflow_get_WFDetail_by_ID_Result
-    {
-        public int? key { get; set; }
-    }
-    public class WF_transition : Proc_Workflow_get_WFTransition_by_ID_Result
-    {
-        public int? from { get; set; }
-        public int? to { get; set; }
-    }
-    public class List_Task : Proc_Task_GetAllTask_Result
-    {
-        public List<Proc_Task_GetTodolist_By_Task_Result> listWFD { set; get; }
-    }
-    
-        public class Gantt_chart : Proc_Project_Gantt_target_Result
-    {
-        public List<Gantt_task> series { set; get; }
-    }
-    public class Gantt_task : Proc_Project_Gantt_task_Result
-    {
-        public string end { set; get; }
-    }
-
-    public class newTarget_project : Proc_ListTargets_Project_Result
-    {
-        public List<Proc_Tasks_by_Target_Result> TaskTarget { get; set; }
-    }
+   
 
 
 }

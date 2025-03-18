@@ -15,7 +15,7 @@ namespace Wise_Report.Controllers
 {
     public class MarkettingReportController : Controller
     {
-        SMART_OKRSEntities db = new SMART_OKRSEntities();
+        TestEntities db = new TestEntities();
         // GET: MarkettingReport
         public ActionResult Index()
         {
@@ -30,7 +30,7 @@ namespace Wise_Report.Controllers
         public ActionResult ExportData(string idheader)
         {
             string headerid = Request["idheader"];
-            var query = db.Database.SqlQuery<Proc_Get_Report_Header_Result>("Proc_Get_Report_Header @headerid", new SqlParameter("headerid", headerid));
+            var query = db.Database.SqlQuery<dynamic>("Proc_Get_Report_Header @headerid", new SqlParameter("headerid", headerid));
             var result = query.ToList();
 
             var gv = new GridView();
