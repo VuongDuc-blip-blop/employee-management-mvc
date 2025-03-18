@@ -21,6 +21,8 @@
     <script src="~/Content/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="~/Content/scripts/jquery.emojis.js"></script>
     <script type="text/javascript" src="~/Content/scripts/jquery.emojipicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/3.5.0/alasql.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
 
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -36,6 +38,15 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
 
+    <script>
+        // Khởi tạo CKEditor
+        CKEDITOR.replace('editor', {
+            toolbar: [
+                ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
+                ['FontSize', 'TextColor', 'BGColor']
+            ]
+        });
+    </script>
 </head>
 <body>
     <div class="container-scroller" ng-controller="ProjectsCtrl" ng-app="myApp">
@@ -43,7 +54,7 @@
         <div>List user{{a}}</div>
         <button class="btn btn-success" data-toggle="modal" data-target="#adduser">Thêm</button>
         <div class="table table-responsive">
-            <table>
+            <table id="xuatexcel" class="table table-hover">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -54,7 +65,7 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <th><input class="form-control"  ng-model="tukhoa1" ng-change="GetListUser()" /></th>
+                        <th><input class="form-control" ng-model="tukhoa1" ng-change="GetListUser()" /></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -81,9 +92,9 @@
                             <input class="form-control" ng-show="sua == true" ng-model="item.PASSWORD" />
                         </td>
                         <td>
-                            <button class="btn btn-warning" ng-click="sua = true"  ng-show="sua == false">Sửa</button>
+                            <button class="btn btn-warning" ng-click="sua = true" ng-show="sua == false">Sửa</button>
                             <button class="btn btn-success" ng-show="sua == true" ng-click="UpdateUser(item)">Lưu</button>
-                            <button class="btn btn-danger"  ng-show="sua == true" ng-click="sua = false" >Hủy</button>
+                            <button class="btn btn-danger" ng-show="sua == true" ng-click="sua = false">Hủy</button>
                             <button class="btn btn-danger" ng-show="sua == false" ng-click="DeleteUser(item)">Xóa</button>
                         </td>
                     </tr>
@@ -91,6 +102,35 @@
             </table>
         </div>
 
+        <div class="col-md-12">
+            <div style="margin-top:10px;padding-top:5px;margin-bottom:10px;" class="col-md-12">
+                <h3>Import dữ liệu</h3>
+                @*<a href="~/Content/Files/mau_import_bao_gia.xlsx" style="color:red; font-weight:bold;font-size:18px">Lấy mẫu</a>*@
+                <textarea id="mail_content" name="mail_content" class="row-fluid" style="min-height: 100px;"></textarea>
+            </div>
+            <div style="padding-left:15px; padding-bottom:10px">
+                <br />
+                <br />
+                <button ng-click="showdata()" class="btn btn-primary" style="float:left;margin-right:10px;">Click</button>
+                <p ng-bind-html="showdatacontent | unsafe" class="showdatacontent"></p>
+                <button type="button" ng-click="helpdata()" class="btn btn-primary">Upload</button>
+                <br />
+            </div>
+        </div>
+
+        <script>
+            if (CKEDITOR.instances['mail_content']) {
+                delete CKEDITOR.instances['mail_content']
+            };
+            CKEDITOR.replace('mail_content', {
+                height: 100
+            });
+            //reference to ckeditor data
+        </script>
+        <div>
+            <button type="button" class="btn btn-success" ng-click="tableToExcel('xuatexcel')">Xuất excel</button>
+            <button type="button" class="btn btn-success" ng-click="XuatExcel(">Xuất excel1 </button>
+        </div>
         <div class="modal fade" id="adduser" role="dialog">
             <div class="modal-dialog" style="max-width:80%">
 
@@ -115,7 +155,7 @@
                             <input type="text" class="form-control" ng-model="newPassword" placeholder="Password" />
                         </div>
 
-                         <button type="button" class="btn btn-success" ng-click="AddUser()" >Thêm</button>
+                        <button type="button" class="btn btn-success" ng-click="AddUser()">Thêm</button>
 
 
                         <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
@@ -123,7 +163,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
 </body>
 
 <style>
