@@ -7,6 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
+using System.Data.SqlClient;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace Wise_Report.Controllers
 {
@@ -14,6 +18,7 @@ namespace Wise_Report.Controllers
     {
         // GET: Home
         TestEntities db = new TestEntities();
+        XuLyNgayThang xlnt = new XuLyNgayThang();
 
         public ActionResult HomeLayout()
         {
@@ -66,8 +71,36 @@ namespace Wise_Report.Controllers
         }
 
         [HttpPost]
-      
-        
+
+        //public ActionResult ExportDeNghiCongTacPhi(string tungay, string denngay, string nguoidenghi)
+        //{
+        //    var username = Session["USERNAME"].ToString(); 
+        //    if (tungay != "" && denngay == "") { 
+        //        var tukhoa = xlnt.Xulydatetime(tungay); 
+        //        var query = db.Database.SqlQuery<dynamic>("Proc_listTongHopGioLamThem_XuatExcel @username,@nhanvien,@tungay,@denngay", 
+        //            new SqlParameter("username", username), 
+        //            new SqlParameter("nhanvien", nguoidenghi), 
+        //            new SqlParameter("tungay", tukhoa), 
+        //            new SqlParameter("denngay", "")); 
+        //        var dt = query.ToList(); 
+        //        var gv = new GridView(); 
+        //        gv.DataSource = dt; gv.DataBind(); 
+        //        Response.ClearContent(); 
+        //        Response.Buffer = true; 
+        //        Response.AddHeader("content-disposition", "attachment; filename= DanhSachDeNghiCongTacPhi.xls"); 
+        //        Response.ContentType = "application/ms-excel"; 
+        //        Response.Charset = "UTF-8"; 
+        //        Response.ContentEncoding = System.Text.Encoding.UTF8; 
+        //        Response.BinaryWrite(System.Text.Encoding.UTF8.GetPreamble()); 
+        //        StringWriter objStringWriter = new StringWriter(); 
+        //        HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter); 
+        //        gv.RenderControl(objHtmlTextWriter); Response.Output.Write(objStringWriter.ToString()); 
+        //        Response.Flush(); Response.End(); 
+        //        return View("ListTongHopGioLamThem"); }
+        //    return View("");
+
+
+        //}
         public ActionResult ChangePassword(string username, string password_old, string password_new, string password_new_confirm)
         {
             string passwordMD5_new = "", passwordMD5_new_confirm = "", passwordMD5_old = "";

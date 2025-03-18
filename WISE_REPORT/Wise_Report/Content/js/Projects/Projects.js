@@ -64,8 +64,119 @@
         }
         
     }
-    //-----=======================END View Task=====================================================================================
 
+    $scope.XuatExcel = function () {
+        var cancelstyle = {
+            headers: true,
+            column: {
+                style: { Font: { Bold: "1" } }
+            }, columns: [
+                { columnid: 'ID', title: 'Id', width: 50 },
+                { columnid: 'USERNAME', title: 'USERNAME', width: 80 },
+                { columnid: 'FULLNAME', title: 'FULLNAME', width: 120 },
+                { columnid: 'PASSWORD', title: 'PASSWORD', width: 80 }
+            ]
+        }; alasql('SELECT  *  INTO  XLSXML("List user",?)  FROM  ?', [cancelstyle, $scope.listUser]);
+    };
+
+    $scope.showdata = function () {
+        $("textarea[name=mail_content]").val(CKEDITOR.instances.mail_content.getData());
+        var mail_content = $("[name=mail_content]").val();
+        var res = mail_content.replace('<table', '<table id="tableupload" ');
+        $scope.showdatacontent = res;
+    }
+
+    $scope.helpdata = function () {
+
+        var tableUp = document.getElementById('tableupload');
+        if (tableUp === null || tableUp === undefined) {
+            alert("vui lòng nhấn \"click\" trước khi \"upload\", hoặc đã xảy ra lỗi !");
+        }
+        //gets rows of table
+        var rowLength = tableUp.rows.length;
+        var List_import = []
+        //loops through rows    
+        for (i = 0; i < rowLength; i++) {
+
+            var DATA_IMPORT = {
+                ID: (document.getElementById("tableupload").rows[i].cells.item(0).innerText),
+                USERNAME: (document.getElementById("tableupload").rows[i].cells.item(1).innerText),
+                FULLNAME: (document.getElementById("tableupload").rows[i].cells.item(2).innerText),
+                PASSWORD: (document.getElementById("tableupload").rows[i].cells.item(3).innerText),
+            }
+            List_import.push(DATA_IMPORT);
+
+        }
+
+        //console.log(List_import)
+        //$http.post(origin + '/api/Api_UserController/UpdateUser/', data).then(function (response) {
+        //    if (response.status == 200) {
+        //        console.log("Thành công")
+        //        $scope.sua = false;
+        //        $scope.GetListUser()
+        //    } else {
+        //        console.log("Thất bại")
+        //    }
+        //});
+        
+    }
+    //-----=======================END View Task=====================================================================================
+    $scope.tableToExcel = function (tableId) { // ex: '#my-table'
+        var tab_text = "<table border='2px' style='width:100%'><tr bgcolor='#87AFC6'>";
+        var textRange; var j = 0;
+        tab = document.getElementById(tableId); // id of table
+
+        for (j = 0; j < tab.rows.length; j++) {
+            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
+        tab_text = tab_text + "</table>";
+        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE");
+        var dt = new Date();
+        var day = dt.getDate();
+        var month = dt.getMonth() + 1;
+        var year = dt.getFullYear();
+        var hour = dt.getHours();
+        var mins = dt.getMinutes();
+        var postfix = day + "." + month + "." + year + "_" + hour + "." + mins;
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html", "replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus();
+            sa = txtArea1.document.execCommand("SaveAs", true, "DataTableExport.xls");
+        }
+        else // For Chrome and firefox (Other broswers not tested)
+        {
+
+
+            var myBlob = new Blob([tab_text], {
+                type: 'application/vnd.ms-excel'
+            });
+            var url = window.URL.createObjectURL(myBlob);
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.href = url;
+            a.download = "listUser" + postfix + ".xls";
+            a.click();
+            //adding some delay in removing the dynamically created link solved the problem in FireFox
+            setTimeout(function () {
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+
+
+        return (sa);
+
+    }
 })
 
 app.directive('editInPlace', function () {

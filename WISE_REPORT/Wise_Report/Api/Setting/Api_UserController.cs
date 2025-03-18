@@ -29,6 +29,7 @@ namespace Wise_Report.Api.Setting
         [Route("api/Api_UserController/GetListUser")]
         public dynamic GetListUser(ThamSo thamso)
         {
+            
             try
             {
                 dynamic returnedData =  db.Database.Connection.Query<dynamic>("GetListUser", new
@@ -36,11 +37,12 @@ namespace Wise_Report.Api.Setting
                     name = thamso.tukhoa1
                 }
                 , commandType: CommandType.StoredProcedure, commandTimeout: 20);
-
+                
                 return Ok(returnedData);
             }
             catch (Exception ex)
             {
+                
                 return InternalServerError(ex);
             }
         }
@@ -50,6 +52,7 @@ namespace Wise_Report.Api.Setting
         [Route("api/Api_UserController/AddUser")]
         public IHttpActionResult AddUser(ThamSo thamso)
         {
+            System.Data.Entity.DbContextTransaction transaction = db.Database.BeginTransaction();
             try
             {
                 var user = db.USERS.Where(x => x.USERNAME == thamso.username).FirstOrDefault();
@@ -62,16 +65,21 @@ namespace Wise_Report.Api.Setting
                     //newUser.NGAY = DateTime.Now;
                     db.USERS.Add(newUser);
                     db.SaveChanges();
+
+
+                    transaction.Commit();
                     return Ok("Thêm thành công!");
                 }
                 else
                 {
+                    transaction.Rollback();
                     return Ok("Đã có tài khoản này rồi");
                 }
               
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
                 return InternalServerError(ex);
             }
         }
