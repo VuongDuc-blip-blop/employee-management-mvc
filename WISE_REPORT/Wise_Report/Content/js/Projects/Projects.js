@@ -12,6 +12,7 @@
     $scope.GetListUser = function () {
         var data = {
             tukhoa1: $scope.tukhoa1
+
         }
         $http.post(origin + '/api/Api_UserController/GetListUser', data).then(function (response) {
             $scope.listUser = response.data;
