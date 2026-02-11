@@ -22,7 +22,9 @@
     <script type="text/javascript" src="~/Content/scripts/jquery.emojis.js"></script>
     <script type="text/javascript" src="~/Content/scripts/jquery.emojipicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/3.5.0/alasql.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-sanitize.js"></script>
+
 
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -33,179 +35,311 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="assets/images/favicon.png" />
 
+
     @*<script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>*@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
 
-    <script>
-        // Khởi tạo CKEditor
-        CKEDITOR.replace('editor', {
-            toolbar: [
-                ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-                ['FontSize', 'TextColor', 'BGColor']
-            ]
-        });
-    </script>
+    @*<script>
+            // Khởi tạo CKEditor
+            CKEDITOR.replace('editor', {
+                toolbar: [
+                    ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
+                    ['FontSize', 'TextColor', 'BGColor']
+                ]
+            });
+        </script>*@
 </head>
-<body>
-    <div class="container-scroller" ng-controller="ProjectsCtrl" ng-app="myApp">
-        <!-- partial:partials/_navbar.html -->
-        <div>List user{{a}}</div>
-        <button class="btn btn-success" data-toggle="modal" data-target="#adduser">Thêm</button>
-        <div class="table table-responsive">
-            <table id="xuatexcel" class="table table-hover">
+
+<body ng-app="myApp">
+
+    <div class="container-scroller" ng-controller="ProjectsCtrl">
+
+        <h3>List học sinh</h3>
+        <button class="btn btn-success" ng-click="OpenAdd()">Thêm</button>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Username</th>
-                        <th>Name</th>
-                        <th>Pass</th>
-                        <th>Tính năng</th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th><input class="form-control" ng-model="tukhoa1" ng-change="GetListUser()" /></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>Tên học sinh</th>
+                        <th>Ngày sinh</th>
+                        <th>Nơi ở</th>
+                        <th>Lớp</th>
+
+                        <th>Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <tr ng-repeat="item in listUser">
+                    <tr ng-repeat="item in listHocSinh">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.tenhocsinh}}</td>
+                        <td>{{item.Ngaysinh | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.Noio}}</td>
+                        <td>{{item.tenlop}}</td>
                         <td>
-                            {{item.ID}}
-
-                        </td>
-                        <td>
-                            <div ng-show="sua == false">{{item.USERNAME}}</div>
-                            <input class="form-control" ng-if="sua == true" ng-model="item.USERNAME" />
-                        </td>
-                        <td>
-                            <div ng-show="sua == false">{{item.FULLNAME}}</div>
-                            <input class="form-control" ng-show="sua == true" ng-model="item.FULLNAME" />
-
-                        </td>
-                        <td>
-                            <div ng-show="sua == false">{{item.PASSWORD}}</div>
-                            <input class="form-control" ng-show="sua == true" ng-model="item.PASSWORD" />
-                        </td>
-                        <td>
-                            <button class="btn btn-warning" ng-click="sua = true" ng-show="sua == false">Sửa</button>
-                            <button class="btn btn-success" ng-show="sua == true" ng-click="UpdateUser(item)">Lưu</button>
-                            <button class="btn btn-danger" ng-show="sua == true" ng-click="sua = false">Hủy</button>
-                            <button class="btn btn-danger" ng-show="sua == false" ng-click="DeleteUser(item)">Xóa</button>
+                            <button class="btn btn-warning"
+                                    ng-click="OpenEdit(item)">
+                                Sửa
+                            </button>
+                            <button class="btn btn-danger"
+                                    ng-click="XoaHocSinh(item)">
+                                Xóa
+                            </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="col-md-12">
-            <div style="margin-top:10px;padding-top:5px;margin-bottom:10px;" class="col-md-12">
-                <h3>Import dữ liệu</h3>
-                @*<a href="~/Content/Files/mau_import_bao_gia.xlsx" style="color:red; font-weight:bold;font-size:18px">Lấy mẫu</a>*@
-                <textarea id="mail_content" name="mail_content" class="row-fluid" style="min-height: 100px;"></textarea>
-            </div>
-            <div style="padding-left:15px; padding-bottom:10px">
-                <br />
-                <br />
-                <button ng-click="showdata()" class="btn btn-primary" style="float:left;margin-right:10px;">Click</button>
-                <p ng-bind-html="showdatacontent | unsafe" class="showdatacontent"></p>
-                <button type="button" ng-click="helpdata()" class="btn btn-primary">Upload</button>
-                <br />
-            </div>
-        </div>
+        <hr />
 
-        <script>
-            if (CKEDITOR.instances['mail_content']) {
-                delete CKEDITOR.instances['mail_content']
-            };
-            CKEDITOR.replace('mail_content', {
-                height: 100
-            });
-            //reference to ckeditor data
-        </script>
-        <div>
-            <button type="button" class="btn btn-success" ng-click="tableToExcel('xuatexcel')">Xuất excel</button>
-            <button type="button" class="btn btn-success" ng-click="XuatExcel(">Xuất excel1 </button>
-        </div>
-        <div class="modal fade" id="adduser" role="dialog">
-            <div class="modal-dialog" style="max-width:80%">
+        <h4>Danh sách lớp</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên lớp</th>
+                    <th>Sĩ số</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="lop in listLopHoc">
+                    <td>{{lop.idlh}}</td>
+                    <td>{{lop.tenlop}}</td>
+                    <td>{{lop.siso}}</td>
+                    <td>
+                        <button class="btn btn-info"
+                                ng-click="GetHocSinhByLop(lop)">
+                            Xem học sinh
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-                <!-- Modal content-->
+        <!-- ================= MODAL XEM HỌC SINH ================= -->
+        <div class="modal fade" id="hocSinhModal">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
+
                     <div class="modal-header">
-                        <h4 class="modal-title" style="width:100%">Add Users</h4>
+                        <h4 class="modal-title">
+                            Danh sách học sinh lớp {{lopDangChon.tenlop}}
+                        </h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-
                     </div>
+
                     <div class="modal-body">
-                        <div class="my-2">
-                            <label>user</label>
-                            <input type="text" class="form-control" ng-model="newUser" placeholder="User" />
-                        </div>
-                        <div class="my-2">
-                            <label>Name</label>
-                            <input type="text" class="form-control" ng-model="newName" placeholder="Name" />
-                        </div>
-                        <div class="my-2">
-                            <label>Password</label>
-                            <input type="text" class="form-control" ng-model="newPassword" placeholder="Password" />
-                        </div>
+                        <p class="text-danger">
+                            <button class="btn btn-success" ng-click="OpenAdd()">Thêm</button>
+                        </p>
 
-                        <button type="button" class="btn btn-success" ng-click="AddUser()">Thêm</button>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>
+                                        Avatar
+                                    </th>
+                                    <th>Tên</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Nơi ở</th>
+                                    <th> Hành động </th>
+                                    <th> Ghi chú </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="hs in listHocSinhTheoLop">
+                                    <td>{{hs.ID}}</td>
+                                    <td>
+                                        <img ng-if="hs.Avatar"
+                                             ng-src="{{getAvatarUrl(hs.Avatar)}}"
+                                             class="avatar-hs"
+                                             onerror="this.src='/Content/images/no-avatar.png'">
+                                    </td>
 
 
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">&times;</button>
+                                    <td>{{hs.tenhocsinh}}</td>
+                                    <td>{{hs.Ngaysinh | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{hs.Noio}}</td>
+                                    <td>
+                                        <button class="btn btn-warning" ng-click="OpenEdit(hs)">
+                                            Sửa
+                                        </button>
+                                        <button class="btn btn-danger"
+                                                ng-click="XoaHocSinh(hs)">
+                                            Xóa
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div ng-bind-html="hs.ghichu | unsafe"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div>
+
+        <!-- ================= MODAL SỬA ================= -->
+        <div class="modal fade" id="editHocSinhModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Sửa học sinh</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Avatar học sinh</label>
+<textarea id="avtEditor"
+          ck-editor
+          ng-model="editHocSinh.Avatar">
+</textarea>
+
+                    </div>
+                    <div class="modal-body">
+                        <label>Tên học sinh</label>
+                        <input class="form-control" ng-model="editHocSinh.tenhocsinh">
+                    </div>
+                    <div class="modal-body">
+                        <label>Ngày sinh</label>
+                        <input type="date" ng-model="editHocSinh.Ngaysinh">
+
+                    </div>
+                    <div class="modal-body">
+                        <label>Nơi ở </label>
+                        <input class="form-control" ng-model="editHocSinh.Noio">
+
+                    </div>
+                    <div class="modal-body">
+                        <label>Nhận xét chi tiết</label>
+                        <textarea ck-editor ng-model="editHocSinh.ghichu" id="ghichuEditor"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Hủy</button>
+                        <button class="btn btn-success" ng-click="SuaHocSinh(editHocSinh)">
+                            Lưu
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= MODAL THÊM ================= -->
+        <div class="modal fade" id="addHocSinhModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Thêm học sinh</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <input class="form-control" placeholder="Tên"
+                               ng-model="newHocSinh.tenhocsinh">
+                        <br />
+                        <input class="form-control" placeholder="Ngày sinh"
+                               ng-model="newHocSinh.ngaysinh">
+                        <br />
+                        <input class="form-control" placeholder="Nơi ở"
+                               ng-model="newHocSinh.noio">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Hủy</button>
+                        <button class="btn btn-success" ng-click="ThemHocSinh()">
+                            Thêm
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </body>
 
 <style>
     .ribbon {
-                top:-5px;
-        width:10em;
-        color:white;
-        white-space:normal;
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: bold;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
-  display: block;
-  height: 4rem;
-  background: linear-gradient(to bottom, #999999 0%, #cccccc 100%);
-  color: white;
-  float: left;
-  position: relative;
-  -webkit-filter: drop-shadow(0 0.5rem 0.3em rgba(0, 0, 0, 0.5));
-  transform: translate3d(0, 0, 0);
-}
-.ribbon:after {
-  content: "";
-  width: 0;
-  height: 0;
-  border-right: 6rem solid transparent;
-  border-left: 6rem solid transparent;
-  border-top: 1.5rem solid #CCCCCC;
-  position: absolute;
-  top: 4rem;
-  left: 0;
-}
-.ribbon.ribbon--orange {
-  background: linear-gradient(to bottom, #e7711b 0%, #f7981d 100%);
-}
-button.btn.btn-default.ribbon.ribbon--orange:hover {
-    text-decoration: underline;
-    color: white;
-}
-.ribbon.ribbon--orange:after {
-  border-top: 1.5rem solid #F7981D;
-}
+        top: -5px;
+        width: 10em;
+        color: white;
+        white-space: normal;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+        display: block;
+        height: 4rem;
+        background: linear-gradient(to bottom, #999999 0%, #cccccc 100%);
+        color: white;
+        float: left;
+        position: relative;
+        -webkit-filter: drop-shadow(0 0.5rem 0.3em rgba(0, 0, 0, 0.5));
+        transform: translate3d(0, 0, 0);
+    }
+
+    .cke_editable b,
+    .cke_editable strong {
+        font-weight: bold !important;
+    }
+
+    .cke_editable i,
+    .cke_editable em {
+        font-style: italic !important;
+    }
+
+    .avatar-html img {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50%;
+        object-fit: cover;
+        display: inline-block;
+        margin-right: 3px;
+    }
+
+    .avatar-hs {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid #ddd;
+    }
+
+    .ribbon:after {
+        content: "";
+        width: 0;
+        height: 0;
+        border-right: 6rem solid transparent;
+        border-left: 6rem solid transparent;
+        border-top: 1.5rem solid #CCCCCC;
+        position: absolute;
+        top: 4rem;
+        left: 0;
+    }
+
+    .ribbon.ribbon--orange {
+        background: linear-gradient(to bottom, #e7711b 0%, #f7981d 100%);
+    }
+
+    button.btn.btn-default.ribbon.ribbon--orange:hover {
+        text-decoration: underline;
+        color: white;
+    }
+
+    .ribbon.ribbon--orange:after {
+        border-top: 1.5rem solid #F7981D;
+    }
+
     .home-layout {
         text-align: center;
         vertical-align: middle;
@@ -214,16 +348,19 @@ button.btn.btn-default.ribbon.ribbon--orange:hover {
         flex-wrap: wrap;
         vertical-align: middle;
     }
-        button.btn.btn-default {
-    font-size: 18px !important;
-    border: none;
-    color: #146eb5;
-}
+
+    button.btn.btn-default {
+        font-size: 18px !important;
+        border: none;
+        color: #146eb5;
+    }
+
         button.btn.btn-default:hover {
-    background-color: transparent;
-    border: none;
-    text-decoration: underline;
-}
+            background-color: transparent;
+            border: none;
+            text-decoration: underline;
+        }
+
     button.fa-edit {
         border: 1px solid #3232bd;
         padding: 5px;
@@ -231,14 +368,17 @@ button.btn.btn-default.ribbon.ribbon--orange:hover {
         color: #3232bd;
         background-color: #fff;
     }
+
     .form-header {
         display: flex;
         justify-content: space-between;
     }
+
     .form-header-content {
-        display:grid;
-        grid-template-columns:6fr 2fr 1fr;
+        display: grid;
+        grid-template-columns: 6fr 2fr 1fr;
     }
+
     button.fa-edit {
         border: 1px solid #3232bd;
         padding: 5px;
@@ -339,41 +479,43 @@ button.btn.btn-default.ribbon.ribbon--orange:hover {
         stroke: #ccc;
         stroke-width: 2px;
     }
+
     label.checkbox-radio {
-        cursor:pointer;
+        cursor: pointer;
     }
+
     body {
         font-size: 18px !important;
     }
+
     .card.draggable.shadow-sm:hover {
-    cursor: pointer;
-}
-              .checkbox-radio input[type=radio]:focus
-            {
-                 outline:none;
-            }
+        cursor: pointer;
+    }
 
-         .checkbox-radio input[type=radio]
-            {
-                background-color: #DDD;
-                border-radius: 2px;
-                appearance: none;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                width: 20px;
-                height: 20px !important;
-                margin-right:5px;
-                top:5px;
-                cursor: pointer;
-                position: relative;
-                border-radius:50%;
-            }
+    .checkbox-radio input[type=radio]:focus {
+        outline: none;
+    }
 
-        .checkbox-radio input[type=radio]:checked
-            {
-                background-color: #409fd6;
-                background: #409fd6 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAXUlEQVQoU2NkIBIwEqmOAa7w48ePqn/+/JnCyMjoBtL8////XSwsLDn8/Py3QXy4wrdv3+6EKYLZAlIsLCzsjqLw3bt3/7E5Q0hICGwY3ESiFRJtNdGeIRRMRIcjAMeDMAtLh63tAAAAAElFTkSuQmCC") 5px 5px  no-repeat;
-            }
+    .checkbox-radio input[type=radio] {
+        background-color: #DDD;
+        border-radius: 2px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 20px;
+        height: 20px !important;
+        margin-right: 5px;
+        top: 5px;
+        cursor: pointer;
+        position: relative;
+        border-radius: 50%;
+    }
+
+        .checkbox-radio input[type=radio]:checked {
+            background-color: #409fd6;
+
+            background: #409fd6 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAXUlEQVQoU2NkIBIwEqmOAa7w48ePqn/+/JnCyMjoBtL8////XSwsLDn8/Py3QXy4wrdv3+6EKYLZAlIsLCzsjqLw3bt3/7E5Q0hICGwY3ESiFRJtNdGeIRRMRIcjAMeDMAtLh63tAAAAAElFTkSuQmCC") 5px 5px no-repeat;
+        }
 </style>
 <script>
     function myFunction() {
