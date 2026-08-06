@@ -18,10 +18,9 @@
         {
             if (context.Administrators.Any() == false)
             {
-                var admin = new USER();
-                admin.USERNAME = "Admin";
-                admin.PASSWORD = "e10adc3949ba59abbe56e057f20f883e";
-                admin.FULLNAME = "Đào Kim Lực";
+                var admin = new User();
+                admin.UserName = "Admin";
+                admin.Password = "e10adc3949ba59abbe56e057f20f883e";
                 //admin.Avatar = "/Content/dist/img/avatar04.png";
                 //admin.Isadmin = true;
 

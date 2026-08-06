@@ -16,6 +16,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Dapper;
 using System.Data;
+using Wise_Report.Shared.Queries;
+using Wise_Report.Shared.Forms;
+using Wise_Report.Shared.DataSeeded;
+using Wise_Report.Enum;
+using Wise_Report.Shared.Dtos;
+
 
 namespace Wise_Report.Api.Setting
 {
@@ -27,18 +33,41 @@ namespace Wise_Report.Api.Setting
 
         [HttpPost]
         [Route("api/Api_UserController/GetListUser")]
-        public dynamic GetListUser(ThamSo thamso)
+        public IHttpActionResult GetListUser(UserPageQuery query)
         {
             
             try
             {
-                dynamic returnedData =  db.Database.Connection.Query<dynamic>("GetListUser", new
+                var returnedData =  db.Database.Connection.Query<User>("GetListUser", new
                 {
-                    name = thamso.tukhoa1
+                    Search = string.IsNullOrWhiteSpace(query.SearchKeyword) ? null : query.SearchKeyword,
+                    PageNumber = query.PageIndex,
+                    PageSize = query.PageSize,
+                    SortColumn = query.SortColumn,
+                    SortDirection = query.SortDirection.ToString().ToUpper()
                 }
                 , commandType: CommandType.StoredProcedure, commandTimeout: 20);
+
+                var mappedDto = returnedData.Select(x => new UserPageItem
+                {
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    Password = x.Password,
+                    CreatedAt = x.CreatedAt,
+                    ModerationStatus = (int)x.ModerationStatus
+                }).ToList();
+                var totalData = returnedData.Count();
+                var pageIndex = query.PageIndex;
+                var pageSize = query.PageSize;
+
                 
-                return Ok(returnedData);
+                return Ok(new
+                {
+                    Data = mappedDto,
+                    TotalData = totalData,
+                    PageIndex = pageIndex,
+                    PageSize = pageSize
+                });
             }
             catch (Exception ex)
             {
@@ -50,20 +79,26 @@ namespace Wise_Report.Api.Setting
 
         [HttpPost]
         [Route("api/Api_UserController/AddUser")]
-        public IHttpActionResult AddUser(ThamSo thamso)
+        public IHttpActionResult AddUser(CreateUserForm form)
         {
             System.Data.Entity.DbContextTransaction transaction = db.Database.BeginTransaction();
             try
             {
-                var user = db.USERS.Where(x => x.USERNAME == thamso.username).FirstOrDefault();
+                var user = db.Users.Where(x => x.UserName == form.UserName).FirstOrDefault();
                 if (user == null)
                 {
-                    USER newUser = new USER();
-                    newUser.USERNAME = thamso.username;
-                    newUser.FULLNAME = thamso.fullname;
-                    newUser.PASSWORD = thamso.tukhoa1;
-                    //newUser.NGAY = DateTime.Now;
-                    db.USERS.Add(newUser);
+                    var newUser = new User();
+                    newUser.Id = Guid.NewGuid();
+                    newUser.UserName = form.UserName;
+
+                    newUser.Password = form.Password;
+                    newUser.CreatedAt = DateTime.Now;
+                    newUser.CreatedBy = SeededAdmin.Id;
+                    newUser.LastModifiedAt = DateTime.Now;
+                    newUser.LastModifiedBy = SeededAdmin.Id;
+                    newUser.ModerationStatus = (int)ModerationStatus.Approved;
+                    newUser.IsDeleted = false;
+                    db.Users.Add(newUser);
                     db.SaveChanges();
 
 
@@ -85,18 +120,16 @@ namespace Wise_Report.Api.Setting
         }
 
         [HttpPost]
-        [Route("api/Api_UserController/UpdateUser/{username}")]
-        public IHttpActionResult UpdateUser(ThamSo thamso, string username)
+        [Route("api/Api_UserController/UpdateUser/{id:Guid}")]
+        public IHttpActionResult UpdateUser(Guid id, UpdateUserForm form)
         {
             try
             {
-                var user = db.USERS.Where(x => x.USERNAME == thamso.username).FirstOrDefault();
+                var user = db.Users.Where(x => x.Id == id).FirstOrDefault();
                 if (user != null)
                 {
-                    user.USERNAME = thamso.username;
-                    user.FULLNAME = thamso.fullname;
-                    user.PASSWORD = thamso.tukhoa1;
-
+                    user.UserName = form.UserName;
+                    user.Password = form.Password;
                     db.SaveChanges();
                     return Ok("Sửa thành công!");
                 }
@@ -113,15 +146,15 @@ namespace Wise_Report.Api.Setting
         }
 
         [HttpPost]
-        [Route("api/Api_UserController/DeleteUser/{username}")]
-        public IHttpActionResult DeleteUser(string username)
+        [Route("api/Api_UserController/DeleteUser/{id:Guid}")]
+        public IHttpActionResult DeleteUser(Guid id)
         {
             try
             {
-                var user = db.USERS.Where(x => x.USERNAME == username).FirstOrDefault();
+                var user = db.Users.Where(x => x.Id == id).FirstOrDefault();
                 if (user != null)
                 {
-                    db.USERS.Remove(user);
+                    db.Users.Remove(user);
 
                     db.SaveChanges();
                     return Ok("Xóa thành công!");

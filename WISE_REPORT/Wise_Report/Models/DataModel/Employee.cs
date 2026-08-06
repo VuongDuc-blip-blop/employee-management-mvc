@@ -12,17 +12,16 @@ namespace Wise_Report.Models.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Employee
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Employees = new HashSet<Employee>();
-        }
-    
         public System.Guid Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public string EmployeeCode { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public int Gender { get; set; }
+        public Nullable<System.Guid> UserId { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime LastModifiedAt { get; set; }
         public System.Guid CreatedBy { get; set; }
@@ -31,7 +30,6 @@ namespace Wise_Report.Models.DataModel
         public Nullable<System.DateTime> DeletedAt { get; set; }
         public int ModerationStatus { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual User User { get; set; }
     }
 }

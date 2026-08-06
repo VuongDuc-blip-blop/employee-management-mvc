@@ -40,13 +40,12 @@ namespace Wise_Report.Controllers
         public ActionResult Login(string username, string password)
         {
             string passwordMD5 = Commons.MD5Hash(password);
-            var user = db.USERS.SingleOrDefault(x => x.USERNAME == username );
+            var user = db.Users.SingleOrDefault(x => x.UserName == username );
             if (user != null)
             {
 
-                Session["username"] = user.USERNAME;
-                Session["fullname"] = user.FULLNAME;
-                Session["userid"] = user.ID;
+                Session["username"] = user.UserName;
+                Session["userid"] = user.Id;
 
 
                 return RedirectToAction("HomeLayout", "Home");
@@ -123,17 +122,17 @@ namespace Wise_Report.Controllers
                 }
                 else
                 {
-                    var user = db.USERS.SingleOrDefault(x => x.USERNAME == username && x.PASSWORD == passwordMD5_old );
+                    var user = db.Users.SingleOrDefault(x => x.UserName == username && x.Password == passwordMD5_old );
                     if (user != null)
                     {
                         try
                         {
-                            user.PASSWORD = passwordMD5_new;
+                            user.Password = passwordMD5_new;
                             db.SaveChanges();
 
-                            Session["username"] = user.USERNAME;
-                            Session["fullname"] = user.FULLNAME;
-                            Session["userid"] = user.ID;
+                            Session["username"] = user.UserName;
+
+                            Session["userid"] = user.Id;
                             ViewBag.susscess = "Đổi mật khẩu thành công!";
                             //return RedirectToAction("Index", "Dashboard/Index");
 

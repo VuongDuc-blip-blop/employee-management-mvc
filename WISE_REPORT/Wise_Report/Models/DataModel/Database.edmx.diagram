@@ -4,8 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c577dfd4e60a4923a42b040936b4b8ee" Name="Diagram1">
-        <EntityTypeShape EntityType="TestModel.USER" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="1fed4f8cd2c94b20b189f4d41556c873" Name="Diagram1">
+        <EntityTypeShape EntityType="EmployeeManagementCoreDbModel.C__EFMigrationsHistory" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EmployeeManagementCoreDbModel.Employee" Width="1.5" PointX="5" PointY="1" />
+        <EntityTypeShape EntityType="EmployeeManagementCoreDbModel.EmployeeUnit" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EmployeeManagementCoreDbModel.Unit" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EmployeeManagementCoreDbModel.User" Width="1.5" PointX="2.75" PointY="1.5" />
+        <AssociationConnector Association="EmployeeManagementCoreDbModel.FK_Employees_Users_UserId" />
+        <AssociationConnector Association="EmployeeManagementCoreDbModel.FK_Units_Units_ParentUnitId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -11,11 +11,16 @@
     //-----=======================WORKFLOW=====================================================================================
     $scope.GetListUser = function () {
         var data = {
-            tukhoa1: $scope.tukhoa1
-
+            SearchKeyword: "",
+            PageIndex: 1,
+            PageSize:20,
+            SortColumn: "USERNAME",
+            SortDirection: "ASC"
         }
         $http.post(origin + '/api/Api_UserController/GetListUser', data).then(function (response) {
-            $scope.listUser = response.data;
+            console.log(response)
+            console.log(response.data.Data)
+            $scope.listUser = response.data.Data;
             //console.log(response.data)
         });
     }
@@ -23,9 +28,8 @@
 
     $scope.AddUser = () => {
         var data = {
-            username: $scope.newUser,
-            fullname: $scope.newName,
-            tukhoa1: $scope.newPassword,
+            username: $scope.newUser.UserName,
+            Password: $scope.newUser.Password,
         }
         $http.post(origin + '/api/Api_UserController/AddUser', data).then(function (response) {
             if (response.status == 200) {
@@ -37,11 +41,10 @@
     }
     $scope.UpdateUser = (item) => {
         var data = {
-            username: item.USERNAME,
-            fullname: item.FULLNAME,
-            tukhoa1: item.PASSWORD,
+            UserName: item.USERNAME,
+            Password: item.PASSWORD,
         }
-        $http.post(origin + '/api/Api_UserController/UpdateUser/' + item.USERNAME, data).then(function (response) {
+        $http.post(origin + '/api/Api_UserController/UpdateUser/' + item.Id, data).then(function (response) {
             if (response.status == 200) {
                 console.log("Thành công")
                 $scope.sua = false;
@@ -52,8 +55,9 @@
         });
     }
     $scope.DeleteUser = (item) => {
+        console.log("DeleteUser", item)
         if (confirm('bạn có chắc chắn muốn xóa?')) {
-            $http.post(origin + '/api/Api_UserController/DeleteUser/' + item.USERNAME).then(function (response) {
+            $http.post(origin + '/api/Api_UserController/DeleteUser/' + item.Id).then(function (response) {
                 if (response.status == 200) {
                     console.log("Thành công")
                     $scope.GetListUser()
@@ -63,6 +67,35 @@
             });
         }
         
+    }
+
+    $scope.GetStatusText = function (status){
+        switch (status){
+            case 0:
+                return "Đang chờ duyệt";
+            case 1:
+                return "Đã duyệt";``
+            case 2:
+                return "Bị từ chối";
+            default:
+                return "Không xác định";
+        }
+    }
+
+   $scope.OpenAdd = function () {
+
+    $scope.newUser = {
+        UserName: "",
+        Password: "",
+        ModerationStatus: 0
+    };
+
+    $("#addUserModal").modal("show");
+};
+
+    $scope.OpenEdit = function (item) {
+        $scope.editUser = angular.copy(item);
+        $("#editUserModal").modal("show");
     }
 
     $scope.XuatExcel = function () {

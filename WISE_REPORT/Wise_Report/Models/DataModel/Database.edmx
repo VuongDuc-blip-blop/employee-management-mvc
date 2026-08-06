@@ -4,49 +4,299 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="USERS">
+    <Schema Namespace="EmployeeManagementCoreDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__EFMigrationsHistory">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="MigrationId" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="USERNAME" Type="varchar" MaxLength="64" />
-          <Property Name="FULLNAME" Type="nvarchar" MaxLength="128" />
-          <Property Name="PASSWORD" Type="varchar" MaxLength="128" />
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="TestModelStoreContainer">
-          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedAt" Type="datetime2" Precision="7" />
+          <Property Name="ModerationStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeUnits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EmployeeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UnitId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UnitCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ParentUnitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedAt" Type="datetime2" Precision="7" />
+          <Property Name="ModerationStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LastModifiedAt" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedAt" Type="datetime2" Precision="7" />
+          <Property Name="ModerationStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employees_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Units_Units_ParentUnitId">
+          <End Role="Units" Type="Self.Units" Multiplicity="1" />
+          <End Role="Units1" Type="Self.Units" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Units1">
+              <PropertyRef Name="ParentUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeManagementCoreDbModelStoreContainer">
+          <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeUnits" EntityType="Self.EmployeeUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employees_Users_UserId" Association="Self.FK_Employees_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Units_Units_ParentUnitId" Association="Self.FK_Units_Units_ParentUnitId">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Units1" EntitySet="Units" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="USER">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="USERNAME" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="FULLNAME" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PASSWORD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-        </EntityType>
+      <Schema Namespace="EmployeeManagementCoreDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <EntitySet Name="C__EFMigrationsHistory" EntityType="EmployeeManagementCoreDbModel.C__EFMigrationsHistory" />
+          <EntitySet Name="Employees" EntityType="EmployeeManagementCoreDbModel.Employee" />
+          <EntitySet Name="EmployeeUnits" EntityType="EmployeeManagementCoreDbModel.EmployeeUnit" />
+          <EntitySet Name="Units" EntityType="EmployeeManagementCoreDbModel.Unit" />
+          <EntitySet Name="Users" EntityType="EmployeeManagementCoreDbModel.User" />
+          <AssociationSet Name="FK_Employees_Users_UserId" Association="EmployeeManagementCoreDbModel.FK_Employees_Users_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Units_Units_ParentUnitId" Association="EmployeeManagementCoreDbModel.FK_Units_Units_ParentUnitId">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Unit1" EntitySet="Units" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="C__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="7" />
+          <Property Name="ModerationStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="EmployeeManagementCoreDbModel.FK_Employees_Users_UserId" FromRole="Employee" ToRole="User" />
+        </EntityType>
+        <EntityType Name="EmployeeUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EmployeeId" Type="Guid" Nullable="false" />
+          <Property Name="UnitId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UnitCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUnitId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="7" />
+          <Property Name="ModerationStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Units1" Relationship="EmployeeManagementCoreDbModel.FK_Units_Units_ParentUnitId" FromRole="Unit" ToRole="Unit1" />
+          <NavigationProperty Name="Unit1" Relationship="EmployeeManagementCoreDbModel.FK_Units_Units_ParentUnitId" FromRole="Unit1" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LastModifiedAt" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="Guid" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedAt" Type="DateTime" Precision="7" />
+          <Property Name="ModerationStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="EmployeeManagementCoreDbModel.FK_Employees_Users_UserId" FromRole="User" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Employees_Users_UserId">
+          <End Type="EmployeeManagementCoreDbModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="EmployeeManagementCoreDbModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Units_Units_ParentUnitId">
+          <End Type="EmployeeManagementCoreDbModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="EmployeeManagementCoreDbModel.Unit" Role="Unit1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Unit1">
+              <PropertyRef Name="ParentUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEntities">
-          <EntitySetMapping Name="USERS">
-            <EntityTypeMapping TypeName="TestModel.USER">
-              <MappingFragment StoreEntitySet="USERS">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
-                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
-                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+        <EntityContainerMapping StorageEntityContainer="EmployeeManagementCoreDbModelStoreContainer" CdmEntityContainer="TestEntities">
+          <EntitySetMapping Name="C__EFMigrationsHistory">
+            <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.C__EFMigrationsHistory">
+              <MappingFragment StoreEntitySet="__EFMigrationsHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="ModerationStatus" ColumnName="ModerationStatus" />
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeUnits">
+            <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.EmployeeUnit">
+              <MappingFragment StoreEntitySet="EmployeeUnits">
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.Unit">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="ModerationStatus" ColumnName="ModerationStatus" />
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="ParentUnitId" ColumnName="ParentUnitId" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ModerationStatus" ColumnName="ModerationStatus" />
+                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

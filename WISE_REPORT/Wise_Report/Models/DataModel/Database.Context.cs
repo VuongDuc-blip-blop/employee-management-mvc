@@ -25,6 +25,10 @@ namespace Wise_Report.Models.DataModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<USER> USERS { get; set; }
+        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<EmployeeUnit> EmployeeUnits { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }
