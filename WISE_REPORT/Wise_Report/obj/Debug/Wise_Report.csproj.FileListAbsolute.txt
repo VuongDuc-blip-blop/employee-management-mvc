@@ -242,4 +242,3 @@ C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Rep.0DBE064D.Up2Date
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.dll
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.pdb
-C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml

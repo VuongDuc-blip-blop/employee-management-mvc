@@ -98,20 +98,46 @@
         $("#editUserModal").modal("show");
     }
 
-    $scope.XuatExcel = function () {
+   $scope.XuatExcel = function () {
         var cancelstyle = {
             headers: true,
             column: {
                 style: { Font: { Bold: "1" } }
-            }, columns: [
+            },
+            columns: [
                 { columnid: 'ID', title: 'Id', width: 50 },
-                { columnid: 'USERNAME', title: 'USERNAME', width: 80 },
-                { columnid: 'FULLNAME', title: 'FULLNAME', width: 120 },
-                { columnid: 'PASSWORD', title: 'PASSWORD', width: 80 }
+                { columnid: 'UserName', title: 'Tên người dùng', width: 80 },
+                { columnid: 'CreatedAt', title: 'Ngày tạo', width: 120 },
+                { columnid: 'ModerationStatus', title: 'Trạng thái', width: 80 }
             ]
-        }; alasql('SELECT  *  INTO  XLSXML("List user",?)  FROM  ?', [cancelstyle, $scope.listUser]);
+        };
+
+        var dataExport = $scope.listUser.map(function (item) {
+            return {
+                ID: item.Id,
+                UserName: item.UserName,
+                CreatedAt: $scope.formatDate(item.CreatedAt),
+                ModerationStatus: $scope.GetStatusText(item.ModerationStatus)
+            };
+        });
+
+        alasql(
+            'SELECT * INTO XLSXML("List user", ?) FROM ?',
+            [cancelstyle, dataExport]
+        );
     };
 
+     $scope.formatDate = function (dateValue) {
+        if (!dateValue) return '';
+
+        var date = new Date(dateValue);
+
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+
+        return day + '/' + month + '/' + year;
+    }
     $scope.showdata = function () {
         $("textarea[name=mail_content]").val(CKEDITOR.instances.mail_content.getData());
         var mail_content = $("[name=mail_content]").val();
