@@ -86,7 +86,7 @@ app.directive('format', ['$filter', function ($filter) {
 //app.config(configFunction);
 
 app.config(['$compileProvider', function ($compileProvider) {
-    $compileProvider.debugInfoEnabled(false);
+    $compileProvider.debugInfoEnabled(true);
 }]);
 app.directive('date', function (dateFilter) {
     return {

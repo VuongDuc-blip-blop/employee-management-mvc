@@ -307,6 +307,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarkettingReportController.cs" />
     <Compile Include="Controllers\Wise_ReportController.cs" />
@@ -363,10 +364,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushMessaging.cs" />
     <Compile Include="Shared\DataSeeded\SeededAdmin.cs" />
+    <Compile Include="Shared\Dtos\EmployeePageItem.cs" />
     <Compile Include="Shared\Dtos\UserPageItem.cs" />
+    <Compile Include="Shared\Forms\CreateEmployeeForm.cs" />
     <Compile Include="Shared\Forms\CreateUserForm.cs" />
+    <Compile Include="Shared\Forms\UpdateEmployeeForm.cs" />
     <Compile Include="Shared\Forms\UpdateUserForm.cs" />
     <Compile Include="Shared\Queries\Base\BaseQuery.cs" />
+    <Compile Include="Shared\Queries\EmployeePageQuery.cs" />
     <Compile Include="Shared\Queries\UserPageQuery.cs" />
     <Compile Include="Shared\test1.cs" />
     <Compile Include="Startup.cs" />
@@ -582,6 +587,7 @@
     <Content Include="Content\js\LiveBoardCtrl.js" />
     <Content Include="Content\js\Mark_report\Mark_daily_report.js" />
     <Content Include="Content\js\OverAllCtrl.js" />
+    <Content Include="Content\js\Projects\EmployeeController.js" />
     <Content Include="Content\js\Projects\Notification.js" />
     <Content Include="Content\js\Projects\Projects.js" />
     <Content Include="Content\js\Projects\Project_Meeting.js" />
@@ -1092,6 +1098,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Views\Home\ViewProject.cshtml" />
     <Content Include="Views\MarkettingReport\Mark_daily_report.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
     <None Include="Views\Shared\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config">
@@ -1117,6 +1124,7 @@
     <Folder Include="Content\bower_components\" />
     <Folder Include="Content\build\" />
     <Folder Include="obj\Debug\" />
+    <Folder Include="Views\Api_Employee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
