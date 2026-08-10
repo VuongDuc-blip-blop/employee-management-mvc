@@ -32,6 +32,23 @@ Run planning này không tạo/sửa test code và không thực thi SQL object 
 | T00-13 | Debug build | Exit 0; warnings recorded; no tracked build artifacts |
 | T00-14 | Expected diff | 6 added files (README + 5 SQL), 2 modified files (`Web.config`, `PushMessaging.cs`); no generated/test edit |
 
+## ERP-0001 matrix
+
+| ID | Acceptance criteria / check | Required evidence |
+|---|---|---|
+| T01-01 | Password helper | PBKDF2 salt produces distinct hashes; valid verifies; wrong/malformed fails closed |
+| T01-02 | Legacy upgrade | Correct 32-hex MD5 verifies once and is replaced by PBKDF2 in a transaction; wrong input does not mutate |
+| T01-03 | Login boundary | Typed validation, trim/length limits, anti-forgery and one generic credential/account-state failure |
+| T01-04 | Account state | Deleted, pending, rejected and unknown users cannot establish a session |
+| T01-05 | Minimal session | Successful login exposes only `userid`/`username`; no password/hash in session or rendered HTML |
+| T01-06 | Password change | Session-derived identity, current/different/12–128/confirmation rules, PBKDF2 transaction, forced re-login |
+| T01-07 | Logout | GET unavailable, missing token rejected, valid POST clears and abandons session |
+| T01-08 | UI/static contract | One form per view, correct anti-forgery/autocomplete, no nested form/hidden password, exact csproj includes |
+| T01-09 | Build/regression | Full Framework restore + Debug/Release build; ERP-0000 isolated DB/API regression remains green |
+| T01-10 | IIS Express journeys | PBKDF2 login, legacy upgrade, wrong password, change password and logout observed over HTTP with isolated fixture |
+| T01-11 | Security scan | No raw/MD5 write, exception leakage, credential echo, reusable fixture secret or unrelated generated diff |
+| T01-12 | Source fingerprint | Report binds PASS/FAIL to exact branch, HEAD, status/diff fingerprint and allowed write-set |
+
 ## Environment and commands policy
 
 - Chỉ chạy destructive DB test trên exact isolated LocalDB database; kiểm tra `SERVERPROPERTY('ServerName')` và `DB_NAME()` trước.
@@ -41,7 +58,7 @@ Run planning này không tạo/sửa test code và không thực thi SQL object 
 
 ## Regression focus cho các task kế tiếp
 
-- ERP-0001: valid/invalid password, deleted/disabled user, session fixation/logout, hash migration, no credential disclosure.
+- ERP-0001: use T01-01 through T01-12; do not weaken malformed-hash, anti-forgery, account-state, session or legacy-upgrade assertions.
 - ERP-0002/0003: sort allowlist, stable paging under equal keys, total independent of page, search/null, response casing, authorization.
 - Mutation tasks: validation, unique constraints, optimistic conflict, transaction rollback, actor audit, soft-delete visibility.
 - Export/import: authorization, selected columns, formula/HTML injection, size limits, malformed input.

@@ -2,32 +2,32 @@
 
 ## State
 
-- Workflow: `TASK_PASSED` for ERP-0000; preparing ERP-0001.
-- Closed: `ERP-0000 — Safe Reproducible LocalDB Baseline`.
-- Tested fingerprint: `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569`.
-- Latest report: `.ai-erp-workflow/reports/ERP-0000-test-report-r02.md` — PASS.
-- Human authorization: agent corrective implementation/push was explicitly allowed for this run.
+- Workflow: `GUIDE_READY` for ERP-0001.
+- Active: `ERP-0001 — Secure Session Identity and Legacy Password Upgrade`.
+- Exact production-source baseline: commit `09482ed60642ab3f6a3ff4a1956b421ecfb278df`; latest branch `TEST` additionally carries this guide/state handoff only.
+- Prerequisite closed: ERP-0000 report r02 PASS at fingerprint `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569`.
+- Guide: `.ai-erp-workflow/tasks/ERP-0001-secure-session-identity.md`, revision r01.
 
 ## Read first
 
-1. `.ai-erp-workflow/tasks/ERP-0000-safe-reproducible-localdb-baseline.md` — closed task + report r02 summary.
-2. `.ai-erp-workflow/PROJECT_STATE.md` — authoritative state.
-3. `.ai-erp-workflow/DECISIONS.md` — especially DEC-015…018 review corrections.
-4. `.ai-erp-workflow/TEST_STRATEGY.md` — independent verification matrix.
+1. `.ai-erp-workflow/tasks/ERP-0001-secure-session-identity.md` — full guide r01 and AC contract.
+2. `.ai-erp-workflow/PROJECT_STATE.md` — authoritative single-active-task state.
+3. `.ai-erp-workflow/DECISIONS.md` — especially DEC-022 through DEC-025.
+4. `.ai-erp-workflow/TEST_STRATEGY.md` — ERP-0001 independent verification matrix.
 
 ## Human action
 
-None for ERP-0000. Use the forthcoming ERP-0001 guide on the company machine after pulling branch `TEST`.
+On the company machine, pull branch `TEST`, verify the baseline commit named in the guide, type ERP-0001 production code exactly, then send PROMPT 2. Do not start ERP-0002 in the same implementation run.
 
 ## Expected implementation write-set
 
-- Add six files under `WISE_REPORT/Database/EmployeeManagementCoreDb`.
-- Modify only `WISE_REPORT/Wise_Report/Web.config` and one commented secret line in `WISE_REPORT/Wise_Report/PushMessaging.cs`.
-- No project/package/EDMX/T4/generated C#/JS/view/test change.
+- Add `PasswordSecurity.cs`, `LoginForm.cs`, and `ChangePasswordForm.cs`.
+- Modify only `Wise_Report.csproj`, `HomeController.cs`, `Login.cshtml`, `ChangePassword.cshtml`, and `_Layout.cshtml`.
+- No SQL, package, EDMX, T4/generated C# or Angular change.
 
 ## Known blockers/debt
 
-Restore/build/DB/API baseline is proven. Current UI sends an enum string inconsistent with the C# enum contract; API still has password-shaped DTO, page-count total and exception leakage; authentication/password storage/hard-delete remain critical; four other called procedures lack source definitions. These are explicitly deferred beyond ERP-0000.
+Anonymous user create/update endpoints still have unsafe credential semantics; ERP-0001 does not claim global authorization, account lockout, MFA or password reset. The user-directory password DTO, total count and enum mismatch remain ERP-0002 debt. Historic credentials must still be rotated outside Git.
 
-WORKFLOW_STATE: TASK_PASSED
-NEXT_HUMAN_ACTION: chờ ERP-0001 guide được tạo trên corrected commit baseline.
+WORKFLOW_STATE: GUIDE_READY
+NEXT_HUMAN_ACTION: pull branch TEST, tự triển khai ERP-0001 guide r01, sau đó gửi PROMPT 2.

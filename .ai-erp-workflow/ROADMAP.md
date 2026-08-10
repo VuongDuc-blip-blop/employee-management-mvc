@@ -8,12 +8,12 @@ Roadmap lấy repository làm source of truth. Các tên miền thương mại t
 
 | Capability family | Provenance | State | Evidence / next dependency |
 |---|---|---|---|
-| Build runtime MVC5/.NET Framework 4.8 | REPO_EXISTING | IMPLEMENTED | Build Debug pass; cần reproducible restore proof |
-| EF6 Database First | REPO_EXISTING | PARTIAL | EDMX có 4 entity; database thật absent |
-| Local database/bootstrap | REPO_EXISTING | MISSING | Blocker P0; ERP-0000 |
-| Stored-procedure contracts | REPO_EXISTING | BROKEN | 5 live call-site, không có definition; implement từng flow |
+| Build runtime MVC5/.NET Framework 4.8 | REPO_EXISTING | PROVEN | Restore, Debug/Release build and IIS Express gate pass in ERP-0000 |
+| EF6 Database First | REPO_EXISTING | BASELINED | EDMX four-domain-entity contract and five physical tables verified |
+| Local database/bootstrap | REPO_EXISTING | IMPLEMENTED | `LocalDatabaseBaseline/v1`; ERP-0000 TASK_PASSED |
+| Stored-procedure contracts | REPO_EXISTING | PARTIAL | `GetListUser` proven; four other live procedures remain undefined |
 | Automated tests | INFERRED_EXTENSION | MISSING | Tester tạo test-only harness sau guide |
-| Configuration/secrets | REPO_EXISTING | BROKEN | Loại reusable secrets khỏi config; rotate ngoài repo |
+| Configuration/secrets | REPO_EXISTING | PARTIAL | Current scoped config is secretless; historic credentials still require rotation |
 | User/session identity | REPO_EXISTING | BROKEN | Login không so password, API lộ password shape |
 | Employee directory/lifecycle | REPO_EXISTING | BROKEN | Model/view skeleton, API employee chưa compile, JS wiring sai |
 | Unit hierarchy/employee assignment | REPO_EXISTING | PARTIAL | Schema có nhưng thiếu FK assignment và workflow |
@@ -61,24 +61,24 @@ Không tạo transaction ERP trước authorization/audit; không tạo sales/pr
 
 ## Learning sprint ưu tiên — ba ngày đầu
 
-### Ngày 1 — Database First contract
+### Ngày 1 — Database First contract — completed
 
 Trace `Web.config → TestEntities → Database.edmx`; đối chiếu type/nullability/key/FK; human tự gõ forward bootstrap, không sửa generated EF files. Outcome: hiểu model artifact không đồng nghĩa database thật tồn tại.
 
-### Ngày 2 — Safety và reversibility
+### Ngày 2 — Safety và reversibility — completed
 
 Human tự gõ verify + transaction-only fixtures + rollback cho isolated LocalDB; thay connection bằng integrated security; xóa secret-bearing obsolete line. Outcome: hiểu rerunnable DDL, metadata assertions, secretless config và rollback boundary.
 
-### Ngày 3 — Independent test evidence
+### Ngày 3 — Independent test evidence — completed
 
-Gửi PROMPT 2 để tester tạo/sửa test-only harness, chạy build/DB smoke/rollback/reapply và ghi exit codes. Chỉ khi gate PASS mới học/triển khai ERP-0001. Outcome: phân biệt production implementation với independent verification.
+Tester đã tạo harness, chạy static/DB lifecycle `33/0/0`, restore/build và IIS Express E2E; ERP-0000 đạt PASS trên fingerprint chính xác. Outcome: ERP-0001 được mở với một baseline tái lập và có regression anchor độc lập.
 
 ## 12 task đầu tiên
 
 | ID / business outcome | Provenance | Dependencies; consumed → produced contract | Target Web/DB patterns | Expected files/layers | Test level | Effort / risk / status |
 |---|---|---|---|---|---|---|
 | ERP-0000 — clone mới có DB baseline tái lập | REPO_EXISTING / baseline enabling | Build runtime → `LocalDatabaseBaseline/v1` | EF DB First; catalog/FK; SP; paging; safe config | SQL/runbook/config | STATIC, BUILD, DB contract/rollback/API E2E | 6–8h / Medium / TASK_PASSED |
-| ERP-0001 — đăng nhập xác minh credential an toàn | REPO_EXISTING repair | 0000 → `SessionIdentity/v1` | Form mapping; password hashing; transaction | DB/EDMX refresh, MVC/helper/view | Unit, integration, E2E login | 6–8h / High / GUIDE_READY |
+| ERP-0001 — đăng nhập xác minh credential an toàn | REPO_EXISTING repair | 0000 → `SessionIdentity/v1` | Typed form; anti-forgery; PBKDF2 + legacy upgrade; transaction/session | MVC helper/forms/controller/views/project include; no DB/EDMX | Unit, integration, MVC/E2E login | 6–8h / High / GUIDE_READY |
 | ERP-0002 — user directory không lộ password | REPO_EXISTING repair | 0000, 0001 → `UserDirectory/v1` | DTO projection; Dapper/SP; server paging | SQL/API/DTO/Angular | DB/API/E2E | 6–8h / Medium / PLANNED |
 | ERP-0003 — employee list end-to-end | REPO_EXISTING repair | 0000, 0001 → `EmployeeDirectory/v1` | View→JS→API→SP; paging | SQL/API/DTO/JS/view/project include | DB/API/E2E | 6–8h / Medium / PLANNED |
 | ERP-0004 — employee create/edit/soft-delete | REPO_EXISTING extension | 0003 → `EmployeeLifecycle/v1` | Forms; EF transaction; validation | DB/index/API/form/JS/view | Unit/integration/E2E | 6–8h / High / PLANNED |

@@ -20,7 +20,7 @@
 | WEB-007 | Sửa object trực tiếp bằng SSMS | `web.md` DB workflow | LAB_ONLY / TEST_LAB | CONDITIONAL | DISCOVERED | Chỉ isolated DB; production dùng script versioned |
 | WEB-008 | AngularJS module/controller wiring | `web.md` AngularJS; `Scripts/Angular/...` | REQUIRED_COMPATIBILITY / PRODUCTION | CONDITIONAL | DISCOVERED | ERP-0002+; kiểm tra đúng controller |
 | WEB-009 | UI Router state mapping | `web.md` RouteCtrl/ui-router; Angular route code | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | Khi route hiện hữu cần mở rộng |
-| WEB-010 | EF transaction commit/rollback | `web.md` EF transaction | PREFERRED_CONVENTION / PRODUCTION | SAFE | DISCOVERED | ERP-0004+; mutation đa bước |
+| WEB-010 | EF transaction commit/rollback | `web.md` EF transaction | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0001 credential upgrade/change; later mutations |
 | WEB-011 | CKEditor integration | `web.md` CKEditor; assets hiện có | CONTEXTUAL / STUDY_ONLY | CONDITIONAL | DISCOVERED | Chỉ khi có rich-text requirement |
 | WEB-012 | Render raw HTML bằng trust bypass | `web.md` AngularJS `$sce.trustAsHtml` | REJECTED_UNSAFE / STUDY_ONLY | UNSAFE | DISCOVERED | Cần sanitize/allowlist trước khi cân nhắc |
 | WEB-013 | CKFinder/file upload | `web.md` file upload; upload code trong repo | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | Sau authz, MIME/size/name/path validation |
@@ -39,6 +39,11 @@
 | WEB-026 | Employee autocomplete | `web.md` employee autocomplete | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | ERP-0005; debounced, paged, authorized lookup |
 | WEB-027 | Excel export | `web.md` Excel export; EPPlus 6.0.3 trong source | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | ERP-0008; safe projection + formula sanitation |
 | WEB-028 | Dapper stored-procedure mapping | `web.md` Dapper/SP; Setting controllers | REQUIRED_COMPATIBILITY / PRODUCTION | CONDITIONAL | TESTED | ERP-0000 Dapper API E2E passed; explicit DTO/count completes in ERP-0002 |
+| WEB-029 | Typed MVC form boundary + DataAnnotations | MVC source; current raw login/change binding | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0001 LoginForm/ChangePasswordForm |
+| WEB-030 | Anti-forgery on state-changing MVC POST | Current login/change/logout omit protection | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0001 all three POST actions/forms |
+| WEB-031 | Salted PBKDF2 with verify-time legacy upgrade | Identity Core reference; current MD5 helper/login bypass | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0001; MD5 never used for new writes |
+| WEB-032 | Minimal session identity and POST logout | Current session/layout/logout source | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0001 stores only userid/username and abandons session |
+| WEB-033 | Generic authentication failure response | Current username-specific control flow | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0001 prevents account-state/credential enumeration |
 
 ## Database patterns
 
@@ -81,4 +86,4 @@
 
 ## Coverage policy
 
-ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. Chúng chưa được gọi là `MASTERED`: WEB-006/020/028 và DB-033 còn consumer/UI debt được giao cho ERP-0002. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.
+ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 vào `PLANNED`; chỉ PROMPT 2 PASS trên fingerprint triển khai mới được nâng trạng thái. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.
