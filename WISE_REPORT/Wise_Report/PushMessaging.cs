@@ -29,11 +29,11 @@ namespace Wise_Report
     //    private PushMessaging(Action<IEnumerable<NOTIFICATION>> dispatcher)
     //    {
     //        _dispatcher = dispatcher;
-    //        _connString = @"data source=27.72.61.226,1433;initial catalog=CODE_DATABASE;user id=CodeACC;password=Code@hoplongtech";
     //        _selectQuery = @"SELECT [ID],[NGAY_THONG_BAO],[NGUOI_DUNG],[NOI_DUNG_THONG_BAO] FROM [dbo].[NOTIFICATIONS]";
     //        _newMessageNotifier = new NewMessageNotifier(_connString, _selectQuery);
     //        _newMessageNotifier.NewMessage += NewMessageRecieved;
     //    }
+
 
     //    internal void NewMessageRecieved(object sender, SqlNotificationEventArgs e)
     //    {
