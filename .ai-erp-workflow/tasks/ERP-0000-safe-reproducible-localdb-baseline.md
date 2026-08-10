@@ -6,7 +6,7 @@
 |---|---|
 | Task ID | ERP-0000 |
 | Provenance | `REPO_EXISTING` + baseline-enabling |
-| Active state | `GUIDE_READY` |
+| Active state | `TASK_PASSED` |
 | Human effort | 6–8 giờ |
 | Risk | Medium; destructive recovery được cô lập và double-confirmed |
 | Produced capability | `LocalDatabaseBaseline/v1` |
@@ -19,6 +19,16 @@ State history:
 2. `ROADMAP_READY` — inventory, pattern catalog, capability map và roadmap hợp nhất.
 3. `TASK_PLANNED` — scope/AC/write-set được Task Planner khóa.
 4. `GUIDE_READY` — guide r01 được Implementation Guide Engineer soạn và Adversarial Reviewer review một vòng; corrections được hợp nhất.
+5. `HUMAN_IMPLEMENTING` — human tự triển khai production theo guide.
+6. `READY_FOR_TEST` — human gửi PROMPT 2 cho active task duy nhất.
+7. `TESTING` — tester khóa fingerprint, thêm test-only harness và chạy static/build/DB/API gates.
+8. `TEST_FAIL` — implementation không đạt mandatory AC; không chuyển task.
+9. `HUMAN_FIXING` — human explicitly authorized the agent to apply the corrective production delta.
+10. `READY_FOR_TEST` → `TESTING` — corrected source was tested without weakening assertions.
+11. `TEST_PASS` — report r02 records all ACs passing for fingerprint `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569`.
+12. `TASK_PASSED` — LocalDatabaseBaseline/v1 is available; ERP-0001 may be planned.
+
+Tested source: branch `TEST`, HEAD `5a708fc2fb8c326abfe1077b454ae81c5e78e0f6`, implementation-diff fingerprint `6250581eaedef60edf3a0a7f7419a58004d805d44039a3082cc719a649384033`. Tester không sửa production source.
 
 ## 2. Baseline SHA
 
@@ -211,6 +221,8 @@ Only after PROMPT 2, tester may add/modify:
 - `WISE_REPORT/Tests/ERP-0000/ERP-0000.DbContract.sql`
 - `.ai-erp-workflow/reports/ERP-0000-test-report-r01.md`
 - Test matrix/report summary sections in this central task file.
+
+Human authorization on 2026-08-10 additionally permits versioned workflow control-plane artifacts to be committed for cross-machine handoff. They remain separate from the eight-path production write-set. Human-supplied `docs/markdowns/*` and `prompts/*` remain local inputs, not production changes.
 
 Tester must not edit production C#/config/SQL to make tests pass.
 
@@ -1911,10 +1923,21 @@ Added: the six files under `WISE_REPORT/Database/EmployeeManagementCoreDb`. Modi
 
 ## 20. Test matrix và test report summaries
 
-Initial matrix is AC-01…AC-15 plus `TEST_STRATEGY.md`. Latest test report: none. Planning probes only: Debug build `PASS_WITH_WARNINGS`; restore `NOT_PROVEN`; tests `ABSENT`; target database `BLOCKED_BASELINE`. These probes are not task-test evidence and do not change task state beyond `GUIDE_READY`.
+Latest report: `.ai-erp-workflow/reports/ERP-0000-test-report-r02.md` — `TEST_GATE: PASS`.
+
+Prompt 2 result on 2026-08-10: `TEST_GATE: FAIL_IMPLEMENTATION`. Restore and Full Framework Debug build exit 0, but AC-01 through AC-12 and AC-14 through AC-15 fail; AC-13 also fails as a whole because tracked generated/build artifacts violate its second clause even though compilation passes. Static harness: `PASS=1 FAIL=8 SKIP=0`; clean isolated DB forward fails at 001 with exit 16; verifier/smoke exit 16; numeric-enum API E2E returns HTTP 500. Unit/vstest is `SKIP_ABSENT` because the repository has no test project/assembly. Exact commands, exit codes, sanitized errors, diff inventory and AC-to-test mapping are in report r01.
+
+Root-cause candidates are recorded only as test findings: inverted Users create guard and singular history table in 001; invalid/mismatched procedure contract in 002; nested/unsafe connection configuration; two wrong/missing file paths; and large out-of-scope generated/unrelated diff. No corrective guide is generated in this run.
+
+Corrective execution superseded the failing r01 evidence without deleting it. Final evidence: static + isolated DB lifecycle `PASS=33 FAIL=0 SKIP=0`, restore exit 0, Debug/Release build exit 0, numeric-enum API E2E HTTP 200, generated delta 0, scoped credential-fragment count 0. The tested executable-source fingerprint is `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569`.
 
 ## 21. Final closure / retrospective
 
-Not closed. Closure remains blank until PROMPT 2/3 evidence and `TASK_PASSED`. Known deferred debt: UI enum binding, API password field/total count/exception leakage, missing auth/password verification, hard delete, three Setting SP definitions, marketing SP, Employee API project registration/wiring, EmployeeUnits relationships, credential rotation.
+Closed on 2026-08-10 as `TASK_PASSED`.
 
-Next prompt: after human types the guide, sends PROMPT 2 so the independent tester creates only test-only harness/report and verifies the implementation.
+- Capability delivered: `LocalDatabaseBaseline/v1` with repeatable forward, verifier, transaction-only smoke, guarded exact-object rollback and rebootstrap.
+- Patterns practiced and tested: EF Database First storage contract, View→JS→API→Dapper→SP trace, deterministic server paging, metadata/FK verification, LocalDB ownership guard, rollback/recovery and secretless local configuration.
+- Regression anchors: `Invoke-ERP0000DbContract.ps1 -Phase All`, Full Framework Debug/Release build and numeric-enum IIS Express API E2E.
+- Remaining debt: UI enum binding, API password field/total count/exception leakage, missing authentication/password verification, hard delete, three Setting SP definitions, marketing SP, Employee API project registration/wiring, EmployeeUnits relationships, credential rotation and legacy vulnerable packages.
+
+Next workflow task: ERP-0001 secure session identity, planned only after this closure.

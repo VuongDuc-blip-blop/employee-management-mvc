@@ -4,22 +4,22 @@
 |---|---|
 | Repository URL | `https://github.com/VuongDuc-blip-blop/employee-management-mvc` |
 | Branch | `TEST` |
-| Baseline SHA | `b06df0fdcb9f6997ad71c4eec421e385a233d2c8` |
-| Working-tree fingerprint | `f1d0404ea974c349e91fb4690caa16f214a89bf2f0c81d2a1eb1b7844b4cc8f8` |
-| Source working tree | Tracked source clean; only human-supplied `docs/markdowns/` and `prompts/` remain untracked; workflow artifacts locally excluded |
+| Baseline SHA | Planning baseline `b06df0fdcb9f6997ad71c4eec421e385a233d2c8`; corrected pre-commit HEAD `5a708fc2fb8c326abfe1077b454ae81c5e78e0f6` |
+| Working-tree fingerprint | ERP-0000 tested executable-source fingerprint `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569` |
+| Source working tree | ERP-0000 corrective production/test/workflow delta pending commit; generated build-probe removed; human docs/prompts retained locally |
 | Active task | `ERP-0000 — Safe Reproducible LocalDB Baseline` |
-| Active task state | `GUIDE_READY` |
-| Latest test report | `NONE` — Prompt 2 not run |
-| Roadmap version | `1.0` — 2026-08-09 |
-| Pattern catalog version | `1.0` — 2026-08-09 |
+| Active task state | `TASK_PASSED` |
+| Latest test report | `.ai-erp-workflow/reports/ERP-0000-test-report-r02.md` — `PASS` |
+| Roadmap version | `1.1` — 2026-08-10 |
+| Pattern catalog version | `1.1` — ERP-0000 patterns advanced to `TESTED` |
 | Task guide revision | `r01` — adversarial corrections incorporated |
-| Next required human action | Tự gõ toàn bộ guide r01, self-review exact write-set, rồi gửi PROMPT 2 |
+| Next required human action | Workflow is preparing the full ERP-0001 guide on the corrected commit baseline |
 
 ## State history
 
-`BOOTSTRAPPING → ROADMAP_READY → TASK_PLANNED → GUIDE_READY`
+`BOOTSTRAPPING → ROADMAP_READY → TASK_PLANNED → GUIDE_READY → HUMAN_IMPLEMENTING → READY_FOR_TEST → TESTING → TEST_FAIL → HUMAN_FIXING → READY_FOR_TEST → TESTING → TEST_PASS → TASK_PASSED`
 
-No transition to `HUMAN_IMPLEMENTING` has been made because this run did not edit production/test/SQL objects. Only one task is active. Do not select ERP-0001 until ERP-0000 becomes `TASK_PASSED` after independent test evidence.
+ERP-0000 report r02 is PASS for exact fingerprint `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569`: static + DB lifecycle `33/0/0`, restore/Debug/Release exit 0, IIS Express API HTTP 200, generated delta 0 and scoped secret count 0. ERP-0000 is closed; ERP-0001 is the dependency-ready successor.
 
 ## Baseline gates
 
@@ -27,11 +27,11 @@ No transition to `HUMAN_IMPLEMENTING` has been made because this run did not edi
 |---|---|---|
 | Fetch/checkout | PASS | `TEST`, exact SHA, origin tracking 0/0 at discovery |
 | Source diff | PASS | No tracked source modification |
-| Restore | NOT_PROVEN | Package cache exists; standalone NuGet absent; Prompt 2 must capture MSBuild restore |
+| Restore | PASS_WITH_WARNINGS | Full Framework MSBuild restore exit 0; 18 NU1902/NU1903 vulnerability warnings captured |
 | Debug build | PASS_WITH_WARNINGS | MSBuild exit 0; 4 duplicate-usings + 1 unused-variable warning |
 | Application tests | ABSENT | No application-owned test project/runner |
 | LocalDB engine | AVAILABLE | MSSQLLocalDB exists/runs |
-| Target database | BLOCKED_BASELINE | `EmployeeManagementCoreDb` absent; ERP-0000 supplies guide |
+| Target database | PASS | Forward/rerun/verify/smoke/negative rollback/confirmed rollback/rebootstrap pass on isolated LocalDB; cleanup residue 0 |
 
 ## Release gate audit
 

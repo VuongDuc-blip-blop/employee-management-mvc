@@ -2,22 +2,22 @@
 
 ## State
 
-- Workflow: `GUIDE_READY`.
-- Active: `ERP-0000 — Safe Reproducible LocalDB Baseline`.
-- Baseline: branch `TEST`, SHA `b06df0fdcb9f6997ad71c4eec421e385a233d2c8`.
-- Human mode: tự gõ production/SQL/config.
-- Tester mode: only test-only code/report after PROMPT 2; never production edits.
+- Workflow: `TASK_PASSED` for ERP-0000; preparing ERP-0001.
+- Closed: `ERP-0000 — Safe Reproducible LocalDB Baseline`.
+- Tested fingerprint: `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569`.
+- Latest report: `.ai-erp-workflow/reports/ERP-0000-test-report-r02.md` — PASS.
+- Human authorization: agent corrective implementation/push was explicitly allowed for this run.
 
 ## Read first
 
-1. `.ai-erp-workflow/tasks/ERP-0000-safe-reproducible-localdb-baseline.md` — central task + complete guide r01.
+1. `.ai-erp-workflow/tasks/ERP-0000-safe-reproducible-localdb-baseline.md` — closed task + report r02 summary.
 2. `.ai-erp-workflow/PROJECT_STATE.md` — authoritative state.
 3. `.ai-erp-workflow/DECISIONS.md` — especially DEC-015…018 review corrections.
 4. `.ai-erp-workflow/TEST_STRATEGY.md` — independent verification matrix.
 
 ## Human action
 
-Verify SHA/fingerprint; type steps 01–08 exactly; run step 09 only after reviewing local-only guards; capture results. Do not edit generated EF files or expand missing SP/auth/UI scope. Then send PROMPT 2.
+None for ERP-0000. Use the forthcoming ERP-0001 guide on the company machine after pulling branch `TEST`.
 
 ## Expected implementation write-set
 
@@ -27,7 +27,7 @@ Verify SHA/fingerprint; type steps 01–08 exactly; run step 09 only after revie
 
 ## Known blockers/debt
 
-Restore reproducibility and tests are not proven. Current UI sends an enum string inconsistent with the C# enum contract; API still has password-shaped DTO, page-count total and exception leakage; authentication/password storage/hard-delete remain critical; four other called procedures lack source definitions. These are not ERP-0000 completion claims.
+Restore/build/DB/API baseline is proven. Current UI sends an enum string inconsistent with the C# enum contract; API still has password-shaped DTO, page-count total and exception leakage; authentication/password storage/hard-delete remain critical; four other called procedures lack source definitions. These are explicitly deferred beyond ERP-0000.
 
-WORKFLOW_STATE: GUIDE_READY
-NEXT_HUMAN_ACTION: tự triển khai guide, sau đó gửi PROMPT 2.
+WORKFLOW_STATE: TASK_PASSED
+NEXT_HUMAN_ACTION: chờ ERP-0001 guide được tạo trên corrected commit baseline.

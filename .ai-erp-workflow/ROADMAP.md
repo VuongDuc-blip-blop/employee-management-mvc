@@ -77,8 +77,8 @@ Gửi PROMPT 2 để tester tạo/sửa test-only harness, chạy build/DB smoke
 
 | ID / business outcome | Provenance | Dependencies; consumed → produced contract | Target Web/DB patterns | Expected files/layers | Test level | Effort / risk / status |
 |---|---|---|---|---|---|---|
-| ERP-0000 — clone mới có DB baseline tái lập | REPO_EXISTING / baseline enabling | Build runtime → `LocalDatabaseBaseline/v1` | EF DB First; catalog/FK; SP; paging; safe config | SQL/runbook/config | STATIC, BUILD, DB contract/rollback | 6–8h / Medium / GUIDE_READY |
-| ERP-0001 — đăng nhập xác minh credential an toàn | REPO_EXISTING repair | 0000 → `SessionIdentity/v1` | Form mapping; password hashing; transaction | DB/EDMX refresh, MVC/helper/view | Unit, integration, E2E login | 6–8h / High / PLANNED |
+| ERP-0000 — clone mới có DB baseline tái lập | REPO_EXISTING / baseline enabling | Build runtime → `LocalDatabaseBaseline/v1` | EF DB First; catalog/FK; SP; paging; safe config | SQL/runbook/config | STATIC, BUILD, DB contract/rollback/API E2E | 6–8h / Medium / TASK_PASSED |
+| ERP-0001 — đăng nhập xác minh credential an toàn | REPO_EXISTING repair | 0000 → `SessionIdentity/v1` | Form mapping; password hashing; transaction | DB/EDMX refresh, MVC/helper/view | Unit, integration, E2E login | 6–8h / High / GUIDE_READY |
 | ERP-0002 — user directory không lộ password | REPO_EXISTING repair | 0000, 0001 → `UserDirectory/v1` | DTO projection; Dapper/SP; server paging | SQL/API/DTO/Angular | DB/API/E2E | 6–8h / Medium / PLANNED |
 | ERP-0003 — employee list end-to-end | REPO_EXISTING repair | 0000, 0001 → `EmployeeDirectory/v1` | View→JS→API→SP; paging | SQL/API/DTO/JS/view/project include | DB/API/E2E | 6–8h / Medium / PLANNED |
 | ERP-0004 — employee create/edit/soft-delete | REPO_EXISTING extension | 0003 → `EmployeeLifecycle/v1` | Forms; EF transaction; validation | DB/index/API/form/JS/view | Unit/integration/E2E | 6–8h / High / PLANNED |
