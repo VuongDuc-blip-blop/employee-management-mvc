@@ -1,0 +1,29 @@
+# Decision Log
+
+| ID | Decision | Evidence / rationale | Consequence |
+|---|---|---|---|
+| DEC-001 | Branch baseline là `TEST` tại `b06df0fdcb9f6997ad71c4eec421e385a233d2c8`. | Fetch/checkout/`rev-parse`; source tree không có tracked modification. | Mọi guide anchor/fingerprint gắn với SHA này. |
+| DEC-002 | Source code thật thắng version/convention trong reference. | Source: .NET Framework 4.8, MVC/Web API 5.2.3, EF 6.1.3, Dapper 1.60.1, IdentityModel 6.11.1, EPPlus 6.0.3; RestSharp/Mongo/Redis absent. | Không downgrade/install package chỉ vì tài liệu. |
+| DEC-003 | Chọn ERP-0000 baseline thay vì login/employee slice. | Build pass nhưng target DB absent, SP definitions absent, test project absent. | Phải có DB/test seam trước business work. |
+| DEC-004 | ERP-0000 chỉ định nghĩa `dbo.GetListUser`. | Đây là active HomeLayout flow; các employee/department/report SP có semantics chưa đủ. | Deferred blockers được ghi, không bịa contract. |
+| DEC-005 | `GetListUser` không trả `Password`; total count là result metadata. | API hiện map password là security defect; Dapper chấp nhận cột thiếu và field thành null. | ERP-0002 phải xóa password khỏi DTO/API shape; run này không sửa C#. |
+| DEC-006 | Schema baseline khớp EDMX hiện tại, kể cả các `nvarchar(max)`/nullable conventions chưa tối ưu. | EF Database First mapping là runtime contract ở SHA baseline. | Index/domain tightening là task có EDMX refresh riêng, không silent drift. |
+| DEC-007 | Không sửa generated EDMX/entity/context bằng tay. | Generated context chủ động throw khi Code First; source dùng Database First. | Mọi schema evolution sau này cần controlled DB change + EDMX refresh. |
+| DEC-008 | Local config chỉ dùng `(localdb)\\MSSQLLocalDB`, integrated security, DB riêng `EmployeeManagementCoreDb`. | Remote/shared credentials trong config là critical conflict. | Human phải rotate credential từng commit ngoài repo; artifact không lặp secret. |
+| DEC-009 | Rollback chỉ xóa exact baseline objects trong isolated DB, không drop database. | Reversibility phải có guard và preview. | Không chạy rollback trên shared/remote instance. |
+| DEC-010 | Domain examples sales/inventory/procurement/receivable/warranty là clue, không phải confirmed requirements. | Không có entity/caller/source contract tương ứng. | Đưa vào later roadmap với discovery gate. |
+| DEC-011 | Cấm default pattern: raw credential, plaintext/MD5 password, raw trusted HTML, arbitrary KILL, blanket NOLOCK, destructive manual DML. | Reference chứa lab/unsafe examples; repository có security debt. | Catalog phân loại rõ, guide không copy các pattern này. |
+| DEC-012 | Restore là `NOT_PROVEN`, build là `PASS_WITH_WARNINGS`, tests là `ABSENT`, DB là `BLOCKED_BASELINE`. | Build dùng cache package hiện hữu; không có test project; LocalDB engine có nhưng catalog absent. | PROMPT 2 phải tạo test-only verification và ghi evidence riêng. |
+| DEC-013 | Không sửa production/test/SQL object trong workflow run này. | User authorization chỉ cho planning/guide. | Chỉ `.ai-erp-workflow` và local `.git/info/exclude` thay đổi. |
+| DEC-014 | Source fingerprint của planning baseline là `f1d0404ea974c349e91fb4690caa16f214a89bf2f0c81d2a1eb1b7844b4cc8f8`. | Hash gồm HEAD/status/diff/input reference hashes. | Human kiểm fingerprint trước khi gõ; drift thì regenerate anchors. |
+| DEC-015 | SQL path chuẩn là `WISE_REPORT/Database/EmployeeManagementCoreDb`; SQL 2012 dùng placeholder + `ALTER PROCEDURE`. | Adversarial review phát hiện generic path và tên `CreateOrAlter` dễ ngụ ý cú pháp không tương thích provider token 2012. | Write-set/README/guide dùng một path và `002_UpsertGetListUser.sql`. |
+| DEC-016 | DB có ownership extended property; rollback cần LocalDB + DB name + ownership + two explicit confirmations. | Chỉ kiểm LocalDB/name vẫn có thể chạm một catalog local không thuộc workflow. | Forward không chiếm existing unowned DB; rollback giữ catalog/token và drop exact objects. |
+| DEC-017 | SP reject invalid pages; page size 1–200; chỉ `USERNAME` và enum-derived `ASCENDING`/`DESCENDING`. | Source supplies defaults but no coercion rule; verified C# enum strings differ from copied JS `ASC`. | Không che caller defect; JS binding repair deferred ERP-0002. |
+| DEC-018 | One-result-set `TotalCount` chỉ tồn tại khi page có row. | Current Dapper `Query<User>` ignores extra count and API computes page count; adding multi-result now would widen contract/test harness. | AC documents empty-page limitation; ERP-0002 adopts explicit total consumer/contract. |
+
+## Deferred blockers
+
+- `GetListEmployee`, `Proc_List_Departments01`, `Proc_List_Departments_Count` và `Proc_Get_Report_Header` có caller nhưng không có definitions; từng contract cần task riêng dựa trên semantics thật.
+- Employee API chưa được compile và Employee view dùng user controller script; sửa ở ERP-0003, không lén đưa vào baseline.
+- Login/password/authorization/password DTO defects là critical debt của ERP-0001/0002.
+- Credentials đã từng commit phải được coi là compromised; xóa khỏi working tree không thay thế rotation.
