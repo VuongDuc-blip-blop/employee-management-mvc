@@ -13,7 +13,6 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using Wise_Report.Enum;
 using Wise_Report.Shared.Forms;
-using Wise_Report.Models.BusinessModel;
 
 namespace Wise_Report.Controllers
 {
@@ -35,7 +34,7 @@ namespace Wise_Report.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if(Session["userid"] != null)
+            if (Session["userid"] != null)
             {
                 return RedirectToAction("HomeLayout", "Home");
             }
@@ -57,27 +56,32 @@ namespace Wise_Report.Controllers
             }
 
             var normalizedUserName = form.UserName.Trim();
-            var candidates = db.Users.Where( x =>
-                !x.IsDeleted 
-                && x.ModerationStatus == (int)ModerationStatus.Approved
-                && x.UserName == normalizedUserName
-            ).Take(2)
-            .ToList();
+            var candidates = db.Users
+                .Where(x =>
+                    !x.IsDeleted
+                    && x.ModerationStatus == (int)ModerationStatus.Approved
+                    && x.UserName == normalizedUserName)
+                .Take(2)
+                .ToList();
 
-            var user = candidates.Count == 1 ? candidates[0] : null;
+            var user = candidates.Count == 1
+                ? candidates[0]
+                : null;
             var verification = user == null
                 ? new PasswordCheckResult(false, false)
                 : PasswordSecurity.VerifyPassword(user.Password, form.Password);
 
-            if(user == null || !verification.Succeeded)
+            if (user == null || !verification.Succeeded)
             {
-                ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Tên đăng nhập hoặc mật khẩu không đúng.");
                 return View(form);
             }
 
             if (verification.RequiresUpgrade)
             {
-                using(var transaction = db.Database.BeginTransaction())
+                using (var transaction = db.Database.BeginTransaction())
                 {
                     try
                     {
@@ -87,26 +91,30 @@ namespace Wise_Report.Controllers
                         db.SaveChanges();
                         transaction.Commit();
                     }
-                    catch(Exception ex)
+                    catch (Exception)
                     {
                         transaction.Rollback();
-                        ModelState.AddModelError("", "Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
+                        ModelState.AddModelError(
+                            string.Empty,
+                            "Không thể hoàn tất đăng nhập. Vui lòng thử lại.");
                         return View(form);
                     }
                 }
             }
+
             Session.Clear();
-            Session["userid"] = user.Id;
             Session["username"] = user.UserName;
-     
+            Session["userid"] = user.Id;
+
             return RedirectToAction("HomeLayout", "Home");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
-
             Session.Clear();
             Session.Abandon();
-
             return RedirectToAction("Login");
         }
 
@@ -114,9 +122,6 @@ namespace Wise_Report.Controllers
         {
             return View();
         }
-
-   
-
         //public ActionResult ExportDeNghiCongTacPhi(string tungay, string denngay, string nguoidenghi)
         //{
         //    var username = Session["USERNAME"].ToString(); 
@@ -149,9 +154,9 @@ namespace Wise_Report.Controllers
         [HttpGet]
         public ActionResult ChangePassword()
         {
-            if(Session["userid"] == null)
+            if (Session["userid"] == null)
             {
-                return RedirectToAction("Login","Home");
+                return RedirectToAction("Login");
             }
 
             return View(new ChangePasswordForm());
@@ -162,38 +167,46 @@ namespace Wise_Report.Controllers
         public ActionResult ChangePassword(ChangePasswordForm form)
         {
             Guid userId;
-            if(Session["userid"] == null || !Guid.TryParse(Convert.ToString(Session["userid"]), out userId))
+            if (Session["userid"] == null
+                || !Guid.TryParse(Convert.ToString(Session["userid"]), out userId))
             {
                 return RedirectToAction("Login");
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(form);
             }
 
-            var user = db.Users.SingleOrDefault(x => x.Id == userId && !x.IsDeleted && x.ModerationStatus == (int)ModerationStatus.Approved);
+            var user = db.Users.SingleOrDefault(x =>
+                x.Id == userId
+                && !x.IsDeleted
+                && x.ModerationStatus == (int)ModerationStatus.Approved);
 
-            if(user == null)
+            if (user == null)
             {
-                Session.Clear();   
+                Session.Clear();
                 Session.Abandon();
                 return RedirectToAction("Login");
             }
 
             var currentVerification = PasswordSecurity.VerifyPassword(user.Password, form.CurrentPassword);
 
-            if(!currentVerification.Succeeded)
+            if (!currentVerification.Succeeded)
             {
-                ModelState.AddModelError("", "Mật khẩu hiện tại không đúng.");
+                ModelState.AddModelError(
+                    "CurrentPassword",
+                    "Mật khẩu hiện tại không đúng.");
                 return View(form);
             }
 
             var samePassword = PasswordSecurity.VerifyPassword(user.Password, form.NewPassword);
 
-            if(samePassword.Succeeded)
+            if (samePassword.Succeeded)
             {
-                ModelState.AddModelError("", "Mật khẩu mới không được trùng với mật khẩu hiện tại.");
+                ModelState.AddModelError(
+                    "NewPassword",
+                    "Mật khẩu mới phải khác mật khẩu hiện tại.");
                 return View(form);
             }
 
@@ -207,17 +220,19 @@ namespace Wise_Report.Controllers
                     db.SaveChanges();
                     transaction.Commit();
                 }
-                catch(Exception ex)
+                catch (Exception)
                 {
                     transaction.Rollback();
-                    ModelState.AddModelError("", "Đã xảy ra lỗi trong quá trình thay đổi mật khẩu. Vui lòng thử lại.");
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "Không thể đổi mật khẩu. Vui lòng thử lại.");
                     return View(form);
                 }
-
-                Session.Clear();
-                Session.Abandon();
-                return RedirectToAction("Login");
             }
+
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Login");
         }
 
         //Lưu ảnh

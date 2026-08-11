@@ -27,6 +27,8 @@
 | DEC-023 | ERP-0001 không đổi DB/EDMX/package. | `Users.Password` là `nvarchar(max)` và Identity Core 2.2.2 đã được reference trong project. | Guide chỉ thêm helper/forms và sửa MVC/controller/view/project include; tránh generated drift. |
 | DEC-024 | Legacy MD5 chỉ được verify-and-upgrade; mọi write mới dùng Identity PBKDF2. | Không có plaintext để bulk migrate; giữ MD5 write sẽ tiếp tục credential debt. | Hash hợp lệ được nâng cấp transactionally khi login; malformed data fail closed; API tạo/sửa user plaintext là debt riêng. |
 | DEC-025 | Thành công đổi mật khẩu không dùng TempData sau `Session.Abandon()`. | SessionStateTempDataProvider phụ thuộc session đang bị hủy và có thể làm mất hoặc lưu không nhất quán thông báo. | Guide redirect về login không kèm credential/status data; hành vi bảo mật quan trọng hơn thông báo tạm. |
+| DEC-026 | Human commit `1777fd4` không đạt ERP-0001 gate dù C# build pass. | Legacy upgrade flag false, GET logout, thiếu DataAnnotations, broken/nested Razor form, hidden password và 9 path noise. | Agent correction được phép; generated/setup noise bị loại, Razor bắt buộc test qua IIS. |
+| DEC-027 | ERP-0001 passes at executable fingerprint `1a6cdfb3d3c1caa5d88d598f6813c2ab9fd4dedcbe669f9a2e1e911b4ac09499`. | Final harness `39/0`, unit `9/0`, restore/build/DB/IIS all pass; residue/generated delta 0. | `SessionIdentity/v1` dependency-ready; ERP-0002 may become active after correction commit. |
 
 ## Deferred blockers
 

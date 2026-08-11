@@ -110,8 +110,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse" ng-app="myApp" ng-controller="NotificationCtrl" style="padding-right:0;">
     <div class="wrapper" style="background-color:#fff">
+        <input type="hidden" value="@Session["fullname"]" id="fullname" />
         <input type="hidden" value="@Session["username"]" id="username" />
-        <input type="hidden" value="@Session["password"]" id="password" />
         <input type="hidden" value="@Session["userid"]" id="userid" />
 
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">

@@ -4,16 +4,16 @@
 |---|---|
 | Repository URL | `https://github.com/VuongDuc-blip-blop/employee-management-mvc` |
 | Branch | `TEST` |
-| Baseline SHA | ERP-0001 production-source baseline `09482ed60642ab3f6a3ff4a1956b421ecfb278df`; latest `TEST` additionally carries guide/state artifacts only |
-| Working-tree fingerprint | Production tree equals the committed ERP-0000 PASS baseline; tested ERP-0000 executable-source fingerprint `b3d428c179b3f3594da31394700766a0d2e8de08809725fc4bf909b5592fa569` |
-| Source working tree | At guide publication, `WISE_REPORT` has no ERP-0001 delta from source baseline; guide/state artifacts are versioned, while human `docs/` and `prompts/` inputs remain local/untracked |
+| Baseline SHA | ERP-0001 human implementation pulled at `1777fd4174381900a0a153575a0e6d02f2c2dc0e`; corrected content will be the ERP-0002 source baseline |
+| Working-tree fingerprint | ERP-0001 tested executable-source fingerprint `1a6cdfb3d3c1caa5d88d598f6813c2ab9fd4dedcbe669f9a2e1e911b4ac09499` |
+| Source working tree | ERP-0001 corrected production/test/report content is ready to version; human `docs/` and `prompts/` inputs remain local/untracked |
 | Active task | `ERP-0001 — Secure Session Identity and Legacy Password Upgrade` |
-| Active task state | `GUIDE_READY` |
-| Latest test report | `.ai-erp-workflow/reports/ERP-0000-test-report-r02.md` — `PASS` |
+| Active task state | `TASK_PASSED` |
+| Latest test report | `.ai-erp-workflow/reports/ERP-0001-test-report-r01.md` — `PASS` |
 | Roadmap version | `1.1` — 2026-08-10 |
-| Pattern catalog version | `1.2` — ERP-0001 identity patterns classified `PLANNED` |
-| Task guide revision | ERP-0001 `r01` — full line-by-line guide on exact commit baseline |
-| Next required human action | Pull branch `TEST` on the company machine, implement ERP-0001 guide r01 exactly, then send PROMPT 2 |
+| Pattern catalog version | `1.3` — ERP-0001 identity patterns advanced to `MASTERED` |
+| Task guide revision | ERP-0001 `r01` implemented and independently tested |
+| Next required human action | None for ERP-0001; workflow is preparing the ERP-0002 guide |
 
 ## State history
 
@@ -37,7 +37,7 @@ ERP-0000 report r02 is PASS for exact fingerprint `b3d428c179b3f3594da3139470076
 
 Task Planner, Implementation Guide Engineer and Adversarial Reviewer completed. Reviewer initially held release for wrong JS anchor, database-level rollback, SQL/version/path inconsistency and validation ambiguity. Guide r01 now uses `Projects.js`, SQL 2012 placeholder + ALTER, DB-specific path, ownership token, strict source-derived sort, and transaction-wrapped exact-object rollback. Known API/UI/auth debts remain explicitly deferred.
 
-ERP-0001 guide r01 was source-reviewed for the orphan `[HttpPost]` attribute before `ChangePassword`, duplicate usernames, classic csproj registration, Razor form nesting, anti-forgery coverage, session data, legacy-hash boundary and PowerShell command compatibility. Its standalone form/helper/controller snippets compile in an in-memory Full Framework compatibility check; actual application build and runtime evidence remain mandatory after human implementation.
+ERP-0001 report r01 proves the typed form/helper/controller/Razor/session contract with `39/0` final gates. Corrections fixed legacy upgrade, POST-only logout, validation/confirmation, the nested/broken Razor form, hidden password output, unexpected setup script and generated-file noise. Test deployment was restored byte-for-byte; fixture residue and IIS process residue are zero.
 
-WORKFLOW_STATE: GUIDE_READY
-NEXT_HUMAN_ACTION: pull branch TEST, tự triển khai ERP-0001 guide r01, sau đó gửi PROMPT 2.
+WORKFLOW_STATE: TASK_PASSED
+NEXT_HUMAN_ACTION: chờ ERP-0002 implementation guide được push lên branch TEST.

@@ -6,7 +6,7 @@
 |---|---|
 | Task ID | `ERP-0001` |
 | Provenance | `REPO_EXISTING repair` |
-| Active state | `GUIDE_READY` |
+| Active state | `TASK_PASSED` |
 | Human effort | 6–8 giờ |
 | Risk | High — authentication and credential migration |
 | Produced capability | `SessionIdentity/v1` |
@@ -17,6 +17,9 @@ State history:
 
 1. `TASK_PLANNED` — selected after ERP-0000 report r02 passed.
 2. `GUIDE_READY` — source-first guide prepared against commit `09482ed60642ab3f6a3ff4a1956b421ecfb278df` and self-reviewed against the adversarial checklist.
+3. `HUMAN_IMPLEMENTING → READY_FOR_TEST` — human implementation pushed as `1777fd4174381900a0a153575a0e6d02f2c2dc0e`.
+4. `TESTING → TEST_FAIL` — exact-diff/static review found credential-upgrade, logout, validation, Razor, hidden-password and generated-noise defects.
+5. `AGENT_FIXING → TESTING → TEST_PASS → TASK_PASSED` — corrections retained all assertions; final gate `39/0`, report r01.
 
 ## 2. Baseline SHA
 
@@ -1156,8 +1159,14 @@ Rollback: revert only the eight listed production paths. No database rollback is
 
 ## 20. Test matrix và test report summaries
 
-Initial matrix is AC-01…AC-12. Latest test report: none. ERP-0000 report r02 is prerequisite evidence only and cannot be reused as ERP-0001 PASS evidence.
+All AC-01…AC-12 passed at executable-source fingerprint `1a6cdfb3d3c1caa5d88d598f6813c2ab9fd4dedcbe669f9a2e1e911b4ac09499`.
+
+- Latest report: `.ai-erp-workflow/reports/ERP-0001-test-report-r01.md`.
+- Final gate: `PASS=39 FAIL=0`; helper unit sub-suite `PASS=9 FAIL=0`.
+- Restore, Debug and Release exited 0; four pre-existing compiler warnings and 18 known-package vulnerability warnings remain recorded debt.
+- DB bootstrap/rerun/verifier/smoke, IIS login/account-state/change/logout/anti-forgery journeys and cleanup all passed.
+- Corrected cumulative production diff is exactly the eight allowed paths; generated delta and fixture residue are zero.
 
 ## 21. Final closure / retrospective
 
-Not closed. Closure requires exact-fingerprint Prompt 2 evidence. If any gate fails, append corrective guide revision r02; do not advance to ERP-0002.
+Closed as `TASK_PASSED`. Human implementation showed why classic C# build alone is insufficient: the broken Razor form compiled only at runtime, while a missing legacy-upgrade flag and GET logout were syntactically valid. Independent static/unit/DB/IIS seams caught all three classes of defect. ERP-0002 may now become the single active task; it must retain ERP-0001 login/logout regression coverage.

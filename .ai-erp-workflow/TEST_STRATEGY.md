@@ -49,6 +49,8 @@ Run planning này không tạo/sửa test code và không thực thi SQL object 
 | T01-11 | Security scan | No raw/MD5 write, exception leakage, credential echo, reusable fixture secret or unrelated generated diff |
 | T01-12 | Source fingerprint | Report binds PASS/FAIL to exact branch, HEAD, status/diff fingerprint and allowed write-set |
 
+Result: report r01 `PASS=39 FAIL=0` at executable fingerprint `1a6cdfb3d3c1caa5d88d598f6813c2ab9fd4dedcbe669f9a2e1e911b4ac09499`; no skipped gate.
+
 ## Environment and commands policy
 
 - Chỉ chạy destructive DB test trên exact isolated LocalDB database; kiểm tra `SERVERPROPERTY('ServerName')` và `DB_NAME()` trước.
