@@ -110,7 +110,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse" ng-app="myApp" ng-controller="NotificationCtrl" style="padding-right:0;">
     <div class="wrapper" style="background-color:#fff">
-        <input type="hidden" value="@Session["fullname"]" id="fullname" />
         <input type="hidden" value="@Session["username"]" id="username" />
         <input type="hidden" value="@Session["password"]" id="password" />
         <input type="hidden" value="@Session["userid"]" id="userid" />
@@ -150,9 +149,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <i class="mdi mdi-cached mr-2 text-success"></i> Change Password
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Home/Login">
-                                <i class="mdi mdi-logout mr-2 text-primary"></i> Signout
-                            </a>
+                            @using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { @class = "m-0" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="dropdown-item border-0 bg-transparent">
+                                    <i class="mdi mdi-logout mr-2 text-primary"></i> Signout
+                                </button>
+                            }
                         </div>
                     </li>
                     <li class="nav-item d-none d-lg-block full-screen-link">
@@ -197,10 +200,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <h5 style="cursor:pointer;color:red" class="p-3 mb-0 text-center" ng-click="openlink('/Notification/Notifications')">See all notifications</h5>
                         </div>
                     </li>
-                    <li class="nav-item nav-logout d-none d-lg-block">
-                        <a class="nav-link" href="/Home/Login">
-                            <i class="mdi mdi-power"></i>
-                        </a>
+                     <li class="nav-item nav-logout d-none d-lg-block">
+                        @using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { @class = "m-0" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="nav-link border-0 bg-transparent">
+                                <i class="mdi mdi-power"></i>
+                            </button>
+                        }
                     </li>
                     <li class="nav-item nav-settings d-none d-lg-block">
                         <a class="nav-link" href="#">

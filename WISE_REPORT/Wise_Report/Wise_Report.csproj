@@ -324,6 +324,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BusinessModel\Commons.cs" />
+    <Compile Include="Models\BusinessModel\PasswordSecurity.cs" />
     <Compile Include="Models\BusinessModel\ProjectManagements.cs" />
     <Compile Include="Models\BusinessModel\ThamSo.cs" />
     <Compile Include="Models\BusinessModel\XuLyNgayThang.cs" />
@@ -366,8 +367,10 @@
     <Compile Include="Shared\DataSeeded\SeededAdmin.cs" />
     <Compile Include="Shared\Dtos\EmployeePageItem.cs" />
     <Compile Include="Shared\Dtos\UserPageItem.cs" />
+    <Compile Include="Shared\Forms\ChangePasswordForm.cs" />
     <Compile Include="Shared\Forms\CreateEmployeeForm.cs" />
     <Compile Include="Shared\Forms\CreateUserForm.cs" />
+    <Compile Include="Shared\Forms\LoginForm.cs" />
     <Compile Include="Shared\Forms\UpdateEmployeeForm.cs" />
     <Compile Include="Shared\Forms\UpdateUserForm.cs" />
     <Compile Include="Shared\Queries\Base\BaseQuery.cs" />

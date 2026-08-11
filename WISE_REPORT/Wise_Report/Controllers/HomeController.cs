@@ -11,6 +11,9 @@ using Microsoft.Ajax.Utilities;
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using Wise_Report.Enum;
+using Wise_Report.Shared.Forms;
+using Wise_Report.Models.BusinessModel;
 
 namespace Wise_Report.Controllers
 {
@@ -28,38 +31,81 @@ namespace Wise_Report.Controllers
         {
             return View();
         }
+
+        [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            if(Session["userid"] != null)
+            {
+                return RedirectToAction("HomeLayout", "Home");
+            }
+
+            return View(new LoginForm());
         }
         public ActionResult Index()
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginForm form)
         {
-            string passwordMD5 = Commons.MD5Hash(password);
-            var user = db.Users.SingleOrDefault(x => x.UserName == username );
-            if (user != null)
+            if (!ModelState.IsValid)
             {
-
-                Session["username"] = user.UserName;
-                Session["userid"] = user.Id;
-
-
-                return RedirectToAction("HomeLayout", "Home");
-                //return RedirectToAction("Dashboard/Index");
+                return View(form);
             }
-            ViewBag.error = "User and Password wrong!!!";
-            return View();
+
+            var normalizedUserName = form.UserName.Trim();
+            var candidates = db.Users.Where( x =>
+                !x.IsDeleted 
+                && x.ModerationStatus == (int)ModerationStatus.Approved
+                && x.UserName == normalizedUserName
+            ).Take(2)
+            .ToList();
+
+            var user = candidates.Count == 1 ? candidates[0] : null;
+            var verification = user == null
+                ? new PasswordCheckResult(false, false)
+                : PasswordSecurity.VerifyPassword(user.Password, form.Password);
+
+            if(user == null || !verification.Succeeded)
+            {
+                ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
+                return View(form);
+            }
+
+            if (verification.RequiresUpgrade)
+            {
+                using(var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        user.Password = PasswordSecurity.HashPassword(form.Password);
+                        user.LastModifiedAt = DateTime.UtcNow;
+                        user.LastModifiedBy = user.Id;
+                        db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch(Exception ex)
+                    {
+                        transaction.Rollback();
+                        ModelState.AddModelError("", "Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
+                        return View(form);
+                    }
+                }
+            }
+            Session.Clear();
+            Session["userid"] = user.Id;
+            Session["username"] = user.UserName;
+     
+            return RedirectToAction("HomeLayout", "Home");
         }
         public ActionResult Logout()
         {
 
-            Session["userid"] = null;
-            Session["username"] = null;
-            Session["fullname"] = null;
+            Session.Clear();
+            Session.Abandon();
 
             return RedirectToAction("Login");
         }
@@ -69,7 +115,7 @@ namespace Wise_Report.Controllers
             return View();
         }
 
-        [HttpPost]
+   
 
         //public ActionResult ExportDeNghiCongTacPhi(string tungay, string denngay, string nguoidenghi)
         //{
@@ -100,56 +146,78 @@ namespace Wise_Report.Controllers
 
 
         //}
-        public ActionResult ChangePassword(string username, string password_old, string password_new, string password_new_confirm)
+        [HttpGet]
+        public ActionResult ChangePassword()
         {
-            string passwordMD5_new = "", passwordMD5_new_confirm = "", passwordMD5_old = "";
-
-            username = Session["username"].ToString();
-
-
-            if (password_new!=null && password_new_confirm!=null)
-            {                
-                if (password_old != "" && password_old != null)
-                    passwordMD5_old = Commons.MD5Hash(password_old);
-                if (password_new != "" && password_new != null)
-                    passwordMD5_new = Commons.MD5Hash(password_new);
-                if (password_new_confirm != "" && password_new_confirm != null)
-                    passwordMD5_new_confirm = Commons.MD5Hash(password_new_confirm);
-
-                if (passwordMD5_new_confirm != passwordMD5_new)
-                {
-                    ViewBag.error = "Nhập mật khẩu mới không khớp!";
-                }
-                else
-                {
-                    var user = db.Users.SingleOrDefault(x => x.UserName == username && x.Password == passwordMD5_old );
-                    if (user != null)
-                    {
-                        try
-                        {
-                            user.Password = passwordMD5_new;
-                            db.SaveChanges();
-
-                            Session["username"] = user.UserName;
-
-                            Session["userid"] = user.Id;
-                            ViewBag.susscess = "Đổi mật khẩu thành công!";
-                            //return RedirectToAction("Index", "Dashboard/Index");
-
-                        }
-                        catch (Exception ex)
-                        {
-                            ViewBag.error = "Đổi mật khẩu không thành công!";
-                        }
-                        //return RedirectToAction("Dashboard/Index");
-                    }
-                    else
-                        ViewBag.error = "Nhập sai mật khẩu cũ!";
-                }
+            if(Session["userid"] == null)
+            {
+                return RedirectToAction("Login","Home");
             }
 
-            ViewBag.username = username;
-            return View();
+            return View(new ChangePasswordForm());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordForm form)
+        {
+            Guid userId;
+            if(Session["userid"] == null || !Guid.TryParse(Convert.ToString(Session["userid"]), out userId))
+            {
+                return RedirectToAction("Login");
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return View(form);
+            }
+
+            var user = db.Users.SingleOrDefault(x => x.Id == userId && !x.IsDeleted && x.ModerationStatus == (int)ModerationStatus.Approved);
+
+            if(user == null)
+            {
+                Session.Clear();   
+                Session.Abandon();
+                return RedirectToAction("Login");
+            }
+
+            var currentVerification = PasswordSecurity.VerifyPassword(user.Password, form.CurrentPassword);
+
+            if(!currentVerification.Succeeded)
+            {
+                ModelState.AddModelError("", "Mật khẩu hiện tại không đúng.");
+                return View(form);
+            }
+
+            var samePassword = PasswordSecurity.VerifyPassword(user.Password, form.NewPassword);
+
+            if(samePassword.Succeeded)
+            {
+                ModelState.AddModelError("", "Mật khẩu mới không được trùng với mật khẩu hiện tại.");
+                return View(form);
+            }
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    user.Password = PasswordSecurity.HashPassword(form.NewPassword);
+                    user.LastModifiedAt = DateTime.UtcNow;
+                    user.LastModifiedBy = user.Id;
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                    ModelState.AddModelError("", "Đã xảy ra lỗi trong quá trình thay đổi mật khẩu. Vui lòng thử lại.");
+                    return View(form);
+                }
+
+                Session.Clear();
+                Session.Abandon();
+                return RedirectToAction("Login");
+            }
         }
 
         //Lưu ảnh
