@@ -35,12 +35,12 @@ namespace Wise_Report.Api.Setting
         [Route("api/Api_UserController/GetListUser")]
         public IHttpActionResult GetListUser(UserPageQuery query)
         {
-            if(query == null)
+            if (query == null)
             {
-                return BadRequest("Request body is required");
+                return BadRequest("Request body is required.");
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -48,29 +48,49 @@ namespace Wise_Report.Api.Setting
             try
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("Search", string.IsNullOrWhiteSpace(query.SearchKeyword) ? null : query.SearchKeyword.Trim(), DbType.String);
+                parameters.Add(
+                    "Search",
+                    string.IsNullOrWhiteSpace(query.SearchKeyword)
+                        ? null
+                        : query.SearchKeyword.Trim(),
+                    DbType.String);
                 parameters.Add("PageNumber", query.PageIndex, DbType.Int32);
                 parameters.Add("PageSize", query.PageSize, DbType.Int32);
                 parameters.Add("SortColumn", query.SortColumn, DbType.String);
-                parameters.Add("SortDirection", query.SortDirection == SortDirectionEnum.Ascending ? "ASCENDING" : "DESCENDING", DbType.String);
+                parameters.Add(
+                    "SortDirection",
+                    query.SortDirection == SortDirectionEnum.Ascending
+                        ? "ASCENDING"
+                        : "DESCENDING",
+                    DbType.AnsiString);
+                parameters.Add(
+                    "TotalCount",
+                    dbType: DbType.Int64,
+                    direction: ParameterDirection.Output);
 
-                var rows = db.Database.Connection.Query<UserPageRow>("GetListUser", parameters, commandType: CommandType.StoredProcedure).ToList();
-                var data = rows.Select(x => new UserPageItem
+                var rows = db.Database.Connection
+                    .Query<UserPageRow>(
+                        "GetListUser",
+                        parameters,
+                        commandType: CommandType.StoredProcedure,
+                        commandTimeout: 20)
+                    .ToList();
+
+                var data = rows.Select(row => new UserPageItem
                 {
-                    Id = x.Id,
-                    UserName = x.UserName,
-                    CreatedAt = x.CreatedAt,
-                    ModerationStatus = x.ModerationStatus
+                    Id = row.Id,
+                    UserName = row.UserName,
+                    CreatedAt = row.CreatedAt,
+                    ModerationStatus = row.ModerationStatus
                 }).ToList();
 
                 return Ok(new PagedResult<UserPageItem>
                 {
-                    Items = data,
-                    TotalData = rows.Count > 0 ? rows.Count : 0,
+                    Data = data,
+                    TotalData = parameters.Get<long>("TotalCount"),
                     PageIndex = query.PageIndex,
                     PageSize = query.PageSize
                 });
-
             }
             catch (Exception)
             {

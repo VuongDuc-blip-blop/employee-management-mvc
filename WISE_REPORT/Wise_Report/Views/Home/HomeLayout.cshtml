@@ -39,7 +39,7 @@
     @*<script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>*@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>s
+    <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
 
     @*<script>
             // Khởi tạo CKEditor
@@ -56,7 +56,7 @@
 
     <div class="container-scroller" ng-controller="ProjectsCtrl">
 
-               <h3>Danh sách người dùng</h3>
+        <h3>Danh sách người dùng</h3>
         <button class="btn btn-success" ng-click="OpenAdd()">Thêm</button>
         <button type="button" class="btn btn-info" ng-click="XuatExcel()">Xuất Excel</button>
 
@@ -66,10 +66,10 @@
                     <input type="text"
                            class="form-control"
                            ng-model="userQuery.SearchKeyword"
-                           ng-keyup="$event.keyCode === 13 && SearchUser()"
+                           ng-keyup="$event.keyCode === 13 && SearchUsers()"
                            placeholder="Tìm theo tên người dùng" />
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" ng-click="SearchUser()">
+                        <button type="button" class="btn btn-primary" ng-click="SearchUsers()">
                             Tìm kiếm
                         </button>
                     </span>
@@ -494,4 +494,3 @@
 
 
 </script>
-

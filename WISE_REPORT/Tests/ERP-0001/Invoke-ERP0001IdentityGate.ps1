@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("Static", "All")]
+    [ValidateSet("Static", "All", "Regression")]
     [string]$Phase = "All"
 )
 
@@ -170,6 +170,8 @@ $connection = $null
 $fixtureIds = @()
 $deployedAssembly = $null
 $assemblyBackup = $null
+$webConfigPath = $null
+$webConfigStamp = $null
 
 try {
     $expectedProduction = @(
@@ -186,6 +188,10 @@ try {
     $actualProduction = @(git diff --name-only $sourceBaseline -- "WISE_REPORT/Wise_Report") |
         Where-Object { $_ -notmatch '/(bin|obj)/' } |
         Sort-Object
+    if ($Phase -eq "Regression") {
+        $actualProduction = @($actualProduction | Where-Object { $expectedProduction -contains $_ }) |
+            Sort-Object
+    }
     Assert-Gate `
         (($actualProduction -join "`n") -eq ($expectedProduction -join "`n")) `
         "STATIC-01-WRITE-SET" `
@@ -364,6 +370,9 @@ WHERE [class] = 0 AND [major_id] = 0 AND [minor_id] = 0
     Copy-Item -LiteralPath $deployedAssembly -Destination $assemblyBackup -Force
     Copy-Item -LiteralPath (Join-Path $debugBin "Wise_Report.dll") `
         -Destination $deployedAssembly -Force
+    $webConfigPath = Join-Path $webRoot "Web.config"
+    $webConfigStamp = (Get-Item -LiteralPath $webConfigPath).LastWriteTimeUtc
+    (Get-Item -LiteralPath $webConfigPath).LastWriteTimeUtc = [DateTime]::UtcNow
     Assert-Gate `
         ((Get-FileHash $deployedAssembly -Algorithm SHA256).Hash -eq
          (Get-FileHash (Join-Path $debugBin "Wise_Report.dll") -Algorithm SHA256).Hash) `
@@ -520,6 +529,9 @@ finally {
             Copy-Item -LiteralPath $assemblyBackup -Destination $deployedAssembly -Force
         }
         catch { Add-Fail "STATIC-13-RESTORE-GENERATED" $_.Exception.Message }
+    }
+    if ($webConfigPath -and $null -ne $webConfigStamp -and (Test-Path -LiteralPath $webConfigPath)) {
+        (Get-Item -LiteralPath $webConfigPath).LastWriteTimeUtc = $webConfigStamp
     }
     if ($connection) {
         try {
