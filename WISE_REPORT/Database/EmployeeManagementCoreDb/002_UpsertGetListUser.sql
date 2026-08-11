@@ -25,7 +25,8 @@ ALTER PROCEDURE [dbo].[GetListUser]
     @PageNumber int,
     @PageSize int,
     @SortColumn nvarchar(50),
-    @SortDirection varchar(10)
+    @SortDirection varchar(10),
+    @TotalCount bigint = NULL OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -78,6 +79,16 @@ BEGIN
                 N'[', N'~[')
             + N'%';
     END;
+
+    SELECT @TotalCount = COUNT_BIG(1)
+    FROM [dbo].[Users] AS [U]
+    WHERE
+        [U].[IsDeleted] = CONVERT(bit, 0)
+        AND
+        (
+            @SearchPattern IS NULL
+            OR [U].[UserName] LIKE @SearchPattern ESCAPE N'~'
+        );
 
     SELECT
         [U].[Id],

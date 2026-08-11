@@ -300,17 +300,19 @@ DECLARE @ExpectedParameters TABLE
     [ParameterId] int NOT NULL PRIMARY KEY,
     [ParameterName] sysname NOT NULL,
     [TypeName] sysname NOT NULL,
-    [MaxLength] smallint NOT NULL
+    [MaxLength] smallint NOT NULL,
+    [IsOutput] bit NOT NULL
 );
 
 INSERT INTO @ExpectedParameters
-    ([ParameterId], [ParameterName], [TypeName], [MaxLength])
+    ([ParameterId], [ParameterName], [TypeName], [MaxLength], [IsOutput])
 VALUES
-    (1, N'@Search', N'nvarchar', -1),
-    (2, N'@PageNumber', N'int', 4),
-    (3, N'@PageSize', N'int', 4),
-    (4, N'@SortColumn', N'nvarchar', 100),
-    (5, N'@SortDirection', N'varchar', 10);
+    (1, N'@Search', N'nvarchar', -1, 0),
+    (2, N'@PageNumber', N'int', 4, 0),
+    (3, N'@PageSize', N'int', 4, 0),
+    (4, N'@SortColumn', N'nvarchar', 100, 0),
+    (5, N'@SortDirection', N'varchar', 10, 0),
+    (6, N'@TotalCount', N'bigint', 8, 1);
 
 IF EXISTS
 (
@@ -326,16 +328,18 @@ IF EXISTS
         OR [P].[name] <> [E].[ParameterName]
         OR [TY].[name] <> [E].[TypeName]
         OR [P].[max_length] <> [E].[MaxLength]
+        OR [P].[is_output] <> [E].[IsOutput]
 )
 OR
 (
     SELECT COUNT_BIG(1)
     FROM [sys].[parameters]
     WHERE [object_id] = OBJECT_ID(N'dbo.GetListUser', N'P')
-) <> 5
+) <> 6
 BEGIN
     THROW 51113, 'dbo.GetListUser parameters are incompatible.', 1;
 END;
+
 
 DECLARE @ActualResult TABLE
 (

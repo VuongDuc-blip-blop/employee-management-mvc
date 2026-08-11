@@ -9,22 +9,70 @@
     $scope.sua = false
     $scope.tukhoa1 = ''
     //-----=======================WORKFLOW=====================================================================================
-    $scope.GetListUser = function () {
-        var data = {
-            SearchKeyword: "",
-            PageIndex: 1,
-            PageSize:20,
-            SortColumn: "USERNAME",
-            SortDirection: "ASC"
-        }
-        $http.post(origin + '/api/Api_UserController/GetListUser', data).then(function (response) {
-            console.log(response)
-            console.log(response.data.Data)
-            $scope.listUser = response.data.Data;
-            //console.log(response.data)
-        });
+    $scope.userQuery = {
+        SearchKeyword:"",
+        PageIndex: 1,
+        PageSize: 20,
+        SortColumn:"USERNAME",
+        SortDirection: 1
     }
-    $scope.GetListUser()
+    $scope.userTotalData = 0;
+    $scope.userListError = "";
+
+    $scope.GetListUser = function (){
+        $scope.userListError = "";
+        console.log("Fetching user list with query:", $scope.userQuery);
+        return $http.post(
+            origin + '/api/Api_UserController/GetListUser',
+            angular.copy($scope.userQuery)
+        )
+        .then(function (response){
+            var page = response.data || {};
+            $scope.listUser = angular.isArray(page.Items) ? page.Items : [];
+            $scope.userTotalData = page.TotalData || 0;
+        }, function(error){
+            console.log("Error fetching user list:", error);
+            console.log("Error Status:", error.status);
+            console.log("Error Data:", error.data);
+            console.log("Error Headers:", error.headers);
+
+            $scope.listUser = [];
+            $scope.userTotalData = 0;
+            $scope.userListError = "Không thể tải danh sách người dùng.";
+        });
+    };
+
+    $scope.SearchUser = function (){
+        $scope.userQuery.PageIndex = 1;
+        return $scope.GetListUser();
+    }
+
+    $scope.ToggleUserNameSort = function (){
+        $scope.userQuery.SortDirection = $scope.userQuery.SortDirection === 1 ? 2 : 1;
+        $scope.userQuery.PageIndex = 1;
+        return $scope.GetListUser();
+    }
+
+    $scope.GetUserPageCount = function(){
+        return Math.max(1, Math.ceil($scope.userTotalData / $scope.userQuery.PageSize));
+    }
+
+    $scope.PreviousUserPage = function (){
+        if($scope.userQuery.PageIndex > 1){
+            $scope.userQuery.PageIndex--;
+            return $scope.GetListUser();
+        }
+    }
+
+    $scope.NextUserPage = function (){
+        if($scope.userQuery.PageIndex < $scope.GetUserPageCount()){
+            $scope.userQuery.PageIndex++;
+            return $scope.GetListUser();
+        }
+    }
+
+    $scope.GetListUser();
+
 
     $scope.AddUser = () => {
         var data = {
@@ -74,7 +122,7 @@
             case 0:
                 return "Đang chờ duyệt";
             case 1:
-                return "Đã duyệt";``
+                return "Đã duyệt";
             case 2:
                 return "Bị từ chối";
             default:

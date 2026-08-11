@@ -13,6 +13,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using Wise_Report.Enum;
 using Wise_Report.Shared.Forms;
+using Wise_Report.Shared.Dtos;
 
 namespace Wise_Report.Controllers
 {

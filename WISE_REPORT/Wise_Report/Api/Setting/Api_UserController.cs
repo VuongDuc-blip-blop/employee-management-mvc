@@ -35,44 +35,46 @@ namespace Wise_Report.Api.Setting
         [Route("api/Api_UserController/GetListUser")]
         public IHttpActionResult GetListUser(UserPageQuery query)
         {
-            
+            if(query == null)
+            {
+                return BadRequest("Request body is required");
+            }
+
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                var returnedData =  db.Database.Connection.Query<User>("GetListUser", new
-                {
-                    Search = string.IsNullOrWhiteSpace(query.SearchKeyword) ? null : query.SearchKeyword,
-                    PageNumber = query.PageIndex,
-                    PageSize = query.PageSize,
-                    SortColumn = query.SortColumn,
-                    SortDirection = query.SortDirection.ToString().ToUpper()
-                }
-                , commandType: CommandType.StoredProcedure, commandTimeout: 20);
+                var parameters = new DynamicParameters();
+                parameters.Add("Search", string.IsNullOrWhiteSpace(query.SearchKeyword) ? null : query.SearchKeyword.Trim(), DbType.String);
+                parameters.Add("PageNumber", query.PageIndex, DbType.Int32);
+                parameters.Add("PageSize", query.PageSize, DbType.Int32);
+                parameters.Add("SortColumn", query.SortColumn, DbType.String);
+                parameters.Add("SortDirection", query.SortDirection == SortDirectionEnum.Ascending ? "ASCENDING" : "DESCENDING", DbType.String);
 
-                var mappedDto = returnedData.Select(x => new UserPageItem
+                var rows = db.Database.Connection.Query<UserPageRow>("GetListUser", parameters, commandType: CommandType.StoredProcedure).ToList();
+                var data = rows.Select(x => new UserPageItem
                 {
                     Id = x.Id,
                     UserName = x.UserName,
-                    Password = x.Password,
                     CreatedAt = x.CreatedAt,
-                    ModerationStatus = (int)x.ModerationStatus
+                    ModerationStatus = x.ModerationStatus
                 }).ToList();
-                var totalData = returnedData.Count();
-                var pageIndex = query.PageIndex;
-                var pageSize = query.PageSize;
 
-                
-                return Ok(new
+                return Ok(new PagedResult<UserPageItem>
                 {
-                    Data = mappedDto,
-                    TotalData = totalData,
-                    PageIndex = pageIndex,
-                    PageSize = pageSize
+                    Items = data,
+                    TotalData = rows.Count > 0 ? rows.Count : 0,
+                    PageIndex = query.PageIndex,
+                    PageSize = query.PageSize
                 });
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
-                return InternalServerError(ex);
+                return InternalServerError();
             }
         }
 

@@ -192,6 +192,10 @@ F:\CODE_NEW\GIGA_NEW\test\WISE_REPORT\Wise_Report\bin\System.Runtime.CompilerSer
 F:\CODE_NEW\GIGA_NEW\test\WISE_REPORT\Wise_Report\bin\System.Threading.Tasks.Extensions.xml
 F:\CODE_NEW\GIGA_NEW\test\WISE_REPORT\Wise_Report\bin\System.ValueTuple.xml
 F:\CODE_NEW\GIGA_NEW\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Rep.0DBE064D.Up2Date
+C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.csproj.AssemblyReference.cache
+C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.Migrations.addre.resources
+C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.csproj.GenerateResource.cache
+C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.csproj.CoreCompileInputs.cache
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\ApplicationInsights.config
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\roslyn\csc.exe
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -235,10 +239,6 @@ C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\System.Ide
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\bin\System.ValueTuple.xml
-C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.csproj.AssemblyReference.cache
-C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.Migrations.addre.resources
-C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.csproj.GenerateResource.cache
-C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.csproj.CoreCompileInputs.cache
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Rep.0DBE064D.Up2Date
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.dll
 C:\Users\vuongkd\Desktop\Development\test\WISE_REPORT\Wise_Report\obj\Debug\Wise_Report.pdb

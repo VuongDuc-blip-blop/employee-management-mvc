@@ -39,7 +39,7 @@
     @*<script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>*@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
+    <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>s
 
     @*<script>
             // Khởi tạo CKEditor
@@ -56,41 +56,80 @@
 
     <div class="container-scroller" ng-controller="ProjectsCtrl">
 
-        <h3>Danh sách người dùng</h3>
+               <h3>Danh sách người dùng</h3>
         <button class="btn btn-success" ng-click="OpenAdd()">Thêm</button>
         <button type="button" class="btn btn-info" ng-click="XuatExcel()">Xuất Excel</button>
+
+        <div class="row" style="margin-top:15px;margin-bottom:15px">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           ng-model="userQuery.SearchKeyword"
+                           ng-keyup="$event.keyCode === 13 && SearchUser()"
+                           placeholder="Tìm theo tên người dùng" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-click="SearchUser()">
+                            Tìm kiếm
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-danger" ng-if="userListError">
+            {{userListError}}
+        </div>
 
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Tên người dùng</th>
+                        <th>
+                            <button type="button" class="btn btn-link" ng-click="ToggleUserNameSort()">
+                                Tên người dùng
+                                <span ng-if="userQuery.SortDirection === 1">▲</span>
+                                <span ng-if="userQuery.SortDirection === 2">▼</span>
+                            </button>
+                        </th>
                         <th>Ngày tạo</th>
                         <th>Trạng thái</th>
-    
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in listUser">
+                    <tr ng-repeat="item in listUser track by item.Id">
                         <td>{{item.UserName}}</td>
                         <td>{{item.CreatedAt | date:'dd/MM/yyyy'}}</td>
-                        <td>{{GetStatusText(item.Status)}}</td>
+                        <td>{{GetStatusText(item.ModerationStatus)}}</td>
                         <td>
-                            <button class="btn btn-warning"
-                                    ng-click="OpenEdit(item)">
-                                Sửa
-                            </button>
-                            <button class="btn btn-danger"
-                                    ng-click="DeleteUser(item)">
-                                Xóa
-                            </button>
+                            <button class="btn btn-warning" ng-click="OpenEdit(item)">Sửa</button>
+                            <button class="btn btn-danger" ng-click="DeleteUser(item)">Xóa</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="clearfix">
+            <div class="pull-left">
+                Tổng số: {{userTotalData}} — Trang {{userQuery.PageIndex}} / {{GetUserPageCount()}}
+            </div>
+            <div class="pull-right">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-disabled="userQuery.PageIndex <= 1"
+                        ng-click="PreviousUserPage()">
+                    Trước
+                </button>
+                <button type="button"
+                        class="btn btn-default"
+                        ng-disabled="userQuery.PageIndex >= GetUserPageCount()"
+                        ng-click="NextUserPage()">
+                    Sau
+                </button>
+            </div>
+        </div>
         <hr />
 
 
