@@ -5,7 +5,7 @@
 - Classification dùng đúng vocabulary: `REQUIRED_COMPATIBILITY`, `PREFERRED_CONVENTION`, `CONTEXTUAL`, `LAB_ONLY`, `REJECTED_UNSAFE`.
 - Application mode: `PRODUCTION`, `TEST_LAB`, `STUDY_ONLY`.
 - Safety: `SAFE`, `CONDITIONAL`, `UNSAFE`. Mastery: `DISCOVERED`, `PLANNED`, `MASTERED`.
-- `MASTERED` chỉ được ghi sau khi human implementation và tester có evidence PASS. Run này không có pattern nào mastered.
+- `MASTERED` chỉ được ghi sau khi human implementation và tester có evidence PASS. Guide mới chỉ nâng pattern lên `PLANNED`.
 
 ## Web/Application patterns
 
@@ -44,6 +44,9 @@
 | WEB-031 | Salted PBKDF2 with verify-time legacy upgrade | Identity Core reference; current MD5 helper/login bypass | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 unit + DB E2E upgrade PASS |
 | WEB-032 | Minimal session identity and POST logout | Current session/layout/logout source | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 HTML/session/logout E2E PASS |
 | WEB-033 | Generic authentication failure response | Current username-specific control flow | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 unknown/state/duplicate E2E PASS |
+| WEB-034 | Explicit Dapper row DTO separated from public response DTO | `Api_UserController`, generated `User`, `UserPageItem` | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0002 `UserPageRow → UserPageItem` |
+| WEB-035 | Typed page envelope plus request DataAnnotations | `BaseQuery`; current anonymous page response | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0002 validation and `PagedResult<T>` |
+| WEB-036 | AngularJS numeric enum boundary with explicit error/page state | `Projects.js`; `SortDirectionEnum` | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0002 two live views and JS syntax/E2E gate |
 
 ## Database patterns
 
@@ -83,7 +86,8 @@
 | DB-032 | Direct PII correction `UPDATE` | `db.md` data correction | REJECTED_UNSAFE / STUDY_ONLY | UNSAFE | DISCOVERED | Audited application workflow/data-fix protocol |
 | DB-033 | Output sanitation/redaction | `db.md` output sanitation; current password exposure | PREFERRED_CONVENTION / PRODUCTION | SAFE | TESTED | ERP-0000 SP omits password; ERP-0002 removes DTO field |
 | DB-034 | Secretless local connection convention | `db.md` connection practice; current config conflict | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | TESTED | ERP-0000 LocalDB integrated-security config/API E2E passed |
+| DB-035 | Stored-procedure output total independent of page rows | Empty page loses window-count metadata; Dapper output parameters supported | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0002 preserves first result and adds `@TotalCount OUTPUT` |
 
 ## Coverage policy
 
-ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 lên `MASTERED` bằng report r01 tại fingerprint chính xác. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.
+ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 lên `MASTERED` bằng report r01 tại fingerprint chính xác. ERP-0002 lập kế hoạch WEB-034/035/036 và DB-035; chúng chỉ được nâng mastery sau PROMPT 2 PASS. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.

@@ -12,9 +12,9 @@ Roadmap lấy repository làm source of truth. Các tên miền thương mại t
 | EF6 Database First | REPO_EXISTING | BASELINED | EDMX four-domain-entity contract and five physical tables verified |
 | Local database/bootstrap | REPO_EXISTING | IMPLEMENTED | `LocalDatabaseBaseline/v1`; ERP-0000 TASK_PASSED |
 | Stored-procedure contracts | REPO_EXISTING | PARTIAL | `GetListUser` proven; four other live procedures remain undefined |
-| Automated tests | INFERRED_EXTENSION | MISSING | Tester tạo test-only harness sau guide |
+| Automated tests | INFERRED_EXTENSION | PARTIAL | ERP-0000/0001 PowerShell, SQL and IIS gates are versioned; no application-owned test project yet |
 | Configuration/secrets | REPO_EXISTING | PARTIAL | Current scoped config is secretless; historic credentials still require rotation |
-| User/session identity | REPO_EXISTING | BROKEN | Login không so password, API lộ password shape |
+| User/session identity | REPO_EXISTING | IMPLEMENTED | `SessionIdentity/v1`; ERP-0001 PASS `39/0` |
 | Employee directory/lifecycle | REPO_EXISTING | BROKEN | Model/view skeleton, API employee chưa compile, JS wiring sai |
 | Unit hierarchy/employee assignment | REPO_EXISTING | PARTIAL | Schema có nhưng thiếu FK assignment và workflow |
 | Authorization/audit | INFERRED_EXTENSION | MISSING/PARTIAL | Bắt buộc trước transaction modules |
@@ -79,7 +79,7 @@ Tester đã tạo harness, chạy static/DB lifecycle `33/0/0`, restore/build v�
 |---|---|---|---|---|---|---|
 | ERP-0000 — clone mới có DB baseline tái lập | REPO_EXISTING / baseline enabling | Build runtime → `LocalDatabaseBaseline/v1` | EF DB First; catalog/FK; SP; paging; safe config | SQL/runbook/config | STATIC, BUILD, DB contract/rollback/API E2E | 6–8h / Medium / TASK_PASSED |
 | ERP-0001 — đăng nhập xác minh credential an toàn | REPO_EXISTING repair | 0000 → `SessionIdentity/v1` | Typed form; anti-forgery; PBKDF2 + legacy upgrade; transaction/session | MVC helper/forms/controller/views/project include; no DB/EDMX | Unit, integration, MVC/E2E login | 6–8h / High / TASK_PASSED |
-| ERP-0002 — user directory không lộ password | REPO_EXISTING repair | 0000, 0001 → `UserDirectory/v1` | DTO projection; Dapper/SP; server paging | SQL/API/DTO/Angular | DB/API/E2E | 6–8h / Medium / PLANNED |
+| ERP-0002 — user directory không lộ password | REPO_EXISTING repair | 0000, 0001 → `UserDirectory/v1` | DTO projection; Dapper/SP output total; validated paging; Angular error path | SQL/API/DTO/Angular/two live views/project include | DB/API/E2E + ERP-0001 regression | 6–8h / Medium / GUIDE_READY |
 | ERP-0003 — employee list end-to-end | REPO_EXISTING repair | 0000, 0001 → `EmployeeDirectory/v1` | View→JS→API→SP; paging | SQL/API/DTO/JS/view/project include | DB/API/E2E | 6–8h / Medium / PLANNED |
 | ERP-0004 — employee create/edit/soft-delete | REPO_EXISTING extension | 0003 → `EmployeeLifecycle/v1` | Forms; EF transaction; validation | DB/index/API/form/JS/view | Unit/integration/E2E | 6–8h / High / PLANNED |
 | ERP-0005 — org tree và assignment có integrity | REPO_EXISTING extension | 0004 → `Organization/v1` | Hierarchy CTE; autocomplete; FK | DB/EDMX/API/DTO/JS/view | DB/API/E2E | 6–8h / High / PLANNED |

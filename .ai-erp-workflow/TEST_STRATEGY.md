@@ -51,6 +51,25 @@ Run planning này không tạo/sửa test code và không thực thi SQL object 
 
 Result: report r01 `PASS=39 FAIL=0` at executable fingerprint `1a6cdfb3d3c1caa5d88d598f6813c2ab9fd4dedcbe669f9a2e1e911b4ac09499`; no skipped gate.
 
+## ERP-0002 matrix
+
+| ID | Acceptance criterion / check | Required evidence |
+|---|---|---|
+| T02-01 | Typed success contract | Numeric enum request returns HTTP 200 `PagedResult<UserPageItem>` with page metadata. |
+| T02-02 | Sensitive-output boundary | Each JSON item has exactly Id/UserName/CreatedAt/ModerationStatus; no Password/hash/per-row TotalCount in metadata, JSON, HTML or logs. |
+| T02-03 | Total independent of page rows | Filtered `TotalData` is identical on page 1, a later page and an empty/out-of-range page. |
+| T02-04 | Request validation | Null body, page <1, size outside 1–200, non-USERNAME sort, enum 0/unknown and search >256 return HTTP 400 without SQL execution. |
+| T02-05 | Generic server failure | Forced isolated DB/procedure failure returns generic HTTP 500 with no exception/stack/object-name disclosure. |
+| T02-06 | SQL contract | Six exact parameters including bigint output; unchanged five-column first result; literal LIKE escaping, soft-delete, two sort directions, stable Id tie-break and rerun pass. |
+| T02-07 | Angular contract | `node --check` passes; payload sends numeric 1/2; error state and total-derived page bounds are exercised. |
+| T02-08 | Both live views | HomeLayout and Employee/Index render ModerationStatus, search/sort/total/bounded paging through `ProjectsCtrl`. |
+| T02-09 | Explicit mapping | Static/runtime evidence proves Dapper uses `UserPageRow`, public items use `UserPageItem`, and generated `User` is absent from list mapping. |
+| T02-10 | Legacy build/runtime | Full Framework restore, Debug/Release, Razor/IIS route and API journey exit 0. |
+| T02-11 | Regression | ERP-0000 isolated DB lifecycle and ERP-0001 identity harness `39/0` remain green. |
+| T02-12 | Fingerprint/write-set | PASS binds to one exact source fingerprint; exactly 11 production paths, no secret/EDMX/package/bin/obj/generated noise. |
+
+ERP-0002 result: not run. PROMPT 2 owns test-only harness/scripts/report and may correct production only with explicit human authorization.
+
 ## Environment and commands policy
 
 - Chỉ chạy destructive DB test trên exact isolated LocalDB database; kiểm tra `SERVERPROPERTY('ServerName')` và `DB_NAME()` trước.
