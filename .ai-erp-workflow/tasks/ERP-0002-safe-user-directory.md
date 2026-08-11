@@ -6,7 +6,7 @@
 |---|---|
 | Task ID | `ERP-0002` |
 | Provenance | `REPO_EXISTING repair` |
-| Active state | `GUIDE_READY` |
+| Active state | `TASK_PASSED` |
 | Human effort | 6–8 giờ |
 | Risk | Medium — API/SQL paging contract and sensitive response shape |
 | Produced capability | `UserDirectory/v1` |
@@ -17,6 +17,8 @@ State history:
 
 1. `TASK_PLANNED` — dependency-ready after ERP-0001 report r01 passed.
 2. `GUIDE_READY` — source-first API/SQL/Angular guide prepared against commit `347a41dff8e96b554d01650d4d7943425ec2b1ad`.
+3. `HUMAN_IMPLEMENTING → READY_FOR_TEST → TESTING → TEST_FAIL` — human commit `d39b8ddd56c6c2fcfdb7f93bc442ae299ffb4c9a` had contract and generated-noise failures.
+4. `AGENT_FIXING → TESTING → TEST_PASS → TASK_PASSED` — authorized correction commit `2a2c9981d9d15020bd272320511af16244052e2f` passed ERP-0002 `36/0` and ERP-0001 regression `39/0`.
 
 ## 2. Baseline SHA
 
@@ -1034,8 +1036,8 @@ Rollback: restore these 11 paths only, then rerun baseline `002 → 003 → 004`
 
 ## 20. Test matrix và test report summaries
 
-Initial matrix is AC-01 through AC-12. Latest ERP-0002 report: none. ERP-0001 report r01 remains required regression evidence, not ERP-0002 PASS evidence.
+Initial matrix is AC-01 through AC-12. All criteria passed in `.ai-erp-workflow/reports/ERP-0002-test-report-r01.md` on correction commit `2a2c9981d9d15020bd272320511af16244052e2f`, production fingerprint `9d209c3fd1344986ad1055ec2dab1c0e3a56804a3237379882b3c9f882dca548`. ERP-0002 gate: `36/0`; ERP-0001 identity regression: `39/0`.
 
 ## 21. Final closure / retrospective
 
-Not closed. Closure requires exact-fingerprint PROMPT 2 evidence. On failure, correct ERP-0002 only; do not advance to ERP-0003.
+Closed as `TASK_PASSED`. The correction separated persistence rows from public DTOs, preserved SQL Server 2012 compatibility, made the empty-page total explicit, removed generated noise, and proved the two live Angular consumers through IIS. Anonymous user mutations and authorization remain explicit debt for later tasks.

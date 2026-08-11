@@ -68,7 +68,29 @@ Result: report r01 `PASS=39 FAIL=0` at executable fingerprint `1a6cdfb3d3c1caa5d
 | T02-11 | Regression | ERP-0000 isolated DB lifecycle and ERP-0001 identity harness `39/0` remain green. |
 | T02-12 | Fingerprint/write-set | PASS binds to one exact source fingerprint; exactly 11 production paths, no secret/EDMX/package/bin/obj/generated noise. |
 
-ERP-0002 result: not run. PROMPT 2 owns test-only harness/scripts/report and may correct production only with explicit human authorization.
+ERP-0002 result: PASS on correction commit `2a2c9981d9d15020bd272320511af16244052e2f`, production fingerprint `9d209c3fd1344986ad1055ec2dab1c0e3a56804a3237379882b3c9f882dca548`. Final harness `36/0`; ERP-0001 regression `39/0`; report `.ai-erp-workflow/reports/ERP-0002-test-report-r01.md`.
+
+## ERP-0003 matrix
+
+| ID | Acceptance criterion / check | Required evidence |
+|---|---|---|
+| T03-01 | Angular identity views | No Razor form/input/validation helpers; `ng-submit`, local Angular, anti-forgery token, busy/error state render. |
+| T03-02 | Login JSON/session | Valid login returns safe JSON and session; unknown/wrong/state/duplicate remain identical; credential not echoed. |
+| T03-03 | Anti-forgery/logout | Missing/invalid token rejected; both controls POST; GET logout unavailable; session cleared. |
+| T03-04 | Change password | Validation, current/different/confirmation policy, transaction, forced re-login, old/new credential checks. |
+| T03-05 | JavaScript unit/static | Node syntax; fixed four-column normalization; formula prefixes `= + - @ tab CR`; no DOM `innerHTML`/IE export. |
+| T03-06 | AlaSQL current page | Workbook contains only Id/UserName/CreatedAt/ModerationStatus and current page rows. |
+| T03-07 | Client HTML `.xls` | Encoded fixed table, correct content type/filename, no controls/password/formula cells. |
+| T03-08 | Multi-sheet MIME `.xls` | Workbook manifest exposes Users and Criteria sheets; values encoded and formula-neutralized. |
+| T03-09 | Server HTML `.xls` | Session required; current literal filter/sort applied; all filtered rows; 5,000 cap; safe binary headers/content. |
+| T03-10 | EPPlus license gate | Committed default returns 409; `NonCommercial` absent. Licensed `.xlsx` ZIP/worksheet test is conditional on real commercial-license evidence. |
+| T03-11 | Server validation/errors | Invalid sort/search 400, no session 401, over cap 413, internal failure generic 500. |
+| T03-12 | Two user-list views | All five labelled techniques, service load order, busy/error UI, ERP-0002 paging unchanged. |
+| T03-13 | Legacy build/DB | Full Framework restore, Debug/Release, baseline SQL `001→004`, no production SQL diff. |
+| T03-14 | Regression | Updated ERP-0001 Angular JSON identity assertions preserve every credential rule; ERP-0002 paging/API remains green. |
+| T03-15 | Fingerprint/write-set | Exactly 12 production paths; no secret, package, EDMX, SQL, bin/obj/generated noise; cleanup residue 0. |
+
+ERP-0003 tester must inspect workbook bytes, not infer PASS from an HTTP 200 or file extension. Compatibility `.xls` modes may trigger Excel format warnings; the UI and report must state this honestly.
 
 ## Environment and commands policy
 

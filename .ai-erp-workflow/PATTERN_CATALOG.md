@@ -37,16 +37,21 @@
 | WEB-024 | Grouped row rendering | `web.md` grouped rows | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | Reporting/workforce views |
 | WEB-025 | Select/radio/check form binding | `web.md` form controls | PREFERRED_CONVENTION / PRODUCTION | SAFE | DISCOVERED | Server validation vẫn bắt buộc |
 | WEB-026 | Employee autocomplete | `web.md` employee autocomplete | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | ERP-0005; debounced, paged, authorized lookup |
-| WEB-027 | Excel export | `web.md` Excel export; EPPlus 6.0.3 trong source | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | ERP-0008; safe projection + formula sanitation |
+| WEB-027 | Excel export | `web.md` EPPlus reference; EPPlus 6.0.3 and four legacy exporters in source | CONTEXTUAL / PRODUCTION | CONDITIONAL | PLANNED | ERP-0003 showcase; true format labels + formula sanitation + license gate |
 | WEB-028 | Dapper stored-procedure mapping | `web.md` Dapper/SP; Setting controllers | REQUIRED_COMPATIBILITY / PRODUCTION | CONDITIONAL | TESTED | ERP-0000 Dapper API E2E passed; explicit DTO/count completes in ERP-0002 |
 | WEB-029 | Typed MVC form boundary + DataAnnotations | MVC source; current raw login/change binding | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 form/runtime validation PASS |
 | WEB-030 | Anti-forgery on state-changing MVC POST | Current login/change/logout omit protection | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | MASTERED | ERP-0001 missing/valid token E2E PASS |
 | WEB-031 | Salted PBKDF2 with verify-time legacy upgrade | Identity Core reference; current MD5 helper/login bypass | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 unit + DB E2E upgrade PASS |
 | WEB-032 | Minimal session identity and POST logout | Current session/layout/logout source | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 HTML/session/logout E2E PASS |
 | WEB-033 | Generic authentication failure response | Current username-specific control flow | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0001 unknown/state/duplicate E2E PASS |
-| WEB-034 | Explicit Dapper row DTO separated from public response DTO | `Api_UserController`, generated `User`, `UserPageItem` | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0002 `UserPageRow → UserPageItem` |
-| WEB-035 | Typed page envelope plus request DataAnnotations | `BaseQuery`; current anonymous page response | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0002 validation and `PagedResult<T>` |
-| WEB-036 | AngularJS numeric enum boundary with explicit error/page state | `Projects.js`; `SortDirectionEnum` | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0002 two live views and JS syntax/E2E gate |
+| WEB-034 | Explicit Dapper row DTO separated from public response DTO | `Api_UserController`, generated `User`, `UserPageItem` | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0002 PASS: `UserPageRow → UserPageItem`, exact JSON shape |
+| WEB-035 | Typed page envelope plus request DataAnnotations | `BaseQuery`; typed page response | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0002 PASS: six invalid cases + empty-page total |
+| WEB-036 | AngularJS numeric enum boundary with explicit error/page state | `Projects.js`; `SortDirectionEnum` | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | MASTERED | ERP-0002 PASS on two IIS-rendered views |
+| WEB-037 | AngularJS identity form over MVC anti-forgery URL-encoded POST | ERP-0001 MVC identity actions; AngularJS runtime | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0003; preserve session/PBKDF2, JSON response envelope |
+| WEB-038 | Fixed-column client spreadsheet export with formula neutralization | `Projects.js` AlaSQL/raw HTML exporters | CONTEXTUAL / PRODUCTION | CONDITIONAL | PLANNED | ERP-0003 current-page AlaSQL and safe HTML modes |
+| WEB-039 | Multi-sheet MIME `.xls` compatibility workbook | `Mark_daily_report.js` raw DOM workbook | LEGACY_COMPAT / PRODUCTION | CONDITIONAL | PLANNED | ERP-0003 fixed Users/Criteria sheets, no raw DOM |
+| WEB-040 | Authenticated bounded server export | Marketing/Home server HTML export patterns | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0003 fixed projection, 5,000-row cap, generic errors |
+| WEB-041 | License-gated genuine EPPlus `.xlsx` | EPPlus 6.0.3 source package versus stale 4.1 reference | REQUIRED_COMPLIANCE / PRODUCTION | CONDITIONAL | PLANNED | ERP-0003 disabled by default; commercial license required |
 
 ## Database patterns
 
@@ -86,8 +91,8 @@
 | DB-032 | Direct PII correction `UPDATE` | `db.md` data correction | REJECTED_UNSAFE / STUDY_ONLY | UNSAFE | DISCOVERED | Audited application workflow/data-fix protocol |
 | DB-033 | Output sanitation/redaction | `db.md` output sanitation; current password exposure | PREFERRED_CONVENTION / PRODUCTION | SAFE | TESTED | ERP-0000 SP omits password; ERP-0002 removes DTO field |
 | DB-034 | Secretless local connection convention | `db.md` connection practice; current config conflict | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | TESTED | ERP-0000 LocalDB integrated-security config/API E2E passed |
-| DB-035 | Stored-procedure output total independent of page rows | Empty page loses window-count metadata; Dapper output parameters supported | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0002 preserves first result and adds `@TotalCount OUTPUT` |
+| DB-035 | Stored-procedure output total independent of page rows | Empty page loses window-count metadata; Dapper output parameters supported | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0002 DB/API empty-page total PASS |
 
 ## Coverage policy
 
-ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 lên `MASTERED` bằng report r01 tại fingerprint chính xác. ERP-0002 lập kế hoạch WEB-034/035/036 và DB-035; chúng chỉ được nâng mastery sau PROMPT 2 PASS. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.
+ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 lên `MASTERED` bằng report r01. ERP-0002 đưa WEB-034/035/036 và DB-035 lên `MASTERED` bằng report r01 tại correction fingerprint chính xác. ERP-0003 lập kế hoạch WEB-027/037/038/039/040/041; kỹ thuật compatibility phải được ghi đúng định dạng, và EPPlus chỉ được test ở chế độ licensed khi có bằng chứng license. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.
