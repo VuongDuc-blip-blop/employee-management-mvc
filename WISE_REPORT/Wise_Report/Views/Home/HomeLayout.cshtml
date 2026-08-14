@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.css">
     <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.tw.css">
+    <link rel="stylesheet" href="~/Content/pnotify.custom.min.css" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
 
     <script src="~/Content/dist/js/jquery.min.js"></script>
@@ -39,7 +40,11 @@
     @*<script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>*@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/pnotify.custom.min.js"></script>
+    <script src="~/Content/js/Projects/UserExcelShowcase.js?time=@DateTime.UtcNow.Ticks"></script>
+    <script src="~/Content/js/Projects/CkeditorDirective.js?time=@DateTime.UtcNow.Ticks"></script>
     <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
+   
 
     @*<script>
             // Khởi tạo CKEditor
@@ -55,165 +60,1060 @@
 <body ng-app="myApp">
 
     <div class="container-scroller" ng-controller="ProjectsCtrl">
+        <div class="user-management-page">
 
-        <h3>Danh sách người dùng</h3>
-        <button class="btn btn-success" ng-click="OpenAdd()">Thêm</button>
-        <button type="button" class="btn btn-info" ng-click="XuatExcel()">Xuất Excel</button>
+            <!-- ================= PAGE HEADER ================= -->
+            <div class="user-page-header clearfix">
+                <div class="pull-left">
+                    <h3 class="user-page-title">Danh sách người dùng</h3>
+                    <p class="text-muted user-page-subtitle">
+                        Quản lý thông tin và trạng thái người dùng
+                    </p>
+                </div>
 
-        <div class="row" style="margin-top:15px;margin-bottom:15px">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="text"
-                           class="form-control"
-                           ng-model="userQuery.SearchKeyword"
-                           ng-keyup="$event.keyCode === 13 && SearchUsers()"
-                           placeholder="Tìm theo tên người dùng" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" ng-click="SearchUsers()">
-                            Tìm kiếm
+                <div class="pull-right user-page-actions">
+                    <button type="button"
+                            class="btn btn-success"
+                            ng-click="OpenAdd()">
+                        <i class="fa fa-plus"></i>
+                        Thêm
+                    </button>
+
+                    <div class="btn-group" role="group" aria-label="Excel export showcase">
+                        <button type="button"
+                                class="btn btn-info dropdown-toggle"
+                                data-toggle="dropdown"
+                                ng-disabled="exportBusy">
+                            <i class="fa fa-file-excel-o"></i>
+                            
                         </button>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="" ng-click="exportUsers('alasql-current')">
+                                    1. AlaSQL/XLSXML — trang hiện tại
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="exportUsers('html-current')">
+                                    2. Client HTML .xls — trang hiện tại
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="exportUsers('multisheet-current')">
+                                    3. Multi-sheet MIME .xls — trang + bộ lọc
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="" ng-click="exportUsers('server-html-all')">
+                                    4. Server HTML .xls — toàn bộ kết quả lọc
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="exportUsers('server-epplus-all')">
+                                    5. EPPlus .xlsx
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <span class="text-muted export-status" ng-if="exportBusy">
+                        <i class="fa fa-spinner fa-spin"></i>
+                        Đang tạo file
                     </span>
                 </div>
             </div>
-        </div>
 
-        <div class="alert alert-danger" ng-if="userListError">
-            {{userListError}}
-        </div>
+            <div class="alert alert-danger user-alert" ng-if="exportError" ng-bind="exportError"></div>
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <button type="button" class="btn btn-link" ng-click="ToggleUserNameSort()">
-                                Tên người dùng
-                                <span ng-if="userQuery.SortDirection === 1">▲</span>
-                                <span ng-if="userQuery.SortDirection === 2">▼</span>
+            <!-- ================= SEARCH ================= -->
+            <div class="user-search-box">
+                <div class="row">
+                    <div class="col-sm-8 col-md-6">
+                        <label class="user-search-label">Tìm kiếm người dùng</label>
+
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="userQuery.SearchKeyword"
+                                   ng-keyup="$event.keyCode === 13 && SearchUsers()"
+                                   placeholder="Nhập tên người dùng..." />
+
+                            <span class="input-group-btn">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="SearchUsers()">
+                                    <i class="fa fa-search"></i>
+                                    Tìm kiếm
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger user-alert" ng-if="userListError">
+                {{userListError}}
+            </div>
+
+            <!-- ================= USER LIST ================= -->
+            <div class="panel panel-default user-list-panel">
+                <div class="panel-heading clearfix">
+                    <strong class="panel-title-text">Danh sách</strong>
+                    <span class="pull-right text-muted user-result-count">
+                        {{userTotalData}} người dùng
+                    </span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover user-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <button type="button"
+                                            class="btn btn-link user-sort-button"
+                                            ng-click="ToggleUserNameSort()">
+                                        Tên người dùng
+                                        <span class="user-sort-icon" ng-if="userQuery.SortDirection === 1">▲</span>
+                                        <span class="user-sort-icon" ng-if="userQuery.SortDirection === 2">▼</span>
+                                    </button>
+                                </th>
+                                <th>Ngày tạo</th>
+                                <th>Trạng thái</th>
+                                <th class="user-action-column">Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="item in listUser track by item.Id">
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-link user-detail-button"
+                                            ng-click="OpenUserDetail(item)">
+                                    <strong>{{item.UserName}}</strong>
+                                    </button>
+                                </td>
+                                <td>{{item.CreatedAt | date:'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <span class="user-status">
+                                        {{GetStatusText(item.ModerationStatus)}}
+                                    </span>
+                                </td>
+                                <td class="user-action-column">
+                                    <button type="button"
+                                            class="btn btn-warning btn-sm"
+                                            ng-click="OpenEdit(item)">
+                                        <i class="fa fa-pencil"></i>
+                                        Sửa
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            ng-click="DeleteUser(item)">
+                                        <i class="fa fa-trash"></i>
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-footer clearfix user-pagination">
+                    <div class="pull-left user-pagination-info">
+                        <span class="user-page-size-wrap">
+                            Hiển thị
+                            <select class="form-control input-sm user-page-size-select"
+                                    ng-model="userQuery.PageSize"
+                                    ng-options="size as size for size in userPageSizeOptions"
+                                    ng-change="OnUserPageSizeChange()"></select>
+                            mục / trang
+                        </span>
+                        <span class="user-pagination-separator">•</span>
+                        Tổng số: <strong>{{userTotalData}}</strong>
+                        <span class="user-pagination-separator">•</span>
+                        Trang <strong>{{userQuery.PageIndex}}</strong> / <strong>{{GetUserPageCount()}}</strong>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="button"
+                                class="btn btn-default btn-sm user-pagination-button"
+                                ng-disabled="userQuery.PageIndex <= 1"
+                                ng-click="PreviousUserPage()">
+                            <i class="fa fa-angle-left"></i>
+                            Trước
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-default btn-sm user-pagination-button"
+                                ng-disabled="userQuery.PageIndex >= GetUserPageCount()"
+                                ng-click="NextUserPage()">
+                            Sau
+                            <i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL SỬA ================= -->
+            <div class="modal fade" id="editUserModal">
+                <div class="modal-dialog">
+                    <div class="modal-content user-modal">
+
+                        <form name="editUserForm"
+                              ng-submit="UpdateUser(editUser, editUserForm)"
+                              novalidate>
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Đóng">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <h4 class="modal-title">
+                                    Sửa người dùng
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="alert alert-danger user-modal-alert" ng-if="editUserValidation.summary.length">
+                                    <div ng-repeat="error in editUserValidation.summary track by $index" ng-bind="error"></div>
+                                </div>
+
+                                <div class="form-group" ng-class="{'has-error': (editUserForm.UserName.$touched || editUserForm.$submitted) && editUserForm.UserName.$invalid}">
+                                    <label for="edit-user-username">Tên người dùng</label>
+                                    <input id="edit-user-username"
+                                           name="UserName"
+                                           class="form-control"
+                                           ng-model="editUser.UserName"
+                                           maxlength="256"
+                                           required>
+                                     <div class="help-block validation-message"
+                                         ng-if="(editUserForm.UserName.$touched || editUserForm.$submitted) && editUserForm.UserName.$error.required">
+                                        Vui lòng nhập tên đăng nhập.
+                                    </div>
+                                    <div class="help-block validation-message"
+                                         ng-if="(editUserForm.UserName.$touched || editUserForm.$submitted) && editUserForm.UserName.$error.maxlength">
+                                        Tên đăng nhập không được vượt quá 256 ký tự.
+                                    </div>
+                                     <div class="help-block validation-message"
+                                         ng-if="editUserValidation.UserName.length">
+                                        <div ng-repeat="error in editUserValidation.UserName track by $index"
+                                            ng-bind="error"></div>
+                                     </div>
+                                </div>
+
+                                  <div class="form-group" ng-class="{'has-error': (editUserForm.Password.$touched || editUserForm.$submitted) && editUserForm.Password.$invalid}">
+                                    <label for="edit-user-password">Mật khẩu</label>
+                                    <input id="edit-user-password"
+                                           name="Password"
+                                           type="password"
+                                           class="form-control"
+                                           ng-model="editUser.Password"
+                                           maxlength="128"
+                                           required>
+                                     <div class="help-block validation-message"
+                                         ng-if="(editUserForm.Password.$touched || editUserForm.$submitted) && editUserForm.Password.$error.required">
+                                        Vui lòng nhập mật khẩu mới.
+                                    </div>
+                                    <div class="help-block validation-message"
+                                         ng-if="(editUserForm.Password.$touched || editUserForm.$submitted) && editUserForm.Password.$error.maxlength">
+                                        Mật khẩu không được vượt quá 128 ký tự.
+                                    </div>
+                                     <div class="help-block validation-message"
+                                         ng-if="editUserValidation.Password.length">
+                                        <div ng-repeat="error in editUserValidation.Password track by $index"
+                                            ng-bind="error"></div>
+                                     </div>
+                                </div>
+                                <div class="form-group"
+                                    ng-class="{
+                                        'has-error':
+                                            (editUserForm.ProfileDescription.$touched || editUserForm.$submitted)
+                                            && editUserForm.ProfileDescription.$invalid
+                                    }">
+
+                                    <label for="edit-user-profile-description">
+                                        Mô tả hồ sơ
+                                    </label>
+
+                                    <textarea id="edit-user-profile-description"
+                                            name="ProfileDescription"
+                                            class="form-control"
+                                            ng-model="editUser.ProfileDescription"
+                                            ng-maxlength="5000"
+                                            ckeditor>
+                                    </textarea>
+
+                                    <div class="help-block validation-message"
+                                        ng-if="
+                                            (editUserForm.ProfileDescription.$touched || editUserForm.$submitted)
+                                            && editUserForm.ProfileDescription.$error.maxlength
+                                        ">
+                                        Mô tả hồ sơ không được vượt quá 5000 ký tự.
+                                    </div>
+
+                                    <div class="help-block validation-message"
+                                        ng-if="editUserValidation.ProfileDescription.length">
+
+                                        <div ng-repeat="
+                                                error in editUserValidation.ProfileDescription track by $index
+                                            "
+                                            ng-bind="error">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-default user-secondary-button"
+                                        data-dismiss="modal">
+                                    Hủy
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-success">
+                                    <i class="fa fa-check"></i>
+                                    Lưu
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL THÊM ================= -->
+            <div class="modal fade" id="addUserModal">
+                <div class="modal-dialog">
+                    <div class="modal-content user-modal">
+
+                        <form name="addUserForm"
+                              ng-submit="AddUser(addUserForm)"
+                              novalidate>
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Đóng">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <h4 class="modal-title">
+                                    Thêm người dùng
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="alert alert-danger user-modal-alert" ng-if="addUserValidation.summary.length">
+                                    <div ng-repeat="error in addUserValidation.summary track by $index" ng-bind="error"></div>
+                                </div>
+
+                                <div class="form-group" ng-class="{'has-error': (addUserForm.UserName.$touched || addUserForm.$submitted) && addUserForm.UserName.$invalid}">
+                                    <label for="add-user-username">Tên người dùng</label>
+                                    <input id="add-user-username"
+                                           name="UserName"
+                                           class="form-control"
+                                           ng-model="newUser.UserName"
+                                           maxlength="256"
+                                           placeholder="Nhập tên người dùng"
+                                           required>
+                                     <div class="help-block validation-message"
+                                         ng-if="(addUserForm.UserName.$touched || addUserForm.$submitted) && addUserForm.UserName.$error.required">
+                                        Vui lòng nhập tên đăng nhập.
+                                    </div>
+                                    <div class="help-block validation-message"
+                                         ng-if="(addUserForm.UserName.$touched || addUserForm.$submitted) && addUserForm.UserName.$error.maxlength">
+                                        Tên đăng nhập không được vượt quá 256 ký tự.
+                                    </div>
+                                     <div class="help-block validation-message"
+                                         ng-if="addUserValidation.UserName.length">
+                                        <div ng-repeat="error in addUserValidation.UserName track by $index"
+                                            ng-bind="error"></div>
+                                     </div>
+                                </div>
+
+                                  <div class="form-group" ng-class="{'has-error': (addUserForm.Password.$touched || addUserForm.$submitted) && addUserForm.Password.$invalid}">
+                                    <label for="add-user-password">Mật khẩu</label>
+                                    <input id="add-user-password"
+                                           name="Password"
+                                           type="password"
+                                           class="form-control"
+                                           ng-model="newUser.Password"
+                                           maxlength="128"
+                                           placeholder="Nhập mật khẩu"
+                                           required>
+                                     <div class="help-block validation-message"
+                                         ng-if="(addUserForm.Password.$touched || addUserForm.$submitted) && addUserForm.Password.$error.required">
+                                        Vui lòng nhập mật khẩu.
+                                    </div>
+                                    <div class="help-block validation-message"
+                                         ng-if="(addUserForm.Password.$touched || addUserForm.$submitted) && addUserForm.Password.$error.maxlength">
+                                        Mật khẩu không được vượt quá 128 ký tự.
+                                    </div>
+                                     <div class="help-block validation-message"
+                                         ng-if="addUserValidation.Password.length">
+                                        <div ng-repeat="error in addUserValidation.Password track by $index"
+                                            ng-bind="error"></div>
+                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select class="form-control"
+                                            ng-model="newUser.ModerationStatus">
+                                        <option value="0">Pending</option>
+                                        <option value="1">Approved</option>
+                                        <option value="2">Rejected</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group"
+                                    ng-class="{
+                                        'has-error':
+                                            (addUserForm.ProfileDescription.$touched || addUserForm.$submitted)
+                                            && addUserForm.ProfileDescription.$invalid
+                                    }">
+
+                                    <label for="add-user-profile-description">
+                                        Mô tả hồ sơ
+                                    </label>
+
+                                    <textarea id="add-user-profile-description"
+                                            name="ProfileDescription"
+                                            class="form-control"
+                                            ng-model="newUser.ProfileDescription"
+                                            ng-maxlength="5000"
+                                            ckeditor>
+                                    </textarea>
+
+                                    <div class="help-block validation-message"
+                                        ng-if="
+                                            (addUserForm.ProfileDescription.$touched || addUserForm.$submitted)
+                                            && addUserForm.ProfileDescription.$error.maxlength
+                                        ">
+                                        Mô tả hồ sơ không được vượt quá 5000 ký tự.
+                                    </div>
+
+                                    <div class="help-block validation-message"
+                                        ng-if="addUserValidation.ProfileDescription.length">
+
+                                        <div ng-repeat="
+                                                error in addUserValidation.ProfileDescription track by $index
+                                            "
+                                            ng-bind="error">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-default user-secondary-button"
+                                        data-dismiss="modal">
+                                    Hủy
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-success">
+                                    <i class="fa fa-plus"></i>
+                                    Thêm
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL CHI TIẾT ================= -->
+            <div class="modal fade" id="userDetailModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content user-modal">
+
+                        <div class="modal-header">
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Đóng">
+                                <span aria-hidden="true">&times;</span>
                             </button>
-                        </th>
-                        <th>Ngày tạo</th>
-                        <th>Trạng thái</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in listUser track by item.Id">
-                        <td>{{item.UserName}}</td>
-                        <td>{{item.CreatedAt | date:'dd/MM/yyyy'}}</td>
-                        <td>{{GetStatusText(item.ModerationStatus)}}</td>
-                        <td>
-                            <button class="btn btn-warning" ng-click="OpenEdit(item)">Sửa</button>
-                            <button class="btn btn-danger" ng-click="DeleteUser(item)">Xóa</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
-        <div class="clearfix">
-            <div class="pull-left">
-                Tổng số: {{userTotalData}} — Trang {{userQuery.PageIndex}} / {{GetUserPageCount()}}
-            </div>
-            <div class="pull-right">
-                <button type="button"
-                        class="btn btn-default"
-                        ng-disabled="userQuery.PageIndex <= 1"
-                        ng-click="PreviousUserPage()">
-                    Trước
-                </button>
-                <button type="button"
-                        class="btn btn-default"
-                        ng-disabled="userQuery.PageIndex >= GetUserPageCount()"
-                        ng-click="NextUserPage()">
-                    Sau
-                </button>
-            </div>
-        </div>
-        <hr />
+                            <h4 class="modal-title">
+                                Chi tiết người dùng
+                            </h4>
+                        </div>
 
+                        <div class="modal-body">
 
-        <!-- ================= MODAL SỬA ================= -->
-        <div class="modal fade" id="editUserModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+                            <div class="text-center user-detail-loading"
+                                ng-if="userDetailLoading">
+                                <i class="fa fa-spinner fa-spin"></i>
+                                Đang tải thông tin...
+                            </div>
 
-                    <div class="modal-header">
-                        <h4 class="modal-title">Sửa người dùng</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <div class="alert alert-danger"
+                                ng-if="userDetailError"
+                                ng-bind="userDetailError">
+                            </div>
+
+                            <div ng-if="!userDetailLoading && userDetail">
+
+                                <div class="row user-detail-row">
+                                    <div class="col-sm-3 user-detail-label">
+                                        Tên người dùng
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        <strong ng-bind="userDetail.UserName"></strong>
+                                    </div>
+                                </div>
+
+                                <div class="row user-detail-row">
+                                    <div class="col-sm-3 user-detail-label">
+                                        Ngày tạo
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        {{userDetail.CreatedAt | date:'dd/MM/yyyy'}}
+                                    </div>
+                                </div>
+
+                                <div class="row user-detail-row">
+                                    <div class="col-sm-3 user-detail-label">
+                                        Trạng thái
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        <span class="user-status">
+                                            {{GetStatusText(userDetail.ModerationStatus)}}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="user-detail-profile">
+                                    <div class="user-detail-profile-title">
+                                        Mô tả hồ sơ
+                                    </div>
+
+                                    <div class="text-muted"
+                                        ng-if="!userDetail.ProfileDescription">
+                                        Chưa có mô tả hồ sơ.
+                                    </div>
+
+                                    <div class="ckeditor-content"
+                                        ng-if="userDetail.ProfileDescription"
+                                        ng-bind-html="userDetailProfileHtml">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-default user-secondary-button"
+                                    data-dismiss="modal">
+                                Đóng
+                            </button>
+                        </div>
+
                     </div>
-                    <div class="modal-body">
-                        <label>Tên người dùng</label>
-                        <input class="form-control" ng-model="editUser.UserName">
-                    </div>
-                    <div class="modal-body">
-                        <label>Mật khẩu</label>
-                        <input class="form-control" ng-model="editUser.Password">
-                    </div>
-    
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">Hủy</button>
-                        <button class="btn btn-success" ng-click="UpdateUser(editUser)">
-                            Lưu
-                        </button>
-                    </div>
-
                 </div>
             </div>
-        </div>
 
-        <!-- ================= MODAL THÊM ================= -->
-        <div class="modal fade" id="addUserModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <!-- ================= MODAL XÁC NHẬN XÓA ================= -->
+            <div class="modal fade" id="deleteUserModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content user-modal user-delete-modal">
+                        <div class="modal-header">
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Đóng">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
 
-                    <div class="modal-header">
-                        <h4 class="modal-title">Thêm người dùng</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">
+                                Xác nhận xóa
+                            </h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="user-delete-summary">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <div>
+                                    <p>Bạn có chắc muốn xóa người dùng này?</p>
+                                    <strong ng-bind="pendingDeleteUser.UserName"></strong>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-danger user-modal-alert" ng-if="deleteUserError" ng-bind="deleteUserError"></div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-default user-secondary-button"
+                                    data-dismiss="modal">
+                                Hủy
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    ng-click="ConfirmDeleteUser()"
+                                    ng-disabled="deleteBusy">
+                                <i class="fa fa-trash"></i>
+                                <span ng-if="!deleteBusy">Xóa</span>
+                                <span ng-if="deleteBusy"><i class="fa fa-spinner fa-spin"></i> Đang xóa</span>
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="modal-body">
-                        <label>Username</label>
-                        <input class="form-control"
-                            ng-model="newUser.UserName">
-
-                        <br />
-
-                        <label>Password</label>
-                        <input type="password"
-                            class="form-control"
-                            ng-model="newUser.Password">
-
-                        <br />
-
-                        <label>Trạng thái</label>
-                        <select class="form-control"
-                                ng-model="newUser.ModerationStatus">
-                            <option value="0">Pending</option>
-                            <option value="1">Approved</option>
-                            <option value="2">Rejected</option>
-                        </select>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">
-                            Hủy
-                        </button>
-
-                        <button class="btn btn-success"
-                                ng-click="AddUser()">
-                            Thêm
-                        </button>
-                    </div>
-
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </body>
 
 <style>
+
+    .user-management-page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 24px 20px 32px;
+    }
+
+    .user-management-page .user-page-header {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .user-management-page .user-page-title {
+        margin: 0 0 5px;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: #333;
+    }
+
+    .user-management-page .user-page-subtitle {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .user-management-page .user-page-actions {
+        padding-top: 3px;
+        white-space: nowrap;
+    }
+
+    .user-management-page .user-page-actions > .btn,
+    .user-management-page .user-page-actions > .btn-group {
+        margin-left: 8px;
+        vertical-align: top;
+    }
+
+    .user-management-page .export-status {
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 14px;
+        line-height: 34px;
+        vertical-align: top;
+    }
+
+    .user-management-page .user-alert {
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+
+    .user-management-page .user-search-box {
+        margin-bottom: 20px;
+        padding: 16px;
+        background: #f8f9fa;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+    }
+
+    .user-management-page .user-search-label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .user-management-page .form-control,
+    .user-management-page .input-group-btn > .btn {
+        height: 38px;
+        font-size: 14px;
+    }
+
+    .user-management-page .user-list-panel {
+        margin-bottom: 0;
+        border-color: #e2e2e2;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .user-management-page .user-list-panel > .panel-heading {
+        padding: 13px 16px;
+        background: #fff;
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .user-management-page .panel-title-text {
+        font-size: 16px;
+        line-height: 22px;
+        color: #333;
+    }
+
+    .user-management-page .user-result-count {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .user-management-page .user-table {
+        margin-bottom: 0;
+        font-size: 14px;
+    }
+
+    .user-management-page .user-table > thead > tr > th {
+        padding: 12px 16px;
+        border-bottom: 1px solid #dcdcdc;
+        background: #f7f7f7;
+        color: #444;
+        font-weight: 600;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .user-management-page .user-table > tbody > tr > td {
+        padding: 13px 16px;
+        border-top: 1px solid #eeeeee;
+        vertical-align: middle;
+        color: #444;
+    }
+
+    .user-management-page .user-table > tbody > tr:hover {
+        background: #fafafa;
+    }
+
+    .user-management-page .user-sort-button {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    .user-management-page .user-sort-button:hover,
+    .user-management-page .user-sort-button:focus {
+        color: #23527c;
+        text-decoration: none;
+        outline: none;
+    }
+
+    .user-management-page .user-sort-icon {
+        display: inline-block;
+        margin-left: 4px;
+        font-size: 10px;
+    }
+
+    .user-management-page .user-status {
+        display: inline-block;
+        padding: 4px 9px;
+        border: 1px solid #dddddd;
+        border-radius: 12px;
+        background: #fafafa;
+        font-size: 12px;
+        line-height: 1.2;
+        color: #555;
+    }
+
+    .user-management-page .user-action-column {
+        width: 180px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .user-management-page .user-action-column .btn + .btn {
+        margin-left: 5px;
+    }
+
+    .user-management-page .btn {
+        font-size: 14px;
+    }
+
+    .user-management-page .btn .fa {
+        margin-right: 4px;
+    }
+
+    .user-management-page .user-pagination {
+        padding: 12px 16px;
+        background: #fff;
+        border-top: 1px solid #e6e6e6;
+    }
+
+    .user-management-page .user-pagination-info {
+        font-size: 13px;
+        line-height: 30px;
+        color: #666;
+    }
+
+    .user-management-page .user-page-size-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .user-management-page .user-page-size-select {
+        width: 82px;
+        min-width: 82px;
+        height: 30px;
+        padding: 4px 8px;
+        line-height: 1.2;
+    }
+
+    .user-management-page .user-pagination-separator {
+        display: inline-block;
+        margin: 0 8px;
+        color: #bbb;
+    }
+
+
+    .user-management-page button.btn.btn-default.user-pagination-button,
+    .user-management-page button.btn.btn-default.user-secondary-button {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #333;
+        font-size: 13px !important;
+        text-decoration: none;
+    }
+
+    .user-management-page button.btn.btn-default.user-pagination-button:hover,
+    .user-management-page button.btn.btn-default.user-pagination-button:focus,
+    .user-management-page button.btn.btn-default.user-secondary-button:hover,
+    .user-management-page button.btn.btn-default.user-secondary-button:focus {
+        border-color: #adadad;
+        background-color: #e6e6e6;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .user-management-page button.btn.btn-default.user-pagination-button[disabled] {
+        border-color: #ddd;
+        background-color: #fff;
+        color: #aaa;
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    .user-management-page .modal-dialog {
+        margin-top: 100px;
+    }
+
+    .user-management-page .user-modal .modal-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .user-management-page .user-modal .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .user-management-page .user-modal .modal-title .fa {
+        margin-right: 7px;
+        color: #666;
+    }
+
+    .user-management-page .user-modal .modal-body {
+        padding: 20px;
+    }
+
+    .user-management-page .user-modal .user-modal-alert {
+        margin-bottom: 18px;
+        border-radius: 4px;
+    }
+
+    .user-management-page .user-delete-modal .modal-body {
+        padding: 18px 20px 8px;
+    }
+
+    .user-management-page .user-delete-summary {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 8px 0 6px;
+    }
+
+    .user-management-page .user-delete-summary i {
+        flex: 0 0 auto;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #fff3cd;
+        color: #b7791f;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .user-management-page .user-delete-summary p {
+        margin: 0 0 4px;
+        color: #444;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .user-management-page .user-delete-summary strong {
+        color: #111;
+        font-size: 15px;
+        word-break: break-word;
+    }
+
+    .user-management-page .user-modal .form-group {
+        margin-bottom: 18px;
+    }
+
+    .user-management-page .user-modal .form-group.has-error .form-control {
+        border-color: #d9534f;
+        box-shadow: none;
+    }
+
+    .user-management-page .user-modal .form-group.has-error label {
+        color: #a94442;
+    }
+
+    .user-management-page .user-modal .validation-message {
+        margin-top: 6px;
+        margin-bottom: 0;
+        color: #d9534f;
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    .user-management-page .user-modal .form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .user-management-page .user-modal label {
+        margin-bottom: 7px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .user-management-page .user-modal .modal-footer {
+        padding: 12px 20px;
+        background: #fafafa;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .ui-pnotify.user-toast {
+        width: 320px;
+        right: 18px !important;
+        top: 18px !important;
+    }
+
+    .ui-pnotify.user-toast .ui-pnotify-text {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .ui-pnotify.user-toast .ui-pnotify-title {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .user-management-page .user-name-link {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #337ab7;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    .user-management-page .user-name-link:hover,
+    .user-management-page .user-name-link:focus {
+        color: #23527c;
+        text-decoration: underline;
+        outline: none;
+    }
+
+    .user-management-page .user-detail-loading {
+        padding: 30px 0;
+        color: #777;
+    }
+
+    .user-management-page .user-detail-row {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .user-management-page .user-detail-label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .user-management-page .user-detail-profile {
+        margin-top: 18px;
+    }
+
+    .user-management-page .user-detail-profile-title {
+        margin-bottom: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .user-management-page .ckeditor-content {
+        min-height: 80px;
+        padding: 14px 16px;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        background: #fff;
+        font-size: 14px;
+        line-height: 1.6;
+        overflow-wrap: break-word;
+    }
+
+    .user-management-page .ckeditor-content > :first-child {
+        margin-top: 0;
+    }
+
+    .user-management-page .ckeditor-content > :last-child {
+        margin-bottom: 0;
+    }
+
+    .user-management-page .ckeditor-content img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .user-management-page .cke {
+        border-radius: 3px;
+    }
+
+    .user-management-page .has-error .cke {
+        border-color: #a94442;
+    }
+
+    
+
     .ribbon {
         top: -5px;
         width: 10em;
@@ -439,6 +1339,10 @@
 
     .checkbox-radio input[type=radio]:focus {
         outline: none;
+    }
+    
+    .btn-group.show {
+        display: inline-flex !important;
     }
 
     .checkbox-radio input[type=radio] {

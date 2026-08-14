@@ -65,6 +65,7 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="DeletedAt" Type="datetime2" Precision="7" />
     <Property Name="ModerationStatus" Type="int" Nullable="false" />
+    <Property Name="Profile" Type="nvarchar(max)" />
   </EntityType>
   <Association Name="FK_Employees_Users_UserId">
     <End Role="Users" Type="Self.Users" Multiplicity="0..1" />

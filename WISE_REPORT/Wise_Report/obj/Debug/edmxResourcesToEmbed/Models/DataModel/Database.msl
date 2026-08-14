@@ -59,6 +59,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Profile" ColumnName="Profile" />
           <ScalarProperty Name="ModerationStatus" ColumnName="ModerationStatus" />
           <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />

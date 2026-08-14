@@ -310,6 +310,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarkettingReportController.cs" />
+    <Compile Include="Controllers\UserExportController.cs" />
     <Compile Include="Controllers\Wise_ReportController.cs" />
     <Compile Include="Enum\ModerationStatus.cs" />
     <Compile Include="Enum\SortDirectionEnum.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="Shared\DataSeeded\SeededAdmin.cs" />
     <Compile Include="Shared\Dtos\EmployeePageItem.cs" />
     <Compile Include="Shared\Dtos\PagedResult.cs" />
+    <Compile Include="Shared\Dtos\UserDetailDto.cs" />
     <Compile Include="Shared\Dtos\UserPageItem.cs" />
     <Compile Include="Shared\Dtos\UserPageRow.cs" />
     <Compile Include="Shared\Forms\ChangePasswordForm.cs" />
@@ -592,6 +594,7 @@
     <Content Include="Content\js\LiveBoardCtrl.js" />
     <Content Include="Content\js\Mark_report\Mark_daily_report.js" />
     <Content Include="Content\js\OverAllCtrl.js" />
+    <Content Include="Content\js\Projects\CkeditorDirective.js" />
     <Content Include="Content\js\Projects\EmployeeController.js" />
     <Content Include="Content\js\Projects\Notification.js" />
     <Content Include="Content\js\Projects\Projects.js" />
@@ -599,6 +602,7 @@
     <Content Include="Content\js\Projects\Project_Scheduler.js" />
     <Content Include="Content\js\Projects\Targets.js" />
     <Content Include="Content\js\Projects\Tasks.js" />
+    <Content Include="Content\js\Projects\UserExcelShowcase.js" />
     <Content Include="Content\js\ReportCtrl.js" />
     <Content Include="Content\js\PatliteCtrl.js" />
     <Content Include="Content\Metro UI.js" />
@@ -1104,6 +1108,8 @@
     <Content Include="Views\Home\ViewProject.cshtml" />
     <Content Include="Views\MarkettingReport\Mark_daily_report.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Home\Configuration.cshtml" />
     <None Include="Views\Shared\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config">

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Wise_Report.Shared.Forms
 {
@@ -11,7 +11,7 @@ namespace Wise_Report.Shared.Forms
         public string CurrentPassword { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu mới.")]
-        [StringLength(128, MinimumLength = 12, ErrorMessage = "Mật khẩu mới phải có từ 12 đến 128 ký tự.")]
+        [StringLength(128, MinimumLength = 6, ErrorMessage = "Mật khẩu mới phải có từ 6 đến 128 ký tự.")]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }

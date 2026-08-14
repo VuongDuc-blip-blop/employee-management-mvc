@@ -52,7 +52,7 @@ namespace Wise_Report.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(form);
+                return IdentityJson(false, null, GetModelStateErrors(), 400);
             }
 
             var normalizedUserName = form.UserName.Trim();
@@ -73,10 +73,11 @@ namespace Wise_Report.Controllers
 
             if (user == null || !verification.Succeeded)
             {
-                ModelState.AddModelError(
-                    string.Empty,
-                    "Tên đăng nhập hoặc mật khẩu không đúng.");
-                return View(form);
+                return IdentityJson(
+                    false,
+                    null,
+                    new[] { "Tên đăng nhập hoặc mật khẩu không đúng." },
+                    400);
             }
 
             if (verification.RequiresUpgrade)
@@ -94,10 +95,11 @@ namespace Wise_Report.Controllers
                     catch (Exception)
                     {
                         transaction.Rollback();
-                        ModelState.AddModelError(
-                            string.Empty,
-                            "Không thể hoàn tất đăng nhập. Vui lòng thử lại.");
-                        return View(form);
+                        return IdentityJson(
+                            false,
+                            null,
+                            new[] { "Không thể hoàn tất đăng nhập. Vui lòng thử lại." },
+                            500);
                     }
                 }
             }
@@ -106,7 +108,7 @@ namespace Wise_Report.Controllers
             Session["username"] = user.UserName;
             Session["userid"] = user.Id;
 
-            return RedirectToAction("HomeLayout", "Home");
+            return IdentityJson(true, Url.Action("HomeLayout", "Home"), Enumerable.Empty<string>(), 200);
         }
 
         [HttpPost]
@@ -115,7 +117,7 @@ namespace Wise_Report.Controllers
         {
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Login");
+            return IdentityJson(true, Url.Action("Login", "Home"), Enumerable.Empty<string>(), 200);
         }
 
         public ActionResult Register()
@@ -170,12 +172,19 @@ namespace Wise_Report.Controllers
             if (Session["userid"] == null
                 || !Guid.TryParse(Convert.ToString(Session["userid"]), out userId))
             {
-                return RedirectToAction("Login");
+                Session.Clear();
+                Session.Abandon();
+
+                return IdentityJson(
+                    false,
+                    Url.Action("Login", "Home"),
+                    new[] { "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại." },
+                    401);
             }
 
             if (!ModelState.IsValid)
             {
-                return View(form);
+                return IdentityJson(false, null, GetModelStateErrors(), 400);
             }
 
             var user = db.Users.SingleOrDefault(x =>
@@ -187,7 +196,11 @@ namespace Wise_Report.Controllers
             {
                 Session.Clear();
                 Session.Abandon();
-                return RedirectToAction("Login");
+                return IdentityJson(
+                    false,
+                    Url.Action("Login", "Home"),
+                    new[] { "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại." },
+                    401);
             }
 
             var currentVerification = PasswordSecurity.VerifyPassword(user.Password, form.CurrentPassword);
@@ -197,17 +210,15 @@ namespace Wise_Report.Controllers
                 ModelState.AddModelError(
                     "CurrentPassword",
                     "Mật khẩu hiện tại không đúng.");
-                return View(form);
+                return IdentityJson(false, null, new[] { "Mật khẩu hiện tại không đúng." }, 400);
             }
 
             var samePassword = PasswordSecurity.VerifyPassword(user.Password, form.NewPassword);
 
             if (samePassword.Succeeded)
             {
-                ModelState.AddModelError(
-                    "NewPassword",
-                    "Mật khẩu mới phải khác mật khẩu hiện tại.");
-                return View(form);
+              
+                return IdentityJson(false, null, new[] { "Mật khẩu mới phải khác mật khẩu hiện tại." }, 400);
             }
 
             using (var transaction = db.Database.BeginTransaction())
@@ -223,16 +234,38 @@ namespace Wise_Report.Controllers
                 catch (Exception)
                 {
                     transaction.Rollback();
-                    ModelState.AddModelError(
-                        string.Empty,
-                        "Không thể đổi mật khẩu. Vui lòng thử lại.");
-                    return View(form);
+                    return IdentityJson(
+                        false,
+                        null,
+                        new[] { "Không thể hoàn tất thay đổi mật khẩu. Vui lòng thử lại." },
+                        500);
                 }
             }
 
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Login");
+            return IdentityJson(true, Url.Action("Login", "Home"), Enumerable.Empty<string>(), 200);
+        }
+
+        private IEnumerable<string> GetModelStateErrors()
+        {
+            return ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(error => string.IsNullOrEmpty(error.ErrorMessage) ? "Dữ liệu không hợp lệ." : error.ErrorMessage);
+        }
+        
+
+        private JsonResult IdentityJson(bool success, string redirectUrl, IEnumerable<string> errors, int statusCode)
+        {
+            Response.StatusCode = statusCode;
+            Response.TrySkipIisCustomErrors = true;
+
+            return Json(new
+            {
+                Success = success,
+                RedirectUrl = redirectUrl,
+                Errors = errors ?? Enumerable.Empty<string>()
+            });
         }
 
         //Lưu ảnh

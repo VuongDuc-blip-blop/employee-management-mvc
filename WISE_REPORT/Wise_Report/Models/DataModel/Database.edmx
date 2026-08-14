@@ -70,6 +70,7 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="DeletedAt" Type="datetime2" Precision="7" />
           <Property Name="ModerationStatus" Type="int" Nullable="false" />
+          <Property Name="Profile" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Employees_Users_UserId">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
@@ -198,6 +199,7 @@
           <Property Name="DeletedAt" Type="DateTime" Precision="7" />
           <Property Name="ModerationStatus" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employees" Relationship="EmployeeManagementCoreDbModel.FK_Employees_Users_UserId" FromRole="User" ToRole="Employee" />
+          <Property Name="Profile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Employees_Users_UserId">
           <End Type="EmployeeManagementCoreDbModel.User" Role="User" Multiplicity="0..1" />
@@ -287,6 +289,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="EmployeeManagementCoreDbModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
                 <ScalarProperty Name="ModerationStatus" ColumnName="ModerationStatus" />
                 <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />

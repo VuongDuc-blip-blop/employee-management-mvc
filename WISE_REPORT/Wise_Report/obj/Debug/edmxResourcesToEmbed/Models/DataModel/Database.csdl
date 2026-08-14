@@ -84,6 +84,7 @@
     <Property Name="DeletedAt" Type="DateTime" Precision="7" />
     <Property Name="ModerationStatus" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Employees" Relationship="EmployeeManagementCoreDbModel.FK_Employees_Users_UserId" FromRole="User" ToRole="Employee" />
+    <Property Name="Profile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Employees_Users_UserId">
     <End Type="EmployeeManagementCoreDbModel.User" Role="User" Multiplicity="0..1" />

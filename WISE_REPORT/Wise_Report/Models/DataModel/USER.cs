@@ -30,6 +30,7 @@ namespace Wise_Report.Models.DataModel
         public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletedAt { get; set; }
         public int ModerationStatus { get; set; }
+        public string Profile { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }

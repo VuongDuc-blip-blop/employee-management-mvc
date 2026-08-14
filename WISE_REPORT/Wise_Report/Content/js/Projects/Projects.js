@@ -1,4 +1,4 @@
-﻿app.controller('ProjectsCtrl', function ($scope, $http, $interval, ajaxService) {
+﻿app.controller('ProjectsCtrl', function ($scope, $http, $interval, $sce, ajaxService, userExcelShowcase) {
 
     $scope.userid = $('#userid').val();
     $scope.today = new Date();
@@ -16,8 +16,138 @@
         SortColumn: "USERNAME",
         SortDirection: 1
     };
+    $scope.userPageSizeOptions = [5,10, 20, 50, 100];
     $scope.userTotalData = 0;
     $scope.userListError = "";
+    $scope.pendingDeleteUser = null;
+    $scope.deleteUserError = "";
+    $scope.deleteBusy = false;
+    $scope.addUserValidation = {
+        summary: []
+    };
+    $scope.editUserValidation = {
+        summary: []
+    };
+
+    function showToast(type, title, text) {
+        if (!window.PNotify) {
+            return;
+        }
+
+        new PNotify({
+            title: title,
+            text: text,
+            type: type,
+            styling: 'bootstrap3',
+            addclass: 'user-toast',
+            delay: 2400,
+            mouse_reset: false,
+            buttons: {
+                closer: true,
+                sticker: false
+            },
+            stack: {
+                dir1: 'down',
+                dir2: 'left',
+                push: 'top',
+                spacing1: 10,
+                spacing2: 10
+            }
+        });
+    }
+
+    function showSuccessToast(text) {
+        showToast('success', 'Thành công', text);
+    }
+
+    function showErrorToast(text) {
+        showToast('error', 'Thất bại', text);
+    }
+
+    function resetValidationState(target) {
+        target.summary = [];
+        target.UserName = [];
+        target.Password = [];
+    }
+
+    function addValidationMessage(target, fieldName, message) {
+        if (!message) {
+            return;
+        }
+
+        target[fieldName] = target[fieldName] || [];
+        target[fieldName].push(message);
+    }
+
+    function collectServerValidationErrors(response, target) {
+        var data = response && response.data;
+
+        if (angular.isString(data)) {
+            target.summary.push(data);
+            return;
+        }
+
+        if (data && angular.isArray(data.errors)) {
+            angular.forEach(data.errors, function (message) {
+                addValidationMessage(target, 'summary', message);
+            });
+            return;
+        }
+
+        if (data && data.ModelState) {
+            angular.forEach(data.ModelState, function (messages, key) {
+                var normalizedKey = (key || '').toLowerCase();
+                var list = angular.isArray(messages) ? messages : [messages];
+
+                angular.forEach(list, function (message) {
+                    if (!message) {
+                        return;
+                    }
+
+                    if (normalizedKey.indexOf('username') !== -1) {
+                        addValidationMessage(target, 'UserName', message);
+                        return;
+                    }
+
+                    if (normalizedKey.indexOf('password') !== -1) {
+                        addValidationMessage(target, 'Password', message);
+                        return;
+                    }
+
+                    addValidationMessage(target, 'summary', message);
+                });
+            });
+
+            return;
+        }
+
+        if (data && data.message) {
+            addValidationMessage(target, 'summary', data.message);
+            return;
+        }
+
+        addValidationMessage(target, 'summary', 'Có lỗi xảy ra.');
+    }
+
+    function getValidationState(target) {
+        return {
+            summary: [],
+            UserName: [],
+            Password: [],
+            ProfileDescription: []
+        };
+    }
+
+    function isSuccessMessage(response, expectedKeyword) {
+        var data = response && response.data;
+        var message = angular.isString(data) ? data : '';
+
+        if (!message) {
+            return response && response.status >= 200 && response.status < 300;
+        }
+
+        return message.toLowerCase().indexOf(expectedKeyword.toLowerCase()) !== -1;
+    }
 
     $scope.GetListUser = function () {
         $scope.userListError = "";
@@ -71,51 +201,114 @@
         }
     };
 
+    $scope.OnUserPageSizeChange = function () {
+        if (!$scope.userQuery.PageSize) {
+            $scope.userQuery.PageSize = 20;
+        }
+
+        $scope.userQuery.PageIndex = 1;
+        return $scope.GetListUser();
+    };
+
     $scope.GetListUser();
 
 
-    $scope.AddUser = () => {
+    $scope.AddUser = function (form) {
+        $scope.addUserValidation = getValidationState();
+
+        if (form && form.$invalid) {
+            return;
+        }
+
         var data = {
-            username: $scope.newUser.UserName,
+            UserName: $scope.newUser.UserName,
             Password: $scope.newUser.Password,
-        }
+            ModerationStatus: $scope.newUser.ModerationStatus,
+            ProfileDescription: $scope.newUser.ProfileDescription
+        };
+
         $http.post(origin + '/api/Api_UserController/AddUser', data).then(function (response) {
-            if (response.status == 200) {
-                console.log("Thành công")
-            } else {
-                console.log("Thất bại")
+            if (isSuccessMessage(response, 'thêm thành công')) {
+                $("#addUserModal").modal("hide");
+                showSuccessToast('Đã thêm người dùng thành công.');
+                $scope.GetListUser();
+                return;
             }
+
+            showErrorToast(angular.isString(response.data) ? response.data : 'Không thể thêm người dùng.');
+        }, function (response) {
+            collectServerValidationErrors(response, $scope.addUserValidation);
+            showErrorToast('Không thể thêm người dùng. Vui lòng kiểm tra lại dữ liệu.');
         });
-    }
-    $scope.UpdateUser = (item) => {
+    };
+
+    $scope.UpdateUser = function (item, form) {
+        $scope.editUserValidation = getValidationState();
+
+        if (form && form.$invalid) {
+            return;
+        }
+
         var data = {
-            UserName: item.USERNAME,
-            Password: item.PASSWORD,
-        }
+            Id: item.Id,
+            UserName: item.UserName,
+            Password: item.Password,
+            ProfileDescription: item.ProfileDescription
+        };
+
         $http.post(origin + '/api/Api_UserController/UpdateUser/' + item.Id, data).then(function (response) {
-            if (response.status == 200) {
-                console.log("Thành công")
+            if (isSuccessMessage(response, 'sửa thành công')) {
                 $scope.sua = false;
-                $scope.GetListUser()
-            } else {
-                console.log("Thất bại")
+                $("#editUserModal").modal("hide");
+                showSuccessToast('Đã sửa người dùng thành công.');
+                $scope.GetListUser();
+                return;
             }
+
+            showErrorToast(angular.isString(response.data) ? response.data : 'Không thể sửa người dùng.');
+        }, function (response) {
+            collectServerValidationErrors(response, $scope.editUserValidation);
+            showErrorToast('Không thể sửa người dùng. Vui lòng kiểm tra lại dữ liệu.');
         });
-    }
-    $scope.DeleteUser = (item) => {
-        console.log("DeleteUser", item)
-        if (confirm('bạn có chắc chắn muốn xóa?')) {
-            $http.post(origin + '/api/Api_UserController/DeleteUser/' + item.Id).then(function (response) {
-                if (response.status == 200) {
-                    console.log("Thành công")
-                    $scope.GetListUser()
-                } else {
-                    console.log("Thất bại")
-                }
-            });
+    };
+
+    $scope.DeleteUser = function (item) {
+        $scope.pendingDeleteUser = angular.copy(item);
+        $scope.deleteUserError = '';
+        $("#deleteUserModal").modal("show");
+    };
+
+
+    $scope.ConfirmDeleteUser = function () {
+        if (!$scope.pendingDeleteUser || $scope.deleteBusy) {
+            return;
         }
-        
-    }
+
+        $scope.deleteBusy = true;
+        $scope.deleteUserError = '';
+
+        $http.post(origin + '/api/Api_UserController/DeleteUser/' + $scope.pendingDeleteUser.Id).then(function (response) {
+            if (isSuccessMessage(response, 'xóa thành công')) {
+                $("#deleteUserModal").modal("hide");
+                showSuccessToast('Đã xóa người dùng thành công.');
+                $scope.pendingDeleteUser = null;
+                $scope.GetListUser();
+                return;
+            }
+
+            $scope.deleteUserError = angular.isString(response.data)
+                ? response.data
+                : 'Không thể xóa người dùng.';
+            showErrorToast($scope.deleteUserError);
+        }, function (response) {
+            $scope.deleteUserError = angular.isString(response.data)
+                ? response.data
+                : 'Không thể xóa người dùng.';
+            showErrorToast($scope.deleteUserError);
+        }).finally(function () {
+            $scope.deleteBusy = false;
+        });
+    };
 
     $scope.GetStatusText = function (status){
         switch (status){
@@ -135,45 +328,104 @@
     $scope.newUser = {
         UserName: "",
         Password: "",
-        ModerationStatus: 0
+        ModerationStatus: 0,
+        ProfileDescription: ""
     };
+    $scope.addUserValidation = getValidationState();
 
     $("#addUserModal").modal("show");
 };
 
-    $scope.OpenEdit = function (item) {
-        $scope.editUser = angular.copy(item);
-        $("#editUserModal").modal("show");
+
+   
+    $scope.exportBusy = false;
+    $scope.exportError = '';
+    $scope.exportUsers = function(mode){
+        if($scope.exportBusy){
+            return;
+        }
+        $scope.exportError = '';
+
+        try
+        {
+            if(mode === 'alasql-current'){
+                userExcelShowcase.alaSqlCurrentPage($scope.listUser)
+                return;
+            }
+            if(mode === 'html-current'){
+                userExcelShowcase.htmlCurrentPage($scope.listUser)
+                return;
+            }
+            if(mode === 'multisheet-current'){
+                userExcelShowcase.multiSheetCurrentPage($scope.listUser, angular.copy($scope.userQuery))
+                return;
+            }
+
+            $scope.exportBusy = true;
+            var request = mode === 'server-html-all'
+                ? userExcelShowcase.serverHtmlAllFiltered($scope.userQuery)
+                : userExcelShowcase.serverEpplusAllFiltered($scope.userQuery);
+            
+            request.catch(function(message){
+                $scope.exportError = message;
+            }).finally(function(){
+                $scope.exportBusy = false;
+            });
+        }catch(error){
+            $scope.exportError = error.message || 'Có lỗi xảy ra trong quá trình xuất dữ liệu';
+            $scope.exportBusy = false;
+        }
+
     }
 
-   $scope.XuatExcel = function () {
-        var cancelstyle = {
-            headers: true,
-            column: {
-                style: { Font: { Bold: "1" } }
+    $scope.OpenEdit = function (item) {
+        $scope.editUserValidation = getValidationState();
+
+        loadUserDetail(item.Id).then(
+            function (response) {
+                $scope.editUser = angular.copy(response.data);
+                $scope.editUser.Password = '';
+
+                $("#editUserModal").modal("show");
             },
-            columns: [
-                { columnid: 'ID', title: 'Id', width: 50 },
-                { columnid: 'UserName', title: 'Tên người dùng', width: 80 },
-                { columnid: 'CreatedAt', title: 'Ngày tạo', width: 120 },
-                { columnid: 'ModerationStatus', title: 'Trạng thái', width: 80 }
-            ]
-        };
-
-        var dataExport = $scope.listUser.map(function (item) {
-            return {
-                ID: item.Id,
-                UserName: item.UserName,
-                CreatedAt: $scope.formatDate(item.CreatedAt),
-                ModerationStatus: $scope.GetStatusText(item.ModerationStatus)
-            };
-        });
-
-        alasql(
-            'SELECT * INTO XLSXML("List user", ?) FROM ?',
-            [cancelstyle, dataExport]
+            function () {
+                showErrorToast(
+                    'Không thể tải thông tin người dùng.'
+                );
+            }
         );
     };
+
+    $scope.OpenUserDetail = function (item) {
+        $scope.userDetail = null;
+        $scope.userDetailProfileHtml = null;
+        $scope.userDetailError = null;
+        $scope.userDetailLoading = true;
+
+        $("#userDetailModal").modal("show");
+
+        loadUserDetail(item.Id).then(
+            function (response) {
+                $scope.userDetail = response.data;
+
+                $scope.userDetailProfileHtml = $sce.trustAsHtml(
+                    response.data.ProfileDescription || ''
+                );
+            },
+            function () {
+                $scope.userDetailError =
+                    'Không thể tải thông tin người dùng.';
+            }
+        ).finally(function () {
+            $scope.userDetailLoading = false;
+        });
+    };
+
+    function loadUserDetail(id) {
+        return $http.get(
+            origin + '/api/Api_UserController/GetUserById/' + id
+        );
+    }
 
      $scope.formatDate = function (dateValue) {
         if (!dateValue) return '';

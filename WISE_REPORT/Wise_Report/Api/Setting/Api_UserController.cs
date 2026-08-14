@@ -63,10 +63,6 @@ namespace Wise_Report.Api.Setting
                         ? "ASCENDING"
                         : "DESCENDING",
                     DbType.AnsiString);
-                parameters.Add(
-                    "TotalCount",
-                    dbType: DbType.Int64,
-                    direction: ParameterDirection.Output);
 
                 var rows = db.Database.Connection
                     .Query<UserPageRow>(
@@ -87,7 +83,7 @@ namespace Wise_Report.Api.Setting
                 return Ok(new PagedResult<UserPageItem>
                 {
                     Data = data,
-                    TotalData = parameters.Get<long>("TotalCount"),
+                    TotalData = db.Users.Count(user => !user.IsDeleted),
                     PageIndex = query.PageIndex,
                     PageSize = query.PageSize
                 });
@@ -103,6 +99,14 @@ namespace Wise_Report.Api.Setting
         [Route("api/Api_UserController/AddUser")]
         public IHttpActionResult AddUser(CreateUserForm form)
         {
+            if(form == null)
+            {
+                return BadRequest("Request body is required.");
+            }
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             System.Data.Entity.DbContextTransaction transaction = db.Database.BeginTransaction();
             try
             {
@@ -118,8 +122,12 @@ namespace Wise_Report.Api.Setting
                     newUser.CreatedBy = SeededAdmin.Id;
                     newUser.LastModifiedAt = DateTime.Now;
                     newUser.LastModifiedBy = SeededAdmin.Id;
-                    newUser.ModerationStatus = (int)ModerationStatus.Approved;
+                    newUser.ModerationStatus = form.ModerationStatus;
                     newUser.IsDeleted = false;
+                    if(!string.IsNullOrWhiteSpace(form.ProfileDescription))
+                    {
+                        newUser.Profile = form.ProfileDescription;
+                    }
                     db.Users.Add(newUser);
                     db.SaveChanges();
 
@@ -145,6 +153,14 @@ namespace Wise_Report.Api.Setting
         [Route("api/Api_UserController/UpdateUser/{id:Guid}")]
         public IHttpActionResult UpdateUser(Guid id, UpdateUserForm form)
         {
+            if (form == null)
+            {
+                return BadRequest("Request body is required.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 var user = db.Users.Where(x => x.Id == id).FirstOrDefault();
@@ -152,6 +168,10 @@ namespace Wise_Report.Api.Setting
                 {
                     user.UserName = form.UserName;
                     user.Password = form.Password;
+                    if(!string.IsNullOrWhiteSpace(form.ProfileDescription))
+                    {
+                        user.Profile = form.ProfileDescription;
+                    }
                     db.SaveChanges();
                     return Ok("Sửa thành công!");
                 }
@@ -186,6 +206,36 @@ namespace Wise_Report.Api.Setting
                     return Ok("Không tìm thấy");
                 }
 
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Api_UserController/GetUserById/{id:Guid}")]
+        public IHttpActionResult GetUserById(Guid id)
+        {
+            try
+            {
+                var user = db.Users.Where(x => x.Id == id).FirstOrDefault();
+                if (user != null)
+                {
+                    var userDto = new UserDetailDto
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        CreatedAt = user.CreatedAt,
+                        ProfileDescription = user.Profile,
+                        ModerationStatus = (int)user.ModerationStatus
+                    };
+                    return Ok(userDto);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             catch (Exception ex)
             {
