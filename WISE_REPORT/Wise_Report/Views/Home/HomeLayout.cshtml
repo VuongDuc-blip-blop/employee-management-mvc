@@ -159,14 +159,72 @@
 
             <!-- ================= USER LIST ================= -->
             <div class="panel panel-default user-list-panel">
-                <div class="panel-heading clearfix">
-                    <strong class="panel-title-text">Danh sách</strong>
-                    <span class="pull-right text-muted user-result-count">
-                        {{userTotalData}} người dùng
-                    </span>
+                <div class="panel-heading clearfix user-table-heading">
+                    <div class="pull-left">
+                        <strong class="panel-title-text">
+                            Danh sách
+                        </strong>
+
+                        <span class="text-muted user-result-count">
+                            {{userTotalData}} người dùng
+                        </span>
+                    </div>
+
+                    <div class="pull-right user-table-toolbar">
+                        <span class="text-muted user-current-page-note">
+                            Áp dụng cho trang hiện tại
+                        </span>
+
+                        <div class="btn-group btn-group-sm user-table-mode-switch"
+                            role="group"
+                            aria-label="Chọn kiểu hiển thị bảng">
+
+                            <button type="button"
+                                    class="btn btn-sm user-table-mode-button"
+                                    ng-class="{
+                                        'btn-primary':
+                                            userTableMode === 'standard',
+                                        'btn-default':
+                                            userTableMode !== 'standard'
+                                    }"
+                                    ng-click="SetUserTableMode('standard')"
+                                    aria-pressed="{{userTableMode === 'standard'}}">
+                                <i class="fa fa-table"></i>
+                                Bảng chuẩn
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-sm user-table-mode-button"
+                                    ng-class="{
+                                        'btn-primary':
+                                            userTableMode === 'dynamic',
+                                        'btn-default':
+                                            userTableMode !== 'dynamic'
+                                    }"
+                                    ng-click="SetUserTableMode('dynamic')"
+                                    aria-pressed="{{userTableMode === 'dynamic'}}">
+                                <i class="fa fa-columns"></i>
+                                Bảng động
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-sm user-table-mode-button"
+                                    ng-class="{
+                                        'btn-primary':
+                                            userTableMode === 'pivot',
+                                        'btn-default':
+                                            userTableMode !== 'pivot'
+                                    }"
+                                    ng-click="SetUserTableMode('pivot')"
+                                    aria-pressed="{{userTableMode === 'pivot'}}">
+                                <i class="fa fa-object-group"></i>
+                                PIVOT
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive" ng-if="userTableMode === 'standard'">
                     <table class="table table-hover user-table">
                         <thead>
                             <tr>
@@ -215,6 +273,148 @@
                                         Xóa
                                     </button>
                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" ng-if = "userTableMode === 'dynamic'">
+                    <table class="table table-hover user-table user-dynamic-table">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="column in userDynamicColumns track by column.Key">
+                                    <button type="button" 
+                                            class="btn btn-link user-sort-button"
+                                            ng-if="column.Key === 'UserName'"
+                                            ng-click="ToggleUserNameSort()">
+                                        {{column.Title}}
+                                  
+
+                                        <span class="user-sort-icon" ng-if="userQuery.SortDirection === 1">
+                                            ▲
+                                        </span>
+                                        <span class="user-sort-icon" ng-if="userQuery.SortDirection === 2">
+                                            ▼
+                                        </span>
+                                    </button>
+
+                                    <span ng-if="column.Key !== 'UserName'" ng-bind="column.Title">
+                                        
+                                    </span>
+                                </th>
+
+                                <th class ="user-action-column">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="item in listUser track by item.Id">
+                                <td ng-repeat ="column in userDynamicColumns track by column.Key" ng-switch="column.Type">
+                                    <button ng-switch-when="user"
+                                            type="button"
+                                            class="btn btn-link user-name-link"
+                                            ng-click="OpenUserDetail(item)"
+                                            ng-bind="item[column.Key]">
+
+                                    </button>
+
+                                    <span ng-switch-when="date">
+                                        {{item[column.Key] | date:'dd/MM/yyyy'}}
+                                    </span>
+
+                                    <span ng-switch-when="status">
+                                        {{GetStatusText(item[column.Key])}}
+                                    </span>
+
+                                    <span ng-switch-default>
+                                        {{item[column.Key] === null || item[column.Key] === undefined || item[column.Key] === '' ? '-' : item[column.Key]}}
+                                    </span>
+
+                                </td>
+
+                                <td class="user-action-column">
+                                    <button type="button"
+                                            class="btn btn-warning btn-sm"
+                                            ng-click="OpenEdit(item)">
+                                        <i class="fa fa-pencil"></i>
+                                        Sửa
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            ng-click="DeleteUser(item)">
+                                        <i class="fa fa-trash"></i>
+                                        Xóa
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" ng-if="userTableMode ==='pivot'">
+                    <table class="table table-hover user-table user-pivot-table">
+                        <thead>
+                            <tr>
+                                <th>Tên người dùng</th>
+                                <th>Ngày tạo</th>
+                                <th>Trạng thái</th>
+                                <th class="user-action-column">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat-start = "group in userPivotGroups track by group.Key" class="user-pivot-group-row">
+                                <td colspan="4" >
+                                    <strong class="user-pivot-group-title">
+                                        {{GetStatusText(group.Status)}}
+                                    </strong>
+
+                                    <span class="user-pivot-group-count">
+                                        ({{group.Items.length}} người dùng)
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="item in group.Items track by item.Id">
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-link user-detail-button"
+                                            ng-click="OpenUserDetail(item)">
+                                        <strong ng-bind="item.UserName"></strong>
+
+                                    </button>
+
+                                </td>
+                                <td>
+                                    {{item.CreatedAt | date:'dd/MM/yyyy'}}
+                                </td>
+                                <td>
+                                    <span class="user-status">
+                                        {{GetStatusText(item.ModerationStatus)}}
+                                    </span>
+                                </td>
+                                <td class="user-action-column">
+                                    <button type="button"
+                                            class="btn btn-warning btn-sm"
+                                            ng-click="OpenEdit(item)">
+                                        <i class="fa fa-pencil"></i>
+                                        Sửa
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            ng-click="DeleteUser(item)">
+                                        <i class="fa fa-trash"></i>
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat-end class="user-pivot-group-spacer" aria-hidden="true">
+                                <td colspan="4"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -852,6 +1052,107 @@
 
     .user-management-page .btn .fa {
         margin-right: 4px;
+    }
+
+    .user-management-page .user-table-heading {
+        min-height: 48px;
+    }
+
+    .user-management-page .user-table-heading > .pull-left {
+        line-height: 30px;
+    }
+
+    .user-management-page .user-table-heading .user-result-count {
+        display: inline-block;
+        margin-left: 8px;
+        font-size: 13px;
+    }
+
+    .user-management-page .user-table-toolbar {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-management-page .user-current-page-note {
+        margin-right: 10px;
+        font-size: 12px;
+    }
+
+    .user-management-page .user-table-mode-switch {
+        vertical-align: middle;
+    }
+
+    .user-management-page .user-table-mode-button {
+        min-width: 104px;
+    }
+
+    .user-management-page .user-table-mode-button .fa {
+        margin-right: 4px;
+    }
+
+    .user-management-page button.btn.btn-default.user-table-mode-button {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #555;
+        font-size: 13px !important;
+        text-decoration: none;
+    }
+
+    .user-management-page button.btn.btn-default.user-table-mode-button:hover,
+    .user-management-page button.btn.btn-default.user-table-mode-button:focus {
+        border-color: #adadad;
+        background-color: #e6e6e6;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .user-management-page button.btn.btn-primary.user-table-mode-button {
+        padding: 5px 10px;
+        border: 1px solid #2e6da4;
+        font-size: 13px !important;
+        text-decoration: none;
+    }
+
+    .user-management-page .user-dynamic-table > thead > tr > th {
+        white-space: nowrap;
+    }
+
+    .user-management-page .user-dynamic-table > tbody > tr > td {
+        min-width: 140px;
+    }
+
+    .user-management-page .user-dynamic-table > tbody > tr > td:last-child {
+        min-width: 180px;
+    }
+
+    .user-management-page .user-pivot-group-row > td {
+        padding: 10px 16px !important;
+        border-top: 1px solid #d9e2ea !important;
+        border-bottom: 1px solid #d9e2ea;
+        background: #f3f6f9;
+    }
+
+    .user-management-page .user-pivot-group-title {
+        font-size: 14px;
+        color: #34495e;
+    }
+
+    .user-management-page .user-pivot-group-count {
+        margin-left: 6px;
+        vertical-align: middle;
+    }
+
+    .user-management-page .user-pivot-group-spacer > td {
+        height: 7px;
+        padding: 0 !important;
+        border-top: 0 !important;
+        background: #fff;
+    }
+
+    .user-management-page .user-empty-row {
+        padding: 28px 16px !important;
+        font-size: 14px;
     }
 
     .user-management-page .user-pagination {

@@ -28,6 +28,142 @@
     $scope.editUserValidation = {
         summary: []
     };
+    
+    var USER_TABLE_MODES = {
+        'Standard': 'standard',
+        'Dynamic': 'dynamic',
+        'Pivot': 'pivot'
+    }
+
+    var USER_DYNAMIC_COLUMN_KEYS=[
+        'Username',
+        'CreatedAt',
+        'ModerationStatus',
+    ]
+
+    var USER_DYNAMIC_COLUMN_META={
+        Username:{
+            Key:'Username',
+            Title:'Tên người dùng',
+            Type:'user',
+            Order:10
+        },
+
+        CreatedAt:{
+            Key:'CreatedAt',
+            Title:'Ngày tạo',
+            Type:'date',
+            Order:20
+        },
+
+        ModerationStatus:{
+            Key:'ModerationStatus',
+            Title:'Trạng thái',
+            Type:'status',
+            Order:30
+        }
+
+    }
+
+    var USER_PIVOT_STATUS_ORDER = {
+        '0': 0,
+        '1': 1,
+        '2': 2
+    };
+
+
+    $scope.SetUserTableMode = function(mode){
+        var isSupported = mode === USER_TABLE_MODES.Standard || mode === USER_TABLE_MODES.Dynamic || mode === USER_TABLE_MODES.Pivot;
+        if(!isSupported){
+            return
+        }
+
+        $scope.userTableMode = mode;
+    }
+
+    function BuildUserDynamicColumns(rows){
+        var presentKeys = {};
+        var columns = [];
+        
+        var hasRows = angular.isArray(rows) && rows.length > 0;
+
+        angular.forEach(rows || [], function(row){
+            angular.forEach(USER_DYNAMIC_COLUMN_KEYS, function(key){
+                if(row && Object.prototype.hasOwnProperty.call(row, key)){
+                    presentKeys[key] = true;
+                }
+            })
+        });
+
+        angular.forEach(USER_DYNAMIC_COLUMN_KEYS, function(key){
+            if(!hasRows || presentKeys[key]){
+                columns.push(USER_DYNAMIC_COLUMN_META[key]);
+            }
+        });
+
+        columns.sort(function(left, right){
+            return left.Order - right.Order;
+        });
+
+        $scope.userDynamicColumns = columns;
+    }
+
+    function GetUserPivotStatusOrder(statusKey){
+        if(Object.prototype.hasOwnProperty.call(USER_PIVOT_STATUS_ORDER, statusKey)){
+            return USER_PIVOT_STATUS_ORDER[statusKey];
+        }
+
+        return 999;
+    }
+
+    function buildUserPivotGroups(rows) {
+        var groupsByStatus = {};
+        var groups = [];
+
+        angular.forEach(rows || [], function(item) {
+            var hasStatus =
+                item &&
+                item.ModerationStatus !== null &&
+                !angular.isUndefined(item.ModerationStatus);
+
+            var statusKey = hasStatus
+                ? String(item.ModerationStatus)
+                : 'unknown';
+
+            if (!groupsByStatus[statusKey]) {
+                groupsByStatus[statusKey] = {
+                    Key: statusKey,
+                    Status: hasStatus ? item.ModerationStatus : null,
+                    Order: GetUserPivotStatusOrder(statusKey),
+                    Items: []
+                };
+            }
+
+            groupsByStatus[statusKey].Items.push(item);
+        });
+
+        angular.forEach(groupsByStatus, function(group) {
+            groups.push(group);
+        });
+
+        groups.sort(function(left, right) {
+            if (left.Order !== right.Order) {
+                return left.Order - right.Order;
+            }
+
+            return left.Key.localeCompare(right.Key);
+        });
+
+        $scope.userPivotGroups = groups;
+    }
+
+    function refreshUserTablePresentations(){
+        var rows = angular.isArray($scope.listUser) ? $scope.listUser : [];
+        BuildUserDynamicColumns(rows);
+        buildUserPivotGroups(rows);
+    }
+
+    
 
     function showToast(type, title, text) {
         if (!window.PNotify) {
@@ -162,8 +298,10 @@
                     ? page.Data
                     : [];
                 $scope.userTotalData = page.TotalData || 0;
+                refreshUserTablePresentations();
             }, function () {
                 $scope.listUser = [];
+                refreshUserTablePresentations();
                 $scope.userTotalData = 0;
                 $scope.userListError = "Không thể tải danh sách người dùng.";
             });
