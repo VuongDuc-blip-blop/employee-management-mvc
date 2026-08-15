@@ -6,7 +6,8 @@ using Wise_Report.Shared.Queries.Base;
 
 namespace Wise_Report.Shared.Queries
 {
-    public class EmployeePageQuery : BaseQuery
+    public sealed class EmployeePageQuery : BaseQuery
     {
+        
     }
 }

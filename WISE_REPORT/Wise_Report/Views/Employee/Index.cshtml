@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.css">
     <link rel="stylesheet" type="text/css" href="~/Content/css/jquery.emojipicker.tw.css">
+    <link rel="stylesheet" href="~/Content/pnotify.custom.min.css" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
 
     <script src="~/Content/dist/js/jquery.min.js"></script>
@@ -39,459 +40,1664 @@
     @*<script src="~/Content/js/SetupUserCtrl.js?time=@DateTime.Now"></script>*@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/pnotify.custom.min.js"></script>
+    <script src="~/Content/js/Projects/UserExcelShowcase.js?time=@DateTime.UtcNow.Ticks"></script>
+    <script src="~/Content/js/Projects/CkeditorDirective.js?time=@DateTime.UtcNow.Ticks"></script>
     <script src="~/Content/js/Projects/Projects.js?time=@DateTime.Now"></script>
-
-    @*<script>
-            // Khởi tạo CKEditor
-            CKEDITOR.replace('editor', {
-                toolbar: [
-                    ['Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-                    ['FontSize', 'TextColor', 'BGColor']
-                ]
-            });
-        </script>*@
+   
 </head>
 
-<body ng-app="myApp">
+@{
+    ViewBag.Title = "Quản lý nhân viên";
+}
 
-    <div class="container-scroller" ng-controller="ProjectsCtrl">
+<div ng-app="myApp">
+    <div class="container-scroller" ng-controller="EmployeeCtrl">
+        <div class="employee-management-page">
 
-        <h3>Danh sách người dùng</h3>
-        <button class="btn btn-success" ng-click="OpenAdd()">Thêm</button>
-        <button type="button" class="btn btn-info" ng-click="XuatExcel()">Xuất Excel</button>
+            <div class="employee-page-header clearfix">
+                <div class="pull-left">
+                    <h3 class="employee-page-title">Danh sách nhân viên</h3>
+                    <p class="text-muted employee-page-subtitle">
+                        Quản lý thông tin và trạng thái nhân viên
+                    </p>
+                </div>
 
-        <div class="row" style="margin-top:15px;margin-bottom:15px">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="text"
-                           class="form-control"
-                           ng-model="userQuery.SearchKeyword"
-                           ng-keyup="$event.keyCode === 13 && SearchUsers()"
-                           placeholder="Tìm theo tên người dùng" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" ng-click="SearchUsers()">
-                            Tìm kiếm
-                        </button>
-                    </span>
+                <div class="pull-right employee-page-actions">
+                    <button type="button"
+                            class="btn btn-success"
+                            ng-click="OpenAddEmloyee()">
+                        <i class="fa fa-plus"></i>
+                        Thêm
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <div class="alert alert-danger" ng-if="userListError">
-            {{userListError}}
-        </div>
+            <div class="employee-search-box">
+                <div class="row">
+                    <div class="col-sm-8 col-md-6">
+                        <label class="employee-search-label">
+                            Tìm kiếm nhân viên
+                        </label>
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <button type="button" class="btn btn-link" ng-click="ToggleUserNameSort()">
-                                Tên người dùng
-                                <span ng-if="userQuery.SortDirection === 1">▲</span>
-                                <span ng-if="userQuery.SortDirection === 2">▼</span>
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control"
+                                   ng-model="employeeListQuery.SearchKeyword"
+                                   ng-keyup="$event.keyCode === 13 && searchEmployee()"
+                                   placeholder="Nhập mã, họ tên, email hoặc số điện thoại..." />
+
+                            <span class="input-group-btn">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="searchEmployee()">
+                                    <i class="fa fa-search"></i>
+                                    Tìm kiếm
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger employee-alert"
+                 ng-if="employeeListError"
+                 ng-bind="employeeListError">
+            </div>
+
+            <!-- ================= EMPLOYEE LIST ================= -->
+            <div class="panel panel-default employee-list-panel">
+                <div class="panel-heading clearfix">
+                    <div class="pull-left">
+                        <strong class="panel-title-text">
+                            Danh sách
+                        </strong>
+
+                        <span class="text-muted employee-result-count">
+                            {{employeeTotalData}} nhân viên
+                        </span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover employee-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <button type="button"
+                                            class="btn btn-link employee-sort-button"
+                                            ng-click="ToggleEmployeeCodeSort()">
+                                        Mã nhân viên
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'EMPLOYEECODE'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 1
+                                                      || employeeListQuery.SortDirection === 'ASCENDING'
+                                                  )
+                                              ">
+                                            ▲
+                                        </span>
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'EMPLOYEECODE'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 2
+                                                      || employeeListQuery.SortDirection === 'DESCENDING'
+                                                  )
+                                              ">
+                                            ▼
+                                        </span>
+                                    </button>
+                                </th>
+
+                                <th>
+                                    <button type="button"
+                                            class="btn btn-link employee-sort-button"
+                                            ng-click="ToggleFullNameSort()">
+                                        Họ và tên
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'FULLNAME'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 1
+                                                      || employeeListQuery.SortDirection === 'ASCENDING'
+                                                  )
+                                              ">
+                                            ▲
+                                        </span>
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'FULLNAME'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 2
+                                                      || employeeListQuery.SortDirection === 'DESCENDING'
+                                                  )
+                                              ">
+                                            ▼
+                                        </span>
+                                    </button>
+                                </th>
+
+                                <th>
+                                    <button type="button"
+                                            class="btn btn-link employee-sort-button"
+                                            ng-click="ToggleEmailSort()">
+                                        Email
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'EMAIL'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 1
+                                                      || employeeListQuery.SortDirection === 'ASCENDING'
+                                                  )
+                                              ">
+                                            ▲
+                                        </span>
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'EMAIL'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 2
+                                                      || employeeListQuery.SortDirection === 'DESCENDING'
+                                                  )
+                                              ">
+                                            ▼
+                                        </span>
+                                    </button>
+                                </th>
+
+                                <th>Số điện thoại</th>
+                                <th>Giới tính</th>
+                                <th>Trạng thái</th>
+
+                                <th>
+                                    <button type="button"
+                                            class="btn btn-link employee-sort-button"
+                                            ng-click="ToggleCreatedAtSort()">
+                                        Ngày tạo
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'CREATEDAT'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 1
+                                                      || employeeListQuery.SortDirection === 'ASCENDING'
+                                                  )
+                                              ">
+                                            ▲
+                                        </span>
+
+                                        <span class="employee-sort-icon"
+                                              ng-if="
+                                                  employeeListQuery.SortColumn === 'CREATEDAT'
+                                                  && (
+                                                      employeeListQuery.SortDirection === 2
+                                                      || employeeListQuery.SortDirection === 'DESCENDING'
+                                                  )
+                                              ">
+                                            ▼
+                                        </span>
+                                    </button>
+                                </th>
+
+                                <th class="employee-action-column">
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-if="employeeListLoading">
+                                <td colspan="8"
+                                    class="text-center text-muted employee-empty-row">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                    Đang tải danh sách...
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="item in listEmployee track by item.Id"
+                                ng-if="!employeeListLoading">
+
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-link employee-detail-button"
+                                            ng-click="OpenEmployeeDetail(item)">
+                                        <strong ng-bind="item.EmployeeCode"></strong>
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <strong ng-bind="item.FullName"></strong>
+                                </td>
+
+                                <td ng-bind="item.Email"></td>
+
+                                <td ng-bind="item.PhoneNumber"></td>
+
+                                <td>
+                                    {{GetGenderText(item.Gender)}}
+                                </td>
+
+                                <td>
+                                    <span class="employee-status">
+                                        {{GetStatusText(item.ModerationStatus)}}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{item.CreatedAt | date:'dd/MM/yyyy'}}
+                                </td>
+
+                                <td class="employee-action-column">
+                                    <button type="button"
+                                            class="btn btn-warning btn-sm"
+                                            ng-click="OpenEditEmployee(item)">
+                                        <i class="fa fa-pencil"></i>
+                                        Sửa
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            ng-click="OpenDeleteEmployee(item)">
+                                        <i class="fa fa-trash"></i>
+                                        Xóa
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr ng-if="
+                                    !employeeListLoading
+                                    && !listEmployee.length
+                                ">
+                                <td colspan="8"
+                                    class="text-center text-muted employee-empty-row">
+                                    Không có nhân viên phù hợp.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ================= PAGINATION ================= -->
+                <div class="panel-footer clearfix employee-pagination">
+                    <div class="pull-left employee-pagination-info">
+                        Tổng số:
+                        <strong>{{employeeTotalData}}</strong>
+
+                        <span class="employee-pagination-separator">
+                            •
+                        </span>
+
+                        Trang
+                        <strong>{{employeeListQuery.PageIndex}}</strong>
+                        /
+                        <strong>{{GetEmployeePageCount()}}</strong>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="button"
+                                class="btn btn-default btn-sm employee-pagination-button"
+                                ng-disabled="employeeListQuery.PageIndex <= 1"
+                                ng-click="PreviousEmployeePage()">
+                            <i class="fa fa-angle-left"></i>
+                            Trước
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-default btn-sm employee-pagination-button"
+                                ng-disabled="
+                                    employeeListQuery.PageIndex
+                                    >= GetEmployeePageCount()
+                                "
+                                ng-click="NextEmployeePage()">
+                            Sau
+                            <i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL THÊM ================= -->
+            <div class="modal fade" id="addEmployeeModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content employee-modal">
+
+                        <form name="addEmployeeForm"
+                              ng-submit="AddEmployee(addEmployeeForm)"
+                              novalidate>
+
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Đóng">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <h4 class="modal-title">
+                                    Thêm nhân viên
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="alert alert-danger employee-modal-alert"
+                                     ng-if="addEmployeeValidation.summary.length">
+
+                                    <div ng-repeat="
+                                            error in addEmployeeValidation.summary
+                                            track by $index
+                                         "
+                                         ng-bind="error">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         addEmployeeForm.EmployeeCode.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.EmployeeCode.$invalid
+                                             }">
+
+                                            <label for="add-employee-code">
+                                                Mã nhân viên
+                                            </label>
+
+                                            <input id="add-employee-code"
+                                                   name="EmployeeCode"
+                                                   type="text"
+                                                   class="form-control"
+                                                   ng-model="newEmployee.EmployeeCode"
+                                                   placeholder="Nhập mã nhân viên"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         addEmployeeForm.EmployeeCode.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.EmployeeCode.$error.required
+                                                 ">
+                                                Vui lòng nhập mã nhân viên.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="addEmployeeValidation.EmployeeCode.length">
+
+                                                <div ng-repeat="
+                                                        error in addEmployeeValidation.EmployeeCode
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         addEmployeeForm.FullName.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.FullName.$invalid
+                                             }">
+
+                                            <label for="add-employee-full-name">
+                                                Họ và tên
+                                            </label>
+
+                                            <input id="add-employee-full-name"
+                                                   name="FullName"
+                                                   type="text"
+                                                   class="form-control"
+                                                   ng-model="newEmployee.FullName"
+                                                   placeholder="Nhập họ và tên"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         addEmployeeForm.FullName.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.FullName.$error.required
+                                                 ">
+                                                Vui lòng nhập họ và tên.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="addEmployeeValidation.FullName.length">
+
+                                                <div ng-repeat="
+                                                        error in addEmployeeValidation.FullName
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         addEmployeeForm.Email.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.Email.$invalid
+                                             }">
+
+                                            <label for="add-employee-email">
+                                                Email
+                                            </label>
+
+                                            <input id="add-employee-email"
+                                                   name="Email"
+                                                   type="email"
+                                                   class="form-control"
+                                                   ng-model="newEmployee.Email"
+                                                   placeholder="Nhập email"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         addEmployeeForm.Email.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.Email.$error.required
+                                                 ">
+                                                Vui lòng nhập email.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         addEmployeeForm.Email.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.Email.$error.email
+                                                 ">
+                                                Email không đúng định dạng.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="addEmployeeValidation.Email.length">
+
+                                                <div ng-repeat="
+                                                        error in addEmployeeValidation.Email
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         addEmployeeForm.PhoneNumber.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.PhoneNumber.$invalid
+                                             }">
+
+                                            <label for="add-employee-phone">
+                                                Số điện thoại
+                                            </label>
+
+                                            <input id="add-employee-phone"
+                                                   name="PhoneNumber"
+                                                   type="text"
+                                                   class="form-control"
+                                                   ng-model="newEmployee.PhoneNumber"
+                                                   placeholder="Nhập số điện thoại"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         addEmployeeForm.PhoneNumber.$touched
+                                                         || addEmployeeForm.$submitted
+                                                     )
+                                                     && addEmployeeForm.PhoneNumber.$error.required
+                                                 ">
+                                                Vui lòng nhập số điện thoại.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="addEmployeeValidation.PhoneNumber.length">
+
+                                                <div ng-repeat="
+                                                        error in addEmployeeValidation.PhoneNumber
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{
+                                         'has-error':
+                                             (
+                                                 addEmployeeForm.Address.$touched
+                                                 || addEmployeeForm.$submitted
+                                             )
+                                             && addEmployeeForm.Address.$invalid
+                                     }">
+
+                                    <label for="add-employee-address">
+                                        Địa chỉ
+                                    </label>
+
+                                    <textarea id="add-employee-address"
+                                              name="Address"
+                                              class="form-control"
+                                              rows="3"
+                                              ng-model="newEmployee.Address"
+                                              placeholder="Nhập địa chỉ"
+                                              required>
+                                    </textarea>
+
+                                    <div class="help-block validation-message"
+                                         ng-if="
+                                             (
+                                                 addEmployeeForm.Address.$touched
+                                                 || addEmployeeForm.$submitted
+                                             )
+                                             && addEmployeeForm.Address.$error.required
+                                         ">
+                                        Vui lòng nhập địa chỉ.
+                                    </div>
+
+                                    <div class="help-block validation-message"
+                                         ng-if="addEmployeeValidation.Address.length">
+
+                                        <div ng-repeat="
+                                                error in addEmployeeValidation.Address
+                                                track by $index
+                                             "
+                                             ng-bind="error">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="add-employee-gender">
+                                                Giới tính
+                                            </label>
+
+                                            <!-- ng-value để giữ kiểu number, khớp GetGenderText -->
+                                            <select id="add-employee-gender"
+                                                    name="Gender"
+                                                    class="form-control"
+                                                    ng-model="newEmployee.Gender">
+                                                <option ng-value="0">Nam</option>
+                                                <option ng-value="1">Nữ</option>
+                                                <option ng-value="2">Khác</option>
+                                            </select>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="addEmployeeValidation.Gender.length">
+
+                                                <div ng-repeat="
+                                                        error in addEmployeeValidation.Gender
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="add-employee-status">
+                                                Trạng thái
+                                            </label>
+
+                                            <select id="add-employee-status"
+                                                    name="ModerationStatus"
+                                                    class="form-control"
+                                                    ng-model="newEmployee.ModerationStatus">
+                                                <option ng-value="0">
+                                                    Đang chờ duyệt
+                                                </option>
+                                                <option ng-value="1">
+                                                    Đã duyệt
+                                                </option>
+                                                <option ng-value="2">
+                                                    Bị từ chối
+                                                </option>
+                                            </select>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="addEmployeeValidation.ModerationStatus.length">
+
+                                                <div ng-repeat="
+                                                        error in addEmployeeValidation.ModerationStatus
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-default employee-secondary-button"
+                                        data-dismiss="modal">
+                                    Hủy
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-success">
+                                    <i class="fa fa-plus"></i>
+                                    Thêm
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL SỬA ================= -->
+            <div class="modal fade" id="editEmployeeModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content employee-modal">
+
+                        <form name="editEmployeeForm"
+                              ng-submit="
+                                  UpdateEmployee(
+                                      employeeDetail,
+                                      editEmployeeForm
+                                  )
+                              "
+                              novalidate>
+
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Đóng">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <h4 class="modal-title">
+                                    Sửa nhân viên
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="alert alert-danger employee-modal-alert"
+                                     ng-if="editEmployeeValidation.summary.length">
+
+                                    <div ng-repeat="
+                                            error in editEmployeeValidation.summary
+                                            track by $index
+                                         "
+                                         ng-bind="error">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         editEmployeeForm.EmployeeCode.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.EmployeeCode.$invalid
+                                             }">
+
+                                            <label for="edit-employee-code">
+                                                Mã nhân viên
+                                            </label>
+
+                                            <input id="edit-employee-code"
+                                                   name="EmployeeCode"
+                                                   type="text"
+                                                   class="form-control"
+                                                   ng-model="employeeDetail.EmployeeCode"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         editEmployeeForm.EmployeeCode.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.EmployeeCode.$error.required
+                                                 ">
+                                                Vui lòng nhập mã nhân viên.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="editEmployeeValidation.EmployeeCode.length">
+
+                                                <div ng-repeat="
+                                                        error in editEmployeeValidation.EmployeeCode
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         editEmployeeForm.FullName.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.FullName.$invalid
+                                             }">
+
+                                            <label for="edit-employee-full-name">
+                                                Họ và tên
+                                            </label>
+
+                                            <input id="edit-employee-full-name"
+                                                   name="FullName"
+                                                   type="text"
+                                                   class="form-control"
+                                                   ng-model="employeeDetail.FullName"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         editEmployeeForm.FullName.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.FullName.$error.required
+                                                 ">
+                                                Vui lòng nhập họ và tên.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="editEmployeeValidation.FullName.length">
+
+                                                <div ng-repeat="
+                                                        error in editEmployeeValidation.FullName
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         editEmployeeForm.Email.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.Email.$invalid
+                                             }">
+
+                                            <label for="edit-employee-email">
+                                                Email
+                                            </label>
+
+                                            <input id="edit-employee-email"
+                                                   name="Email"
+                                                   type="email"
+                                                   class="form-control"
+                                                   ng-model="employeeDetail.Email"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         editEmployeeForm.Email.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.Email.$error.required
+                                                 ">
+                                                Vui lòng nhập email.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         editEmployeeForm.Email.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.Email.$error.email
+                                                 ">
+                                                Email không đúng định dạng.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="editEmployeeValidation.Email.length">
+
+                                                <div ng-repeat="
+                                                        error in editEmployeeValidation.Email
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{
+                                                 'has-error':
+                                                     (
+                                                         editEmployeeForm.PhoneNumber.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.PhoneNumber.$invalid
+                                             }">
+
+                                            <label for="edit-employee-phone">
+                                                Số điện thoại
+                                            </label>
+
+                                            <input id="edit-employee-phone"
+                                                   name="PhoneNumber"
+                                                   type="text"
+                                                   class="form-control"
+                                                   ng-model="employeeDetail.PhoneNumber"
+                                                   required />
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="
+                                                     (
+                                                         editEmployeeForm.PhoneNumber.$touched
+                                                         || editEmployeeForm.$submitted
+                                                     )
+                                                     && editEmployeeForm.PhoneNumber.$error.required
+                                                 ">
+                                                Vui lòng nhập số điện thoại.
+                                            </div>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="editEmployeeValidation.PhoneNumber.length">
+
+                                                <div ng-repeat="
+                                                        error in editEmployeeValidation.PhoneNumber
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{
+                                         'has-error':
+                                             (
+                                                 editEmployeeForm.Address.$touched
+                                                 || editEmployeeForm.$submitted
+                                             )
+                                             && editEmployeeForm.Address.$invalid
+                                     }">
+
+                                    <label for="edit-employee-address">
+                                        Địa chỉ
+                                    </label>
+
+                                    <textarea id="edit-employee-address"
+                                              name="Address"
+                                              class="form-control"
+                                              rows="3"
+                                              ng-model="employeeDetail.Address"
+                                              required>
+                                    </textarea>
+
+                                    <div class="help-block validation-message"
+                                         ng-if="
+                                             (
+                                                 editEmployeeForm.Address.$touched
+                                                 || editEmployeeForm.$submitted
+                                             )
+                                             && editEmployeeForm.Address.$error.required
+                                         ">
+                                        Vui lòng nhập địa chỉ.
+                                    </div>
+
+                                    <div class="help-block validation-message"
+                                         ng-if="editEmployeeValidation.Address.length">
+
+                                        <div ng-repeat="
+                                                error in editEmployeeValidation.Address
+                                                track by $index
+                                             "
+                                             ng-bind="error">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="edit-employee-gender">
+                                                Giới tính
+                                            </label>
+
+                                            <select id="edit-employee-gender"
+                                                    name="Gender"
+                                                    class="form-control"
+                                                    ng-model="employeeDetail.Gender">
+                                                <option ng-value="0">Nam</option>
+                                                <option ng-value="1">Nữ</option>
+                                                <option ng-value="2">Khác</option>
+                                            </select>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="editEmployeeValidation.Gender.length">
+
+                                                <div ng-repeat="
+                                                        error in editEmployeeValidation.Gender
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="edit-employee-status">
+                                                Trạng thái
+                                            </label>
+
+                                            <select id="edit-employee-status"
+                                                    name="ModerationStatus"
+                                                    class="form-control"
+                                                    ng-model="employeeDetail.ModerationStatus">
+                                                <option ng-value="0">
+                                                    Đang chờ duyệt
+                                                </option>
+                                                <option ng-value="1">
+                                                    Đã duyệt
+                                                </option>
+                                                <option ng-value="2">
+                                                    Bị từ chối
+                                                </option>
+                                            </select>
+
+                                            <div class="help-block validation-message"
+                                                 ng-if="editEmployeeValidation.ModerationStatus.length">
+
+                                                <div ng-repeat="
+                                                        error in editEmployeeValidation.ModerationStatus
+                                                        track by $index
+                                                     "
+                                                     ng-bind="error">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-default employee-secondary-button"
+                                        data-dismiss="modal">
+                                    Hủy
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-success">
+                                    <i class="fa fa-check"></i>
+                                    Lưu
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL CHI TIẾT ================= -->
+            <div class="modal fade" id="employeeDetailModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content employee-modal">
+
+                        <div class="modal-header">
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Đóng">
+                                <span aria-hidden="true">&times;</span>
                             </button>
-                        </th>
-                        <th>Ngày tạo</th>
-                        <th>Trạng thái</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in listUser track by item.Id">
-                        <td>{{item.UserName}}</td>
-                        <td>{{item.CreatedAt | date:'dd/MM/yyyy'}}</td>
-                        <td>{{GetStatusText(item.ModerationStatus)}}</td>
-                        <td>
-                            <button class="btn btn-warning" ng-click="OpenEdit(item)">Sửa</button>
-                            <button class="btn btn-danger" ng-click="DeleteUser(item)">Xóa</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
-        <div class="clearfix">
-            <div class="pull-left">
-                Tổng số: {{userTotalData}} — Trang {{userQuery.PageIndex}} / {{GetUserPageCount()}}
-            </div>
-            <div class="pull-right">
-                <button type="button"
-                        class="btn btn-default"
-                        ng-disabled="userQuery.PageIndex <= 1"
-                        ng-click="PreviousUserPage()">
-                    Trước
-                </button>
-                <button type="button"
-                        class="btn btn-default"
-                        ng-disabled="userQuery.PageIndex >= GetUserPageCount()"
-                        ng-click="NextUserPage()">
-                    Sau
-                </button>
-            </div>
-        </div>
+                            <h4 class="modal-title">
+                                Chi tiết nhân viên
+                            </h4>
+                        </div>
 
-        <hr />
+                        <div class="modal-body">
 
+                            <div class="text-center employee-detail-loading"
+                                 ng-if="employeeDetailLoading">
+                                <i class="fa fa-spinner fa-spin"></i>
+                                Đang tải thông tin...
+                            </div>
 
-        <!-- ================= MODAL SỬA ================= -->
-        <div class="modal fade" id="editUserModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+                            <div class="alert alert-danger"
+                                 ng-if="employeeDetailError"
+                                 ng-bind="employeeDetailError">
+                            </div>
 
-                    <div class="modal-header">
-                        <h4 class="modal-title">Sửa người dùng</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <div ng-if="
+                                    !employeeDetailLoading
+                                    && employeeDetail
+                                ">
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Mã nhân viên
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        <strong ng-bind="employeeDetail.EmployeeCode"></strong>
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Họ và tên
+                                    </div>
+
+                                    <div class="col-sm-9"
+                                         ng-bind="employeeDetail.FullName">
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Email
+                                    </div>
+
+                                    <div class="col-sm-9"
+                                         ng-bind="employeeDetail.Email">
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Số điện thoại
+                                    </div>
+
+                                    <div class="col-sm-9"
+                                         ng-bind="employeeDetail.PhoneNumber">
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Địa chỉ
+                                    </div>
+
+                                    <div class="col-sm-9"
+                                         ng-bind="employeeDetail.Address">
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Giới tính
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        {{GetGenderText(employeeDetail.Gender)}}
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row">
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Trạng thái
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        <span class="employee-status">
+                                            {{
+                                                GetStatusText(
+                                                    employeeDetail.ModerationStatus
+                                                )
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row"
+                                     ng-if="employeeDetail.CreatedAt">
+
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Ngày tạo
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        {{
+                                            employeeDetail.CreatedAt
+                                            | date:'dd/MM/yyyy HH:mm'
+                                        }}
+                                    </div>
+                                </div>
+
+                                <div class="row employee-detail-row"
+                                     ng-if="employeeDetail.LastModifiedAt">
+
+                                    <div class="col-sm-3 employee-detail-label">
+                                        Cập nhật gần nhất
+                                    </div>
+
+                                    <div class="col-sm-9">
+                                        {{
+                                            employeeDetail.LastModifiedAt
+                                            | date:'dd/MM/yyyy HH:mm'
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-default employee-secondary-button"
+                                    data-dismiss="modal">
+                                Đóng
+                            </button>
+                        </div>
+
                     </div>
-                    <div class="modal-body">
-                        <label>Tên người dùng</label>
-                        <input class="form-control" ng-model="editUser.UserName">
-                    </div>
-                    <div class="modal-body">
-                        <label>Mật khẩu</label>
-                        <input class="form-control" ng-model="editUser.Password">
-                    </div>
-    
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">Hủy</button>
-                        <button class="btn btn-success" ng-click="UpdateUser(editUser)">
-                            Lưu
-                        </button>
-                    </div>
-
                 </div>
             </div>
-        </div>
 
-        <!-- ================= MODAL THÊM ================= -->
-        <div class="modal fade" id="addUserModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <!-- ================= MODAL XÁC NHẬN XÓA ================= -->
+            <div class="modal fade" id="deleteEmployeeModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content employee-modal employee-delete-modal">
 
-                    <div class="modal-header">
-                        <h4 class="modal-title">Thêm người dùng</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="modal-header">
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Đóng">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                            <h4 class="modal-title">
+                                Xác nhận xóa
+                            </h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="employee-delete-summary">
+                                <i class="fa fa-exclamation-triangle"></i>
+
+                                <div>
+                                    <p>
+                                        Bạn có chắc muốn xóa nhân viên này?
+                                    </p>
+
+                                    <strong ng-bind="employeeToDelete.FullName">
+                                    </strong>
+
+                                    <div class="text-muted employee-delete-code">
+                                        Mã:
+                                        <span ng-bind="employeeToDelete.EmployeeCode"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-danger employee-modal-alert"
+                                 ng-if="deleteEmployeeError"
+                                 ng-bind="deleteEmployeeError">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-default employee-secondary-button"
+                                    data-dismiss="modal"
+                                    ng-disabled="deleteBusy">
+                                Hủy
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    ng-click="
+                                        ConfirmDeleteEmployee(
+                                            employeeToDelete
+                                        )
+                                    "
+                                    ng-disabled="deleteBusy">
+
+                                <i class="fa fa-trash"
+                                   ng-if="!deleteBusy">
+                                </i>
+
+                                <span ng-if="!deleteBusy">
+                                    Xóa
+                                </span>
+
+                                <span ng-if="deleteBusy">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                    Đang xóa
+                                </span>
+                            </button>
+                        </div>
+
                     </div>
-
-                    <div class="modal-body">
-                        <label>Username</label>
-                        <input class="form-control"
-                            ng-model="newUser.UserName">
-
-                        <br />
-
-                        <label>Password</label>
-                        <input type="password"
-                            class="form-control"
-                            ng-model="newUser.Password">
-
-                        <br />
-
-                        <label>Trạng thái</label>
-                        <select class="form-control"
-                                ng-model="newUser.ModerationStatus">
-                            <option value="0">Pending</option>
-                            <option value="1">Approved</option>
-                            <option value="2">Rejected</option>
-                        </select>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal">
-                            Hủy
-                        </button>
-
-                        <button class="btn btn-success"
-                                ng-click="AddUser()">
-                            Thêm
-                        </button>
-                    </div>
-
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</body>
+</div>
 
 <style>
-    .ribbon {
-        top: -5px;
-        width: 10em;
-        color: white;
-        white-space: normal;
-        text-transform: uppercase;
-        text-align: center;
-        font-weight: bold;
-        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+
+
+    .employee-management-page {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 24px 20px 32px;
+    }
+
+    .employee-management-page .employee-page-header {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .employee-management-page .employee-page-title {
+        margin: 0 0 5px;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: #333;
+    }
+
+    .employee-management-page .employee-page-subtitle {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .employee-management-page .employee-page-actions {
+        padding-top: 3px;
+        white-space: nowrap;
+    }
+
+    .employee-management-page .employee-alert {
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+
+    .employee-management-page .employee-search-box {
+        margin-bottom: 20px;
+        padding: 16px;
+        background: #f8f9fa;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+    }
+
+    .employee-management-page .employee-search-label {
         display: block;
-        height: 4rem;
-        background: linear-gradient(to bottom, #999999 0%, #cccccc 100%);
-        color: white;
-        float: left;
-        position: relative;
-        -webkit-filter: drop-shadow(0 0.5rem 0.3em rgba(0, 0, 0, 0.5));
-        transform: translate3d(0, 0, 0);
+        margin-bottom: 7px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #444;
     }
 
-    .cke_editable b,
-    .cke_editable strong {
-        font-weight: bold !important;
+    .employee-management-page .form-control,
+    .employee-management-page .input-group-btn > .btn {
+        height: 38px;
+        font-size: 14px;
     }
 
-    .cke_editable i,
-    .cke_editable em {
-        font-style: italic !important;
+    .employee-management-page textarea.form-control {
+        height: auto;
     }
 
-    .avatar-html img {
-        width: 40px !important;
-        height: 40px !important;
-        border-radius: 50%;
-        object-fit: cover;
+    .employee-management-page .employee-list-panel {
+        margin-bottom: 0;
+        border-color: #e2e2e2;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .employee-management-page .employee-list-panel > .panel-heading {
+        padding: 13px 16px;
+        background: #fff;
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .employee-management-page .panel-title-text {
+        font-size: 16px;
+        line-height: 22px;
+        color: #333;
+    }
+
+    .employee-management-page .employee-result-count {
         display: inline-block;
-        margin-right: 3px;
+        margin-left: 8px;
+        font-size: 13px;
+        line-height: 22px;
     }
 
-    .avatar-hs {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 1px solid #ddd;
+    .employee-management-page .employee-table {
+        margin-bottom: 0;
+        font-size: 14px;
     }
 
-    .ribbon:after {
-        content: "";
-        width: 0;
-        height: 0;
-        border-right: 6rem solid transparent;
-        border-left: 6rem solid transparent;
-        border-top: 1.5rem solid #CCCCCC;
-        position: absolute;
-        top: 4rem;
-        left: 0;
+    .employee-management-page .employee-table > thead > tr > th {
+        padding: 12px 14px;
+        border-bottom: 1px solid #dcdcdc;
+        background: #f7f7f7;
+        color: #444;
+        font-weight: 600;
+        vertical-align: middle;
+        white-space: nowrap;
     }
 
-    .ribbon.ribbon--orange {
-        background: linear-gradient(to bottom, #e7711b 0%, #f7981d 100%);
+    .employee-management-page .employee-table > tbody > tr > td {
+        padding: 13px 14px;
+        border-top: 1px solid #eee;
+        vertical-align: middle;
+        color: #444;
     }
 
-    button.btn.btn-default.ribbon.ribbon--orange:hover {
+    .employee-management-page .employee-table > tbody > tr:hover {
+        background: #fafafa;
+    }
+
+    .employee-management-page .employee-sort-button,
+    .employee-management-page .employee-detail-button {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font-size: 14px;
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    .employee-management-page .employee-sort-button {
+        font-weight: 600;
+    }
+
+    .employee-management-page .employee-detail-button {
+        text-align: left;
+    }
+
+    .employee-management-page .employee-sort-button:hover,
+    .employee-management-page .employee-sort-button:focus,
+    .employee-management-page .employee-detail-button:hover,
+    .employee-management-page .employee-detail-button:focus {
+        color: #23527c;
         text-decoration: underline;
-        color: white;
+        outline: none;
     }
 
-    .ribbon.ribbon--orange:after {
-        border-top: 1.5rem solid #F7981D;
+    .employee-management-page .employee-sort-icon {
+        display: inline-block;
+        margin-left: 4px;
+        font-size: 10px;
     }
 
-    .home-layout {
-        text-align: center;
-        vertical-align: middle;
-        /* height: 100vh; */
-        /* display: flex; */
-        flex-wrap: wrap;
-        vertical-align: middle;
+    .employee-management-page .employee-status {
+        display: inline-block;
+        padding: 4px 9px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        background: #fafafa;
+        font-size: 12px;
+        line-height: 1.2;
+        color: #555;
+        white-space: nowrap;
     }
 
-    button.btn.btn-default {
-        font-size: 18px !important;
-        border: none;
-        color: #146eb5;
+    .employee-management-page .employee-action-column {
+        min-width: 180px;
+        text-align: right;
+        white-space: nowrap;
     }
 
-        button.btn.btn-default:hover {
-            background-color: transparent;
-            border: none;
-            text-decoration: underline;
-        }
-
-    button.fa-edit {
-        border: 1px solid #3232bd;
-        padding: 5px;
-        border-radius: 2px;
-        color: #3232bd;
-        background-color: #fff;
+    .employee-management-page .employee-action-column .btn + .btn {
+        margin-left: 5px;
     }
 
-    .form-header {
-        display: flex;
-        justify-content: space-between;
+    .employee-management-page .employee-empty-row {
+        padding: 28px 16px !important;
+        font-size: 14px;
     }
 
-    .form-header-content {
-        display: grid;
-        grid-template-columns: 6fr 2fr 1fr;
+    .employee-management-page .btn {
+        font-size: 14px;
     }
 
-    button.fa-edit {
-        border: 1px solid #3232bd;
-        padding: 5px;
-        border-radius: 2px;
-        color: #3232bd;
-        background-color: #fff;
+    .employee-management-page .btn .fa {
+        margin-right: 4px;
     }
 
-    .fade {
-        opacity: 1;
+    .employee-management-page .employee-pagination {
+        padding: 12px 16px;
+        background: #fff;
+        border-top: 1px solid #e6e6e6;
     }
 
-    .textarea-detail {
-        background-color: #f9f9f9;
-        padding: 5px;
-        min-height: 50px;
-        font-size: 18px;
-        box-shadow: 0 3px 15px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+    .employee-management-page .employee-pagination-info {
+        font-size: 13px;
+        line-height: 30px;
+        color: #666;
     }
 
-    .checked {
-        text-decoration: line-through;
-        -webkit-text-decoration-color: #198ae3;
-        text-decoration-color: #198ae3;
-    }
-
-    .thead-content {
-        display: table;
-        width: 100%;
-    }
-
-    .tbody-content {
-        border: 1px solid #ccc;
-        margin-bottom: 15px;
-        display: table;
-        width: 100%;
-    }
-
-    .input-form-search .form-control-feedback {
-        color: white;
-        right: 0;
-        background: #18af24;
-        vertical-align: middle;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .form-checkbox input[type=checkbox] {
-        border-radius: 50%;
-        border: none !important;
-        background-color: #DDD;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        width: 20px;
-        height: 20px !important;
-        position: relative;
-        top: 5px;
-        margin-right: 5px;
-    }
-
-        fieldset[disabled] .form-checkbox input[type=checkbox], fieldset[disabled] .form-checkbox input[type=radio], .form-checkbox input[type=checkbox].disabled, .form-checkbox input[type=checkbox][disabled], .form-checkbox input[type=radio].disabled, .form-checkbox input[type=radio][disabled] {
-            background-color: #EEE;
-            cursor: not-allowed;
-        }
-
-        .form-checkbox input[type=checkbox]:checked {
-            background-color: #68AD17;
-            background: #68AD17 url(data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==) 5px 5px no-repeat;
-        }
-
-    div.process-bar {
-        position: relative;
-    }
-
-        div.process-bar b {
-            background: #189fd3;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-        }
-
-    .node circle {
-        fill: #fff;
-        stroke: steelblue;
-        stroke-width: 3px;
-    }
-
-    .node text {
-        font: 12px sans-serif;
-    }
-
-    .link {
-        fill: none;
-        stroke: #ccc;
-        stroke-width: 2px;
-    }
-
-    label.checkbox-radio {
-        cursor: pointer;
+    .employee-management-page .employee-pagination-separator {
+        display: inline-block;
+        margin: 0 8px;
+        color: #bbb;
     }
 
     body {
         font-size: 18px !important;
     }
 
-    .card.draggable.shadow-sm:hover {
-        cursor: pointer;
+    /*
+       Project hiện có rule legacy:
+       button.btn.btn-default { font-size:18px; border:none; ... }
+       Override chỉ trong Employee page.
+    */
+    .employee-management-page button.btn.btn-default.employee-pagination-button,
+    .employee-management-page button.btn.btn-default.employee-secondary-button {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #333;
+        font-size: 13px !important;
+        text-decoration: none;
     }
 
-    .checkbox-radio input[type=radio]:focus {
-        outline: none;
+    .employee-management-page button.btn.btn-default.employee-pagination-button:hover,
+    .employee-management-page button.btn.btn-default.employee-pagination-button:focus,
+    .employee-management-page button.btn.btn-default.employee-secondary-button:hover,
+    .employee-management-page button.btn.btn-default.employee-secondary-button:focus {
+        border-color: #adadad;
+        background-color: #e6e6e6;
+        color: #333;
+        text-decoration: none;
     }
 
-    .checkbox-radio input[type=radio] {
-        background-color: #DDD;
-        border-radius: 2px;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        width: 20px;
-        height: 20px !important;
-        margin-right: 5px;
-        top: 5px;
-        cursor: pointer;
-        position: relative;
+    .employee-management-page button.btn.btn-default.employee-pagination-button[disabled],
+    .employee-management-page button.btn.btn-default.employee-secondary-button[disabled] {
+        border-color: #ddd;
+        background-color: #fff;
+        color: #aaa;
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    .employee-management-page .modal-dialog {
+        margin-top: 100px;
+    }
+
+    .employee-management-page .employee-modal .modal-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .employee-management-page .employee-modal .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .employee-management-page .employee-modal .modal-body {
+        padding: 20px;
+    }
+
+    .employee-management-page .employee-modal .modal-footer {
+        padding: 12px 20px;
+        background: #fafafa;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .employee-management-page .employee-modal .employee-modal-alert {
+        margin-bottom: 18px;
+        border-radius: 4px;
+    }
+
+    .employee-management-page .employee-modal .form-group {
+        margin-bottom: 18px;
+    }
+
+    .employee-management-page .employee-modal .form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .employee-management-page .employee-modal label {
+        margin-bottom: 7px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .employee-management-page .employee-modal .form-group.has-error .form-control {
+        border-color: #d9534f;
+        box-shadow: none;
+    }
+
+    .employee-management-page .employee-modal .form-group.has-error label {
+        color: #a94442;
+    }
+
+    .employee-management-page .employee-modal .validation-message {
+        margin-top: 6px;
+        margin-bottom: 0;
+        color: #d9534f;
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    .employee-management-page .employee-detail-loading {
+        padding: 30px 0;
+        color: #777;
+    }
+
+    .employee-management-page .employee-detail-row {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .employee-management-page .employee-detail-label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .employee-management-page .employee-delete-modal .modal-body {
+        padding: 18px 20px 8px;
+    }
+
+    .employee-management-page .employee-delete-summary {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 8px 0 6px;
+    }
+
+    .employee-management-page .employee-delete-summary > i {
+        flex: 0 0 auto;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
+        background: #fff3cd;
+        color: #b7791f;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
     }
 
-        .checkbox-radio input[type=radio]:checked {
-            background-color: #409fd6;
+    .employee-management-page .employee-delete-summary p {
+        margin: 0 0 4px;
+        color: #444;
+        font-size: 14px;
+        line-height: 1.5;
+    }
 
-            background: #409fd6 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAXUlEQVQoU2NkIBIwEqmOAa7w48ePqn/+/JnCyMjoBtL8////XSwsLDn8/Py3QXy4wrdv3+6EKYLZAlIsLCzsjqLw3bt3/7E5Q0hICGwY3ESiFRJtNdGeIRRMRIcjAMeDMAtLh63tAAAAAElFTkSuQmCC") 5px 5px no-repeat;
-        }
+    .employee-management-page .employee-delete-summary strong {
+        color: #111;
+        font-size: 15px;
+        word-break: break-word;
+    }
+
+    .employee-management-page .employee-delete-code {
+        margin-top: 3px;
+        font-size: 12px;
+    }
+
 </style>
-<script>
-    function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
 
-
-</script>
-<script>
-    $('body').on('keyup input', 'textarea', function () {
-        var offset = this.offsetHeight - this.clientHeight;
-        var scroll = $('body').scrollTop();
-        $(this).css('height', 'auto').css('height', this.scrollHeight + offset);
-        $('body').scrollTop(scroll);
-    }).removeAttr('data-autoresize');
-
-
-</script>
+<script src="~/Content/js/Projects/EmployeeController.js?time=@DateTime.UtcNow.Ticks"></script>

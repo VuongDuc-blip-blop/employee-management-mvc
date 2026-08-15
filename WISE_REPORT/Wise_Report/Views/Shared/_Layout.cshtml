@@ -67,7 +67,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/Content/download/plugins/ckfinder/ckfinder.js"></script>
     <script src="~/Content/js-vendor/angular-filter.js"></script>
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/ng.ckeditor/2.0.2/ng-ckeditor.min.js"></script>*@
-    <script src="~/Content/js-vendor/vendor.bundle.base.js"></script>
     @*<script src="~/Content/js/SUMIRUBBERCtrl.js"></script>*@
     <script src="~/Content/pagination.js"></script>
     <script src="~/Content/moment.min.js"></script>
@@ -233,19 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/Configuration">
-                            <span class="menu-title">Configuration</span>
-                            <i class="mdi mdi-contacts menu-icon"></i>
-                        </a>
-                    </li>
-                   
-                    <li class="nav-item">
-                        <a class="nav-link" href="/MarkettingReport/Mark_daily_report">
-                            <span class="menu-title">Report</span>
-                            <i class="mdi mdi-table-large menu-icon"></i>
-                        </a>
-                    </li>
+                    @Html.Partial("_ManagementNavigationItems")
                 </ul>
             </nav>
             <div class="content-wrapper main-panel" style="background-color:0e4c6d !important">

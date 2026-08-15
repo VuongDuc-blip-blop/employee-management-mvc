@@ -15,7 +15,6 @@ namespace Wise_Report.Shared.Queries.Base
         public int PageSize { get; set; } = 20;
 
         [Required(ErrorMessage = "SortColumn is required.")]
-        [RegularExpression("^USERNAME$", ErrorMessage = "SortColumn is not allowed.")]
         public string SortColumn { get; set; }
 
         [EnumDataType(typeof(SortDirectionEnum), ErrorMessage = "SortDirection is invalid.")]

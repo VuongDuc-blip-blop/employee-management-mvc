@@ -299,6 +299,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Setting\Api_EmployeeController.cs" />
     <Compile Include="Api\Setting\Api_UserController.cs" />
     <Compile Include="Api\Setting\Api_DepartmentsController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushMessaging.cs" />
     <Compile Include="Shared\DataSeeded\SeededAdmin.cs" />
+    <Compile Include="Shared\Dtos\EmployeeDetailDto.cs" />
     <Compile Include="Shared\Dtos\EmployeePageItem.cs" />
     <Compile Include="Shared\Dtos\PagedResult.cs" />
     <Compile Include="Shared\Dtos\UserDetailDto.cs" />
@@ -1127,6 +1129,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\HomeLayout.cshtml" />
+    <Content Include="Views\Shared\_ManagementNavigationItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

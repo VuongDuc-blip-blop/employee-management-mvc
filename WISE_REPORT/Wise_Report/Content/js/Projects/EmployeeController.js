@@ -1,248 +1,399 @@
-﻿app.controller('EmployeeCtrl', function ($scope, $http, $interval, ajaxService) {
+﻿app.controller('EmployeeCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout){
+    'use strict';
 
-    $scope.userid = $('#userid').val();
-    $scope.today = new Date();
+    var API_ROOT = origin + '/api/Api_EmployeeController';
 
-    //-----=======================WORKFLOW=====================================================================================
-    $scope.GetListUser = function () {
-        var data = {
-            SearchKeyword: "",
-            PageIndex: 1,
-            PageSize:20,
-            SortColumn: "USERNAME",
-            SortDirection: "ASC"
-        }
-        $http.post(origin + '/api/Api_UserController/GetListUser', data).then(function (response) {
-            console.log(response)
-            console.log(response.data.Data)
-            $scope.listUser = response.data.Data;
-            //console.log(response.data)
-        });
-    }
-    $scope.GetListUser()
-
-    $scope.AddUser = () => {
-        var data = {
-            username: $scope.newUser.UserName,
-            Password: $scope.newUser.Password,
-        }
-        $http.post(origin + '/api/Api_UserController/AddUser', data).then(function (response) {
-            if (response.status == 200) {
-                console.log("Thành công")
-            } else {
-                console.log("Thất bại")
-            }
-        });
-    }
-    $scope.UpdateUser = (item) => {
-        var data = {
-            UserName: item.USERNAME,
-            Password: item.PASSWORD,
-        }
-        $http.post(origin + '/api/Api_UserController/UpdateUser/' + item.Id, data).then(function (response) {
-            if (response.status == 200) {
-                console.log("Thành công")
-                $scope.sua = false;
-                $scope.GetListUser()
-            } else {
-                console.log("Thất bại")
-            }
-        });
-    }
-    $scope.DeleteUser = (item) => {
-        console.log("DeleteUser", item)
-        if (confirm('bạn có chắc chắn muốn xóa?')) {
-            $http.post(origin + '/api/Api_UserController/DeleteUser/' + item.Id).then(function (response) {
-                if (response.status == 200) {
-                    console.log("Thành công")
-                    $scope.GetListUser()
-                } else {
-                    console.log("Thất bại")
-                }
-            });
-        }
-        
-    }
-
-    $scope.GetStatusText = function (status){
-        switch (status){
-            case 0:
-                return "Đang chờ duyệt";
-            case 1:
-                return "Đã duyệt";``
-            case 2:
-                return "Bị từ chối";
-            default:
-                return "Không xác định";
-        }
-    }
-
-   $scope.OpenAdd = function () {
-
-    $scope.newUser = {
-        UserName: "",
-        Password: "",
-        ModerationStatus: 0
+    /=== Employee List scope ===*/
+    $scope.listEmployee = [];
+    $scope.employeeTotalData = 0;
+    $scope.employeeListLoading = false;
+    $scope.employeeListError = null;
+    
+    $scope.employeeListQuery = {
+        SearchKeyword: '',
+        PageIndex: 1,
+        PageSize: 20,
+        SortColumn: 'FULLNAME',
+        SortDirection: 1
     };
 
-    $("#addUserModal").modal("show");
-};
+    /=== Employee Detail scope ===*/
+    $scope.employeeDetail = null;
+    $scope.employeeDetailLoading = false;
+    $scope.employeeDetailError = null;
 
-    $scope.OpenEdit = function (item) {
-        $scope.editUser = angular.copy(item);
-        $("#editUserModal").modal("show");
-    }
 
-    $scope.XuatExcel = function () {
-        var cancelstyle = {
-            headers: true,
-            column: {
-                style: { Font: { Bold: "1" } }
-            }, columns: [
-                { columnid: 'ID', title: 'Id', width: 50 },
-                { columnid: 'USERNAME', title: 'USERNAME', width: 80 },
-                { columnid: 'FULLNAME', title: 'FULLNAME', width: 120 },
-                { columnid: 'PASSWORD', title: 'PASSWORD', width: 80 }
-            ]
-        }; alasql('SELECT  *  INTO  XLSXML("List user",?)  FROM  ?', [cancelstyle, $scope.listUser]);
-    };
-
-    $scope.showdata = function () {
-        $("textarea[name=mail_content]").val(CKEDITOR.instances.mail_content.getData());
-        var mail_content = $("[name=mail_content]").val();
-        var res = mail_content.replace('<table', '<table id="tableupload" ');
-        $scope.showdatacontent = res;
-    }
-
-    $scope.helpdata = function () {
-
-        var tableUp = document.getElementById('tableupload');
-        if (tableUp === null || tableUp === undefined) {
-            alert("vui lòng nhấn \"click\" trước khi \"upload\", hoặc đã xảy ra lỗi !");
-        }
-        //gets rows of table
-        var rowLength = tableUp.rows.length;
-        var List_import = []
-        //loops through rows    
-        for (i = 0; i < rowLength; i++) {
-
-            var DATA_IMPORT = {
-                ID: (document.getElementById("tableupload").rows[i].cells.item(0).innerText),
-                USERNAME: (document.getElementById("tableupload").rows[i].cells.item(1).innerText),
-                FULLNAME: (document.getElementById("tableupload").rows[i].cells.item(2).innerText),
-                PASSWORD: (document.getElementById("tableupload").rows[i].cells.item(3).innerText),
-            }
-            List_import.push(DATA_IMPORT);
-
-        }
-
-        //console.log(List_import)
-        //$http.post(origin + '/api/Api_UserController/UpdateUser/', data).then(function (response) {
-        //    if (response.status == 200) {
-        //        console.log("Thành công")
-        //        $scope.sua = false;
-        //        $scope.GetListUser()
-        //    } else {
-        //        console.log("Thất bại")
-        //    }
-        //});
-        
-    }
-    //-----=======================END View Task=====================================================================================
-    $scope.tableToExcel = function (tableId) { // ex: '#my-table'
-        var tab_text = "<table border='2px' style='width:100%'><tr bgcolor='#87AFC6'>";
-        var textRange; var j = 0;
-        tab = document.getElementById(tableId); // id of table
-
-        for (j = 0; j < tab.rows.length; j++) {
-            tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
-            //tab_text=tab_text+"</tr>";
-        }
-
-        tab_text = tab_text + "</table>";
-        tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
-
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("MSIE");
-        var dt = new Date();
-        var day = dt.getDate();
-        var month = dt.getMonth() + 1;
-        var year = dt.getFullYear();
-        var hour = dt.getHours();
-        var mins = dt.getMinutes();
-        var postfix = day + "." + month + "." + year + "_" + hour + "." + mins;
-
-        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    $scope.genderOptions = [
         {
-            txtArea1.document.open("txt/html", "replace");
-            txtArea1.document.write(tab_text);
-            txtArea1.document.close();
-            txtArea1.focus();
-            sa = txtArea1.document.execCommand("SaveAs", true, "DataTableExport.xls");
-        }
-        else // For Chrome and firefox (Other broswers not tested)
-        {
-
-
-            var myBlob = new Blob([tab_text], {
-                type: 'application/vnd.ms-excel'
-            });
-            var url = window.URL.createObjectURL(myBlob);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.href = url;
-            a.download = "listUser" + postfix + ".xls";
-            a.click();
-            //adding some delay in removing the dynamically created link solved the problem in FireFox
-            setTimeout(function () {
-                window.URL.revokeObjectURL(url);
-            }, 0);
-        }
-
-
-        return (sa);
-
-    }
-})
-
-app.directive('editInPlace', function () {
-    return {
-        restrict: 'E',
-        scope: {
-            value: '='
+            Value : '0',
+            Text : 'Nam'
         },
-        template: '<span  ng-bind="value"></span><input ng-model="value"></input>',
-        link: function ($scope, element, attrs) {
-            // Let's get a reference to the input element, as we'll want to reference it.
-            var inputElement = angular.element(element.children()[1]);
-
-            // This directive should have a set class so we can style it.
-            element.addClass('edit-in-place');
-
-            // Initially, we're not editing.
-            $scope.editing = false;
-
-            // ng-click handler to activate edit-in-place
-            $scope.edit = function () {
-                $scope.editing = true;
-
-                // We control display through a class on the directive itself. See the CSS.
-                element.addClass('active');
-
-                // And we must focus the element. 
-                // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function, 
-                // we have to reference the first element in the array.
-                inputElement[0].focus();
-            };
-
-            // When we leave the input, we're done editing.
-            inputElement.prop('onblur', function () {
-                $scope.editing = false;
-                element.removeClass('active');
-            });
+        {
+            Value : '1',
+            Text : 'Nữ'
+        },
+        {
+            Value : '2',
+            Text : 'Khác'
         }
-    };
-});
+    ];
 
+    $scope.statusOptions = [
+        {
+            Value : '0',
+            Text : 'Đang chờ duyệt'
+        },
+        {
+            Value : '1',
+            Text: 'Đã duyệt'
+        },
+        {
+            Value : '2',
+            Text: 'Bị từ chối'
+        }
+    ];
+
+
+    /=== Validation State ===*/
+    function createValidationState(){
+        return {
+            summary: [],
+            EmployeeCode: [],
+            FullName: [],
+            Email: [],
+            PhoneNumber: [],
+            Address: [],
+            Gender: [],
+            ModerationStatus: [],
+        }
+    }
+
+    $scope.addEmployeeValidation = createValidationState();
+    $scope.editEmployeeValidation = createValidationState();
+
+    function resetAngularForm(form){
+        if(!form)
+        {
+            return;
+        }
+
+        form.$setPristine();
+        form.$setUntouched();
+    }
+
+    function getResponseMessage(response, fallback){
+        if(response && response.data && angular.isString(response.data.Message) && response.data.Message.length > 0){
+            return response.data.Message;
+        }
+        if(response && angular.isString(response.data)){
+            return response.data;
+        }
+        return fallback;
+    }
+
+    function showSuccessToast(message){
+        if(window.toastr && angular.isFunction(window.toastr.success)){
+            window.toastr.success(message);
+            return;
+        }
+
+        window.alert(message);
+    }
+
+    function showErrorToast(message){
+        if(window.toastr && angular.isFunction(window.toastr.error)){
+            window.toastr.error(message);
+            return;
+        }
+
+        window.alert(message);
+    }
+
+    function collectServerValidationErrors(response, validationState){
+        var modelState = response && response.data && response.data.ModelState;
+
+        if(!modelState){
+            var message = getResponseMessage(response, null);
+            
+            if(message){
+                validationState.summary.push(message);
+            }
+
+            return;
+        }
+
+        angular.forEach(modelState, function(messages, serverKey){
+            var keyParts = serverKey.split('.');
+
+            var fieldName = keyParts[keyParts.length - 1];
+
+            var target = validationState[fieldName] || validationState.summary;
+
+            angular.forEach(messages || [], function(message){
+                target.push(message);
+            });
+        });
+
+    }
+
+    function normalizePageResponse(response){
+        var responseData = response && response.data ? response.data : {};
+
+        return{
+            Data: angular.isArray(responseData.Data) ? responseData.Data : [],
+            TotalData: angular.isNumber(responseData.TotalData) ? responseData.TotalData : 0
+        };
+    }
+
+    function toggleSort(sortColumn){
+        if($scope.employeeListQuery.SortColumn === sortColumn){
+            $scope.employeeListQuery.SortDirection = $scope.employeeListQuery.SortDirection === 1 ? 2 : 1;
+
+        }else{
+            $scope.employeeListQuery.SortColumn = sortColumn;
+            $scope.employeeListQuery.SortDirection = 1;
+        }
+
+        $scope.employeeListQuery.PageIndex = 1;
+        $scope.GetListEmployee();
+    }
+
+    $scope.ToggleEmployeeCodeSort = function(){
+        toggleSort('EMPLOYEECODE');
+    }
+
+    $scope.ToggleFullNameSort = function(){
+        toggleSort('FULLNAME');
+    }
+
+    $scope.ToggleEmailSort = function(){
+        toggleSort('EMAIL');
+    }
+
+    $scope.ToggleCreatedAtSort = function(){
+        toggleSort('CREATEDAT');
+    }
+
+    $scope.GetListEmployee = function(){
+        $scope.employeeListLoading = true;
+        $scope.employeeListError = null;
+
+        var query = angular.copy($scope.employeeListQuery);
+
+        return $http.post(API_ROOT + '/GetListEmployee', query)
+            .then(function(response){
+                var page = normalizePageResponse(response);
+                $scope.listEmployee = page.Data;
+                $scope.employeeTotalData = page.TotalData;
+            }, function(response){
+                $scope.listEmployee = [];
+                $scope.employeeTotalData = 0;
+
+                $scope.employeeListError = getResponseMessage(response, 'Không thể tải danh sách nhân viên');
+            })
+            .finally(function(){
+                $scope.employeeListLoading = false;
+            });
+    }
+
+    $scope.searchEmployee = function(){
+        $scope.employeeListQuery.PageIndex = 1;
+        $scope.GetListEmployee();
+    }
+
+    $scope.GetEmployeePageCount = function(){
+        var pageSize = Number($scope.employeeListQuery.PageSize);
+
+        if(!pageSize || pageSize <=0){
+            return 1;
+        }
+
+        return Math.max(1, Math.ceil($scope.employeeTotalData / pageSize));
+    }
+    
+    $scope.PreviousEmployeePage = function(){
+        if($scope.employeeListQuery.PageIndex <=1){
+            return;
+        }
+        $scope.employeeListQuery.PageIndex--;
+        $scope.GetListEmployee();
+    }
+
+    $scope.NextEmployeePage = function(){
+        if($scope.employeeListQuery.PageIndex >= $scope.GetEmployeePageCount()){
+            return;
+        }
+        $scope.employeeListQuery.PageIndex++;
+        $scope.GetListEmployee();
+    }
+
+    $scope.GetGenderText = function(gender){
+        switch(gender){
+            case 0:
+                return 'Nam';
+            case 1:
+                return 'Nữ';
+            case 2:
+                return 'Khác';
+            default:
+                return 'Không xác định';
+        }
+    }
+
+    $scope.GetStatusText = function(status){
+        switch(status){
+            case 0:
+                return 'Đang chờ duyệt';
+            case 1:
+                return 'Đã duyệt';
+            case 2:
+                return 'Bị từ chối';
+            default:
+                return 'Không xác định';
+        }
+    }
+
+    $scope.OpenAddEmloyee = function(){
+        $scope.addEmployeeValidation = createValidationState();
+
+        $scope.newEmployee = {
+            'EmployeeCode': '',
+            'FullName': '',
+            'Email': '',
+            'PhoneNumber': '',
+            'Address': '',
+            'Gender': 0,
+            'ModerationStatus': 1
+        };
+
+        $('#addEmployeeModal').modal('show');
+
+        $timeout(function(){
+            resetAngularForm($scope.addEmployeeForm);
+        })
+    }
+
+    $scope.AddEmployee = function(form){
+        $scope.addEmployeeValidation = createValidationState();
+
+        if(form && form.$invalid){
+            form.$setSubmitted();
+            return;
+        }
+
+        var data = angular.copy($scope.newEmployee);
+
+        return $http.post(API_ROOT + '/AddEmployee', data)
+            .then(function(response){
+                showSuccessToast(getResponseMessage(response, 'Thêm nhân viên thành công'));
+                $('#addEmployeeModal').modal('hide');
+                $scope.GetListEmployee();
+            }, function(response){
+                collectServerValidationErrors(response, $scope.addEmployeeValidation);
+                showErrorToast(getResponseMessage(response, 'Không thể thêm nhân viên'));
+            })
+    }
+
+    $scope.OpenEditEmployee = function(item){
+        $scope.editEmployeeValidation = createValidationState();
+
+        return $http.get(API_ROOT + '/GetEmployeeDetail', { params: { id: item.Id } })
+            .then(function(response){
+                $scope.employeeDetail = angular.copy(response.data);
+                $('#editEmployeeModal').modal('show');
+                $timeout(function(){
+                    resetAngularForm($scope.editEmployeeForm);
+                })
+            }, function(response){
+                showErrorToast(getResponseMessage(response, 'Không thể tải thông tin nhân viên'));
+            })
+    }
+
+    $scope.UpdateEmployee = function(item, form){
+        $scope.editEmployeeValidation = createValidationState();
+
+        if(form && form.$invalid){
+            form.$setSubmitted();
+            return;
+        }
+
+        var data = {
+            Id: item.Id,
+            EmployeeCode: item.EmployeeCode,
+            FullName: item.FullName,
+            Email: item.Email,
+            PhoneNumber: item.PhoneNumber,
+            Address: item.Address,
+            Gender: item.Gender,
+            ModerationStatus: item.ModerationStatus
+        }
+
+        return $http.post(API_ROOT + '/UpdateEmployee/' + item.Id, data)
+            .then(function(response){
+                showSuccessToast(getResponseMessage(response, 'Cập nhật thông tin nhân viên thành công'));
+                $('#editEmployeeModal').modal('hide');
+                $scope.GetListEmployee();
+            }, function(response){
+                collectServerValidationErrors(response, $scope.editEmployeeValidation);
+                showErrorToast(getResponseMessage(response, 'Không thể cập nhật thông tin nhân viên'));
+        })
+    }
+
+    $scope.OpenEmployeeDetail = function(item){
+        $scope.employeeDetail = null;
+        $scope.employeeDetailLoading = true;
+        $scope.employeeDetailError = null;
+
+        $('#employeeDetailModal').modal('show');
+
+        return $http.get(API_ROOT + '/GetEmployeeDetail', { params: { id: item.Id } })
+            .then(function(response){
+                $scope.employeeDetail = angular.copy(response.data);
+            }, function(response){
+                $scope.employeeDetailError = getResponseMessage(response, 'Không thể tải thông tin nhân viên');
+            })
+            .finally(function(){
+                $scope.employeeDetailLoading = false;
+            })
+    }
+
+    $scope.OpenDeleteEmployee = function(item){
+        $scope.employeeToDelete = angular.copy(item);
+        $scope.deleteEmployeeError = null;
+
+        $('#deleteEmployeeModal').modal('show');
+    }
+
+    $scope.ConfirmDeleteEmployee = function(item){
+        if(!$scope.employeeToDelete || $scope.deleteBusy){
+            return;
+        }
+
+        $scope.deleteBusy = true;
+        $scope.deleteEmployeeError = null;
+
+        $http.post(API_ROOT + '/DeleteEmployee', { id: item.Id })
+            .then(function(response){
+                if(response && response.status >= 200 && response.status < 300){
+                    showSuccessToast(getResponseMessage(response, 'Xóa nhân viên thành công'));
+                    $('#deleteEmployeeModal').modal('hide');
+                    $scope.employeeToDelete = null;
+                    if($scope.listEmployee.length === 1 && $scope.employeeListQuery.PageIndex > 1){
+                        $scope.employeeListQuery.PageIndex--;
+                    }
+                    $scope.GetListEmployee();
+                }
+
+                $scope.deleteEmployeeError = getResponseMessage(response, 'Không thể xóa nhân viên');
+                showErrorToast($scope.deleteEmployeeError);
+            }, function(response){
+                $scope.deleteEmployeeError = getResponseMessage(response, 'Không thể xóa nhân viên');
+                showErrorToast($scope.deleteEmployeeError);
+            })
+            .finally(function(){
+                $scope.deleteBusy = false;
+            })
+    }
+
+    $scope.GetListEmployee();
+}])

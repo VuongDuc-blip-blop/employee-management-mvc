@@ -1,0 +1,20 @@
+﻿@using System
+@{
+    var currentController = Convert.ToString(ViewContext.RouteData.Values["controller"]);
+    var userActive = string.Equals(currentController, "User", StringComparison.OrdinalIgnoreCase) || string.Equals(currentController, "Department", StringComparison.OrdinalIgnoreCase);
+    var employeeActive = string.Equals(currentController, "Employee", StringComparison.OrdinalIgnoreCase);
+}
+
+<li class="@(userActive ? "active" : string.Empty)">
+    <a href="@Url.Action("HomeLayout", "Home")">
+        <i class="fa fa-users"></i>
+        <span class="nav-label">Quản lý người dùng</span>
+    </a>
+
+</li>
+<li class="@(employeeActive ? "active" : string.Empty)">
+    <a href="@Url.Action("Index", "Employee")">
+        <i class="fa fa-user"></i>
+        <span class="nav-label">Quản lý nhân viên</span>
+    </a>
+</li>
