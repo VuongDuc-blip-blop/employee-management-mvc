@@ -52,6 +52,13 @@
 | WEB-039 | Multi-sheet MIME `.xls` compatibility workbook | `Mark_daily_report.js` raw DOM workbook | LEGACY_COMPAT / PRODUCTION | CONDITIONAL | PLANNED | ERP-0003 fixed Users/Criteria sheets, no raw DOM |
 | WEB-040 | Authenticated bounded server export | Marketing/Home server HTML export patterns | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0003 fixed projection, 5,000-row cap, generic errors |
 | WEB-041 | License-gated genuine EPPlus `.xlsx` | EPPlus 6.0.3 source package versus stale 4.1 reference | REQUIRED_COMPLIANCE / PRODUCTION | CONDITIONAL | PLANNED | ERP-0003 disabled by default; commercial license required |
+| WEB-042 | MVC5 typed session actor + role action filter | `HomeController`, custom session and SeededAdmin/Employees.UserId seams | PREFERRED_CONVENTION / PRODUCTION | CONDITIONAL | PLANNED | ERP-0004; menu presentation plus server/DB enforcement |
+| WEB-043 | AngularJS JSON anti-forgery header | Layout form token + MVC `AntiForgery.Validate` cookie/header pair | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0004 all new JSON POSTs |
+| WEB-044 | Dapper multi-result aggregate/report mapping | Existing employee/user Dapper patterns; new fixed SP result contracts | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0004 list/detail/summary/trend/detail total |
+| WEB-045 | Dynamic order-line editor with server-authoritative decimals | AngularJS form vocabulary and human order requirement | PREFERRED_CONVENTION / PRODUCTION | CONDITIONAL | PLANNED | ERP-0004; null/duplicate/contiguous-line and positive-total checks |
+| WEB-046 | Formula-safe fixed-sheet client `.xlsx` | Existing SheetJS layout dependency; unsafe/noncommercial server exporters rejected | CONTEXTUAL / PRODUCTION | CONDITIONAL | PLANNED | ERP-0004 four sheets, SP export parity, 10k cap |
+| WEB-047 | Explicit MVC5 JSON wire serializer for binary/date contracts | Runtime probes: JavaScriptSerializer emits `byte[]` arrays; existing Newtonsoft.Json supports Base64 and ISO-8601 | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0004 secure envelope, exact token lengths, bounded UTF-8 payload |
+| WEB-048 | Browser-safe whole-VND and timezone-stable workbook transport | JavaScript/Excel numeric precision and workstation timezone behavior | PREFERRED_CONVENTION / PRODUCTION | CONDITIONAL | PLANNED | ERP-0004 strict integer ranges, UTC+07 reconstruction, fixed empty-sheet headers |
 
 ## Database patterns
 
@@ -76,7 +83,7 @@
 | DB-017 | Global temp + dynamic SQL | `db.md` temp/dynamic SQL | REJECTED_UNSAFE / STUDY_ONLY | UNSAFE | DISCOVERED | Prefer scoped temp/table-valued contract |
 | DB-018 | Sargable date filtering | `db.md` date filtering | PREFERRED_CONVENTION / PRODUCTION | SAFE | DISCOVERED | Attendance/report queries |
 | DB-019 | `LIKE` and authentication predicates | `db.md` LIKE/auth predicates | CONTEXTUAL / PRODUCTION | CONDITIONAL | DISCOVERED | Parameterize; never use LIKE for passwords |
-| DB-020 | Sales-order domain clues | `db.md` sales reports | CONTEXTUAL / STUDY_ONLY | CONDITIONAL | DISCOVERED | P4; business confirmation required |
+| DB-020 | Sales-order domain clues adapted into approved-order sales | `db.md` sales reports + explicit ERP-0004 human requirement | CONTEXTUAL / PRODUCTION | CONDITIONAL | PLANNED | ERP-0004 uses snapshots/static SPs; rejects global temp/dynamic/NOLOCK patterns |
 | DB-021 | Inventory domain clues | `db.md` inventory reports | CONTEXTUAL / STUDY_ONLY | CONDITIONAL | DISCOVERED | P6; business confirmation required |
 | DB-022 | Procurement domain clues | `db.md` procurement reports | CONTEXTUAL / STUDY_ONLY | CONDITIONAL | DISCOVERED | P5; business confirmation required |
 | DB-023 | Receivable domain clues | `db.md` receivable reports | CONTEXTUAL / STUDY_ONLY | CONDITIONAL | DISCOVERED | P7; business confirmation required |
@@ -92,7 +99,14 @@
 | DB-033 | Output sanitation/redaction | `db.md` output sanitation; current password exposure | PREFERRED_CONVENTION / PRODUCTION | SAFE | TESTED | ERP-0000 SP omits password; ERP-0002 removes DTO field |
 | DB-034 | Secretless local connection convention | `db.md` connection practice; current config conflict | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | TESTED | ERP-0000 LocalDB integrated-security config/API E2E passed |
 | DB-035 | Stored-procedure output total independent of page rows | Empty page loses window-count metadata; Dapper output parameters supported | PREFERRED_CONVENTION / PRODUCTION | SAFE | MASTERED | ERP-0002 DB/API empty-page total PASS |
+| DB-036 | TVP-backed transactional aggregate creation | `db.md` typed set operations; new order header/items requirement | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0004 validates 1–100 lines and commits header/items/history atomically |
+| DB-037 | Idempotency key + canonical payload hash | Duplicate browser submit risk and immutable order aggregate | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0004 same request returns existing; hash conflict fails 409 |
+| DB-038 | Rowversion-guarded idempotent state transition | SQL locking/concurrency reference; Pending→terminal order rules | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0004 UPDLOCK/HOLDLOCK, one history row, opposite race fails |
+| DB-039 | Actor-scoped stored procedures | Existing session UserId and human minimal-role requirement | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0004 every role/link/order/report SP revalidates live actor |
+| DB-040 | ApprovedAt half-open reporting + conditional aggregation | `db.md` sales clues/date filtering; human approved-sales semantics | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0004 UTC filters, UTC+07 DAY/MONTH groups, deterministic paging |
+| DB-041 | Lossless optimistic token for legacy datetime2 | `Employees.LastModifiedAt datetime2(7)`; MVC JSON DateTime loses precision | PREFERRED_CONVENTION / PRODUCTION | SAFE | PLANNED | ERP-0004 transports SQL `binary(9)` as base64; RowVersion remains binary(8) |
+| DB-042 | Session-safe local temp-table constraints | SQL Server named constraints on `#temp` tables collide across concurrent sessions | REQUIRED_COMPATIBILITY / PRODUCTION | SAFE | PLANNED | ERP-0004 report staging uses an unnamed local-temp primary key and concurrent execution test |
 
 ## Coverage policy
 
-ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 lên `MASTERED` bằng report r01. ERP-0002 đưa WEB-034/035/036 và DB-035 lên `MASTERED` bằng report r01 tại correction fingerprint chính xác. ERP-0003 lập kế hoạch WEB-027/037/038/039/040/041; kỹ thuật compatibility phải được ghi đúng định dạng, và EPPlus chỉ được test ở chế độ licensed khi có bằng chứng license. Các pattern `STUDY_ONLY` trong reference chỉ là domain clue; source code thật và yêu cầu human tiếp tục quyết định requirement.
+ERP-0000 đã đưa WEB-002/006/020/028 và DB-003/004/005/006/008/015/033/034 lên `TESTED` bằng report r02. ERP-0001 đưa WEB-010/029/030/031/032/033 lên `MASTERED` bằng report r01. ERP-0002 đưa WEB-034/035/036 và DB-035 lên `MASTERED` bằng report r01 tại correction fingerprint chính xác. ERP-0003 vẫn `STALE_UNVERIFIED`; các pattern WEB-027/037/038/039/040/041 không được nâng mastery. ERP-0004 lập kế hoạch WEB-042–048 và DB-036–042; DB-020 sales clue nay có human confirmation nhưng chỉ được nâng mastery sau exact-fingerprint PASS. Các pattern `STUDY_ONLY` khác vẫn chỉ là clue.

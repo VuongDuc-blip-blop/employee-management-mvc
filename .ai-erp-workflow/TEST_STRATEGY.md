@@ -92,6 +92,28 @@ ERP-0002 result: PASS on correction commit `2a2c9981d9d15020bd272320511af1624405
 
 ERP-0003 tester must inspect workbook bytes, not infer PASS from an HTTP 200 or file extension. Compatibility `.xls` modes may trigger Excel format warnings; the UI and report must state this honestly.
 
+## ERP-0004 matrix
+
+| ID | Acceptance criterion / check | Required evidence |
+|---|---|---|
+| T04-01 | Fingerprint/write-set | Exact tested branch/HEAD/status/diff fingerprint; 41 ADD + 10 MODIFY only; no `.gitignore`, secret, package/config/EDMX/bin/obj noise. |
+| T04-02 | Fresh/rerunnable DB | Isolated LocalDB absent→001–008 twice; Profile/GetListEmployee (including 256-character source-compatible search)/module metadata/verifier/smoke exit 0; no fixture residue. |
+| T04-03 | Controlled recovery | 998 wrong confirmation preserves objects; double-confirmed rollback removes module objects plus module-owned GetListEmployee, retains DB/baseline/Profile; complete 001–008 reapply restores the prerequisite and passes. |
+| T04-04 | Principal/account bind | Admin/linked employee/unassigned login behavior; binary(9) Base64 EmployeeVersion round-trip; monotonic token after rapid A→B→A rebind; stale/duplicate/wrong-role/CSRF cases. |
+| T04-05 | Order validation/atomicity | 1–100 exact lines; null/duplicate/gap/bounds/invalid date/non-positive total fail 400; header/items/history atomic; server attribution/totals. |
+| T04-06 | Create idempotency | Same ClientRequestId+canonical payload returns existing with one order/history; changed payload 409. |
+| T04-07 | Order read isolation | Employee list/detail own only; admin all; independent total on empty page; literal search and deterministic sort/page. |
+| T04-08 | Review concurrency | Pending approve/reject; same decision retry 200/no second history; opposite/stale pending rowversion 409; only Approved appears in sales. |
+| T04-09 | Report correctness | Summary/trend/detail reconcile; explicit arbitrary day/month/custom UTC+07 boundaries tested under multiple browser timezones; literal composite filters; whole-VND min/max fail closed; inactive historical admin report; forced-self IDOR denial. |
+| T04-10 | Excel content | Export/filter snapshot parity; cap 10,000 and 10,001→413; four fixed sheet/header contracts even when empty; real XLSX bytes; typed UTC/UTC+07 dates; formula prefixes neutralized; no password/rowversion/SQL. |
+| T04-11 | MVC/Angular runtime | Anonymous 401/login, wrong-role 403, missing/invalid token rejection, escaped strict post-redirect order number, malformed query encoding tolerance, loading/empty/error states, mobile/desktop critical journey through IIS Express. |
+| T04-12 | Legacy build/regression | Full-framework restore + redirected Debug/Release build; every complete JS payload syntax-checks; ERP-0001 credential/session and ERP-0002 user directory plus employee list regressions. |
+| T04-13 | JSON wire contract | Newtonsoft module envelope emits 9-byte/8-byte tokens as Base64 and DateTime as ISO-8601, never MVC numeric byte arrays/legacy date strings; invalid token and 32 MiB ceiling fail safely. |
+| T04-14 | Numeric integrity | Quantity scale, integer UnitPrice/Discount/filter, whole computed VND, per-order cap, report aggregate caps and XLSX numeric fidelity pass at boundaries; fractional/overflow values fail without rounding. |
+| T04-15 | Concurrent report execution | At least two overlapping report sessions run without temp-table object-name collision; no explicitly named local-temp constraint; query-plan/logical-read evidence recorded for representative employee/date/status filters. |
+
+No ERP-0004 result exists in this guide run. Prompt 2 must create test-only harnesses and bind every PASS to the exact implementation fingerprint.
+
 ## Environment and commands policy
 
 - Chỉ chạy destructive DB test trên exact isolated LocalDB database; kiểm tra `SERVERPROPERTY('ServerName')` và `DB_NAME()` trước.
