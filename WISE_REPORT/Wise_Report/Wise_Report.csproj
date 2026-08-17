@@ -313,7 +313,9 @@
     <Compile Include="Controllers\MarkettingReportController.cs" />
     <Compile Include="Controllers\UserExportController.cs" />
     <Compile Include="Controllers\Wise_ReportController.cs" />
+    <Compile Include="Enum\DemoRole.cs" />
     <Compile Include="Enum\ModerationStatus.cs" />
+    <Compile Include="Enum\SalesOrderStatus.cs" />
     <Compile Include="Enum\SortDirectionEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -366,10 +368,19 @@
     <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushMessaging.cs" />
+    <Compile Include="Shared\Contracts\ApiEnvelope.cs" />
+    <Compile Include="Shared\Database\DatabaseErrorNumbers.cs" />
+    <Compile Include="Shared\Database\StoredProcedureExceptionTranslator.cs" />
+    <Compile Include="Shared\Database\StoredProcedureHttpException.cs" />
     <Compile Include="Shared\DataSeeded\SeededAdmin.cs" />
+    <Compile Include="Shared\Dtos\EmployeeAccountBindingDto.cs" />
+    <Compile Include="Shared\Dtos\EmployeeAccountCandidateDto.cs" />
     <Compile Include="Shared\Dtos\EmployeeDetailDto.cs" />
     <Compile Include="Shared\Dtos\EmployeePageItem.cs" />
     <Compile Include="Shared\Dtos\PagedResult.cs" />
+    <Compile Include="Shared\Dtos\SalesOrderDtos.cs" />
+    <Compile Include="Shared\Dtos\SalesReportDtos.cs" />
+    <Compile Include="Shared\Dtos\SessionPrincipalDto.cs" />
     <Compile Include="Shared\Dtos\UserDetailDto.cs" />
     <Compile Include="Shared\Dtos\UserPageItem.cs" />
     <Compile Include="Shared\Dtos\UserPageRow.cs" />
@@ -382,6 +393,11 @@
     <Compile Include="Shared\Queries\Base\BaseQuery.cs" />
     <Compile Include="Shared\Queries\EmployeePageQuery.cs" />
     <Compile Include="Shared\Queries\UserPageQuery.cs" />
+    <Compile Include="Shared\Security\SessionActor.cs" />
+    <Compile Include="Shared\Security\SessionActorStore.cs" />
+    <Compile Include="Shared\Security\SessionKeys.cs" />
+    <Compile Include="Shared\Security\SessionRoleAuthorizeAttribute.cs" />
+    <Compile Include="Shared\Security\ValidateJsonAntiForgeryTokenAttribute.cs" />
     <Compile Include="Shared\test1.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
